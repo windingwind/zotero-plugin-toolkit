@@ -1,0 +1,43 @@
+{
+  "name": "zotero-plugin-toolkit",
+  "version": "0.0.0",
+  "description": "Toolkit for Zotero plugins",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "release": "release-it",
+    "build": "tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windingwind/zotero-plugin-toolkit.git"
+  },
+  "keywords": [
+    "zotero",
+    "plugin",
+    "developer",
+    "toolkit"
+  ],
+  "author": "windingwind",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/windingwind/zotero-plugin-toolkit/issues"
+  },
+  "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.33.7",
+    "release-it": "^15.5.1"
+  },
+  "dependencies": {
+    "zotero-types": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "dist/**/*.d.ts",
+    "dist/**/*.js",
+    "docs/**/*"
+  ]
+}
