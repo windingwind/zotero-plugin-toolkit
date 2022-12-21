@@ -18,7 +18,7 @@ createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul"
 |  --- | --- | --- |
 |  doc | Document | target document, e.g. Zotero main window.document |
 |  tagName | string | element tag name, e.g. <code>hbox</code>, <code>div</code> |
-|  namespace | "html" \| "svg" \| "xul" | <i>(Optional)</i> default  "html" |
+|  namespace | "html" \| "svg" \| "xul" | <i>(Optional)</i> default "html" |
 
 <b>Returns:</b>
 

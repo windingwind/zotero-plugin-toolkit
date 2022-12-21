@@ -12,16 +12,11 @@ General tool APIs.
 export declare class ZoteroTool 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [log](./zotero-plugin-toolkit.zoterotool.log.md) |  | typeof log |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [getCopyHelper()](./zotero-plugin-toolkit.zoterotool.getcopyhelper.md) |  | create a <code>CopyHelper</code> instance for text/rich text/image |
+|  [log(data)](./zotero-plugin-toolkit.zoterotool.log.md) |  | Output to both Zotero.debug and console.log |
 |  [openFilePicker(title, mode, filters, suggestion)](./zotero-plugin-toolkit.zoterotool.openfilepicker.md) |  | Open a file picker |
 

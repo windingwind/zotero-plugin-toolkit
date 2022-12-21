@@ -33,7 +33,7 @@ export class ZoteroUI {
    * 
    * @param doc target document, e.g. Zotero main window.document
    * @param tagName element tag name, e.g. `hbox`, `div`
-   * @param namespace default @default "html"
+   * @param namespace default "html"
    * @example
    * Create an element
    * ```ts

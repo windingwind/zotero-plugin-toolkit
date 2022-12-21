@@ -2,10 +2,23 @@
 
 [Home](./index.md) &gt; [zotero-plugin-toolkit](./zotero-plugin-toolkit.md) &gt; [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) &gt; [log](./zotero-plugin-toolkit.zoterotool.log.md)
 
-## ZoteroTool.log property
+## ZoteroTool.log() method
+
+Output to both Zotero.debug and console.log
 
 <b>Signature:</b>
 
 ```typescript
-log: typeof log;
+log(...data: any): void;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  data | any | e.g. string, number, object, ... |
+
+<b>Returns:</b>
+
+void
+

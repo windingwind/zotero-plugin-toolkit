@@ -91,5 +91,11 @@ export class ZoteroTool {
       });
     });
   }
-  log = log;
+  /**
+   * Output to both Zotero.debug and console.log
+   * @param data e.g. string, number, object, ...
+   */
+  log(...data: any) {
+    return log(...data);
+  }
 }
