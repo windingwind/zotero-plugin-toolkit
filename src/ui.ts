@@ -299,13 +299,13 @@ export class ZoteroUI {
    * ```
    */
   insertMenuItem(
-    menuPopup: XUL.Menupopup | keyof typeof MenuSelector,
+    menuPopup: XUL.MenuPopup | keyof typeof MenuSelector,
     options: MenuitemOptions,
     insertPosition: "before" | "after" = "after",
     anchorElement: XUL.Element = undefined
   ) {
     const Zotero = getZotero();
-    let popup: XUL.Menupopup;
+    let popup: XUL.MenuPopup;
     if (typeof menuPopup === "string") {
       popup = (Zotero.getMainWindow() as Window).document.querySelector(
         MenuSelector[menuPopup]
