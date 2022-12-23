@@ -98,4 +98,32 @@ export class ZoteroTool {
   log(...data: any) {
     return log(...data);
   }
+
+  private _repatch(
+    object: { [sign: string]: any },
+    funcSign: string,
+    ownerSign: string,
+    patcher: (fn: Function) => Function
+  ) {
+    this.log("patching", funcSign);
+    object[funcSign] = patcher(object[funcSign]);
+    object[funcSign][ownerSign] = true;
+  }
+
+  /**
+   * Patch a function
+   * @param object The owner of the function
+   * @param funcSign The signature of the function(function name)
+   * @param ownerSign The signature of patch owner to avoid patching again
+   * @param patcher The new wrapper of the patched funcion
+   */
+  patch(
+    object: { [sign: string]: any },
+    funcSign: string,
+    ownerSign: string,
+    patcher: (fn: Function) => Function
+  ) {
+    if (object[funcSign][ownerSign]) throw new Error(`${funcSign} re-patched`);
+    this._repatch(object, funcSign, ownerSign, patcher);
+  }
 }

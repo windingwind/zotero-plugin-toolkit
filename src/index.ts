@@ -1,5 +1,6 @@
 import { ZoteroCompat } from "./compat";
 import { ZoteroTool } from "./tool";
+import { ItemTreeTool } from "./treeView";
 import { ZoteroUI } from "./ui";
 
 /**
@@ -22,14 +23,16 @@ export class ZoteroToolkit {
    * @public
    */
   public UI: ZoteroUI;
+  public ItemTree: ItemTreeTool;
 
   constructor() {
     this.Compat = new ZoteroCompat();
     this.Tool = new ZoteroTool();
     this.UI = new ZoteroUI();
+    this.ItemTree = new ItemTreeTool();
   }
 }
 
 export default ZoteroToolkit;
 
-export { ZoteroCompat, ZoteroTool, ZoteroUI };
+export { ZoteroCompat, ZoteroTool, ItemTreeTool, ZoteroUI };

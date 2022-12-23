@@ -6,6 +6,16 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 [API Documentation](./docs/index.md)
 
+## Features
+
+- Consistent API for creating elements & preference pane on Zotero 6/7. See [ZoteroCompat](./docs/zotero-plugin-toolkit.zoterocompat.md)
+
+- Creating HTML/XUL elements in batch form JSON; The toolkit will automatically remove all elements created by your plugin on one call when the plugin is disabled/removed. See [ZoteroUI](./docs/zotero-plugin-toolkit.zoteroui.md)
+
+- Register extra columns to the item tree. See [itemTree](./docs/zotero-plugin-toolkit.itemtreetool.md)
+
+- Tools like copy helper, file picker, etc. See [ZoteroTools](./docs/zotero-plugin-toolkit.zoterotool.md)
+
 ## Usage
 
 1. Run `npm install --save zotero-plugin-toolkit`.
@@ -34,7 +44,6 @@ This package is integrated into the [Zotero Addon Template](https://github.com/w
 If you are new to Zotero plugins/looking for solutions to migrate from Zotero 6 to 7, please take a look at that repo.
 
 The API documentation also contains example code for some APIs.
-
 
 ## Contributing
 

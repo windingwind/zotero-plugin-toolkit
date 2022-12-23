@@ -23,6 +23,7 @@ export declare class ZoteroToolkit
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [Compat](./zotero-plugin-toolkit.zoterotoolkit.compat.md) |  | [ZoteroCompat](./zotero-plugin-toolkit.zoterocompat.md) | ZoteroCompat instance. Provides consistent APIs for Zotero 6 &amp; newer (7). |
+|  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeTool](./zotero-plugin-toolkit.itemtreetool.md) |  |
 |  [Tool](./zotero-plugin-toolkit.zoterotoolkit.tool.md) |  | [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) | ZoteroTool instance. Provides tool APIs. |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [ZoteroUI](./zotero-plugin-toolkit.zoteroui.md) | ZoteroUI instance. Provides UI APIs. |
 

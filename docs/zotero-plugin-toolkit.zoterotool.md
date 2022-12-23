@@ -19,4 +19,5 @@ export declare class ZoteroTool
 |  [getCopyHelper()](./zotero-plugin-toolkit.zoterotool.getcopyhelper.md) |  | create a <code>CopyHelper</code> instance for text/rich text/image |
 |  [log(data)](./zotero-plugin-toolkit.zoterotool.log.md) |  | Output to both Zotero.debug and console.log |
 |  [openFilePicker(title, mode, filters, suggestion)](./zotero-plugin-toolkit.zoterotool.openfilepicker.md) |  | Open a file picker |
+|  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.zoterotool.patch.md) |  | Patch a function |
 
