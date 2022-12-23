@@ -29,7 +29,7 @@
     "release-it": "^15.5.1"
   },
   "dependencies": {
-    "zotero-types": "^0.1.1"
+    "zotero-types": "^0.1.2"
   },
   "publishConfig": {
     "access": "public",
