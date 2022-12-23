@@ -126,4 +126,56 @@ export class ZoteroTool {
     if (object[funcSign][ownerSign]) throw new Error(`${funcSign} re-patched`);
     this._repatch(object, funcSign, ownerSign, patcher);
   }
+
+  /**
+   * Get all extra fields
+   * @param item 
+   */
+  getExtraFields(item: Zotero.Item): Map<string, string> {
+    return Zotero.Utilities.Internal.extractExtraFields(item.getField("extra"))
+      .fields;
+  }
+
+  /**
+   * Get extra field value by key. If it does not exists, return undefined.
+   * @param item 
+   * @param key 
+   */
+  getExtraField(item: Zotero.Item, key: string): string | undefined {
+    const fields = this.getExtraFields(item);
+    return fields.get(key);
+  }
+
+  /**
+   * Replace extra field of an item.
+   * @param item 
+   * @param fields 
+   */
+  async replaceExtraFields(
+    item: Zotero.Item,
+    fields: Map<string, string>
+  ): Promise<void> {
+    let kvs = [];
+    fields.forEach((v, k) => {
+      kvs.push(`${k}: ${v}`);
+    });
+    item.setField("extra", kvs.join("\n"));
+    await item.saveTx();
+  }
+
+  /**
+   * Set an key-value pair to the item's extra field
+   * @param item 
+   * @param key 
+   * @param value 
+   */
+  async setExtraField(
+    item: Zotero.Item,
+    key: string,
+    value: string
+  ): Promise<void> {
+    const fields = this.getExtraFields(item);
+    fields.set(key, value);
+    await this.replaceExtraFields(item, fields);
+  }
 }
