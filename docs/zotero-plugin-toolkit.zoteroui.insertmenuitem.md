@@ -9,14 +9,14 @@ Insert an menu item/menu(with popup)/menuseprator into a menupopup
 <b>Signature:</b>
 
 ```typescript
-insertMenuItem(menuPopup: XUL.Menupopup | keyof typeof MenuSelector, options: MenuitemOptions, insertPosition?: "before" | "after", anchorElement?: XUL.Element): boolean;
+insertMenuItem(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: MenuitemOptions, insertPosition?: "before" | "after", anchorElement?: XUL.Element): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  menuPopup | XUL.Menupopup \| keyof typeof MenuSelector |  |
+|  menuPopup | XUL.MenuPopup \| keyof typeof MenuSelector |  |
 |  options | MenuitemOptions | See [source code:options.ts](https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts) |
 |  insertPosition | "before" \| "after" | <i>(Optional)</i> |
 |  anchorElement | XUL.Element | <i>(Optional)</i> The menuitem will be put before/after <code>anchorElement</code>. If not set, put at start/end of the menupopup. |
