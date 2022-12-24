@@ -71,7 +71,7 @@ Run `npm run build`.
 
 ### Release
 
-`npm run release`. The 
+`npm run release`. Tagged pushes will trigger a npm-publish GitHub action.
 
 ## Disclaimer
 
