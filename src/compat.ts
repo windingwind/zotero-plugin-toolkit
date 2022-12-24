@@ -360,6 +360,9 @@ export class ZoteroCompat {
               const prefPane = win.document.querySelector(`#${options.id}`);
               // @ts-ignore
               prefWindow.addPane(prefPane);
+              // Resize window, otherwise the new prefpane may be placed out of the window
+              // @ts-ignore
+              win.sizeToContent();
               this.prefPaneCache.win = win;
               this.prefPaneCache.listeners.push(windowListener);
               this.prefPaneCache.ids.push(options.id);
