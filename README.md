@@ -71,7 +71,7 @@ Run `npm run build`.
 
 ### Release
 
-Run `npm run release`.
+`npm run release`. The 
 
 ## Disclaimer
 

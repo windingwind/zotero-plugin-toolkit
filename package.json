@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs"
+    "build": "tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.19.27",
-    "@microsoft/api-extractor": "^7.33.7"
+    "@microsoft/api-extractor": "^7.33.7",
+    "release-it": "^15.5.1"
   }
 }
