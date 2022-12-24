@@ -38,5 +38,9 @@
   "directories": {
     "lib": "dist",
     "doc": "docs"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.19.27",
+    "@microsoft/api-extractor": "^7.33.7"
   }
 }
