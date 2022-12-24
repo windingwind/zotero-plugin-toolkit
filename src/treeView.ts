@@ -182,6 +182,7 @@ export class ItemTreeTool {
     iconPath: string;
     name: string;
   }): ReactElement {
+    // @ts-ignore
     const react = window.require("react");
     return react.createElement(
       "span",
