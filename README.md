@@ -10,6 +10,10 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 - Consistent API for creating elements & preference pane on Zotero 6/7. See [ZoteroCompat](./docs/zotero-plugin-toolkit.zoterocompat.md)
 
+  - [`getZotero`](./docs/zotero-plugin-toolkit.zoterocompat.getzotero.md)/[`getWindow`](./docs/zotero-plugin-toolkit.zoterocompat.getwindow.md)/[`getDOMParser`](./docs/zotero-plugin-toolkit.zoterocompat.getdomparser.md): Global variables in Zotero 6 overlay plugins
+  - [`isZotero7`](./docs/zotero-plugin-toolkit.zoterocompat.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md): Some if statements
+  - [`registerPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.registerprefpane.md)/[`unregisterPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.unregisterprefpane.md): Preferencepane registrations for Zotero 6 bootstrapped plugins
+
 - Creating HTML/XUL elements in batch form JSON; The toolkit will automatically remove all elements created by your plugin on one call when the plugin is disabled/removed. See [ZoteroUI](./docs/zotero-plugin-toolkit.zoteroui.md)
 
 - Register extra columns to the item tree. See [itemTree](./docs/zotero-plugin-toolkit.itemtreetool.md)
@@ -57,8 +61,6 @@ The API documentation also contains example code for some APIs.
 git clone https://github.com/windingwind/zotero-plugin-toolkit
 cd zotero-plugin-toolkit
 npm install
-npm install -g @microsoft/api-extractor
-npm install -g @microsoft/api-documenter
 ```
 
 ### Build
