@@ -23,14 +23,14 @@ export class ZoteroUI {
   /**
    * Create an element on doc under specific namespace
    * The element will be maintained by toolkit.
-   * 
+   *
    * @remarks
    * > What is this for?
    *
    * In boostrap plugins, elements must be manually maintained and removed on exiting.
    *
    * This API does this for you.
-   * 
+   *
    * @param doc target document, e.g. Zotero main window.document
    * @param tagName element tag name, e.g. `hbox`, `div`
    * @param namespace default "html"
@@ -69,7 +69,7 @@ export class ZoteroUI {
   }
   /**
    * Remove all elements created by `createElement`.
-   * 
+   *
    * @remarks
    * > What is this for?
    *
@@ -101,14 +101,11 @@ export class ZoteroUI {
    *   styles?: { [key: string]: string };
    *   directAttributes?: { [key: string]: string | boolean | number };
    *   attributes?: { [key: string]: string | boolean | number };
-   *   listeners?: Array<
-   *     | [
-   *         string,
-   *         EventListenerOrEventListenerObject,
-   *         boolean | AddEventListenerOptions
-   *       ]
-   *     | [string, EventListenerOrEventListenerObject]
-   *   >;
+   *   listeners?: Array<{
+   *     type: string;
+   *     listener: EventListenerOrEventListenerObject | ((e: Event) => void);
+   *     options?: boolean | AddEventListenerOptions;
+   *   }>;
    *   checkExistanceParent?: HTMLElement;
    *   ignoreIfExists?: boolean;
    *   removeIfExists?: boolean;
@@ -146,12 +143,11 @@ export class ZoteroUI {
    *        attributes: { label: "Resize Image" },
    *        customCheck: imageSelected,
    *        listeners: [
-   *          [
-   *            "command",
-   *            (e) => {
+   *          {
+   *            type: "command",
+   *            listener: (e) => {
    *              postMessage({ type: "resizeImage", width: 100 }, "   *  ");
    *            },
-   *            undefined,
    *          ],
    *        ],
    *      },
@@ -220,9 +216,9 @@ export class ZoteroUI {
         });
       }
       if (options.listeners?.length) {
-        options.listeners.forEach(([type, cbk, option]) => {
-          typeof cbk !== "undefined" &&
-            element.addEventListener(type, cbk, option);
+        options.listeners.forEach(({ type, listener, options }) => {
+          typeof listener !== "undefined" &&
+            element.addEventListener(type, listener, options);
         });
       }
     }
@@ -258,9 +254,9 @@ export class ZoteroUI {
    *   subElementOptions?: Array<MenuitemOptions>;
    * }
    * ```
-   * @param menuPopup 
+   * @param menuPopup
    * @param options See {@link https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts | source code:options.ts}
-   * @param insertPosition 
+   * @param insertPosition
    * @param anchorElement The menuitem will be put before/after `anchorElement`. If not set, put at start/end of the menupopup.
    * @example
    * Insert menuitem with icon into item menupopup
@@ -332,7 +328,9 @@ export class ZoteroUI {
           oncommand: menuitemOption.oncommand,
         },
         styles: menuitemOption.styles || {},
-        listeners: [["command", menuitemOption.commandListener]],
+        listeners: [
+          { type: "command", listener: menuitemOption.commandListener },
+        ],
         subElementOptions: [],
       };
       if (menuitemOption.icon) {

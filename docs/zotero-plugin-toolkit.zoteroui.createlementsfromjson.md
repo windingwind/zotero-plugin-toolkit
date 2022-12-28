@@ -37,14 +37,11 @@ export interface ElementOptions {
   styles?: { [key: string]: string };
   directAttributes?: { [key: string]: string | boolean | number };
   attributes?: { [key: string]: string | boolean | number };
-  listeners?: Array<
-    | [
-        string,
-        EventListenerOrEventListenerObject,
-        boolean | AddEventListenerOptions
-      ]
-    | [string, EventListenerOrEventListenerObject]
-  >;
+  listeners?: Array<{
+    type: string;
+    listener: EventListenerOrEventListenerObject | ((e: Event) => void);
+    options?: boolean | AddEventListenerOptions;
+  }>;
   checkExistanceParent?: HTMLElement;
   ignoreIfExists?: boolean;
   removeIfExists?: boolean;
@@ -82,12 +79,11 @@ Create multiple menu item/menu. This code is part of Zotero Better Notes.
        attributes: { label: "Resize Image" },
        customCheck: imageSelected,
        listeners: [
-         [
-           "command",
-           (e) => {
+         {
+           type: "command",
+           listener: (e) => {
              postMessage({ type: "resizeImage", width: 100 }, "   *  ");
            },
-           undefined,
          ],
        ],
      },
