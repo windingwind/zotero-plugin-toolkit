@@ -56,7 +56,7 @@ export class ZoteroTool {
     mode: "open" | "save" | "folder",
     filters?: [string, string][],
     suggestion?: string
-  ) {
+  ): Promise<string> {
     const fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(
       Components.interfaces.nsIFilePicker
     );
@@ -129,7 +129,7 @@ export class ZoteroTool {
 
   /**
    * Get all extra fields
-   * @param item 
+   * @param item
    */
   getExtraFields(item: Zotero.Item): Map<string, string> {
     return Zotero.Utilities.Internal.extractExtraFields(item.getField("extra"))
@@ -138,8 +138,8 @@ export class ZoteroTool {
 
   /**
    * Get extra field value by key. If it does not exists, return undefined.
-   * @param item 
-   * @param key 
+   * @param item
+   * @param key
    */
   getExtraField(item: Zotero.Item, key: string): string | undefined {
     const fields = this.getExtraFields(item);
@@ -148,8 +148,8 @@ export class ZoteroTool {
 
   /**
    * Replace extra field of an item.
-   * @param item 
-   * @param fields 
+   * @param item
+   * @param fields
    */
   async replaceExtraFields(
     item: Zotero.Item,
@@ -165,9 +165,9 @@ export class ZoteroTool {
 
   /**
    * Set an key-value pair to the item's extra field
-   * @param item 
-   * @param key 
-   * @param value 
+   * @param item
+   * @param key
+   * @param value
    */
   async setExtraField(
     item: Zotero.Item,

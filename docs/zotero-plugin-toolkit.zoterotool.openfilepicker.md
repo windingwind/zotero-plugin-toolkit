@@ -9,7 +9,7 @@ Open a file picker
 <b>Signature:</b>
 
 ```typescript
-openFilePicker(title: string, mode: "open" | "save" | "folder", filters?: [string, string][], suggestion?: string): Promise<unknown>;
+openFilePicker(title: string, mode: "open" | "save" | "folder", filters?: [string, string][], suggestion?: string): Promise<string>;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ openFilePicker(title: string, mode: "open" | "save" | "folder", filters?: [strin
 
 <b>Returns:</b>
 
-Promise&lt;unknown&gt;
+Promise&lt;string&gt;
 
 ## Example
 
