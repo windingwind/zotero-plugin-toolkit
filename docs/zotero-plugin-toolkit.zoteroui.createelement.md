@@ -9,7 +9,7 @@ Create an element on doc under specific namespace The element will be maintained
 <b>Signature:</b>
 
 ```typescript
-createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul"): HTMLElement | DocumentFragment | SVGAElement;
+createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul", enableElementRecord?: boolean): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
 ```
 
 ## Parameters
@@ -19,10 +19,11 @@ createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul"
 |  doc | Document | target document, e.g. Zotero main window.document |
 |  tagName | string | element tag name, e.g. <code>hbox</code>, <code>div</code> |
 |  namespace | "html" \| "svg" \| "xul" | <i>(Optional)</i> default "html" |
+|  enableElementRecord | boolean | <i>(Optional)</i> If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal |
 
 <b>Returns:</b>
 
-HTMLElement \| DocumentFragment \| SVGAElement
+HTMLElement \| XUL.Element \| SVGElement \| DocumentFragment
 
 ## Remarks
 

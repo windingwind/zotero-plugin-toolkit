@@ -17,8 +17,20 @@ export class ZoteroUI {
    * This API does this for you.
    */
   addonElements: Element[];
+  /**
+   * If elements created with `createElement` should be recorded.
+   *
+   * @remarks
+   * > What is this for?
+   *
+   * In boostrap plugins, elements must be manually maintained and removed on exiting.
+   *
+   * If this is `false`, newly created elements with `createElement` will not be maintained.
+   */
+  enableElementRecordGlobal: boolean;
   constructor() {
     this.addonElements = [];
+    this.enableElementRecordGlobal = true;
   }
   /**
    * Create an element on doc under specific namespace
@@ -34,6 +46,7 @@ export class ZoteroUI {
    * @param doc target document, e.g. Zotero main window.document
    * @param tagName element tag name, e.g. `hbox`, `div`
    * @param namespace default "html"
+   * @param enableElementRecord If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal
    * @example
    * Create an element
    * ```ts
@@ -46,26 +59,32 @@ export class ZoteroUI {
   createElement(
     doc: Document,
     tagName: string,
-    namespace: "html" | "svg" | "xul" = "html"
-  ) {
+    namespace: "html" | "svg" | "xul" = "html",
+    enableElementRecord: boolean = undefined
+  ): HTMLElement | XUL.Element | SVGElement | DocumentFragment {
     namespace = namespace || "html";
     const namespaces = {
       html: "http://www.w3.org/1999/xhtml",
       svg: "http://www.w3.org/2000/svg",
     };
+    let elem: HTMLElement | XUL.Element | SVGElement | DocumentFragment;
     if (tagName === "fragment") {
-      return doc.createDocumentFragment();
+      elem = doc.createDocumentFragment();
+      return elem;
     } else if (namespace === "xul") {
-      const e = createXULElement(doc, tagName);
-      this.addonElements.push(e);
-      return e;
+      elem = createXULElement(doc, tagName);
     } else {
-      const e = doc.createElementNS(namespaces[namespace], tagName) as
+      elem = doc.createElementNS(namespaces[namespace], tagName) as
         | HTMLElement
-        | SVGAElement;
-      this.addonElements.push(e);
-      return e;
+        | SVGElement;
     }
+    if (
+      (typeof enableElementRecord !== "undefined" && enableElementRecord) ||
+      this.enableElementRecordGlobal
+    ) {
+      this.addonElements.push(elem);
+    }
+    return elem;
   }
   /**
    * Remove all elements created by `createElement`.

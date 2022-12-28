@@ -23,12 +23,13 @@ export declare class ZoteroUI
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [addonElements](./zotero-plugin-toolkit.zoteroui.addonelements.md) |  | Element\[\] | Store elements created with this instance |
+|  [enableElementRecordGlobal](./zotero-plugin-toolkit.zoteroui.enableelementrecordglobal.md) |  | boolean | If elements created with <code>createElement</code> should be recorded. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createElement(doc, tagName, namespace)](./zotero-plugin-toolkit.zoteroui.createelement.md) |  | Create an element on doc under specific namespace The element will be maintained by toolkit. |
+|  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.zoteroui.createelement.md) |  | Create an element on doc under specific namespace The element will be maintained by toolkit. |
 |  [creatElementsFromJSON(doc, options)](./zotero-plugin-toolkit.zoteroui.createlementsfromjson.md) |  | <p>Create elements in batch, based on <code>createElement</code>.</p><p>The return element will also be maintained by toolkit.</p> |
 |  [insertMenuItem(menuPopup, options, insertPosition, anchorElement)](./zotero-plugin-toolkit.zoteroui.insertmenuitem.md) |  | Insert an menu item/menu(with popup)/menuseprator into a menupopup |
 |  [removeAddonElements()](./zotero-plugin-toolkit.zoteroui.removeaddonelements.md) |  | Remove all elements created by <code>createElement</code>. |

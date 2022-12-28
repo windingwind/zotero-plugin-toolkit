@@ -11,7 +11,7 @@ The return element will also be maintained by toolkit.
 <b>Signature:</b>
 
 ```typescript
-creatElementsFromJSON(doc: Document, options: ElementOptions): HTMLElement | DocumentFragment | SVGAElement;
+creatElementsFromJSON(doc: Document, options: ElementOptions): HTMLElement | SVGElement | DocumentFragment;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ creatElementsFromJSON(doc: Document, options: ElementOptions): HTMLElement | Doc
 
 <b>Returns:</b>
 
-HTMLElement \| DocumentFragment \| SVGAElement
+HTMLElement \| SVGElement \| DocumentFragment
 
 ## Remarks
 
