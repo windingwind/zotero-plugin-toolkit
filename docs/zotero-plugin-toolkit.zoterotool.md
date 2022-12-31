@@ -12,6 +12,18 @@ General tool APIs.
 export declare class ZoteroTool 
 ```
 
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)()](./zotero-plugin-toolkit.zoterotool._constructor_.md) |  | Constructs a new instance of the <code>ZoteroTool</code> class |
+
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [logOptionsGlobal](./zotero-plugin-toolkit.zoterotool.logoptionsglobal.md) |  | { \_type: "toolkitlog"; disableConsole: boolean; disableZLog: boolean; prefix: string; } | Log options. |
+
 ## Methods
 
 |  Method | Modifiers | Description |

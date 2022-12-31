@@ -20,14 +20,34 @@ export function createXULElement(doc: Document, type: string): XUL.Element {
 }
 
 export function log(...data: any[]) {
+  if (data.length === 0) {
+    return;
+  }
   const Zotero = getZotero();
+  const console = Zotero.getMainWindow().console as Console;
+  let options = {
+    disableConsole: false,
+    disableZLog: false,
+    prefix: "",
+  };
+  if (data[data.length - 1]?._type === "toolkitlog") {
+    options = data.pop();
+  }
   try {
-    Zotero.getMainWindow().console.log(...data);
-    for (const d of data) {
-      Zotero.debug(d);
+    if (options.prefix) {
+      data.splice(0, 0, options.prefix);
+    }
+    if (!options.disableConsole) {
+      console.groupCollapsed(...data);
+      console.trace();
+      console.groupEnd();
+    }
+    if (!options.disableZLog) {
+      Zotero.debug(data.map((d) => String(d)).join("\n"));
     }
   } catch (e) {
-    Zotero.debug(e);
+    console.error(e);
+    Zotero.logError(e);
   }
 }
 

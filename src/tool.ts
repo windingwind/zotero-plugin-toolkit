@@ -6,6 +6,34 @@ import { CopyHelper, log } from "./utils";
  */
 export class ZoteroTool {
   /**
+   * Log options.
+   * @remarks
+   * default:
+   * ```ts
+   * {
+   *   disableConsole: false,
+   *   disableZLog: false,
+   *   prefix: "",
+   * }
+   * ```
+   * `_type` is for recognization, don't modify it.
+   */
+  logOptionsGlobal: {
+    _type: "toolkitlog";
+    disableConsole: boolean;
+    disableZLog: boolean;
+    prefix: string;
+  };
+
+  constructor() {
+    this.logOptionsGlobal = {
+      _type: "toolkitlog",
+      disableConsole: false,
+      disableZLog: false,
+      prefix: "",
+    };
+  }
+  /**
    * create a `CopyHelper` instance for text/rich text/image
    *
    * @example
@@ -96,6 +124,13 @@ export class ZoteroTool {
    * @param data e.g. string, number, object, ...
    */
   log(...data: any) {
+    if (data.length === 0) {
+      return;
+    }
+    // If logOption is not provides, use the global one.
+    if (data[data.length - 1]?._type !== "toolkitlog") {
+      data.push(this.logOptionsGlobal);
+    }
     return log(...data);
   }
 
