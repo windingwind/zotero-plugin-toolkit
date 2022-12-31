@@ -324,17 +324,18 @@ export class ItemTreeTool {
     await this.initializationLock.promise;
     const ZoteroPane = this.Zotero.getActiveZoteroPane();
     ZoteroPane.itemsView._columnsId = null;
+    const virtualizedTable = ZoteroPane.itemsView.tree?._columns;
+    if (!virtualizedTable) {
+      this.tool.log("ItemTree is still loading. Refresh skipped.");
+      return;
+    }
     // Remove style list otherwise the change will not be updated
-    document
-      .querySelector(`.${ZoteroPane.itemsView.tree._columns._styleKey}`)
-      ?.remove();
+    document.querySelector(`.${virtualizedTable._styleKey}`)?.remove();
     // Refresh to rebuild _columns
     await ZoteroPane.itemsView.refreshAndMaintainSelection();
     // Construct a new virtualized-table, otherwise it will not be updated
     ZoteroPane.itemsView.tree._columns =
-      new ZoteroPane.itemsView.tree._columns.__proto__.constructor(
-        ZoteroPane.itemsView.tree
-      );
+      new virtualizedTable.__proto__.constructor(ZoteroPane.itemsView.tree);
     // Refresh again to totally make the itemView updated
     await ZoteroPane.itemsView.refreshAndMaintainSelection();
   }
