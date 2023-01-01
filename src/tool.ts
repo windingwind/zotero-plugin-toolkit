@@ -134,17 +134,6 @@ export class ZoteroTool {
     return log(...data);
   }
 
-  private _repatch(
-    object: { [sign: string]: any },
-    funcSign: string,
-    ownerSign: string,
-    patcher: (fn: Function) => Function
-  ) {
-    this.log("patching", funcSign);
-    object[funcSign] = patcher(object[funcSign]);
-    object[funcSign][ownerSign] = true;
-  }
-
   /**
    * Patch a function
    * @param object The owner of the function
@@ -158,8 +147,12 @@ export class ZoteroTool {
     ownerSign: string,
     patcher: (fn: Function) => Function
   ) {
-    if (object[funcSign][ownerSign]) throw new Error(`${funcSign} re-patched`);
-    this._repatch(object, funcSign, ownerSign, patcher);
+    if (object[funcSign][ownerSign]) {
+      throw new Error(`${funcSign} re-patched`);
+    }
+    this.log("patching", funcSign, `by ${ownerSign}`);
+    object[funcSign] = patcher(object[funcSign]);
+    object[funcSign][ownerSign] = true;
   }
 
   /**
