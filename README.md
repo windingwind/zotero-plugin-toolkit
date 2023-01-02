@@ -71,6 +71,14 @@ Run `npm run build`.
 
 - Documentations under `./docs`.
 
+### Test Locally
+
+Test it with your plugin or use [Zotero Addon Template](https://github.com/windingwind/zotero-addon-template/) as a playground.
+
+Run `npm install /path/to/this/repo` under the playground repo folder, the lib will be installed from your local build.
+
+The playground uses the latest build. No need to npm install again if you rebuild this lib.
+
 ### Release
 
 `npm run release`. Tagged pushes will trigger a npm-publish GitHub action.
