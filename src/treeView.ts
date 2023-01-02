@@ -268,7 +268,6 @@ export class ItemTreeTool {
         this.patchSign,
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
-            console.log("_renderCell", arguments);
             if (!(column.dataKey in globalCache.renderCellHooks)) {
               // @ts-ignore
               return original.apply(this, arguments);
