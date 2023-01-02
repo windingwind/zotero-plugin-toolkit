@@ -22,7 +22,10 @@ export declare class ItemTreeTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [addFieldHook(dataKey, fieldHook)](./zotero-plugin-toolkit.itemtreetool.addfieldhook.md) |  | <p>Add a patch hook for <code>getField</code>, which is called when custom cell is rendered(and in many other cases).</p><p>Don't patch a Zotero's built-in field.</p> |
+|  [addRenderCellHook(dataKey, renderCellHook)](./zotero-plugin-toolkit.itemtreetool.addrendercellhook.md) |  | <p>Add a patch hook for <code>_renderCell</code>, which is called when cell is rendered.</p><p>This also works for Zotero's built-in cells.</p> |
 |  [register(key, label, fieldHook, options)](./zotero-plugin-toolkit.itemtreetool.register.md) |  | Register a new column. Don't forget to call <code>unregister</code> on plugin exit. |
-|  [registerExample()](./zotero-plugin-toolkit.itemtreetool.registerexample.md) |  | An example of registering an extra column |
+|  [removeFieldHook(dataKey)](./zotero-plugin-toolkit.itemtreetool.removefieldhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
+|  [removeRenderCellHook(dataKey)](./zotero-plugin-toolkit.itemtreetool.removerendercellhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
 |  [unregister(key)](./zotero-plugin-toolkit.itemtreetool.unregister.md) |  | Unregister an extra column. Call it on plugin exit. |
 

@@ -48,3 +48,24 @@ export interface PrefPaneOptions {
   // Only for Zotero 6
   onload?: (win: Window) => any;
 }
+
+export interface ReactElement {
+  [key: string | number | symbol]: any;
+}
+
+export interface ColumnOptions {
+  dataKey: string;
+  label: string;
+  iconLabel?: ReactElement;
+  defaultIn?: Set<"default" | "feeds" | "feed" | string>;
+  disabledIn?: Set<"default" | "feeds" | "feed" | string>;
+  defaultSort?: 1 | -1;
+  flex?: number;
+  width?: string;
+  fixedWidth?: boolean;
+  staticWidth?: boolean;
+  minWidth?: number;
+  ignoreInColumnPicker?: boolean;
+  submenu?: boolean;
+  zoteroPersist?: Set<string>;
+}
