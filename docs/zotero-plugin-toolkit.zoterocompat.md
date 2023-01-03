@@ -22,6 +22,7 @@ export declare class ZoteroCompat
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [getGlobal](./zotero-plugin-toolkit.zoterocompat.getglobal.md) |  | typeof getGlobal | Get global variables |
 |  [prefPaneCache](./zotero-plugin-toolkit.zoterocompat.prefpanecache.md) |  | { win: Window; listeners: any\[\]; ids: string\[\]; } | Consistent APIs for Zotero 6 &amp; newer (7). |
 
 ## Methods
@@ -30,8 +31,8 @@ export declare class ZoteroCompat
 |  --- | --- | --- |
 |  [createXULElement(doc, type)](./zotero-plugin-toolkit.zoterocompat.createxulelement.md) |  | <p>Create an XUL element</p><p>For Zotero 6, use <code>createElementNS</code>;</p><p>For Zotero 7+, use <code>createXULElement</code>.</p> |
 |  [getDOMParser()](./zotero-plugin-toolkit.zoterocompat.getdomparser.md) |  | <p>Get DOMParser.</p><p>For Zotero 6: mainWindow.DOMParser or nsIDOMParser</p><p>For Zotero 7: Firefox 102 support DOMParser natively</p> |
-|  [getWindow()](./zotero-plugin-toolkit.zoterocompat.getwindow.md) |  | Get Zotero Main Window |
-|  [getZotero()](./zotero-plugin-toolkit.zoterocompat.getzotero.md) |  | Get Zotero instance |
+|  [getWindow()](./zotero-plugin-toolkit.zoterocompat.getwindow.md) |  | Get Zotero Main Window. An alias of <code>getGlobal(&quot;window&quot;)</code>. |
+|  [getZotero()](./zotero-plugin-toolkit.zoterocompat.getzotero.md) |  | Get Zotero instance. An alias of <code>getGlobal(&quot;Zotero&quot;)</code>. |
 |  [isXULElement(elem)](./zotero-plugin-toolkit.zoterocompat.isxulelement.md) |  | If it's an XUL element |
 |  [isZotero7()](./zotero-plugin-toolkit.zoterocompat.iszotero7.md) |  | Check if it's running on Zotero 7 (Firefox 102) |
 |  [parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.zoterocompat.parsexhtmltofragment.md) |  | <p>Parse XHTML to XUL fragment. For Zotero 6.</p><p>To load preferences from a Zotero 7's <code>.xhtml</code>, use this method to parse it.</p> |

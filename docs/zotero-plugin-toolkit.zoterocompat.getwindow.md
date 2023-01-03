@@ -4,7 +4,7 @@
 
 ## ZoteroCompat.getWindow() method
 
-Get Zotero Main Window
+Get Zotero Main Window. An alias of `getGlobal("window")`<!-- -->.
 
 <b>Signature:</b>
 

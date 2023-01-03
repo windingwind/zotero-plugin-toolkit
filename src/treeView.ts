@@ -1,6 +1,6 @@
 import { ColumnOptions, ReactElement } from "./options";
 import { ZoteroTool } from "./tool";
-import { getZotero, log } from "./utils";
+import { getGlobal, log } from "./utils";
 
 /**
  * Tool for adding customized new columns to the library treeView
@@ -27,7 +27,7 @@ export class ItemTreeTool {
   constructor() {
     this.patchSign = "zotero-plugin-toolkit@0.0.1";
     this.tool = new ZoteroTool();
-    this.Zotero = getZotero();
+    this.Zotero = getGlobal("Zotero");
     this.initializationLock = this.Zotero.Promise.defer();
 
     this.initializeGlobal();

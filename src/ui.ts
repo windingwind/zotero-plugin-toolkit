@@ -1,5 +1,6 @@
 import { ElementOptions, MenuitemOptions } from "./options";
-import { createXULElement, log, getZotero } from "./utils";
+import { ZoteroReaderTool } from "./reader";
+import { createXULElement, log, getGlobal } from "./utils";
 
 /**
  * UI APIs.
@@ -28,9 +29,33 @@ export class ZoteroUI {
    * If this is `false`, newly created elements with `createElement` will not be maintained.
    */
   enableElementRecordGlobal: boolean;
+  private readerTabCache: {
+    optionsList: {
+      tabId: string;
+      tabLabel: string;
+      panelId: string;
+      renderPanelHook: (
+        panel: XUL.TabPanel | undefined,
+        ownerDeck: XUL.Deck,
+        ownerWindow: Window,
+        readerInstance: _ZoteroReaderInstance
+      ) => void;
+      targetIndex: number;
+      selectPanel?: boolean;
+    }[];
+    observer: MutationObserver;
+    readerTool: ZoteroReaderTool;
+    initializeLock: _ZoteroPromiseObject;
+  };
   constructor() {
     this.addonElements = [];
     this.enableElementRecordGlobal = true;
+    this.readerTabCache = {
+      optionsList: [],
+      observer: undefined,
+      readerTool: new ZoteroReaderTool(),
+      initializeLock: undefined,
+    };
   }
   /**
    * Create an element on doc under specific namespace
@@ -117,6 +142,7 @@ export class ZoteroUI {
    *   tag: string;
    *   id?: string;
    *   namespace?: "html" | "svg" | "xul";
+   *   classList?: Array<string>;
    *   styles?: { [key: string]: string };
    *   directAttributes?: { [key: string]: string | boolean | number };
    *   attributes?: { [key: string]: string | boolean | number };
@@ -192,7 +218,7 @@ export class ZoteroUI {
       ).querySelector(`#${options.id}`)
     ) {
       if (options.ignoreIfExists) {
-        return undefined;
+        return doc.querySelector(`#${options.id}`);
       }
       if (options.removeIfExists) {
         doc.querySelector(`#${options.id}`).remove();
@@ -233,6 +259,10 @@ export class ZoteroUI {
           const v = options.attributes[k];
           typeof v !== "undefined" && element.setAttribute(k, String(v));
         });
+      }
+      // Add classes after attributes, as user may set the class attribute
+      if (options.classList?.length) {
+        element.classList.add(...options.classList);
       }
       if (options.listeners?.length) {
         options.listeners.forEach(({ type, listener, options }) => {
@@ -280,9 +310,10 @@ export class ZoteroUI {
    * @example
    * Insert menuitem with icon into item menupopup
    * ```ts
+   * const ui = new ZoteroUI();
    * // base64 or chrome:// url
    * const menuIcon = "chrome://addontemplate/content/icons/favicon@0.5x.png";
-   * this._Addon.Utils.UI.insertMenuItem("item", {
+   * ui.insertMenuItem("item", {
    *   tag: "menuitem",
    *   id: "zotero-itemmenu-addontemplate-test",
    *   label: "Addon Template: Menuitem",
@@ -293,7 +324,8 @@ export class ZoteroUI {
    * @example
    * Insert menu into file menupopup
    * ```ts
-   * this._Addon.Utils.UI.insertMenuItem(
+   * const ui = new ZoteroUI();
+   * ui.insertMenuItem(
    *   "menuFile",
    *   {
    *     tag: "menu",
@@ -307,7 +339,7 @@ export class ZoteroUI {
    *     ],
    *   },
    *   "before",
-   *   this._Addon.Zotero.getMainWindow().document.querySelector(
+   *   Zotero.getMainWindow().document.querySelector(
    *     "#zotero-itemmenu-addontemplate-test"
    *   )
    * );
@@ -319,12 +351,9 @@ export class ZoteroUI {
     insertPosition: "before" | "after" = "after",
     anchorElement: XUL.Element = undefined
   ) {
-    const Zotero = getZotero();
     let popup: XUL.MenuPopup;
     if (typeof menuPopup === "string") {
-      popup = (Zotero.getMainWindow() as Window).document.querySelector(
-        MenuSelector[menuPopup]
-      );
+      popup = getGlobal("document").querySelector(MenuSelector[menuPopup]);
     } else {
       popup = menuPopup;
     }
@@ -346,6 +375,7 @@ export class ZoteroUI {
           class: menuitemOption.class || "",
           oncommand: menuitemOption.oncommand,
         },
+        classList: menuitemOption.classList,
         styles: menuitemOption.styles || {},
         listeners: [
           { type: "command", listener: menuitemOption.commandListener },
@@ -383,6 +413,385 @@ export class ZoteroUI {
       ) as XUL.Element;
     }
     anchorElement[insertPosition](menuItem);
+  }
+
+  /**
+   * Register a tabpanel in library.
+   * @remarks
+   * If you don't want to remove the tab & panel in runtime, `unregisterLibraryTabPanel` is not a must.
+   * 
+   * The elements wiil be removed by `removeAddonElements`.
+   * @param tabLabel Label of panel tab.
+   * @param renderPanelHook Called when panel is ready. Add elements to the panel.
+   * @param options Other optional parameters.
+   * @param options.tabId ID of panel tab. Also used as unregister query. If not set, generate a random one.
+   * @param options.panelId ID of panel container (XUL.TabPanel). If not set, generate a random one.
+   * @param options.targetIndex Index of the inserted tab. Default the end of tabs.
+   * @param options.selectPanel If the panel should be selected immediately.
+   * @returns tabId. Use it for unregister.
+   * @example
+   * Register an extra library tabpanel into index 1.
+   * ```ts
+   * const ui = new ZoteroUI();
+   * const libTabId = ui.registerLibraryTabPanel(
+   *   "test",
+   *   (panel: XUL.Element, win: Window) => {
+   *     const elem = ui.creatElementsFromJSON(
+   *       win.document,
+   *       {
+   *         tag: "vbox",
+   *         namespace: "xul",
+   *         subElementOptions: [
+   *           {
+   *             tag: "h2",
+   *             directAttributes: {
+   *               innerText: "Hello World!",
+   *             },
+   *           },
+   *           {
+   *             tag: "label",
+   *             namespace: "xul",
+   *             directAttributes: {
+   *               value: "This is a library tab.",
+   *             },
+   *           },
+   *           {
+   *             tag: "button",
+   *             directAttributes: {
+   *               innerText: "Unregister",
+   *             },
+   *             listeners: [
+   *               {
+   *                 type: "click",
+   *                 listener: () => {
+   *                   ui.unregisterLibraryTabPanel(
+   *                     libTabId
+   *                   );
+   *                 },
+   *               },
+   *             ],
+   *           },
+   *         ],
+   *       }
+   *     );
+   *     panel.append(elem);
+   *   },
+   *   {
+   *     targetIndex: 1,
+   *   }
+   * );
+   * ```
+   */
+  registerLibraryTabPanel(
+    tabLabel: string,
+    renderPanelHook: (panel: XUL.TabPanel, ownerWindow: Window) => void,
+    options?: {
+      tabId?: string;
+      panelId?: string;
+      targetIndex?: number;
+      selectPanel?: boolean;
+    }
+  ): string {
+    options = options || {
+      tabId: undefined,
+      panelId: undefined,
+      targetIndex: -1,
+      selectPanel: false,
+    };
+    const window = getGlobal("window");
+    const tabbox = window.document.querySelector(
+      "#zotero-view-tabbox"
+    ) as XUL.TabBox;
+    const randomId = `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
+    const tabId = options.tabId || `toolkit-readertab-${randomId}`;
+    const panelId = options.panelId || `toolkit-readertabpanel-${randomId}`;
+    const tab = this.creatElementsFromJSON(window.document, {
+      tag: "tab",
+      namespace: "xul",
+      id: tabId,
+      classList: [`toolkit-ui-tabs-${tabId}`],
+      attributes: {
+        label: tabLabel,
+      },
+      ignoreIfExists: true,
+    }) as XUL.Tab;
+    const tabpanel = this.creatElementsFromJSON(window.document, {
+      tag: "tabpanel",
+      namespace: "xul",
+      id: panelId,
+      classList: [`toolkit-ui-tabs-${tabId}`],
+      ignoreIfExists: true,
+    }) as XUL.TabPanel;
+    const tabs = tabbox.querySelector("tabs");
+    const tabpanels = tabbox.querySelector("tabpanels");
+    const targetIndex =
+      typeof options.targetIndex === "number" ? options.targetIndex : -1;
+    if (targetIndex >= 0) {
+      tabs.querySelectorAll("tab")[targetIndex].before(tab);
+      tabpanels.querySelectorAll("tabpanel")[targetIndex].before(tabpanel);
+    } else {
+      tabs.appendChild(tab);
+      tabpanels.appendChild(tabpanel);
+    }
+    if (options.selectPanel) {
+      tabbox.selectedTab = tab;
+    }
+    renderPanelHook(tabpanel, window);
+    return tabId;
+  }
+
+  /**
+   * Unregister the library tabpanel.
+   * @param tabId tab id
+   */
+  unregisterLibraryTabPanel(tabId: string) {
+    this.removeTabPanel(tabId);
+  }
+
+  /**
+   * Register a tabpanel for every reader.
+   * @remarks
+   * Don't forget to call `unregisterReaderTabPanel` on exit.
+   * @remarks
+   * Every time a tab reader is selected/opened, the hook will be called.
+   * @param tabLabel Label of panel tab.
+   * @param renderPanelHook Called when panel is ready. Add elements to the panel.
+   *
+   * The panel might be `undefined` when opening a PDF without parent item.
+   *
+   * The owner deck is the top container of right-side bar.
+   *
+   * The readerInstance is the reader of current tabpanel.
+   * @param options Other optional parameters.
+   * @param options.tabId ID of panel tab. Also used as unregister query. If not set, generate a random one.
+   * @param options.panelId ID of panel container (XUL.TabPanel). If not set, generate a random one.
+   * @param options.targetIndex Index of the inserted tab. Default the end of tabs.
+   * @param options.selectPanel If the panel should be selected immediately.
+   * @returns tabId. Use it for unregister.
+   * @example
+   * Register an extra reader tabpanel into index 1.
+   * ```ts
+   * const readerTabId = `${config.addonRef}-extra-reader-tab`;
+   * this._Addon.toolkit.UI.registerReaderTabPanel(
+   *   "test",
+   *   (
+   *     panel: XUL.Element,
+   *     deck: XUL.Deck,
+   *     win: Window,
+   *     reader: _ZoteroReaderInstance
+   *   ) => {
+   *     if (!panel) {
+   *       this._Addon.toolkit.Tool.log(
+   *         "This reader do not have right-side bar. Adding reader tab skipped."
+   *       );
+   *       return;
+   *     }
+   *     this._Addon.toolkit.Tool.log(reader);
+   *     const elem = this._Addon.toolkit.UI.creatElementsFromJSON(
+   *       win.document,
+   *       {
+   *         tag: "vbox",
+   *         id: `${config.addonRef}-${reader._instanceID}-extra-reader-tab-div`,
+   *         namespace: "xul",
+   *         // This is important! Don't create content for multiple times
+   *         ignoreIfExists: true,
+   *         subElementOptions: [
+   *           {
+   *             tag: "h2",
+   *             directAttributes: {
+   *               innerText: "Hello World!",
+   *             },
+   *           },
+   *           {
+   *             tag: "label",
+   *             namespace: "xul",
+   *             directAttributes: {
+   *               value: "This is a reader tab.",
+   *             },
+   *           },
+   *           {
+   *             tag: "label",
+   *             namespace: "xul",
+   *             directAttributes: {
+   *               value: `Reader: ${reader._title.slice(0, 20)}`,
+   *             },
+   *           },
+   *           {
+   *             tag: "label",
+   *             namespace: "xul",
+   *             directAttributes: {
+   *               value: `itemID: ${reader.itemID}.`,
+   *             },
+   *           },
+   *           {
+   *             tag: "button",
+   *             directAttributes: {
+   *               innerText: "Unregister",
+   *             },
+   *             listeners: [
+   *               {
+   *                 type: "click",
+   *                 listener: () => {
+   *                   this._Addon.toolkit.UI.unregisterReaderTabPanel(
+   *                     readerTabId
+   *                   );
+   *                 },
+   *               },
+   *             ],
+   *           },
+   *         ],
+   *       }
+   *     );
+   *     panel.append(elem);
+   *   },
+   *   {
+   *     tabId: readerTabId,
+   *   }
+   * );
+   * ```
+   */
+  async registerReaderTabPanel(
+    tabLabel: string,
+    renderPanelHook: (
+      panel: XUL.TabPanel | undefined,
+      ownerDeck: XUL.Deck,
+      ownerWindow: Window,
+      readerInstance: _ZoteroReaderInstance
+    ) => void,
+    options?: {
+      tabId?: string;
+      panelId?: string;
+      targetIndex?: number;
+      selectPanel?: boolean;
+    }
+  ) {
+    options = options || {
+      tabId: undefined,
+      panelId: undefined,
+      targetIndex: -1,
+      selectPanel: false,
+    };
+    if (typeof this.readerTabCache.initializeLock === "undefined") {
+      await this.initializeReaderTabObserver();
+    }
+    await this.readerTabCache.initializeLock.promise;
+    const randomId = `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
+    const tabId = options.tabId || `toolkit-readertab-${randomId}`;
+    const panelId = options.panelId || `toolkit-readertabpanel-${randomId}`;
+    const targetIndex =
+      typeof options.targetIndex === "number" ? options.targetIndex : -1;
+    this.readerTabCache.optionsList.push({
+      tabId,
+      tabLabel,
+      panelId,
+      renderPanelHook,
+      targetIndex,
+      selectPanel: options.selectPanel,
+    });
+    // Try to add tabpanel to current reader immediately
+    await this.addReaderTabPanel();
+    return tabId;
+  }
+
+  /**
+   * Unregister the reader tabpanel.
+   * @param tabId tab id
+   */
+  unregisterReaderTabPanel(tabId: string) {
+    const idx = this.readerTabCache.optionsList.findIndex(
+      (v) => v.tabId === tabId
+    );
+    if (idx >= 0) {
+      this.readerTabCache.optionsList.splice(idx, 1);
+    }
+    if (this.readerTabCache.optionsList.length === 0) {
+      this.readerTabCache.observer.disconnect();
+      this.readerTabCache = {
+        optionsList: [],
+        observer: undefined,
+        readerTool: new ZoteroReaderTool(),
+        initializeLock: undefined,
+      };
+    }
+    this.removeTabPanel(tabId);
+  }
+
+  private removeTabPanel(tabId: string) {
+    const doc = getGlobal("document");
+    Array.prototype.forEach.call(
+      doc.querySelectorAll(`.toolkit-ui-tabs-${tabId}`),
+      (e: XUL.Tab) => {
+        e.remove();
+      }
+    );
+  }
+
+  private async initializeReaderTabObserver() {
+    this.readerTabCache.initializeLock = getGlobal("Zotero").Promise.defer();
+    await Promise.all([
+      Zotero.initializationPromise,
+      Zotero.unlockPromise,
+      Zotero.uiReadyPromise,
+    ]);
+    const observer =
+      this.readerTabCache.readerTool.addReaderTabPanelDeckObserver(() => {
+        this.addReaderTabPanel();
+      });
+    this.readerTabCache.observer = observer;
+    this.readerTabCache.initializeLock.resolve();
+  }
+
+  private async addReaderTabPanel() {
+    const window = getGlobal("window");
+    const deck = this.readerTabCache.readerTool.getReaderTabPanelDeck();
+    const tabbox = deck.selectedPanel?.querySelector("tabbox") as
+      | XUL.TabBox
+      | undefined;
+    if (!tabbox) {
+      return;
+    }
+    const reader = await this.readerTabCache.readerTool.getReader();
+    if (!reader) {
+      return;
+    }
+    this.readerTabCache.optionsList.forEach((options) => {
+      if (tabbox) {
+        const tab = this.creatElementsFromJSON(window.document, {
+          tag: "tab",
+          namespace: "xul",
+          id: `${options.tabId}-${reader._instanceID}`,
+          classList: [`toolkit-ui-tabs-${options.tabId}`],
+          attributes: {
+            label: options.tabLabel,
+          },
+          ignoreIfExists: true,
+        }) as XUL.Tab;
+        const tabpanel = this.creatElementsFromJSON(window.document, {
+          tag: "tabpanel",
+          namespace: "xul",
+          id: `${options.panelId}-${reader._instanceID}`,
+          classList: [`toolkit-ui-tabs-${options.tabId}`],
+          ignoreIfExists: true,
+        }) as XUL.TabPanel;
+        const tabs = tabbox.querySelector("tabs");
+        const tabpanels = tabbox.querySelector("tabpanels");
+        if (options.targetIndex >= 0) {
+          tabs.querySelectorAll("tab")[options.targetIndex].before(tab);
+          tabpanels
+            .querySelectorAll("tabpanel")
+            [options.targetIndex].before(tabpanel);
+        } else {
+          tabs.appendChild(tab);
+          tabpanels.appendChild(tabpanel);
+        }
+        if (options.selectPanel) {
+          tabbox.selectedTab = tab;
+        }
+        options.renderPanelHook(tabpanel, deck, window, reader);
+      } else {
+        options.renderPanelHook(undefined, deck, window, reader);
+      }
+    });
   }
 }
 

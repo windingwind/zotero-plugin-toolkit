@@ -32,5 +32,9 @@ export declare class ZoteroUI
 |  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.zoteroui.createelement.md) |  | Create an element on doc under specific namespace The element will be maintained by toolkit. |
 |  [creatElementsFromJSON(doc, options)](./zotero-plugin-toolkit.zoteroui.createlementsfromjson.md) |  | <p>Create elements in batch, based on <code>createElement</code>.</p><p>The return element will also be maintained by toolkit.</p> |
 |  [insertMenuItem(menuPopup, options, insertPosition, anchorElement)](./zotero-plugin-toolkit.zoteroui.insertmenuitem.md) |  | Insert an menu item/menu(with popup)/menuseprator into a menupopup |
+|  [registerLibraryTabPanel(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.zoteroui.registerlibrarytabpanel.md) |  | Register a tabpanel in library. |
+|  [registerReaderTabPanel(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.zoteroui.registerreadertabpanel.md) |  | Register a tabpanel for every reader. |
 |  [removeAddonElements()](./zotero-plugin-toolkit.zoteroui.removeaddonelements.md) |  | Remove all elements created by <code>createElement</code>. |
+|  [unregisterLibraryTabPanel(tabId)](./zotero-plugin-toolkit.zoteroui.unregisterlibrarytabpanel.md) |  | Unregister the library tabpanel. |
+|  [unregisterReaderTabPanel(tabId)](./zotero-plugin-toolkit.zoteroui.unregisterreadertabpanel.md) |  | Unregister the reader tabpanel. |
 

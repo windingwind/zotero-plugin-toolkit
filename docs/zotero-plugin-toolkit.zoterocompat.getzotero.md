@@ -4,7 +4,7 @@
 
 ## ZoteroCompat.getZotero() method
 
-Get Zotero instance
+Get Zotero instance. An alias of `getGlobal("Zotero")`<!-- -->.
 
 <b>Signature:</b>
 

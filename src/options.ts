@@ -2,6 +2,7 @@ export interface ElementOptions {
   tag: string;
   id?: string;
   namespace?: "html" | "svg" | "xul";
+  classList?: Array<string>;
   styles?: { [key: string]: string };
   directAttributes?: { [key: string]: string | boolean | number };
   attributes?: { [key: string]: string | boolean | number };
@@ -23,6 +24,7 @@ export interface MenuitemOptions {
   label?: string;
   // data url (chrome://xxx.png) or base64 url (data:image/png;base64,xxx)
   icon?: string;
+  classList?: string[];
   class?: string;
   styles?: { [key: string]: string };
   hidden?: boolean;

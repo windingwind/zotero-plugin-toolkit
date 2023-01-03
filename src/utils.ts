@@ -1,4 +1,4 @@
-export function getZotero(): _ZoteroConstructable {
+function getZotero(): _ZoteroConstructable {
   if (typeof Zotero === "undefined") {
     return Components.classes["@zotero.org/Zotero;1"].getService(
       Components.interfaces.nsISupports
@@ -6,6 +6,48 @@ export function getZotero(): _ZoteroConstructable {
   }
   return Zotero;
 }
+
+interface globalGetterInterface {
+  get(k: "Zotero" | "zotero"): _ZoteroConstructable;
+  get(k: "window"): Window;
+  get(k: "document"): Document;
+  get(k: "ZoteroPane" | "ZoteroPane_Local"): _ZoteroPaneConstructable;
+  get(k: "Zotero_Tabs"): typeof Zotero_Tabs;
+  get(k: "Zotero_File_Interface"): typeof Zotero_File_Interface;
+  get(k: "Zotero_File_Exporter"): any;
+  get(k: "Zotero_LocateMenu"): any;
+  get(k: "Zotero_Report_Interface"): any;
+  get(k: "Zotero_Timeline_Interface"): any;
+  get(k: "Zotero_Tooltip"): any;
+  get(k: "ZoteroContextPane"): typeof ZoteroContextPane;
+  get(k: "ZoteroItemPane"): any;
+  get(k: string): any;
+}
+
+const globalGetter: globalGetterInterface = {
+  // @ts-ignore
+  get(k: string) {
+    const Zotero = getZotero();
+    const window = Zotero.getMainWindow();
+    switch (k) {
+      case "Zotero":
+      case "zotero":
+        return Zotero;
+      case "window":
+        return window;
+      case "document":
+        return window.document;
+      case "ZoteroPane":
+      case "ZoteroPane_Local":
+        return Zotero.getActiveZoteroPane();
+      default:
+        return window[k];
+        break;
+    }
+  },
+};
+
+export const getGlobal = globalGetter.get;
 
 export function createXULElement(doc: Document, type: string): XUL.Element {
   if (getZotero().platformMajorVersion >= 102) {

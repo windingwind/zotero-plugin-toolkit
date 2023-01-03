@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
   "dependencies": {
-    "zotero-types": "^0.1.2"
+    "zotero-types": "^0.1.3"
   },
   "publishConfig": {
     "access": "public",

@@ -1,5 +1,5 @@
 import { PrefPaneOptions } from "./options";
-import { createXULElement, getZotero, log } from "./utils";
+import { createXULElement, getGlobal, log } from "./utils";
 
 /**
  * Consistent APIs for Zotero 6 & newer (7).
@@ -7,24 +7,29 @@ import { createXULElement, getZotero, log } from "./utils";
  */
 export class ZoteroCompat {
   /**
+   * Get global variables
+   */
+  getGlobal: typeof getGlobal;
+  /**
    * Consistent APIs for Zotero 6 & newer (7).
    */
   public prefPaneCache: { win: Window; listeners: any[]; ids: string[] };
   constructor() {
+    this.getGlobal = getGlobal;
     this.prefPaneCache = { win: undefined, listeners: [], ids: [] };
   }
 
   /**
-   * Get Zotero instance
+   * Get Zotero instance. An alias of `getGlobal("Zotero")`.
    *  */
   getZotero(): _ZoteroConstructable {
-    return getZotero();
+    return getGlobal("Zotero");
   }
   /**
-   * Get Zotero Main Window
+   * Get Zotero Main Window. An alias of `getGlobal("window")`.
    */
   getWindow(): Window {
-    return this.getZotero().getMainWindow() as Window;
+    return getGlobal("window");
   }
   /**
    * Check if it's running on Zotero 7 (Firefox 102)
@@ -44,8 +49,7 @@ export class ZoteroCompat {
       return new DOMParser();
     }
     try {
-      // @ts-ignore
-      return new (this.getZotero().getMainWindow().DOMParser)();
+      return new (getGlobal("DOMParser") as typeof DOMParser)();
     } catch (e) {
       return Components.classes[
         "@mozilla.org/xmlextras/domparser;1"
@@ -133,7 +137,8 @@ export class ZoteroCompat {
   }
   /**
    * Register a preference pane in Zotero 6 from an xhtml
-   *
+   * @remarks
+   * Don't forget to call `unregisterPrefPane` on exit.
    * @remarks
    * options:
    * ```ts

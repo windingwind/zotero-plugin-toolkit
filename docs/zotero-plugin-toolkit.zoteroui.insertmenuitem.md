@@ -54,9 +54,10 @@ export interface MenuitemOptions {
 Insert menuitem with icon into item menupopup
 
 ```ts
+const ui = new ZoteroUI();
 // base64 or chrome:// url
 const menuIcon = "chrome://addontemplate/content/icons/favicon@0.5x.png";
-this._Addon.Utils.UI.insertMenuItem("item", {
+ui.insertMenuItem("item", {
   tag: "menuitem",
   id: "zotero-itemmenu-addontemplate-test",
   label: "Addon Template: Menuitem",
@@ -70,7 +71,8 @@ this._Addon.Utils.UI.insertMenuItem("item", {
 Insert menu into file menupopup
 
 ```ts
-this._Addon.Utils.UI.insertMenuItem(
+const ui = new ZoteroUI();
+ui.insertMenuItem(
   "menuFile",
   {
     tag: "menu",
@@ -84,7 +86,7 @@ this._Addon.Utils.UI.insertMenuItem(
     ],
   },
   "before",
-  this._Addon.Zotero.getMainWindow().document.querySelector(
+  Zotero.getMainWindow().document.querySelector(
     "#zotero-itemmenu-addontemplate-test"
   )
 );

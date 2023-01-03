@@ -11,7 +11,7 @@ The return element will also be maintained by toolkit.
 <b>Signature:</b>
 
 ```typescript
-creatElementsFromJSON(doc: Document, options: ElementOptions): HTMLElement | SVGElement | DocumentFragment;
+creatElementsFromJSON(doc: Document, options: ElementOptions): Element | SVGElement | DocumentFragment;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ creatElementsFromJSON(doc: Document, options: ElementOptions): HTMLElement | SVG
 
 <b>Returns:</b>
 
-HTMLElement \| SVGElement \| DocumentFragment
+Element \| SVGElement \| DocumentFragment
 
 ## Remarks
 
@@ -34,6 +34,7 @@ export interface ElementOptions {
   tag: string;
   id?: string;
   namespace?: "html" | "svg" | "xul";
+  classList?: Array<string>;
   styles?: { [key: string]: string };
   directAttributes?: { [key: string]: string | boolean | number };
   attributes?: { [key: string]: string | boolean | number };
