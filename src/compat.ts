@@ -44,6 +44,7 @@ export class ZoteroCompat {
       return new DOMParser();
     }
     try {
+      // @ts-ignore
       return new (this.getZotero().getMainWindow().DOMParser)();
     } catch (e) {
       return Components.classes[

@@ -24,6 +24,7 @@ export function log(...data: any[]) {
     return;
   }
   const Zotero = getZotero();
+  // @ts-ignore
   const console = Zotero.getMainWindow().console as Console;
   let options = {
     disableConsole: false,
