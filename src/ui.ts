@@ -134,78 +134,71 @@ export class ZoteroUI {
    * Create elements in batch, based on `createElement`.
    * 
    * The return element will also be maintained by toolkit.
-   * 
-   * @remarks
-   * options:
-   * ```ts
-   * export interface ElementOptions {
-   *   tag: string;
-   *   id?: string;
-   *   namespace?: "html" | "svg" | "xul";
-   *   classList?: Array<string>;
-   *   styles?: { [key: string]: string };
-   *   directAttributes?: { [key: string]: string | boolean | number };
-   *   attributes?: { [key: string]: string | boolean | number };
-   *   listeners?: Array<{
-   *     type: string;
-   *     listener: EventListenerOrEventListenerObject | ((e: Event) => void);
-   *     options?: boolean | AddEventListenerOptions;
-   *   }>;
-   *   checkExistanceParent?: HTMLElement;
-   *   ignoreIfExists?: boolean;
-   *   removeIfExists?: boolean;
-   *   customCheck?: () => boolean;
-   *   subElementOptions?: Array<ElementOptions>;
-   * }
-   * ```
-   * 
    * @param doc 
    * @param options See {@link https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts | source code:options.ts}
+   * @param options.tag tagName
+   * @param options.id element id
+   * @param options.namespace namespace, "html" | "svg" | "xul". Default "html".
+   * subElements will inherit namespace if not assigned.
+   * @param options.classList class list
+   * @param options.styles styles
+   * @param options.directAttributes attributes that can be directly set by`elem.attr = "value"`
+   * @param options.attributes attributes set by `elem.setAttribute("key", "value")`
+   * @param options.listeners event listeners
+   * @param options.ignoreIfExists Skip element creation and return the existing element immediately if the target element with specific `id` exists, default `false`.
+   * @param options.removeIfExists Remove element before creation if the target element with specific `id` exists, default `false`.
+   * @param options.checkExistanceParent When `ignoreIfExists` or `removeIfExists` is `true`, toolkit will try to search the element with specific `id`.
+   * If this element is undefined, search under `document` node; otherwise under this `checkExistanceParent` node.
+   * @param options.customCheck Custom check hook. If it returns false, skip element creation and return immediately.
+   * @param options.subElementOptions Child nodes options
    * @example
    * Create multiple menu item/menu. This code is part of Zotero Better Notes.
    * ```ts
-   *  const imageSelected = () => {
-   *    // Return false to skip current element
-   *    return true;
-   *  };
-   *  
-   *  const popup = document.getElementById("popup")!;
+   * const ui = new ZoteroUI();
+   * 
+   * const imageSelected = () => {
+   *   // Return false to skip current element
+   *   return true;
+   * };
+   * 
+   * const popup = document.getElementById("popup")!;
 
-   *  const elementOptions = {
-   *    tag: "fragment",
-   *    subElementOptions: [
-   *      {
-   *        tag: "menuseparator",
-   *        id: "menupopup-betternotessplitter",
-   *        checkExistanceParent: popup,
-   *        ignoreIfExists: true,
-   *      },
-   *      {
-   *        tag: "menuitem",
-   *        id: "menupopup-resizeImage",
-   *        checkExistanceParent: popup,
-   *        ignoreIfExists: true,
-   *        attributes: { label: "Resize Image" },
-   *        customCheck: imageSelected,
-   *        listeners: [
-   *          {
-   *            type: "command",
-   *            listener: (e) => {
-   *              postMessage({ type: "resizeImage", width: 100 }, "   *  ");
-   *            },
-   *          ],
-   *        ],
-   *      },
-   *    ],
-   *  };
-   *  
-   *  const fragment = this._Addon.ZoteroViews.createXULElement(
-   *    popup.ownerDocument,
-   *    elementOptions
-   *  );
-   *  if (fragment) {
-   *    popup.append(fragment);
-   *  }
+   * const elementOptions = {
+   *   tag: "fragment",
+   *   namespace: "xul",
+   *   subElementOptions: [
+   *     {
+   *       tag: "menuseparator",
+   *       id: "menupopup-betternotessplitter",
+   *       checkExistanceParent: popup,
+   *       ignoreIfExists: true,
+   *     },
+   *     {
+   *       tag: "menuitem",
+   *       id: "menupopup-resizeImage",
+   *       checkExistanceParent: popup,
+   *       ignoreIfExists: true,
+   *       attributes: { label: "Resize Image" },
+   *       customCheck: imageSelected,
+   *       listeners: [
+   *         {
+   *           type: "command",
+   *           listener: (e) => {
+   *             postMessage({ type: "resizeImage", width: 100 }, "   * ");
+   *           },
+   *         ],
+   *       ],
+   *     },
+   *   ],
+   * };
+   * 
+   * const fragment = ui.creatElementsFromJSON(
+   *   popup.ownerDocument,
+   *   elementOptions
+   * );
+   * if (fragment) {
+   *   popup.append(fragment);
+   * }
    * ```
    */
   creatElementsFromJSON(doc: Document, options: ElementOptions) {
@@ -224,7 +217,7 @@ export class ZoteroUI {
         doc.querySelector(`#${options.id}`).remove();
       }
     }
-    if (options.customCheck && !options.customCheck()) {
+    if (options.customCheck && !options.customCheck(doc, options)) {
       return undefined;
     }
     const element = this.createElement(doc, options.tag, options.namespace);
@@ -274,7 +267,10 @@ export class ZoteroUI {
 
     if (options.subElementOptions?.length) {
       const subElements = options.subElementOptions
-        .map((_options) => this.creatElementsFromJSON(doc, _options))
+        .map((_options) => {
+          _options.namespace = _options.namespace || options.namespace;
+          return this.creatElementsFromJSON(doc, _options);
+        })
         .filter((e) => e);
       element.append(...subElements);
     }
@@ -419,7 +415,7 @@ export class ZoteroUI {
    * Register a tabpanel in library.
    * @remarks
    * If you don't want to remove the tab & panel in runtime, `unregisterLibraryTabPanel` is not a must.
-   * 
+   *
    * The elements wiil be removed by `removeAddonElements`.
    * @param tabLabel Label of panel tab.
    * @param renderPanelHook Called when panel is ready. Add elements to the panel.
