@@ -1,11 +1,11 @@
 import { ColumnOptions, ReactElement } from "./options";
 import { ZoteroTool } from "./tool";
-import { getGlobal, log } from "./utils";
+import { getGlobal, log, RegisterToolBase } from "./utils";
 
 /**
  * Tool for adding customized new columns to the library treeView
  */
-export class ItemTreeTool {
+export class ItemTreeTool implements RegisterToolBase {
   /**
    * Signature to avoid patching more than once.
    */
@@ -14,8 +14,10 @@ export class ItemTreeTool {
    * A ZoteroTool instance.
    */
   private tool: ZoteroTool;
-  private Zotero: _ZoteroConstructable;
   private globalCache: ItemTreeExtraColumnsGlobal;
+  private localColumnCache: string[];
+  private localFieldCache: string[];
+  private localRenderCellCache: string[];
   private initializationLock: _ZoteroPromiseObject;
   /**
    * Initialize Zotero._ItemTreeExtraColumnsGlobal if it doesn't exist.
@@ -27,10 +29,20 @@ export class ItemTreeTool {
   constructor() {
     this.patchSign = "zotero-plugin-toolkit@0.0.1";
     this.tool = new ZoteroTool();
-    this.Zotero = getGlobal("Zotero");
-    this.initializationLock = this.Zotero.Promise.defer();
+    this.localColumnCache = [];
+    this.localFieldCache = [];
+    this.localRenderCellCache = [];
+    this.initializationLock = getGlobal("Zotero").Promise.defer();
 
     this.initializeGlobal();
+  }
+
+  unregisterAll(): void {
+    [...this.localColumnCache].forEach(this.unregister.bind(this));
+    [...this.localFieldCache].forEach(this.removeFieldHook.bind(this));
+    [...this.localRenderCellCache].forEach(
+      this.removeRenderCellHook.bind(this)
+    );
   }
 
   /**
@@ -131,6 +143,7 @@ export class ItemTreeTool {
       await this.addRenderCellHook(key, options.renderCellHook);
     }
     this.globalCache.columns.push(column);
+    this.localColumnCache.push(column.dataKey);
     await this.refresh();
   }
 
@@ -139,12 +152,13 @@ export class ItemTreeTool {
    * @param key Column dataKey, should be same as the one used in `register`
    */
   public async unregister(key: string) {
+    const Zotero = getGlobal("Zotero");
     await this.initializationLock.promise;
-    let persisted = this.Zotero.Prefs.get("pane.persist") as string;
+    let persisted = Zotero.Prefs.get("pane.persist") as string;
 
     const persistedJSON = JSON.parse(persisted) as { [key: string]: any };
     delete persistedJSON[key];
-    this.Zotero.Prefs.set("pane.persist", JSON.stringify(persistedJSON));
+    Zotero.Prefs.set("pane.persist", JSON.stringify(persistedJSON));
 
     const idx = this.globalCache.columns.map((_c) => _c.dataKey).indexOf(key);
     if (idx >= 0) {
@@ -153,6 +167,10 @@ export class ItemTreeTool {
     this.removeFieldHook(key);
     this.removeRenderCellHook(key);
     await this.refresh();
+    const localKeyIdx = this.localColumnCache.indexOf(key);
+    if (localKeyIdx >= 0) {
+      this.localColumnCache.splice(localKeyIdx, 1);
+    }
   }
 
   /**
@@ -182,13 +200,18 @@ export class ItemTreeTool {
       );
     }
     this.globalCache.fieldHooks[dataKey] = fieldHook;
+    this.localFieldCache.push(dataKey);
   }
 
   /**
    * Remove a patch hook by `dataKey`.
    */
   public removeFieldHook(dataKey: string) {
-    return delete this.globalCache.fieldHooks[dataKey];
+    delete this.globalCache.fieldHooks[dataKey];
+    const idx = this.localFieldCache.indexOf(dataKey);
+    if (idx >= 0) {
+      this.localFieldCache.splice(idx, 1);
+    }
   }
 
   /**
@@ -217,6 +240,7 @@ export class ItemTreeTool {
       );
     }
     this.globalCache.renderCellHooks[dataKey] = renderCellHook;
+    this.localRenderCellCache.push(dataKey);
   }
 
   /**
@@ -224,6 +248,10 @@ export class ItemTreeTool {
    */
   public async removeRenderCellHook(dataKey: string) {
     delete this.globalCache.renderCellHooks[dataKey];
+    const idx = this.localRenderCellCache.indexOf(dataKey);
+    if (idx >= 0) {
+      this.localRenderCellCache.splice(idx, 1);
+    }
     await this.refresh();
   }
 
@@ -231,15 +259,16 @@ export class ItemTreeTool {
    * Do initializations. Called in constructor to be async
    */
   private async initializeGlobal() {
-    await this.Zotero.uiReadyPromise;
-    const window = this.Zotero.getMainWindow() as Window;
-    if (!this.Zotero._ItemTreeExtraColumnsGlobal) {
+    const Zotero = getGlobal("Zotero");
+    await Zotero.uiReadyPromise;
+    const window = getGlobal("window");
+    if (!Zotero._ItemTreeExtraColumnsGlobal) {
       let globalCache = {
         columns: [],
         fieldHooks: {},
         renderCellHooks: {},
       } as ItemTreeExtraColumnsGlobal;
-      this.globalCache = this.Zotero._ItemTreeExtraColumnsGlobal = globalCache;
+      this.globalCache = Zotero._ItemTreeExtraColumnsGlobal = globalCache;
 
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
@@ -294,7 +323,7 @@ export class ItemTreeTool {
           }
       );
       this.tool.patch(
-        this.Zotero.Item.prototype,
+        Zotero.Item.prototype,
         "getField",
         this.patchSign,
         (original) =>
@@ -327,7 +356,7 @@ export class ItemTreeTool {
           }
       );
     } else {
-      this.globalCache = this.Zotero._ItemTreeExtraColumnsGlobal;
+      this.globalCache = Zotero._ItemTreeExtraColumnsGlobal;
     }
     this.initializationLock.resolve();
   }
@@ -363,7 +392,7 @@ export class ItemTreeTool {
    */
   private async refresh() {
     await this.initializationLock.promise;
-    const ZoteroPane = this.Zotero.getActiveZoteroPane();
+    const ZoteroPane = getGlobal("ZoteroPane");
     ZoteroPane.itemsView._columnsId = null;
     const virtualizedTable = ZoteroPane.itemsView.tree?._columns;
     if (!virtualizedTable) {

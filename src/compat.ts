@@ -1,11 +1,11 @@
 import { PrefPaneOptions } from "./options";
-import { createXULElement, getGlobal, log } from "./utils";
+import { createXULElement, getGlobal, log, RegisterToolBase } from "./utils";
 
 /**
  * Consistent APIs for Zotero 6 & newer (7).
  * @public
  */
-export class ZoteroCompat {
+export class ZoteroCompat implements RegisterToolBase {
   /**
    * Get global variables
    */
@@ -17,6 +17,10 @@ export class ZoteroCompat {
   constructor() {
     this.getGlobal = getGlobal;
     this.prefPaneCache = { win: undefined, listeners: [], ids: [] };
+  }
+
+  unregisterAll() {
+    this.unregisterPrefPane();
   }
 
   /**

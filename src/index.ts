@@ -3,11 +3,12 @@ import { ZoteroReaderTool } from "./reader";
 import { ZoteroTool } from "./tool";
 import { ItemTreeTool } from "./treeView";
 import { ZoteroUI } from "./ui";
+import { RegisterToolBase } from "./utils";
 
 /**
  * The base class for all tools.
  */
-export class ZoteroToolkit {
+export class ZoteroToolkit implements RegisterToolBase {
   /**
    * ZoteroCompat instance. Provides consistent APIs for Zotero 6 & newer (7).
    */
@@ -35,6 +36,15 @@ export class ZoteroToolkit {
     this.UI = new ZoteroUI();
     this.ItemTree = new ItemTreeTool();
     this.ReaderTool = new ZoteroReaderTool();
+  }
+
+  /**
+   * Unregister everything created by `registerSth` method of this instance.
+   */
+  unregisterAll(): void {
+    this.Compat.unregisterAll();
+    this.UI.unregisterAll();
+    this.ItemTree.unregisterAll();
   }
 }
 

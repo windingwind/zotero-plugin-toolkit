@@ -9,8 +9,9 @@ UI APIs.
 <b>Signature:</b>
 
 ```typescript
-export declare class ZoteroUI 
+export declare class ZoteroUI implements RegisterToolBase 
 ```
+<b>Implements:</b> RegisterToolBase
 
 ## Constructors
 
@@ -35,6 +36,9 @@ export declare class ZoteroUI
 |  [registerLibraryTabPanel(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.zoteroui.registerlibrarytabpanel.md) |  | Register a tabpanel in library. |
 |  [registerReaderTabPanel(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.zoteroui.registerreadertabpanel.md) |  | Register a tabpanel for every reader. |
 |  [removeAddonElements()](./zotero-plugin-toolkit.zoteroui.removeaddonelements.md) |  | Remove all elements created by <code>createElement</code>. |
+|  [unregisterAll()](./zotero-plugin-toolkit.zoteroui.unregisterall.md) |  |  |
+|  [unregisterAllLibraryPanels()](./zotero-plugin-toolkit.zoteroui.unregisteralllibrarypanels.md) |  | Unregister all library tabpanel. |
+|  [unregisterAllReaderTabPanels()](./zotero-plugin-toolkit.zoteroui.unregisterallreadertabpanels.md) |  | Unregister all library tabpanel. |
 |  [unregisterLibraryTabPanel(tabId)](./zotero-plugin-toolkit.zoteroui.unregisterlibrarytabpanel.md) |  | Unregister the library tabpanel. |
 |  [unregisterReaderTabPanel(tabId)](./zotero-plugin-toolkit.zoteroui.unregisterreadertabpanel.md) |  | Unregister the reader tabpanel. |
 

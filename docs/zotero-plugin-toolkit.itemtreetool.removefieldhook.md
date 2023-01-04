@@ -9,7 +9,7 @@ Remove a patch hook by `dataKey`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-removeFieldHook(dataKey: string): boolean;
+removeFieldHook(dataKey: string): void;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ removeFieldHook(dataKey: string): boolean;
 
 <b>Returns:</b>
 
-boolean
+void
 

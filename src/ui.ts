@@ -1,12 +1,12 @@
 import { ElementOptions, MenuitemOptions } from "./options";
 import { ZoteroReaderTool } from "./reader";
-import { createXULElement, log, getGlobal } from "./utils";
+import { createXULElement, log, getGlobal, RegisterToolBase } from "./utils";
 
 /**
  * UI APIs.
  * @public
  */
-export class ZoteroUI {
+export class ZoteroUI implements RegisterToolBase {
   /**
    * Store elements created with this instance
    *
@@ -29,6 +29,19 @@ export class ZoteroUI {
    * If this is `false`, newly created elements with `createElement` will not be maintained.
    */
   enableElementRecordGlobal: boolean;
+  private libraryTabCache: {
+    optionsList: {
+      tabId: string;
+      tabLabel: string;
+      panelId: string;
+      renderPanelHook: (
+        panel: XUL.TabPanel | undefined,
+        ownerWindow: Window
+      ) => void;
+      targetIndex: number;
+      selectPanel?: boolean;
+    }[];
+  };
   private readerTabCache: {
     optionsList: {
       tabId: string;
@@ -50,6 +63,9 @@ export class ZoteroUI {
   constructor() {
     this.addonElements = [];
     this.enableElementRecordGlobal = true;
+    this.libraryTabCache = {
+      optionsList: [],
+    };
     this.readerTabCache = {
       optionsList: [],
       observer: undefined,
@@ -57,6 +73,13 @@ export class ZoteroUI {
       initializeLock: undefined,
     };
   }
+
+  unregisterAll(): void {
+    this.unregisterAllLibraryPanels();
+    this.unregisterAllReaderTabPanels();
+    this.removeAddonElements();
+  }
+
   /**
    * Create an element on doc under specific namespace
    * The element will be maintained by toolkit.
@@ -532,6 +555,14 @@ export class ZoteroUI {
     if (options.selectPanel) {
       tabbox.selectedTab = tab;
     }
+    this.libraryTabCache.optionsList.push({
+      tabId,
+      tabLabel,
+      panelId,
+      renderPanelHook,
+      targetIndex,
+      selectPanel: options.selectPanel,
+    });
     renderPanelHook(tabpanel, window);
     return tabId;
   }
@@ -541,7 +572,23 @@ export class ZoteroUI {
    * @param tabId tab id
    */
   unregisterLibraryTabPanel(tabId: string) {
+    const idx = this.libraryTabCache.optionsList.findIndex(
+      (v) => v.tabId === tabId
+    );
+    if (idx >= 0) {
+      this.libraryTabCache.optionsList.splice(idx, 1);
+    }
     this.removeTabPanel(tabId);
+  }
+
+  /**
+   * Unregister all library tabpanel.
+   */
+  unregisterAllLibraryPanels() {
+    const tabIds = this.libraryTabCache.optionsList.map(
+      (options) => options.tabId
+    );
+    tabIds.forEach(this.unregisterLibraryTabPanel.bind(this));
   }
 
   /**
@@ -710,6 +757,16 @@ export class ZoteroUI {
       };
     }
     this.removeTabPanel(tabId);
+  }
+
+  /**
+   * Unregister all library tabpanel.
+   */
+  unregisterAllReaderTabPanels() {
+    const tabIds = this.readerTabCache.optionsList.map(
+      (options) => options.tabId
+    );
+    tabIds.forEach(this.unregisterReaderTabPanel.bind(this));
   }
 
   private removeTabPanel(tabId: string) {

@@ -25,78 +25,55 @@ creatElementsFromJSON(doc: Document, options: ElementOptions): Element | SVGElem
 
 Element \| SVGElement \| DocumentFragment
 
-## Remarks
-
-options:
-
-```ts
-export interface ElementOptions {
-  tag: string;
-  id?: string;
-  namespace?: "html" | "svg" | "xul";
-  classList?: Array<string>;
-  styles?: { [key: string]: string };
-  directAttributes?: { [key: string]: string | boolean | number };
-  attributes?: { [key: string]: string | boolean | number };
-  listeners?: Array<{
-    type: string;
-    listener: EventListenerOrEventListenerObject | ((e: Event) => void);
-    options?: boolean | AddEventListenerOptions;
-  }>;
-  checkExistanceParent?: HTMLElement;
-  ignoreIfExists?: boolean;
-  removeIfExists?: boolean;
-  customCheck?: () => boolean;
-  subElementOptions?: Array<ElementOptions>;
-}
-```
-
 ## Example
 
 Create multiple menu item/menu. This code is part of Zotero Better Notes.
 
 ```ts
- const imageSelected = () => {
-   // Return false to skip current element
-   return true;
- };
+const ui = new ZoteroUI();
 
- const popup = document.getElementById("popup")!;
+const imageSelected = () => {
+  // Return false to skip current element
+  return true;
+};
 
- const elementOptions = {
-   tag: "fragment",
-   subElementOptions: [
-     {
-       tag: "menuseparator",
-       id: "menupopup-betternotessplitter",
-       checkExistanceParent: popup,
-       ignoreIfExists: true,
-     },
-     {
-       tag: "menuitem",
-       id: "menupopup-resizeImage",
-       checkExistanceParent: popup,
-       ignoreIfExists: true,
-       attributes: { label: "Resize Image" },
-       customCheck: imageSelected,
-       listeners: [
-         {
-           type: "command",
-           listener: (e) => {
-             postMessage({ type: "resizeImage", width: 100 }, "   *  ");
-           },
-         ],
-       ],
-     },
-   ],
- };
+const popup = document.getElementById("popup")!;
 
- const fragment = this._Addon.ZoteroViews.createXULElement(
-   popup.ownerDocument,
-   elementOptions
- );
- if (fragment) {
-   popup.append(fragment);
- }
+const elementOptions = {
+  tag: "fragment",
+  namespace: "xul",
+  subElementOptions: [
+    {
+      tag: "menuseparator",
+      id: "menupopup-betternotessplitter",
+      checkExistanceParent: popup,
+      ignoreIfExists: true,
+    },
+    {
+      tag: "menuitem",
+      id: "menupopup-resizeImage",
+      checkExistanceParent: popup,
+      ignoreIfExists: true,
+      attributes: { label: "Resize Image" },
+      customCheck: imageSelected,
+      listeners: [
+        {
+          type: "command",
+          listener: (e) => {
+            postMessage({ type: "resizeImage", width: 100 }, "   * ");
+          },
+        ],
+      ],
+    },
+  ],
+};
+
+const fragment = ui.creatElementsFromJSON(
+  popup.ownerDocument,
+  elementOptions
+);
+if (fragment) {
+  popup.append(fragment);
+}
 ```
 

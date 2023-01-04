@@ -39,7 +39,7 @@ const toolkit = new ZoteroToolkit();
 const Zotero = toolkit.Compat.getZotero();
 ```
 
-> ⚠️All `registerSth` methods have corresponding `unregisterSth`. Don't forget to unregister when plugin exits.
+> ⚠️All `registerSth` methods have corresponding `unregisterSth`. Don't forget to unregister when plugin exits. Alternatively, call `unregisterAll` on `ZoteroToolkit` or sub modules.
 
 > This repo depends on [zotero-types](https://github.com/windingwind/zotero-types). See its hompage for more details about Zotero type definitions.
 

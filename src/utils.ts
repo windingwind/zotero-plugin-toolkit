@@ -1,3 +1,10 @@
+export interface RegisterToolBase {
+  /**
+   * Unregister everything
+   */
+  unregisterAll(): void;
+}
+
 function getZotero(): _ZoteroConstructable {
   if (typeof Zotero === "undefined") {
     return Components.classes["@zotero.org/Zotero;1"].getService(

@@ -9,8 +9,9 @@ Tool for adding customized new columns to the library treeView
 <b>Signature:</b>
 
 ```typescript
-export declare class ItemTreeTool 
+export declare class ItemTreeTool implements RegisterToolBase 
 ```
+<b>Implements:</b> RegisterToolBase
 
 ## Constructors
 
@@ -28,4 +29,5 @@ export declare class ItemTreeTool
 |  [removeFieldHook(dataKey)](./zotero-plugin-toolkit.itemtreetool.removefieldhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
 |  [removeRenderCellHook(dataKey)](./zotero-plugin-toolkit.itemtreetool.removerendercellhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
 |  [unregister(key)](./zotero-plugin-toolkit.itemtreetool.unregister.md) |  | Unregister an extra column. Call it on plugin exit. |
+|  [unregisterAll()](./zotero-plugin-toolkit.itemtreetool.unregisterall.md) |  |  |
 

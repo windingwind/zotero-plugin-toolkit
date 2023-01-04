@@ -9,8 +9,9 @@ The base class for all tools.
 <b>Signature:</b>
 
 ```typescript
-export declare class ZoteroToolkit 
+export declare class ZoteroToolkit implements RegisterToolBase 
 ```
+<b>Implements:</b> RegisterToolBase
 
 ## Constructors
 
@@ -27,4 +28,10 @@ export declare class ZoteroToolkit
 |  [ReaderTool](./zotero-plugin-toolkit.zoterotoolkit.readertool.md) |  | [ZoteroReaderTool](./zotero-plugin-toolkit.zoteroreadertool.md) | ZoteroReaderTool instance. Provides ReaderInstance APIs. |
 |  [Tool](./zotero-plugin-toolkit.zoterotoolkit.tool.md) |  | [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) | ZoteroTool instance. Provides tool APIs. |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [ZoteroUI](./zotero-plugin-toolkit.zoteroui.md) | ZoteroUI instance. Provides UI APIs. |
+
+## Methods
+
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [unregisterAll()](./zotero-plugin-toolkit.zoterotoolkit.unregisterall.md) |  | Unregister everything created by <code>registerSth</code> method of this instance. |
 
