@@ -833,6 +833,19 @@ export class ZoteroUI implements RegisterToolBase {
           tabpanels
             .querySelectorAll("tabpanel")
             [options.targetIndex].before(tabpanel);
+          if (tabbox.getAttribute("toolkit-select-fixed") !== "true") {
+            // Tabs after current tab will not be correctly selected
+            // A workaround to manually set selection.
+            tabbox.tabpanels.addEventListener("select", () => {
+              getGlobal("setTimeout")(() => {
+                // @ts-ignore
+                tabbox.tabpanels.selectedPanel = tabbox.tabs.getRelatedElement(
+                  tabbox.tabs.selectedItem
+                );
+              }, 0);
+            });
+            tabbox.setAttribute("toolkit-select-fixed", "true");
+          }
         } else {
           tabs.appendChild(tab);
           tabpanels.appendChild(tabpanel);
