@@ -93,7 +93,11 @@ export function log(...data: any[]) {
       console.groupEnd();
     }
     if (!options.disableZLog) {
-      Zotero.debug(data.map((d) => String(d)).join("\n"));
+      Zotero.debug(
+        data
+          .map((d) => (typeof d === "object" ? JSON.stringify(d) : String(d)))
+          .join("\n")
+      );
     }
   } catch (e) {
     console.error(e);
