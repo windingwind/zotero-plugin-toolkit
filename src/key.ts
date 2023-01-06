@@ -222,6 +222,12 @@ export class ZoteroKeyTool implements RegisterToolBase {
     return conflctions;
   }
 
+  triggerKeyCommand(doc: Document, options: Key | Command) {
+    doc
+      .querySelector(options.id)
+      ?.dispatchEvent(new (getGlobal("Event") as typeof Event)("command"));
+  }
+
   unregister(doc: Document, id: string) {
     doc.querySelector(`#${id}`)?.remove();
   }

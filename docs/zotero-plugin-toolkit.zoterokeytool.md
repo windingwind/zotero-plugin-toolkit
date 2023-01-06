@@ -33,6 +33,7 @@ export declare class ZoteroKeyTool implements RegisterToolBase
 |  [registerCommandset(doc, id, commandOptionsList)](./zotero-plugin-toolkit.zoterokeytool.registercommandset.md) |  |  |
 |  [registerKey(doc, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey.md) |  |  |
 |  [registerKeyset(doc, id, keyOptionsList)](./zotero-plugin-toolkit.zoterokeytool.registerkeyset.md) |  |  |
+|  [triggerKeyCommand(doc, options)](./zotero-plugin-toolkit.zoterokeytool.triggerkeycommand.md) |  |  |
 |  [unregister(doc, id)](./zotero-plugin-toolkit.zoterokeytool.unregister.md) |  |  |
 |  [unregisterAll()](./zotero-plugin-toolkit.zoterokeytool.unregisterall.md) |  |  |
 
