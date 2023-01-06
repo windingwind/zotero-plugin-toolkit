@@ -28,12 +28,15 @@ export declare class ZoteroTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [getCopyHelper()](./zotero-plugin-toolkit.zoterotool.getcopyhelper.md) |  | create a <code>CopyHelper</code> instance for text/rich text/image |
+|  [createCopyHelper()](./zotero-plugin-toolkit.zoterotool.createcopyhelper.md) |  | create a <code>CopyHelper</code> instance for text/rich text/image |
+|  [createFilePicker(title, mode, filters, suggestion)](./zotero-plugin-toolkit.zoterotool.createfilepicker.md) |  | Create a file picker |
+|  [createProgressWindow(header, options)](./zotero-plugin-toolkit.zoterotool.createprogresswindow.md) |  | Create a ProgressWindow instance |
 |  [getExtraField(item, key)](./zotero-plugin-toolkit.zoterotool.getextrafield.md) |  | Get extra field value by key. If it does not exists, return undefined. |
 |  [getExtraFields(item)](./zotero-plugin-toolkit.zoterotool.getextrafields.md) |  | Get all extra fields |
+|  [getIconURI(key)](./zotero-plugin-toolkit.zoterotool.geticonuri.md) |  | Get icon uri |
 |  [log(data)](./zotero-plugin-toolkit.zoterotool.log.md) |  | Output to both Zotero.debug and console.log |
-|  [openFilePicker(title, mode, filters, suggestion)](./zotero-plugin-toolkit.zoterotool.openfilepicker.md) |  | Open a file picker |
 |  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.zoterotool.patch.md) |  | Patch a function |
 |  [replaceExtraFields(item, fields)](./zotero-plugin-toolkit.zoterotool.replaceextrafields.md) |  | Replace extra field of an item. |
 |  [setExtraField(item, key, value)](./zotero-plugin-toolkit.zoterotool.setextrafield.md) |  | Set an key-value pair to the item's extra field |
+|  [setIconURI(key, uri)](./zotero-plugin-toolkit.zoterotool.seticonuri.md) |  | Set custom icon uri for progress window |
 

@@ -10,7 +10,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 - Consistent API for creating elements & preference pane on Zotero 6/7. See [ZoteroCompat](./docs/zotero-plugin-toolkit.zoterocompat.md)
 
-  - [`getZotero`](./docs/zotero-plugin-toolkit.zoterocompat.getzotero.md)/[`getWindow`](./docs/zotero-plugin-toolkit.zoterocompat.getwindow.md)/[`getDOMParser`](./docs/zotero-plugin-toolkit.zoterocompat.getdomparser.md): Global variables in Zotero 6 overlay plugins
+  - [`getGlobal`](./docs/zotero-plugin-toolkit.zoterocompat.getglobal.md): Global variables in Zotero 6 overlay plugins, `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`.
   - [`isZotero7`](./docs/zotero-plugin-toolkit.zoterocompat.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md): Some if statements
   - [`registerPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.registerprefpane.md)/[`unregisterPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.unregisterprefpane.md): Preferencepane registrations for Zotero 6 bootstrapped plugins
 
@@ -18,7 +18,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 - Register extra columns to the item tree. See [itemTree](./docs/zotero-plugin-toolkit.itemtreetool.md)
 
-- Tools like copy helper, file picker, etc. See [ZoteroTools](./docs/zotero-plugin-toolkit.zoterotool.md)
+- Tools like copy helper, file picker, progress window, extra field getter/setter, etc. See [ZoteroTools](./docs/zotero-plugin-toolkit.zoterotool.md)
 
 ## Usage
 

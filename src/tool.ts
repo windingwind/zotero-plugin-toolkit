@@ -1,4 +1,5 @@
-import { CopyHelper, log } from "./utils";
+import { LineOptions } from "./options";
+import { log } from "./utils";
 
 /**
  * General tool APIs.
@@ -33,6 +34,7 @@ export class ZoteroTool {
       prefix: "",
     };
   }
+
   /**
    * create a `CopyHelper` instance for text/rich text/image
    *
@@ -60,11 +62,20 @@ export class ZoteroTool {
    *                     .copy();
    * ```
    */
-  getCopyHelper() {
+  createCopyHelper() {
     return new CopyHelper();
   }
+
   /**
-   * Open a file picker
+   * @deprecated Use `createCopyHelper`.
+   * @alpha
+   */
+  getCopyHelper() {
+    return this.createCopyHelper();
+  }
+
+  /**
+   * Create a file picker
    * @param title window title
    * @param mode 
    * @param filters Array<[hint string, filter string]>
@@ -79,7 +90,7 @@ export class ZoteroTool {
     );
     ```
    */
-  openFilePicker(
+  createFilePicker(
     title: string,
     mode: "open" | "save" | "folder",
     filters?: [string, string][],
@@ -118,6 +129,79 @@ export class ZoteroTool {
         }
       });
     });
+  }
+
+  /**
+   * @deprecated Use `createFilePicker`
+   * @alpha
+   * @param title
+   * @param mode
+   * @param filters
+   * @param suggestion
+   */
+  openFilePicker(
+    title: string,
+    mode: "open" | "save" | "folder",
+    filters?: [string, string][],
+    suggestion?: string
+  ): Promise<string> {
+    return this.createFilePicker(title, mode, filters, suggestion);
+  }
+
+  /**
+   * Create a ProgressWindow instance
+   * @param header window header
+   * @param options
+   * @example
+   * Show a popup with success icon
+   * ```ts
+   * const tool = new ZoteroTool();
+   * tool.createProgressWindow("Addon").createLine({
+   *   type: "success",
+   *   text: "Finish"
+   *   progress: 100,
+   * }).show();
+   * ```
+   * @example
+   * Show a popup and change line content
+   * ```ts
+   * const compat = new ZoteroCompat();
+   * const tool = new ZoteroTool();
+   * const popupWin = tool.createProgressWindow("Addon").createLine({
+   *   text: "Loading"
+   *   progress: 50,
+   * }).show(-1);
+   * // Do operations
+   * compat.getGlobal("setTimeout")(()=>{
+   *   popupWin.changeLine({
+   *     text: "Finish",
+   *     progress: 100,
+   *   });
+   * }, 3000);
+   * ```
+   */
+  createProgressWindow(
+    header: string,
+    options?: { window?: Window; closeOnClick?: boolean; closeTime?: number }
+  ) {
+    return new PopupWindow(header, options);
+  }
+
+  /**
+   * Get icon uri
+   * @param key
+   */
+  getIconURI(key: string) {
+    return icons[key];
+  }
+
+  /**
+   * Set custom icon uri for progress window
+   * @param key
+   * @param uri
+   */
+  setIconURI(key: string, uri: string) {
+    icons[key] = uri;
   }
   /**
    * Output to both Zotero.debug and console.log
@@ -205,5 +289,152 @@ export class ZoteroTool {
     const fields = this.getExtraFields(item);
     fields.set(key, value);
     await this.replaceExtraFields(item, fields);
+  }
+}
+
+/**
+ * @alpha
+ */
+export class CopyHelper {
+  private transferable: any;
+  private clipboardService: any;
+
+  constructor() {
+    this.transferable = Components.classes[
+      "@mozilla.org/widget/transferable;1"
+    ].createInstance(Components.interfaces.nsITransferable);
+    this.clipboardService = Components.classes[
+      "@mozilla.org/widget/clipboard;1"
+    ].getService(Components.interfaces.nsIClipboard);
+    this.transferable.init(null);
+  }
+
+  public addText(source: string, type: "text/html" | "text/unicode") {
+    const str = Components.classes[
+      "@mozilla.org/supports-string;1"
+    ].createInstance(Components.interfaces.nsISupportsString);
+    str.data = source;
+    this.transferable.addDataFlavor(type);
+    this.transferable.setTransferData(type, str, source.length * 2);
+    return this;
+  }
+
+  public addImage(source: string) {
+    let parts = source.split(",");
+    if (!parts[0].includes("base64")) {
+      return;
+    }
+    let mime = parts[0].match(/:(.*?);/)[1];
+    let bstr = atob(parts[1]);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    let imgTools = Components.classes["@mozilla.org/image/tools;1"].getService(
+      Components.interfaces.imgITools
+    );
+    let imgPtr = Components.classes[
+      "@mozilla.org/supports-interface-pointer;1"
+    ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
+    imgPtr.data = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
+    this.transferable.addDataFlavor(mime);
+    this.transferable.setTransferData(mime, imgPtr, 0);
+    return this;
+  }
+
+  public copy() {
+    this.clipboardService.setData(
+      this.transferable,
+      null,
+      Components.interfaces.nsIClipboard.kGlobalClipboard
+    );
+  }
+}
+
+/**
+ * Icon dict. Add your custom icons here.
+ * @default
+ * ```ts
+ * {
+ *   success: "chrome://zotero/skin/tick.png",
+ *   fail: "chrome://zotero/skin/cross.png",
+ * };
+ * ```
+ */
+const icons = {
+  success: "chrome://zotero/skin/tick.png",
+  fail: "chrome://zotero/skin/cross.png",
+};
+
+/**
+ * @alpha
+ */
+export class PopupWindow extends Zotero.ProgressWindow {
+  private lines: _ZoteroItemProgress[];
+  private closeTime: number | undefined;
+  private originalShow: typeof Zotero.ProgressWindow.prototype.show;
+  // @ts-ignore
+  public show!: typeof this.showWithTimer;
+
+  constructor(
+    header: string,
+    options: {
+      window?: Window;
+      closeOnClick?: boolean;
+      closeTime?: number;
+    } = {
+      closeOnClick: true,
+      closeTime: 5000,
+    }
+  ) {
+    super(options);
+    this.lines = [];
+    this.closeTime = options.closeTime || 5000;
+    this.changeHeadline(header);
+    this.originalShow = this
+      .show as unknown as typeof Zotero.ProgressWindow.prototype.show;
+    this.show = this.showWithTimer;
+  }
+
+  createLine(options: LineOptions) {
+    const icon = this.getIcon(options.type, options.icon);
+    const line = new this.ItemProgress(icon || "", options.text || "");
+    if (typeof options.progress === "number") {
+      line.setProgress(options.progress);
+    }
+    this.lines.push(line);
+    return this;
+  }
+
+  changeLine(options: LineOptions) {
+    if (this.lines?.length === 0) {
+      return this;
+    }
+    const idx =
+      typeof options.idx !== "undefined" &&
+      options.idx >= 0 &&
+      options.idx < this.lines.length
+        ? options.idx
+        : 0;
+    const icon = this.getIcon(options.type, options.icon);
+    options.text && this.lines[idx].setText(options.text);
+    icon && this.lines[idx].setIcon(icon);
+    typeof options.progress === "number" &&
+      this.lines[idx].setProgress(options.progress);
+    return this;
+  }
+
+  protected showWithTimer(closeTime: number | undefined = undefined) {
+    this.originalShow();
+    typeof closeTime !== "undefined" && (this.closeTime = closeTime);
+    if (this.closeTime && this.closeTime > 0) {
+      this.startCloseTimer(this.closeTime);
+    }
+    return this;
+  }
+
+  protected getIcon(type: string | undefined, defaulIcon?: string | undefined) {
+    return type && type in icons ? icons[type] : defaulIcon;
   }
 }

@@ -71,3 +71,11 @@ export interface ColumnOptions {
   submenu?: boolean;
   zoteroPersist?: Set<string>;
 }
+
+export interface LineOptions {
+  type?: string;
+  icon?: string;
+  text?: string;
+  progress?: number;
+  idx?: number;
+}
