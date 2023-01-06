@@ -169,6 +169,7 @@ export class ZoteroUI implements RegisterToolBase {
    * @param options.attributes attributes set by `elem.setAttribute("key", "value")`
    * @param options.listeners event listeners
    * @param options.ignoreIfExists Skip element creation and return the existing element immediately if the target element with specific `id` exists, default `false`.
+   * @param options.skipIfExists Skip element creation and continue if the target element with specific `id` exists, default `false`.
    * @param options.removeIfExists Remove element before creation if the target element with specific `id` exists, default `false`.
    * @param options.checkExistanceParent When `ignoreIfExists` or `removeIfExists` is `true`, toolkit will try to search the element with specific `id`.
    * If this element is undefined, search under `document` node; otherwise under this `checkExistanceParent` node.
@@ -226,24 +227,26 @@ export class ZoteroUI implements RegisterToolBase {
    */
   creatElementsFromJSON(doc: Document, options: ElementOptions) {
     log(options);
-    if (
+    let element: Element | DocumentFragment | undefined =
       options.id &&
+      options.tag !== "fragment" &&
       (options.checkExistanceParent
         ? options.checkExistanceParent
         : doc
-      ).querySelector(`#${options.id}`)
-    ) {
-      if (options.ignoreIfExists) {
-        return doc.querySelector(`#${options.id}`);
-      }
-      if (options.removeIfExists) {
-        doc.querySelector(`#${options.id}`).remove();
-      }
+      ).querySelector(`#${options.id}`);
+    if (element && options.ignoreIfExists) {
+      return element;
+    }
+    if (element && options.removeIfExists) {
+      element.remove();
+      element = undefined;
     }
     if (options.customCheck && !options.customCheck(doc, options)) {
       return undefined;
     }
-    const element = this.createElement(doc, options.tag, options.namespace);
+    if (!element && !options.skipIfExists) {
+      element = this.createElement(doc, options.tag, options.namespace);
+    }
 
     let _DocumentFragment: typeof DocumentFragment;
     if (typeof DocumentFragment === "undefined") {
@@ -258,7 +261,7 @@ export class ZoteroUI implements RegisterToolBase {
       if (options.styles && Object.keys(options.styles).length) {
         Object.keys(options.styles).forEach((k) => {
           const v = options.styles[k];
-          typeof v !== "undefined" && (element.style[k] = v);
+          typeof v !== "undefined" && ((element as HTMLElement).style[k] = v);
         });
       }
       if (
@@ -273,7 +276,8 @@ export class ZoteroUI implements RegisterToolBase {
       if (options.attributes && Object.keys(options.attributes).length) {
         Object.keys(options.attributes).forEach((k) => {
           const v = options.attributes[k];
-          typeof v !== "undefined" && element.setAttribute(k, String(v));
+          typeof v !== "undefined" &&
+            (element as HTMLElement).setAttribute(k, String(v));
         });
       }
       // Add classes after attributes, as user may set the class attribute

@@ -13,6 +13,7 @@ export interface ElementOptions {
   }>;
   checkExistanceParent?: HTMLElement;
   ignoreIfExists?: boolean;
+  skipIfExists?: boolean;
   removeIfExists?: boolean;
   customCheck?: (doc: Document, options: ElementOptions) => boolean;
   subElementOptions?: Array<ElementOptions>;

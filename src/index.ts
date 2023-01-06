@@ -1,4 +1,5 @@
 import { ZoteroCompat } from "./compat";
+import { ZoteroKeyTool } from "./key";
 import { ZoteroReaderTool } from "./reader";
 import { ZoteroTool } from "./tool";
 import { ItemTreeTool } from "./treeView";
@@ -29,6 +30,7 @@ export class ZoteroToolkit implements RegisterToolBase {
    * ZoteroReaderTool instance. Provides ReaderInstance APIs.
    */
   public ReaderTool: ZoteroReaderTool;
+  public KeyTool: ZoteroKeyTool;
 
   constructor() {
     this.Compat = new ZoteroCompat();
@@ -36,6 +38,7 @@ export class ZoteroToolkit implements RegisterToolBase {
     this.UI = new ZoteroUI();
     this.ItemTree = new ItemTreeTool();
     this.ReaderTool = new ZoteroReaderTool();
+    this.KeyTool = new ZoteroKeyTool();
   }
 
   /**
@@ -45,9 +48,17 @@ export class ZoteroToolkit implements RegisterToolBase {
     this.Compat.unregisterAll();
     this.UI.unregisterAll();
     this.ItemTree.unregisterAll();
+    this.KeyTool.unregisterAll();
   }
 }
 
 export default ZoteroToolkit;
 
-export { ZoteroCompat, ZoteroTool, ItemTreeTool, ZoteroReaderTool, ZoteroUI };
+export {
+  ZoteroCompat,
+  ZoteroKeyTool,
+  ZoteroTool,
+  ItemTreeTool,
+  ZoteroReaderTool,
+  ZoteroUI,
+};

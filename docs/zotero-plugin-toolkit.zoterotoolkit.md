@@ -25,6 +25,7 @@ export declare class ZoteroToolkit implements RegisterToolBase
 |  --- | --- | --- | --- |
 |  [Compat](./zotero-plugin-toolkit.zoterotoolkit.compat.md) |  | [ZoteroCompat](./zotero-plugin-toolkit.zoterocompat.md) | ZoteroCompat instance. Provides consistent APIs for Zotero 6 &amp; newer (7). |
 |  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeTool](./zotero-plugin-toolkit.itemtreetool.md) | ItemTreeTool instance. Provides itemTree APIs. |
+|  [KeyTool](./zotero-plugin-toolkit.zoterotoolkit.keytool.md) |  | [ZoteroKeyTool](./zotero-plugin-toolkit.zoterokeytool.md) |  |
 |  [ReaderTool](./zotero-plugin-toolkit.zoterotoolkit.readertool.md) |  | [ZoteroReaderTool](./zotero-plugin-toolkit.zoteroreadertool.md) | ZoteroReaderTool instance. Provides ReaderInstance APIs. |
 |  [Tool](./zotero-plugin-toolkit.zoterotoolkit.tool.md) |  | [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) | ZoteroTool instance. Provides tool APIs. |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [ZoteroUI](./zotero-plugin-toolkit.zoteroui.md) | ZoteroUI instance. Provides UI APIs. |
