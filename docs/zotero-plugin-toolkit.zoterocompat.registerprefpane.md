@@ -4,7 +4,7 @@
 
 ## ZoteroCompat.registerPrefPane() method
 
-Register a preference pane in Zotero 6 from an xhtml
+Register a preference pane from an xhtml, for Zotero 6 &amp; 7.
 
 <b>Signature:</b>
 
@@ -61,11 +61,7 @@ function initPrefs() {
       return;
     },
   };
-  if (compat.isZotero7()) {
-    Zotero.PreferencePanes.register(prefOptions);
-  } else {
-    compat.registerPrefPane(prefOptions);
-  }
+  compat.registerPrefPane(prefOptions);
 };
 
 function unInitPrefs() {

@@ -37,7 +37,7 @@ export declare class ZoteroCompat implements RegisterToolBase
 |  [isXULElement(elem)](./zotero-plugin-toolkit.zoterocompat.isxulelement.md) |  | If it's an XUL element |
 |  [isZotero7()](./zotero-plugin-toolkit.zoterocompat.iszotero7.md) |  | Check if it's running on Zotero 7 (Firefox 102) |
 |  [parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.zoterocompat.parsexhtmltofragment.md) |  | <p>Parse XHTML to XUL fragment. For Zotero 6.</p><p>To load preferences from a Zotero 7's <code>.xhtml</code>, use this method to parse it.</p> |
-|  [registerPrefPane(options)](./zotero-plugin-toolkit.zoterocompat.registerprefpane.md) |  | Register a preference pane in Zotero 6 from an xhtml |
+|  [registerPrefPane(options)](./zotero-plugin-toolkit.zoterocompat.registerprefpane.md) |  | Register a preference pane from an xhtml, for Zotero 6 &amp; 7. |
 |  [unregisterAll()](./zotero-plugin-toolkit.zoterocompat.unregisterall.md) |  |  |
 |  [unregisterPrefPane()](./zotero-plugin-toolkit.zoterocompat.unregisterprefpane.md) |  | <p>Unregister all preference panes added with this instance</p><p>Called on exiting</p> |
 

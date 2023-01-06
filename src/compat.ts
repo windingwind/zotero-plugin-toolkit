@@ -140,7 +140,7 @@ export class ZoteroCompat implements RegisterToolBase {
     return range.extractContents();
   }
   /**
-   * Register a preference pane in Zotero 6 from an xhtml
+   * Register a preference pane from an xhtml, for Zotero 6 & 7.
    * @remarks
    * Don't forget to call `unregisterPrefPane` on exit.
    * @remarks
@@ -179,11 +179,7 @@ export class ZoteroCompat implements RegisterToolBase {
    *       return;
    *     },
    *   };
-   *   if (compat.isZotero7()) {
-   *     Zotero.PreferencePanes.register(prefOptions);
-   *   } else {
-   *     compat.registerPrefPane(prefOptions);
-   *   }
+   *   compat.registerPrefPane(prefOptions);
    * };
    *
    * function unInitPrefs() {
@@ -199,6 +195,10 @@ export class ZoteroCompat implements RegisterToolBase {
    * unInitPrefs();
    */
   registerPrefPane(options: PrefPaneOptions) {
+    if (this.isZotero7()) {
+      getGlobal("Zotero").PreferencePanes.register(options);
+      return;
+    }
     const _initImportedNodesPostInsert = (container) => {
       const _observerSymbols = new Map();
       const Zotero = this.getZotero();
@@ -378,6 +378,11 @@ export class ZoteroCompat implements RegisterToolBase {
               this.prefPaneCache.ids.push(options.id);
               // Binding preferences
               _initImportedNodesPostInsert(prefPane);
+              if (options.scripts?.length) {
+                options.scripts.forEach((script) =>
+                  Services.scriptloader.loadSubScript(script, win)
+                );
+              }
               if (options.onload) {
                 options.onload(win);
               }
