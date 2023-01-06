@@ -32,7 +32,7 @@ export declare class ZoteroTool
 |  [createFilePicker(title, mode, filters, suggestion)](./zotero-plugin-toolkit.zoterotool.createfilepicker.md) |  | Create a file picker |
 |  [createProgressWindow(header, options)](./zotero-plugin-toolkit.zoterotool.createprogresswindow.md) |  | Create a ProgressWindow instance |
 |  [getExtraField(item, key)](./zotero-plugin-toolkit.zoterotool.getextrafield.md) |  | Get extra field value by key. If it does not exists, return undefined. |
-|  [getExtraFields(item)](./zotero-plugin-toolkit.zoterotool.getextrafields.md) |  | Get all extra fields |
+|  [getExtraFields(item, backend)](./zotero-plugin-toolkit.zoterotool.getextrafields.md) |  | Get all extra fields |
 |  [getIconURI(key)](./zotero-plugin-toolkit.zoterotool.geticonuri.md) |  | Get icon uri |
 |  [log(data)](./zotero-plugin-toolkit.zoterotool.log.md) |  | Output to both Zotero.debug and console.log |
 |  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.zoterotool.patch.md) |  | Patch a function |

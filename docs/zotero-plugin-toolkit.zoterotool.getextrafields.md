@@ -9,7 +9,7 @@ Get all extra fields
 <b>Signature:</b>
 
 ```typescript
-getExtraFields(item: Zotero.Item): Map<string, string>;
+getExtraFields(item: Zotero.Item, backend?: "default" | "custom"): Map<string, string>;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ getExtraFields(item: Zotero.Item): Map<string, string>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  item | Zotero.Item |  |
+|  backend | "default" \| "custom" | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

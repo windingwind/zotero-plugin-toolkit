@@ -243,9 +243,23 @@ export class ZoteroTool {
    * Get all extra fields
    * @param item
    */
-  getExtraFields(item: Zotero.Item): Map<string, string> {
-    return Zotero.Utilities.Internal.extractExtraFields(item.getField("extra"))
-      .fields;
+  getExtraFields(
+    item: Zotero.Item,
+    backend: "default" | "custom" = "custom"
+  ): Map<string, string> {
+    const extraFiledRaw = item.getField("extra") as string;
+    if (backend === "default") {
+      return Zotero.Utilities.Internal.extractExtraFields(extraFiledRaw).fields;
+    } else {
+      const map = new Map<string, string>();
+      extraFiledRaw.split("\n").forEach((line) => {
+        const split = line.split(": ");
+        if (split.length >= 2 && split[0]) {
+          map.set(split[0], split.slice(1).join(": "));
+        }
+      });
+      return map;
+    }
   }
 
   /**
