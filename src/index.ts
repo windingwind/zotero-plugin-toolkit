@@ -30,6 +30,9 @@ export class ZoteroToolkit implements RegisterToolBase {
    * ZoteroReaderTool instance. Provides ReaderInstance APIs.
    */
   public ReaderTool: ZoteroReaderTool;
+  /**
+   * ZoteroKeyTool instance. Provides Shortcut key APIs.
+   */
   public KeyTool: ZoteroKeyTool;
 
   constructor() {

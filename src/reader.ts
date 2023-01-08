@@ -62,13 +62,11 @@ export class ZoteroReaderTool {
   /**
    * Add a reader tabpanel deck selection change observer.
    * @alpha
-   * @param callback 
+   * @param callback
    */
   addReaderTabPanelDeckObserver(callback: Function) {
     const deck = this.getReaderTabPanelDeck();
-    const observer = new (getGlobal(
-      "MutationObserver"
-    ) as typeof MutationObserver)(async (mutations) => {
+    const observer = new (getGlobal("MutationObserver"))(async (mutations) => {
       mutations.forEach(async (mutation) => {
         const target = mutation.target as XUL.Element;
         // When the tabbox is ready, the selectedIndex of tabbox is changed.

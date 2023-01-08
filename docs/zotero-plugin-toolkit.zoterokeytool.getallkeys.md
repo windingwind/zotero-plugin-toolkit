@@ -4,22 +4,14 @@
 
 ## ZoteroKeyTool.getAllKeys() method
 
+Get all keys(element, event, prefs, builtin)
+
 <b>Signature:</b>
 
 ```typescript
-getAllKeys(doc?: Document, options?: {
-        searchCommands?: boolean;
-    }): KeySet[];
+getAllKeys(): Key[];
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document | <i>(Optional)</i> |
-|  options | { searchCommands?: boolean; } | <i>(Optional)</i> |
-
 <b>Returns:</b>
 
-KeySet\[\]
+Key\[\]
 

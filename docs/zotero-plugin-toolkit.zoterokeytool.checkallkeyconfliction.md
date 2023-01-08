@@ -4,19 +4,26 @@
 
 ## ZoteroKeyTool.checkAllKeyConfliction() method
 
+Find all key conflictions.
+
 <b>Signature:</b>
 
 ```typescript
-checkAllKeyConfliction(doc: Document): Key[][];
+checkAllKeyConfliction(options?: {
+        customKeys?: CustomKey[];
+        includeEmpty: boolean;
+    }): Key[][];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  doc | Document |  |
+|  options | { customKeys?: CustomKey\[\]; includeEmpty: boolean; } | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
 Key\[\]\[\]
+
+An array of confliction keys arrays. Same confliction keys are put together.
 

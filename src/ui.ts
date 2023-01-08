@@ -244,7 +244,7 @@ export class ZoteroUI implements RegisterToolBase {
     if (options.customCheck && !options.customCheck(doc, options)) {
       return undefined;
     }
-    if (!element && !options.skipIfExists) {
+    if (!element || !options.skipIfExists) {
       element = this.createElement(doc, options.tag, options.namespace);
     }
 

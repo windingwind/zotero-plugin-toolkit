@@ -4,20 +4,30 @@
 
 ## ZoteroKeyTool.registerKey() method
 
+Register a shortcut key with window.addEventListener("keypress").
+
+The callback will not be affected by conflictions.
+
 <b>Signature:</b>
 
 ```typescript
-registerKey(doc: Document, keyOptions: Key): void;
+registerKey(type: "event", keyOptions: {
+        id: string;
+        key: string;
+        callback: (keyOptions: EventKey) => any;
+        modifiers?: string;
+        disabled?: boolean;
+    }): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  doc | Document |  |
-|  keyOptions | Key |  |
+|  type | "event" |  |
+|  keyOptions | { id: string; key: string; callback: (keyOptions: EventKey) =&gt; any; modifiers?: string; disabled?: boolean; } |  |
 
 <b>Returns:</b>
 
-void
+boolean
 

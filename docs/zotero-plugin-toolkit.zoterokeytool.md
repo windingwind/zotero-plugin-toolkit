@@ -23,17 +23,13 @@ export declare class ZoteroKeyTool implements RegisterToolBase
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [checkAllKeyConfliction(doc)](./zotero-plugin-toolkit.zoterokeytool.checkallkeyconfliction.md) |  |  |
-|  [checkKeyConfliction(doc, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.checkkeyconfliction.md) |  |  |
-|  [getAllCommands(doc)](./zotero-plugin-toolkit.zoterokeytool.getallcommands.md) |  |  |
-|  [getAllCommandsFlattened(doc)](./zotero-plugin-toolkit.zoterokeytool.getallcommandsflattened.md) |  |  |
-|  [getAllKeys(doc, options)](./zotero-plugin-toolkit.zoterokeytool.getallkeys.md) |  |  |
-|  [getAllKeysFlattened(doc, options)](./zotero-plugin-toolkit.zoterokeytool.getallkeysflattened.md) |  |  |
-|  [registerCommand(doc, commandOptions)](./zotero-plugin-toolkit.zoterokeytool.registercommand.md) |  |  |
-|  [registerCommandset(doc, id, commandOptionsList)](./zotero-plugin-toolkit.zoterokeytool.registercommandset.md) |  |  |
-|  [registerKey(doc, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey.md) |  |  |
-|  [registerKeyset(doc, id, keyOptionsList)](./zotero-plugin-toolkit.zoterokeytool.registerkeyset.md) |  |  |
-|  [triggerKeyCommand(doc, options)](./zotero-plugin-toolkit.zoterokeytool.triggerkeycommand.md) |  |  |
-|  [unregister(doc, id)](./zotero-plugin-toolkit.zoterokeytool.unregister.md) |  |  |
-|  [unregisterAll()](./zotero-plugin-toolkit.zoterokeytool.unregisterall.md) |  |  |
+|  [checkAllKeyConfliction(options)](./zotero-plugin-toolkit.zoterokeytool.checkallkeyconfliction.md) |  | Find all key conflictions. |
+|  [checkKeyConfliction(inputKeyOptions, options)](./zotero-plugin-toolkit.zoterokeytool.checkkeyconfliction.md) |  | Check key confliction of <code>inputKeyOptions</code>. |
+|  [getAllKeys()](./zotero-plugin-toolkit.zoterokeytool.getallkeys.md) |  | Get all keys(element, event, prefs, builtin) |
+|  [registerKey(type, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey.md) |  | <p>Register a shortcut key with window.addEventListener("keypress").</p><p>The callback will not be affected by conflictions.</p> |
+|  [registerKey(type, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey_1.md) |  | <p>Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.</p><p>The command might not be triggered if there are conflictions.</p> |
+|  [registerKey(type, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey_2.md) |  | <p>Register a Zotero key in preferences.</p><p>Requires restarting Zotero to take effects.</p> |
+|  [registerKey(type, keyOptions)](./zotero-plugin-toolkit.zoterokeytool.registerkey_3.md) |  | <p>Register a custom key.</p><p>This is possibly not what you want to use. An API for future extensions.</p> |
+|  [unregisterAll()](./zotero-plugin-toolkit.zoterokeytool.unregisterall.md) |  | Unregister all keys created by this instance. |
+|  [unregisterKey(keyOptions)](./zotero-plugin-toolkit.zoterokeytool.unregisterkey.md) |  | Unregister a key. |
 

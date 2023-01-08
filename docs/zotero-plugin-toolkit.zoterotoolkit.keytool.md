@@ -4,6 +4,8 @@
 
 ## ZoteroToolkit.KeyTool property
 
+ZoteroKeyTool instance. Provides Shortcut key APIs.
+
 <b>Signature:</b>
 
 ```typescript

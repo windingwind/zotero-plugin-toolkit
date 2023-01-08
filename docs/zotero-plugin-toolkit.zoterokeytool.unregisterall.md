@@ -4,6 +4,8 @@
 
 ## ZoteroKeyTool.unregisterAll() method
 
+Unregister all keys created by this instance.
+
 <b>Signature:</b>
 
 ```typescript
