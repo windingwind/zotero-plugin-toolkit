@@ -7,20 +7,87 @@ import { createXULElement, getGlobal, log, RegisterToolBase } from "./utils";
  */
 export class ZoteroCompat implements RegisterToolBase {
   /**
-   * Get global variables
-   */
-  getGlobal: typeof getGlobal;
-  /**
    * Consistent APIs for Zotero 6 & newer (7).
    */
   public prefPaneCache: { win: Window; listeners: any[]; ids: string[] };
   constructor() {
-    this.getGlobal = getGlobal;
     this.prefPaneCache = { win: undefined, listeners: [], ids: [] };
   }
 
   unregisterAll() {
     this.unregisterPrefPane();
+  }
+
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero" | "zotero"): _ZoteroConstructable;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "ZoteroPane" | "ZoteroPane_Local"): _ZoteroPaneConstructable;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_Tabs"): typeof Zotero_Tabs;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_File_Interface"): typeof Zotero_File_Interface;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_File_Exporter"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_LocateMenu"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_Report_Interface"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_Timeline_Interface"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "Zotero_Tooltip"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "ZoteroContextPane"): typeof ZoteroContextPane;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal(k: "ZoteroItemPane"): any;
+  /**
+   * @alpha
+   * @param k
+   */
+  getGlobal<
+    K extends keyof typeof globalThis,
+    GLOBAL extends typeof globalThis
+  >(k: K): GLOBAL[K];
+  /**
+   * Get global variables.
+   * @param k Global variable name, `Zotero`, `ZoteroPane`, `window`, `document`, etc.
+   */
+  getGlobal(k: string): any;
+  getGlobal(k: string) {
+    return getGlobal(k);
   }
 
   /**
@@ -53,7 +120,7 @@ export class ZoteroCompat implements RegisterToolBase {
       return new DOMParser();
     }
     try {
-      return new (getGlobal("DOMParser") as typeof DOMParser)();
+      return new (getGlobal("DOMParser"))();
     } catch (e) {
       return Components.classes[
         "@mozilla.org/xmlextras/domparser;1"
