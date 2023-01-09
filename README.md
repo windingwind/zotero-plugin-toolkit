@@ -4,21 +4,48 @@
 
 This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npmjs.com/package/zotero-plugin-toolkit), which provides useful APIs for [Zotero](https://www.zotero.org/) plugin developers.
 
-[API Documentation](./docs/index.md)
+[API Documentation](docs/index.md)
 
-## Features
+## Modules
 
-- Consistent API for creating elements & preference pane on Zotero 6/7. See [ZoteroCompat](./docs/zotero-plugin-toolkit.zoterocompat.md)
+- [ZoteroToolkit](docs/zotero-plugin-toolkit.zoterotoolkit.md): Contains all modules of this library. Start from `import ZoteroToolkit from "zotero-plugin-toolkit"` to get familiar with the APIs.
 
-  - [`getGlobal`](./docs/zotero-plugin-toolkit.zoterocompat.getglobal.md): Global variables in Zotero 6 overlay plugins, `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`.
-  - [`isZotero7`](./docs/zotero-plugin-toolkit.zoterocompat.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md): Some if statements
-  - [`registerPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.registerprefpane.md)/[`unregisterPrefPane`](./docs/zotero-plugin-toolkit.zoterocompat.unregisterprefpane.md): Preferencepane registrations for Zotero 6 bootstrapped plugins
+- [Basic Tool](docs/zotero-plugin-toolkit.basictool.md)
 
-- Creating HTML/XUL elements in batch form JSON; The toolkit will automatically remove all elements created by your plugin on one call when the plugin is disabled/removed. See [ZoteroUI](./docs/zotero-plugin-toolkit.zoteroui.md)
+  - [getGlobal](docs/zotero-plugin-toolkit.basictool-getglobal_12.md): Get global variables for bootstrapped plugin sandbox. `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`. With type hint.
+  - [log](docs/zotero-plugin-toolkit.basictool.log.md): Output to both `Zotero.debug` and `console.log`. Can be customized depending on dev/prod environment.
+  - [isZotero7](docs/zotero-plugin-toolkit.basictool.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md)
+  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
 
-- Register extra columns to the item tree. See [itemTree](./docs/zotero-plugin-toolkit.itemtreetool.md)
+- Tools
 
-- Tools like copy helper, file picker, progress window, extra field getter/setter, etc. See [ZoteroTools](./docs/zotero-plugin-toolkit.zoterotool.md)
+  - [UI](docs/zotero-plugin-toolkit.uitool.md): Create elements and manage them automatically.
+
+  - [Reader](docs/zotero-plugin-toolkit.readertool.md): Reader instance APIs.
+
+  - [ExtraField](docs/zotero-plugin-toolkit.extrafieldtool.md): Get/set extra fields APIs.
+
+- Managers
+
+  - [ItemTree](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
+
+  - [`PreferencePane`](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+
+  - [LibraryTabPanel](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
+
+  - [ReaderTabPanel](docs/zotero-plugin-toolkit.readertabpanelmanager.md): Register extra tab panel in the reader right-sidebars.
+
+  - [Menu](docs/zotero-plugin-toolkit.menumanager.md): Register menu/menu popup.
+
+  - [Shortcut](docs/zotero-plugin-toolkit.shortcutmanager.md): Register shortcut keys.
+
+- Helpers
+
+  - [Clipboard](docs/zotero-plugin-toolkit.clibpoardhelper.md): Copy text/rich text/image.
+
+  - [FilePicker](docs/zotero-plugin-toolkit.filepickerhelper.md): Open file picker.
+
+  - [ProgressWindow](docs/zotero-plugin-toolkit.progresswindowhelper.md): Open progress window.
 
 ## Usage
 
@@ -30,16 +57,16 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 import ZoteroToolkit from "zotero-plugin-toolkit";
 // Alternatively, import class you need
 // import { ZoteroCompat, ZoteroTool, ZoteroUI } from "zotero-plugin-toolkit"
-const toolkit = new ZoteroToolkit();
+const ztoolkit = new ZoteroToolkit();
 ```
 
 3. Use the toolkit following this [API Documentation](./docs/index.md)
 
 ```ts
-const Zotero = toolkit.Compat.getZotero();
+ztoolkit.log("This is Zotero:", toolkit.getGlobal("Zotero"));
 ```
 
-> ⚠️All `registerSth` methods have corresponding `unregisterSth`. Don't forget to unregister when plugin exits. Alternatively, call `unregisterAll` on `ZoteroToolkit` or sub modules.
+> ⚠️All Manager classes have `register` method with corresponding `unregister/unregisterAll`. Don't forget to unregister when plugin exits.
 
 > This repo depends on [zotero-types](https://github.com/windingwind/zotero-types). See its hompage for more details about Zotero type definitions.
 
