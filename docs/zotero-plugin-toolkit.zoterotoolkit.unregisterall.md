@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.unregisterAll() method
 
-Unregister everything created by `registerSth` method of this instance.
+Unregister everything created by managers.
 
 <b>Signature:</b>
 

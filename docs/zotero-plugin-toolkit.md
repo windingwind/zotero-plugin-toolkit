@@ -8,11 +8,18 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [ItemTreeTool](./zotero-plugin-toolkit.itemtreetool.md) | Tool for adding customized new columns to the library treeView |
-|  [ZoteroCompat](./zotero-plugin-toolkit.zoterocompat.md) | Consistent APIs for Zotero 6 &amp; newer (7). |
-|  [ZoteroKeyTool](./zotero-plugin-toolkit.zoterokeytool.md) | Shortcut keys APIs. |
-|  [ZoteroReaderTool](./zotero-plugin-toolkit.zoteroreadertool.md) | Tools for Zotero ReaderInstance |
-|  [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) | General tool APIs. |
-|  [ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md) | The base class for all tools. |
-|  [ZoteroUI](./zotero-plugin-toolkit.zoteroui.md) | UI APIs. |
+|  [BasicTool](./zotero-plugin-toolkit.basictool.md) | Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers |
+|  [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) | Copy helper for text/richtext/image. |
+|  [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) | Get/set extra field APIs. |
+|  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
+|  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
+|  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
+|  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
+|  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xtml</code>, for Zotero 6 &amp; 7. |
+|  [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) | ProgressWindow helper. |
+|  [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) | Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar. |
+|  [ReaderTool](./zotero-plugin-toolkit.readertool.md) | Zotero ReaderInstance APIs. |
+|  [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) | Register shortcut keys. |
+|  [UITool](./zotero-plugin-toolkit.uitool.md) | UI APIs. Create elements and manage them. |
+|  [ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md) | ⭐Contains all tools in this lib. Start from here if you are new to this lib. |
 

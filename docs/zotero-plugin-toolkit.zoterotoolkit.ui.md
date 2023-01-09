@@ -4,10 +4,8 @@
 
 ## ZoteroToolkit.UI property
 
-ZoteroUI instance. Provides UI APIs.
-
 <b>Signature:</b>
 
 ```typescript
-UI: ZoteroUI;
+UI: UITool;
 ```

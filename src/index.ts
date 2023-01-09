@@ -1,67 +1,66 @@
-import { ZoteroCompat } from "./compat";
-import { ZoteroKeyTool } from "./key";
-import { ZoteroReaderTool } from "./reader";
-import { ZoteroTool } from "./tool";
-import { ItemTreeTool } from "./treeView";
-import { ZoteroUI } from "./ui";
-import { RegisterToolBase } from "./utils";
+import { BasicTool } from "./basic";
+import { UITool } from "./tools/ui";
+import { ReaderTool } from "./tools/reader";
+import { ExtraFieldTool } from "./tools/extraField";
+import { ItemTreeManager } from "./managers/itemTree";
+import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
+import { ReaderTabPanelManager } from "./managers/readerTabPanel";
+import { MenuManager } from "./managers/menu";
+import { PreferencePaneManager } from "./managers/preferencePane";
+import { ShortcutManager } from "./managers/shortcut";
+import { ClibpoardHelper } from "./helpers/clipboard";
+import { FilePickerHelper } from "./helpers/filePicker";
+import { ProgressWindowHelper } from "./helpers/progressWindow";
 
 /**
- * The base class for all tools.
+ * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
+ * @remarks
+ * To minimize your plugin, import the modules you need manually.
  */
-export class ZoteroToolkit implements RegisterToolBase {
-  /**
-   * ZoteroCompat instance. Provides consistent APIs for Zotero 6 & newer (7).
-   */
-  public Compat: ZoteroCompat;
-  /**
-   * ZoteroTool instance. Provides tool APIs.
-   */
-  public Tool: ZoteroTool;
-  /**
-   * ZoteroUI instance. Provides UI APIs.
-   */
-  public UI: ZoteroUI;
-  /**
-   * ItemTreeTool instance. Provides itemTree APIs.
-   */
-  public ItemTree: ItemTreeTool;
-  /**
-   * ZoteroReaderTool instance. Provides ReaderInstance APIs.
-   */
-  public ReaderTool: ZoteroReaderTool;
-  /**
-   * ZoteroKeyTool instance. Provides Shortcut key APIs.
-   */
-  public KeyTool: ZoteroKeyTool;
+class ZoteroToolkit extends BasicTool {
+  UI: UITool;
+  Reader: ReaderTool;
+  ExtraField: ExtraFieldTool;
+  ItemTree: ItemTreeManager;
+  LibraryTabPanel: LibraryTabPanelManager;
+  ReaderTabPanel: ReaderTabPanelManager;
+  Menu: MenuManager;
+  PreferencePane: PreferencePaneManager;
+  Shortcut: ShortcutManager;
+  Clibpoard: typeof ClibpoardHelper;
+  FilePicker: typeof FilePickerHelper;
+  ProgressWindow: typeof ProgressWindowHelper;
 
   constructor() {
-    this.Compat = new ZoteroCompat();
-    this.Tool = new ZoteroTool();
-    this.UI = new ZoteroUI();
-    this.ItemTree = new ItemTreeTool();
-    this.ReaderTool = new ZoteroReaderTool();
-    this.KeyTool = new ZoteroKeyTool();
+    super();
+    this.UI = new UITool();
+    this.Reader = new ReaderTool();
+    this.ExtraField = new ExtraFieldTool();
+    this.ItemTree = new ItemTreeManager();
+    this.LibraryTabPanel = new LibraryTabPanelManager();
+    this.ReaderTabPanel = new ReaderTabPanelManager();
+    this.Menu = new MenuManager();
+    this.PreferencePane = new PreferencePaneManager();
+    this.Shortcut = new ShortcutManager();
+    this.Clibpoard = ClibpoardHelper;
+    this.FilePicker = FilePickerHelper;
+    this.ProgressWindow = ProgressWindowHelper;
   }
 
   /**
-   * Unregister everything created by `registerSth` method of this instance.
+   * Unregister everything created by managers.
    */
   unregisterAll(): void {
-    this.Compat.unregisterAll();
-    this.UI.unregisterAll();
     this.ItemTree.unregisterAll();
-    this.KeyTool.unregisterAll();
+    this.LibraryTabPanel.unregisterAll();
+    this.ReaderTabPanel.unregisterAll();
+    this.Menu.unregisterAll();
+    this.PreferencePane.unregisterAll();
+    this.Shortcut.unregisterAll();
+    this.UI.unregisterAll();
   }
 }
 
 export default ZoteroToolkit;
 
-export {
-  ZoteroCompat,
-  ZoteroKeyTool,
-  ZoteroTool,
-  ItemTreeTool,
-  ZoteroReaderTool,
-  ZoteroUI,
-};
+export { ZoteroToolkit };

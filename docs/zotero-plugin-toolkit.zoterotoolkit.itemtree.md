@@ -4,10 +4,8 @@
 
 ## ZoteroToolkit.ItemTree property
 
-ItemTreeTool instance. Provides itemTree APIs.
-
 <b>Signature:</b>
 
 ```typescript
-ItemTree: ItemTreeTool;
+ItemTree: ItemTreeManager;
 ```

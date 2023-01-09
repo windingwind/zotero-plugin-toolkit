@@ -4,14 +4,18 @@
 
 ## ZoteroToolkit class
 
-The base class for all tools.
+⭐Contains all tools in this lib. Start from here if you are new to this lib.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class ZoteroToolkit implements RegisterToolBase 
+declare class ZoteroToolkit extends BasicTool 
 ```
-<b>Implements:</b> RegisterToolBase
+<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
+
+## Remarks
+
+To minimize your plugin, import the modules you need manually.
 
 ## Constructors
 
@@ -23,16 +27,22 @@ export declare class ZoteroToolkit implements RegisterToolBase
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [Compat](./zotero-plugin-toolkit.zoterotoolkit.compat.md) |  | [ZoteroCompat](./zotero-plugin-toolkit.zoterocompat.md) | ZoteroCompat instance. Provides consistent APIs for Zotero 6 &amp; newer (7). |
-|  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeTool](./zotero-plugin-toolkit.itemtreetool.md) | ItemTreeTool instance. Provides itemTree APIs. |
-|  [KeyTool](./zotero-plugin-toolkit.zoterotoolkit.keytool.md) |  | [ZoteroKeyTool](./zotero-plugin-toolkit.zoterokeytool.md) | ZoteroKeyTool instance. Provides Shortcut key APIs. |
-|  [ReaderTool](./zotero-plugin-toolkit.zoterotoolkit.readertool.md) |  | [ZoteroReaderTool](./zotero-plugin-toolkit.zoteroreadertool.md) | ZoteroReaderTool instance. Provides ReaderInstance APIs. |
-|  [Tool](./zotero-plugin-toolkit.zoterotoolkit.tool.md) |  | [ZoteroTool](./zotero-plugin-toolkit.zoterotool.md) | ZoteroTool instance. Provides tool APIs. |
-|  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [ZoteroUI](./zotero-plugin-toolkit.zoteroui.md) | ZoteroUI instance. Provides UI APIs. |
+|  [Clibpoard](./zotero-plugin-toolkit.zoterotoolkit.clibpoard.md) |  | typeof [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) |  |
+|  [ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md) |  | [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) |  |
+|  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
+|  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) |  |
+|  [LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md) |  | [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) |  |
+|  [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md) |  | [MenuManager](./zotero-plugin-toolkit.menumanager.md) |  |
+|  [PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md) |  | [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) |  |
+|  [ProgressWindow](./zotero-plugin-toolkit.zoterotoolkit.progresswindow.md) |  | typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) |  |
+|  [Reader](./zotero-plugin-toolkit.zoterotoolkit.reader.md) |  | [ReaderTool](./zotero-plugin-toolkit.readertool.md) |  |
+|  [ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md) |  | [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) |  |
+|  [Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md) |  | [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) |  |
+|  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [UITool](./zotero-plugin-toolkit.uitool.md) |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [unregisterAll()](./zotero-plugin-toolkit.zoterotoolkit.unregisterall.md) |  | Unregister everything created by <code>registerSth</code> method of this instance. |
+|  [unregisterAll()](./zotero-plugin-toolkit.zoterotoolkit.unregisterall.md) |  | Unregister everything created by managers. |
 
