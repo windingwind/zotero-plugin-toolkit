@@ -47,7 +47,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [ProgressWindow](docs/zotero-plugin-toolkit.progresswindowhelper.md): Open progress window.
 
-  - [VirtualizedTable](docs)
+  - [VirtualizedTable](docs/zotero-plugin-toolkit.virtualizedtablehelper.md): Create a VirtualizedTable (an advanced table view element, which is used by the Zotero item tree, collections tree, item picker, etc.)
 
 ## Usage
 
