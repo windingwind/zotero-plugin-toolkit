@@ -57,8 +57,11 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 ```ts
 import ZoteroToolkit from "zotero-plugin-toolkit";
-// Alternatively, import class you need
-// import { ZoteroCompat, ZoteroTool, ZoteroUI } from "zotero-plugin-toolkit"
+/* Alternatively, import class you need to minify the plugin size
+ * ```ts
+ * import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
+ * import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
+ */
 const ztoolkit = new ZoteroToolkit();
 ```
 
@@ -74,7 +77,7 @@ ztoolkit.log("This is Zotero:", toolkit.getGlobal("Zotero"));
 
 ## Examples
 
-This package is integrated into the [Zotero Addon Template](https://github.com/windingwind/zotero-addon-template/). You can find examples there.
+This package is integrated into the [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template/). You can find examples there.
 
 If you are new to Zotero plugins/looking for solutions to migrate from Zotero 6 to 7, please take a look at that repo.
 
@@ -104,7 +107,7 @@ Run `npm run build`.
 
 ### Test Locally
 
-Test it with your plugin or use [Zotero Addon Template](https://github.com/windingwind/zotero-addon-template/) as a playground.
+Test it with your plugin or use [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template/) as a playground.
 
 Run `npm install /path/to/this/repo` under the playground repo folder, the lib will be installed from your local build.
 
