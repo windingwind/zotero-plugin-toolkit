@@ -29,7 +29,7 @@
  * ```
  */
 export class ProgressWindowHelper extends Zotero.ProgressWindow {
-  private lines: _ZoteroItemProgress[];
+  private lines: Zotero.ItemProgress[];
   private closeTime: number | undefined;
   private originalShow: typeof Zotero.ProgressWindow.prototype.show;
   // @ts-ignore

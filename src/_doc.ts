@@ -16,6 +16,7 @@ import { ShortcutManager } from "./managers/shortcut";
 import { ClibpoardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
+import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 
 export {
   BasicTool,
@@ -32,4 +33,5 @@ export {
   ClibpoardHelper,
   FilePickerHelper,
   ProgressWindowHelper,
+  VirtualizedTableHelper,
 };

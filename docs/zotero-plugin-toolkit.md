@@ -21,5 +21,6 @@
 |  [ReaderTool](./zotero-plugin-toolkit.readertool.md) | Zotero ReaderInstance APIs. |
 |  [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) | Register shortcut keys. |
 |  [UITool](./zotero-plugin-toolkit.uitool.md) | UI APIs. Create elements and manage them. |
+|  [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
 |  [ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md) | ⭐Contains all tools in this lib. Start from here if you are new to this lib. |
 

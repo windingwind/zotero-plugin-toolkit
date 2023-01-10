@@ -10,7 +10,7 @@ export class ReaderTool extends BasicTool {
    */
   async getReader(
     waitTime: number = 5000
-  ): Promise<_ZoteroReaderInstance | undefined> {
+  ): Promise<_ZoteroTypes.ReaderInstance | undefined> {
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
     if (Zotero_Tabs.selectedType !== "reader") {
       return undefined;
@@ -30,9 +30,9 @@ export class ReaderTool extends BasicTool {
   /**
    * Get all window readers.
    */
-  getWindowReader(): Array<_ZoteroReaderInstance> {
+  getWindowReader(): Array<_ZoteroTypes.ReaderWindow> {
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
-    let windowReaders: Array<_ZoteroReaderInstance> = [];
+    let windowReaders: Array<_ZoteroTypes.ReaderWindow> = [];
     let tabs = Zotero_Tabs._tabs.map((e) => e.id);
     for (let i = 0; i < Zotero.Reader._readers.length; i++) {
       let flag = false;
@@ -43,7 +43,9 @@ export class ReaderTool extends BasicTool {
         }
       }
       if (!flag) {
-        windowReaders.push(Zotero.Reader._readers[i]);
+        windowReaders.push(
+          Zotero.Reader._readers[i] as _ZoteroTypes.ReaderWindow
+        );
       }
     }
     return windowReaders;
@@ -94,7 +96,7 @@ export class ReaderTool extends BasicTool {
    * Get the text selection of reader.
    * @param currentReader Target reader
    */
-  getSelectedText(currentReader: _ZoteroReaderInstance): string {
+  getSelectedText(currentReader: _ZoteroTypes.ReaderInstance): string {
     if (!currentReader) {
       return "";
     }

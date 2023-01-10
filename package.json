@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
   "dependencies": {
-    "zotero-types": "^0.1.5"
+    "zotero-types": "^1.0.0"
   },
   "publishConfig": {
     "access": "public",
@@ -43,6 +43,10 @@
   "devDependencies": {
     "@microsoft/api-documenter": "^7.19.27",
     "@microsoft/api-extractor": "^7.33.7",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-intl": "^3.0.0",
+    "react-intl": "^6.2.5",
     "release-it": "^15.5.1"
   }
 }

@@ -1,3 +1,4 @@
+import React = require("react");
 import { BasicTool } from "../basic";
 import { ManagerInterface } from "../basic";
 
@@ -13,7 +14,7 @@ export class ItemTreeManager extends BasicTool implements ManagerInterface {
   private localColumnCache: string[];
   private localFieldCache: string[];
   private localRenderCellCache: string[];
-  private initializationLock: _ZoteroPromiseObject;
+  private initializationLock: _ZoteroTypes.PromiseObject;
   /**
    * Initialize Zotero._ItemTreeExtraColumnsGlobal if it doesn't exist.
    *
@@ -83,7 +84,7 @@ export class ItemTreeManager extends BasicTool implements ManagerInterface {
       disabledIn?: Set<"default" | "feeds" | "feed" | string>;
       defaultSort?: 1 | -1;
       flex?: number;
-      width?: string;
+      width?: number;
       fixedWidth?: boolean;
       staticWidth?: boolean;
       minWidth?: number;
@@ -363,13 +364,13 @@ export class ItemTreeManager extends BasicTool implements ManagerInterface {
   private createIconLabel(props: {
     iconPath: string;
     name: string;
-  }): ReactElement {
+  }): React.ReactElement {
     // @ts-ignore
-    const react = window.require("react");
-    return react.createElement(
+    const _React = window.require("react") as typeof React;
+    return _React.createElement(
       "span",
       null,
-      react.createElement("img", {
+      _React.createElement("img", {
         src: props.iconPath,
         height: "10px",
         width: "9px",
@@ -430,20 +431,16 @@ export interface ItemTreeExtraColumnsGlobal {
 export interface ColumnOptions {
   dataKey: string;
   label: string;
-  iconLabel?: ReactElement;
+  iconLabel?: React.ReactElement;
   defaultIn?: Set<"default" | "feeds" | "feed" | string>;
   disabledIn?: Set<"default" | "feeds" | "feed" | string>;
   defaultSort?: 1 | -1;
   flex?: number;
-  width?: string;
+  width?: number;
   fixedWidth?: boolean;
   staticWidth?: boolean;
   minWidth?: number;
   ignoreInColumnPicker?: boolean;
   submenu?: boolean;
   zoteroPersist?: Set<string>;
-}
-
-export interface ReactElement {
-  [key: string | number | symbol]: any;
 }

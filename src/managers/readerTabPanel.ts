@@ -21,13 +21,13 @@ export class ReaderTabPanelManager
         panel: XUL.TabPanel | undefined,
         ownerDeck: XUL.Deck,
         ownerWindow: Window,
-        readerInstance: _ZoteroReaderInstance
+        readerInstance: _ZoteroTypes.ReaderInstance
       ) => void;
       targetIndex: number;
       selectPanel?: boolean;
     }[];
     observer: MutationObserver;
-    initializeLock: _ZoteroPromiseObject;
+    initializeLock: _ZoteroTypes.PromiseObject;
   };
   constructor(base?: BasicTool) {
     super(base);
@@ -148,7 +148,7 @@ export class ReaderTabPanelManager
       panel: XUL.TabPanel | undefined,
       ownerDeck: XUL.Deck,
       ownerWindow: Window,
-      readerInstance: _ZoteroReaderInstance
+      readerInstance: _ZoteroTypes.ReaderInstance
     ) => void,
     options?: {
       tabId?: string;

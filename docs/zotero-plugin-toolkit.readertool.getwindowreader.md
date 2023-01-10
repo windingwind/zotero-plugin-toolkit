@@ -9,9 +9,9 @@ Get all window readers.
 <b>Signature:</b>
 
 ```typescript
-getWindowReader(): Array<_ZoteroReaderInstance>;
+getWindowReader(): Array<_ZoteroTypes.ReaderWindow>;
 ```
 <b>Returns:</b>
 
-Array&lt;\_ZoteroReaderInstance&gt;
+Array&lt;\_ZoteroTypes.ReaderWindow&gt;
 

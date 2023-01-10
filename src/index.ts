@@ -11,6 +11,7 @@ import { ShortcutManager } from "./managers/shortcut";
 import { ClibpoardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
+import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -30,6 +31,7 @@ class ZoteroToolkit extends BasicTool {
   Clibpoard: typeof ClibpoardHelper;
   FilePicker: typeof FilePickerHelper;
   ProgressWindow: typeof ProgressWindowHelper;
+  VirtualizedTabel: typeof VirtualizedTableHelper;
 
   constructor() {
     super();
@@ -45,6 +47,7 @@ class ZoteroToolkit extends BasicTool {
     this.Clibpoard = ClibpoardHelper;
     this.FilePicker = FilePickerHelper;
     this.ProgressWindow = ProgressWindowHelper;
+    this.VirtualizedTabel = VirtualizedTableHelper;
   }
 
   /**

@@ -47,6 +47,8 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [ProgressWindow](docs/zotero-plugin-toolkit.progresswindowhelper.md): Open progress window.
 
+  - [VirtualizedTable](docs)
+
 ## Usage
 
 1. Run `npm install --save zotero-plugin-toolkit`.

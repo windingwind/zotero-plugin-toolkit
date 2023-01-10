@@ -40,7 +40,7 @@ export class BasicTool {
    * @alpha
    * @param k
    */
-  getGlobal(k: "ZoteroPane" | "ZoteroPane_Local"): _ZoteroPaneConstructable;
+  getGlobal(k: "ZoteroPane" | "ZoteroPane_Local"): _ZoteroTypes.ZoteroPane;
   /**
    * @alpha
    * @param k
@@ -50,7 +50,7 @@ export class BasicTool {
    * @alpha
    * @param k
    */
-  getGlobal(k: "Zotero_File_Interface"): typeof Zotero_File_Interface;
+  getGlobal(k: "Zotero_File_Interface"): any;
   /**
    * @alpha
    * @param k
