@@ -9,11 +9,9 @@ Register shortcut keys.
 <b>Signature:</b>
 
 ```typescript
-export declare class ShortcutManager extends BasicTool implements ManagerInterface 
+export declare class ShortcutManager extends ManagerTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
-
-<b>Implements:</b> ManagerInterface
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

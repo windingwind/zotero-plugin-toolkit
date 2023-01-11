@@ -4,6 +4,8 @@
 
 ## VirtualizedTableHelper class
 
+VirtualizedTable helper.
+
 <b>Signature:</b>
 
 ```typescript

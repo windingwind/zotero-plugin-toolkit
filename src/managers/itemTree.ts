@@ -1,11 +1,11 @@
 import React = require("react");
-import { BasicTool } from "../basic";
-import { ManagerInterface } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register customized new columns to the library itemTree.
  */
-export class ItemTreeManager extends BasicTool implements ManagerInterface {
+export class ItemTreeManager extends ManagerTool {
   /**
    * Signature to avoid patching more than once.
    */
@@ -22,7 +22,7 @@ export class ItemTreeManager extends BasicTool implements ManagerInterface {
    *
    * Then patch `require("zotero/itemTree").getColumns` and `Zotero.Item.getField`
    */
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.patchSign = "zotero-plugin-toolkit@0.0.1";
     this.localColumnCache = [];

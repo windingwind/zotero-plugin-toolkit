@@ -9,11 +9,9 @@ Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar.
 <b>Signature:</b>
 
 ```typescript
-export declare class LibraryTabPanelManager extends BasicTool implements ManagerInterface 
+export declare class LibraryTabPanelManager extends ManagerTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
-
-<b>Implements:</b> ManagerInterface
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

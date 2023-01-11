@@ -1,15 +1,12 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { UITool } from "../tools/ui";
 import { ReaderTool } from "../tools/reader";
-import { ManagerInterface } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register new \<tabpanel\> in reader right-side bar.
  */
-export class ReaderTabPanelManager
-  extends BasicTool
-  implements ManagerInterface
-{
+export class ReaderTabPanelManager extends ManagerTool {
   private ui: UITool;
   private readerTool: ReaderTool;
   private readerTabCache: {
@@ -29,7 +26,7 @@ export class ReaderTabPanelManager
     observer: MutationObserver;
     initializeLock: _ZoteroTypes.PromiseObject;
   };
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
     this.readerTool = new ReaderTool(this);

@@ -1,17 +1,14 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ManagerInterface } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register preference pane from Zotero 7's `xtml`, for Zotero 6 & 7.
  */
-export class PreferencePaneManager
-  extends BasicTool
-  implements ManagerInterface
-{
+export class PreferencePaneManager extends ManagerTool {
   private ui: UITool;
   private prefPaneCache: { win: Window; listeners: { [id: string]: any } };
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
     this.prefPaneCache = { win: undefined, listeners: {} };
@@ -176,7 +173,7 @@ export class PreferencePaneManager
             }
             for (let node of mutation.addedNodes) {
               if (
-                node.nodeType == Node.ELEMENT_NODE &&
+                node.nodeType == window.Node.ELEMENT_NODE &&
                 (node as Element).hasAttribute("preference")
               ) {
                 attachToPreference(

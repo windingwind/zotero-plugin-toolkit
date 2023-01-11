@@ -1,13 +1,13 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ManagerInterface } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register \<menuitem\>, \<menupopup\>, or \<menuseperator\> to Zotero right-click/window menus.
  */
-export class MenuManager extends BasicTool implements ManagerInterface {
+export class MenuManager extends ManagerTool {
   private ui: UITool;
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
   }

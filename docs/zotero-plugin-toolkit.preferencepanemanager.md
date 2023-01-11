@@ -9,11 +9,9 @@ Register preference pane from Zotero 7's `xtml`<!-- -->, for Zotero 6 &amp; 7.
 <b>Signature:</b>
 
 ```typescript
-export declare class PreferencePaneManager extends BasicTool implements ManagerInterface 
+export declare class PreferencePaneManager extends ManagerTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
-
-<b>Implements:</b> ManagerInterface
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

@@ -6,21 +6,18 @@ export class BasicTool {
   /**
    * configurations.
    */
-  basicOptions: {
-    log: {
-      readonly _type: "toolkitlog";
-      disableConsole: boolean;
-      disableZLog: boolean;
-      prefix: string;
-    };
-  };
+  protected _basicOptions: BasicOptions;
+
+  public get basicOptions(): BasicOptions {
+    return this._basicOptions;
+  }
 
   /**
    *
    * @param basicTool Pass an BasicTool instance to copy its options.
    */
-  constructor(basicTool?: BasicTool) {
-    this.basicOptions = {
+  constructor(data?: BasicTool | BasicOptions) {
+    this._basicOptions = {
       log: {
         _type: "toolkitlog",
         disableConsole: false,
@@ -28,7 +25,8 @@ export class BasicTool {
         prefix: "",
       },
     };
-    this.updateOptions(basicTool);
+    this.updateOptions(data);
+    return;
   }
 
   /**
@@ -199,11 +197,11 @@ export class BasicTool {
     const Zotero = this.getGlobal("Zotero");
     const console = this.getGlobal("console");
     // If logOption is not provides, use the global one.
-    let options: typeof this.basicOptions.log;
+    let options: typeof this._basicOptions.log;
     if (data[data.length - 1]?._type === "toolkitlog") {
       options = data.pop();
     } else {
-      options = this.basicOptions.log;
+      options = this._basicOptions.log;
     }
     try {
       if (options.prefix) {
@@ -248,19 +246,43 @@ export class BasicTool {
     object[funcSign][ownerSign] = true;
   }
 
-  protected updateOptions(source?: BasicTool) {
+  protected updateOptions(source?: BasicTool | BasicOptions) {
     if (!source) {
       return;
     }
-    this.basicOptions = source.basicOptions;
+    if (source instanceof BasicTool) {
+      this._basicOptions = source._basicOptions;
+    } else {
+      this._basicOptions = source;
+    }
   }
 }
 
-export interface ManagerInterface {
-  register(...data): any;
-  unregister(...data): any;
+export interface BasicOptions {
+  log: {
+    readonly _type: "toolkitlog";
+    disableConsole: boolean;
+    disableZLog: boolean;
+    prefix: string;
+  };
+}
+
+export abstract class ManagerTool extends BasicTool {
+  abstract register(...data): any;
+  abstract unregister(...data): any;
   /**
    * Unregister everything
    */
-  unregisterAll(...data): any;
+  abstract unregisterAll(): any;
+}
+
+export function unregister(tools: { [key: string | number]: any }) {
+  Object.values(tools).forEach((tool) => {
+    if (
+      tool instanceof ManagerTool ||
+      typeof tool.unregisterAll === "function"
+    ) {
+      tool.unregisterAll();
+    }
+  });
 }

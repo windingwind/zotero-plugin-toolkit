@@ -13,12 +13,6 @@ export declare class ExtraFieldTool extends BasicTool
 ```
 <b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
-## Constructors
-
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.extrafieldtool._constructor_.md) |  | Constructs a new instance of the <code>ExtraFieldTool</code> class |
-
 ## Methods
 
 |  Method | Modifiers | Description |

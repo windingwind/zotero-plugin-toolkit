@@ -1,15 +1,15 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ManagerInterface } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register shortcut keys.
  */
-export class ShortcutManager extends BasicTool implements ManagerInterface {
+export class ShortcutManager extends ManagerTool {
   private ui: UITool;
   private globalCache: ToolkitShortcutsGlobal;
   private creatorId: string;
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
     this.creatorId = `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;

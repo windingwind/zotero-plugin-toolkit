@@ -9,11 +9,9 @@ Register customized new columns to the library itemTree.
 <b>Signature:</b>
 
 ```typescript
-export declare class ItemTreeManager extends BasicTool implements ManagerInterface 
+export declare class ItemTreeManager extends ManagerTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
-
-<b>Implements:</b> ManagerInterface
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

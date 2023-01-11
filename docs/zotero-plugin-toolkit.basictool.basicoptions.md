@@ -4,17 +4,8 @@
 
 ## BasicTool.basicOptions property
 
-configurations.
-
 <b>Signature:</b>
 
 ```typescript
-basicOptions: {
-        log: {
-            readonly _type: "toolkitlog";
-            disableConsole: boolean;
-            disableZLog: boolean;
-            prefix: string;
-        };
-    };
+get basicOptions(): BasicOptions;
 ```

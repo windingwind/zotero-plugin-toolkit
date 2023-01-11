@@ -9,12 +9,12 @@ Constructs a new instance of the `BasicTool` class
 <b>Signature:</b>
 
 ```typescript
-constructor(basicTool?: BasicTool);
+constructor(data?: BasicTool | BasicOptions);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  basicTool | [BasicTool](./zotero-plugin-toolkit.basictool.md) | <i>(Optional)</i> Pass an BasicTool instance to copy its options. |
+|  data | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 

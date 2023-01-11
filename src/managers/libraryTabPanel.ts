@@ -1,14 +1,11 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ManagerInterface } from "../basic";
+import { ManagerTool } from "../basic";
 
 /**
  * Register a new \<tabpanel\> in library right-side bar.
  */
-export class LibraryTabPanelManager
-  extends BasicTool
-  implements ManagerInterface
-{
+export class LibraryTabPanelManager extends ManagerTool {
   private ui: UITool;
   private libraryTabCache: {
     optionsList: {
@@ -23,7 +20,7 @@ export class LibraryTabPanelManager
       selectPanel?: boolean;
     }[];
   };
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
     this.libraryTabCache = {

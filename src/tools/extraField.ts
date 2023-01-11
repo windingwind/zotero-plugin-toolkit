@@ -4,10 +4,6 @@ import { BasicTool } from "../basic";
  * Get/set extra field APIs.
  */
 export class ExtraFieldTool extends BasicTool {
-  constructor(base?: BasicTool) {
-    super(base);
-  }
-
   /**
    * Get all extra fields
    * @param item

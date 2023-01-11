@@ -1,4 +1,4 @@
-import { BasicTool } from "./basic";
+import { BasicTool, unregister } from "./basic";
 import { UITool } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
@@ -54,13 +54,7 @@ class ZoteroToolkit extends BasicTool {
    * Unregister everything created by managers.
    */
   unregisterAll(): void {
-    this.ItemTree.unregisterAll();
-    this.LibraryTabPanel.unregisterAll();
-    this.ReaderTabPanel.unregisterAll();
-    this.Menu.unregisterAll();
-    this.PreferencePane.unregisterAll();
-    this.Shortcut.unregisterAll();
-    this.UI.unregisterAll();
+    unregister(this);
   }
 }
 

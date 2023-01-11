@@ -16,13 +16,14 @@ export declare class BasicTool
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(basicTool)](./zotero-plugin-toolkit.basictool._constructor_.md) |  | Constructs a new instance of the <code>BasicTool</code> class |
+|  [(constructor)(data)](./zotero-plugin-toolkit.basictool._constructor_.md) |  | Constructs a new instance of the <code>BasicTool</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md) |  | { log: { readonly \_type: "toolkitlog"; disableConsole: boolean; disableZLog: boolean; prefix: string; }; } | configurations. |
+|  [\_basicOptions](./zotero-plugin-toolkit.basictool._basicoptions.md) | <code>protected</code> | BasicOptions | configurations. |
+|  [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md) | <code>readonly</code> | BasicOptions |  |
 
 ## Methods
 

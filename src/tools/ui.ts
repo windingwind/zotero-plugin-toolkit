@@ -1,4 +1,4 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 
 /**
  * UI APIs. Create elements and manage them.
@@ -35,7 +35,7 @@ export class UITool extends BasicTool {
    */
   private elementCache: Element[];
 
-  constructor(base?: BasicTool) {
+  constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.elementCache = [];
     this.elementOptions = {
@@ -305,10 +305,10 @@ export class UITool extends BasicTool {
     const wrappedStr = `${
       entities.length
         ? `<!DOCTYPE bindings [ ${entities.reduce((preamble, url, index) => {
-            return (
-              preamble +
+      return (
+        preamble +
               `<!ENTITY % _dtd-${index} SYSTEM "${url}"> %_dtd-${index}; `
-            );
+      );
           }, "")}]>`
         : ""
     }

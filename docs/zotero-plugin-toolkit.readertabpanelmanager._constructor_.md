@@ -9,12 +9,12 @@ Constructs a new instance of the `ReaderTabPanelManager` class
 <b>Signature:</b>
 
 ```typescript
-constructor(base?: BasicTool);
+constructor(base?: BasicTool | BasicOptions);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) | <i>(Optional)</i> |
+|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 

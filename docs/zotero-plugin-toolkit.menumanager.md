@@ -9,11 +9,9 @@ Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->
 <b>Signature:</b>
 
 ```typescript
-export declare class MenuManager extends BasicTool implements ManagerInterface 
+export declare class MenuManager extends ManagerTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
-
-<b>Implements:</b> ManagerInterface
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

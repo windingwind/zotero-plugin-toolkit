@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-protected updateOptions(source?: BasicTool): void;
+protected updateOptions(source?: BasicTool | BasicOptions): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  source | [BasicTool](./zotero-plugin-toolkit.basictool.md) | <i>(Optional)</i> |
+|  source | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
