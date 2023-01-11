@@ -3,6 +3,9 @@ import ReactDOM = require("react-dom");
 import { IntlProvider } from "react-intl";
 import { BasicTool } from "../basic";
 
+/**
+ * VirtualizedTable helper.
+ */
 export class VirtualizedTableHelper {
   public props: VirtualizedTableProps;
   public localeStrings: { [name: string]: string };
@@ -13,10 +16,12 @@ export class VirtualizedTableHelper {
   private ReactDOM: typeof ReactDOM;
   private VirtualizedTable: VirtualizedTabelConstructor;
   private IntlProvider: typeof IntlProvider;
+  private basicTool: BasicTool;
 
   constructor(win: Window) {
     this.window = win;
-    const Zotero = new BasicTool().getGlobal("Zotero");
+    this.basicTool = new BasicTool();
+    const Zotero = this.basicTool.getGlobal("Zotero");
     const _require = (win as any).require as Function;
     // Don't actually use any React instance, so that it won't be actually compiled.
     this.React = _require("react");
@@ -154,28 +159,15 @@ export class VirtualizedTableHelper {
     onfulfilled?: (value: unknown) => unknown,
     onrejected?: (reason: any) => PromiseLike<never>
   ) {
+    const refreshSelection = () => {
+      this.treeInstance.invalidate();
+      if (typeof selecteId !== "undefined" && selecteId >= 0) {
+        this.treeInstance.selection.select(selecteId);
+      } else {
+        this.treeInstance.selection.clearSelection();
+      }
+    };
     if (!this.treeInstance) {
-      // const columns = [
-      //   {
-      //     dataKey: "title",
-      //     label: "zotero.preferences.cite.styles.styleManager.title",
-      //   },
-      //   {
-      //     dataKey: "updated",
-      //     label: "zotero.preferences.cite.styles.styleManager.updated",
-      //     fixedWidth: true,
-      //     width: 100,
-      //   },
-      // ];
-      // var handleKeyDown = (event) => {
-      //   if (
-      //     event.key == "Delete" ||
-      //     (Zotero.isMac && event.key == "Backspace")
-      //   ) {
-      //     Zotero_Preferences.Cite.deleteStyle();
-      //     return false;
-      //   }
-      // };
       const vtableProps = Object.assign({}, this.props, {
         ref: (ref) => (this.treeInstance = ref),
       });
@@ -194,17 +186,16 @@ export class VirtualizedTableHelper {
       const container = this.window.document.getElementById(this.containerId);
       new Promise((resolve) =>
         this.ReactDOM.render(elem, container, resolve as () => {})
-      ).then(onfulfilled, onrejected);
-
-      // Fix style manager showing partially blank until scrolled
-      setTimeout(() => this.treeInstance.invalidate());
+      )
+        .then(() => {
+          // Fix style manager showing partially blank until scrolled
+          this.basicTool.getGlobal("setTimeout")(() => {
+            refreshSelection();
+          });
+        })
+        .then(onfulfilled, onrejected);
     } else {
-      this.treeInstance.invalidate();
-    }
-    if (typeof selecteId !== "undefined" && selecteId >= 0) {
-      this.treeInstance.selection.select(selecteId);
-    } else {
-      this.treeInstance.selection.clearSelection();
+      refreshSelection();
     }
     return this;
   }
