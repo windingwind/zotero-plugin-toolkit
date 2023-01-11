@@ -35,15 +35,15 @@ class ZoteroToolkit extends BasicTool {
 
   constructor() {
     super();
-    this.UI = new UITool();
-    this.Reader = new ReaderTool();
-    this.ExtraField = new ExtraFieldTool();
-    this.ItemTree = new ItemTreeManager();
-    this.LibraryTabPanel = new LibraryTabPanelManager();
-    this.ReaderTabPanel = new ReaderTabPanelManager();
-    this.Menu = new MenuManager();
-    this.PreferencePane = new PreferencePaneManager();
-    this.Shortcut = new ShortcutManager();
+    this.UI = new UITool(this);
+    this.Reader = new ReaderTool(this);
+    this.ExtraField = new ExtraFieldTool(this);
+    this.ItemTree = new ItemTreeManager(this);
+    this.LibraryTabPanel = new LibraryTabPanelManager(this);
+    this.ReaderTabPanel = new ReaderTabPanelManager(this);
+    this.Menu = new MenuManager(this);
+    this.PreferencePane = new PreferencePaneManager(this);
+    this.Shortcut = new ShortcutManager(this);
     this.Clibpoard = ClibpoardHelper;
     this.FilePicker = FilePickerHelper;
     this.ProgressWindow = ProgressWindowHelper;

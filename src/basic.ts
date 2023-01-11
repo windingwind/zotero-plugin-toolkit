@@ -215,7 +215,14 @@ export class BasicTool {
       if (!options.disableZLog) {
         Zotero.debug(
           data
-            .map((d) => (typeof d === "object" ? JSON.stringify(d) : String(d)))
+            .map((d) => {
+              try {
+                return typeof d === "object" ? JSON.stringify(d) : String(d);
+              } catch (e) {
+                Zotero.debug(d);
+                return "";
+              }
+            })
             .join("\n")
         );
       }
