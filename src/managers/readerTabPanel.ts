@@ -254,9 +254,7 @@ export class ReaderTabPanelManager extends ManagerTool {
     }
     this.readerTabCache.optionsList.forEach((options) => {
       if (tabbox) {
-        const tab = this.ui.creatElementsFromJSON(window.document, {
-          tag: "tab",
-          namespace: "xul",
+        const tab = this.ui.createElement(window.document, "tab", {
           id: `${options.tabId}-${reader._instanceID}`,
           classList: [`toolkit-ui-tabs-${options.tabId}`],
           attributes: {
@@ -264,9 +262,7 @@ export class ReaderTabPanelManager extends ManagerTool {
           },
           ignoreIfExists: true,
         }) as XUL.Tab;
-        const tabpanel = this.ui.creatElementsFromJSON(window.document, {
-          tag: "tabpanel",
-          namespace: "xul",
+        const tabpanel = this.ui.createElement(window.document, "tabpanel", {
           id: `${options.panelId}-${reader._instanceID}`,
           classList: [`toolkit-ui-tabs-${options.tabId}`],
           ignoreIfExists: true,

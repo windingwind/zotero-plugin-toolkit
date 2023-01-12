@@ -117,23 +117,19 @@ export class LibraryTabPanelManager extends ManagerTool {
     const randomId = `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
     const tabId = options.tabId || `toolkit-readertab-${randomId}`;
     const panelId = options.panelId || `toolkit-readertabpanel-${randomId}`;
-    const tab = this.ui.creatElementsFromJSON(window.document, {
-      tag: "tab",
-      namespace: "xul",
+    const tab = this.ui.createElement(window.document, "tab", {
       id: tabId,
       classList: [`toolkit-ui-tabs-${tabId}`],
       attributes: {
         label: tabLabel,
       },
       ignoreIfExists: true,
-    }) as XUL.Tab;
-    const tabpanel = this.ui.creatElementsFromJSON(window.document, {
-      tag: "tabpanel",
-      namespace: "xul",
+    });
+    const tabpanel = this.ui.createElement(window.document, "tabpanel", {
       id: panelId,
       classList: [`toolkit-ui-tabs-${tabId}`],
       ignoreIfExists: true,
-    }) as XUL.TabPanel;
+    });
     const tabs = tabbox.querySelector("tabs");
     const tabpanels = tabbox.querySelector("tabpanels");
     const targetIndex =

@@ -4,7 +4,7 @@
 
 import { BasicTool } from "./basic";
 import { ZoteroToolkit } from "./index";
-import { UITool } from "./tools/ui";
+import { UITool, ElementProps } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
 import { ItemTreeManager } from "./managers/itemTree";
@@ -22,6 +22,7 @@ export {
   BasicTool,
   ZoteroToolkit,
   UITool,
+  ElementProps,
   ReaderTool,
   ExtraFieldTool,
   ItemTreeManager,

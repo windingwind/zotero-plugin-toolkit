@@ -5,24 +5,13 @@ import { BasicOptions, BasicTool } from "../basic";
  */
 export class UITool extends BasicTool {
   /**
-   * Element management options
-   * @remarks
-   * > What is this for?
-   *
-   * In boostrap plugins, elements must be manually maintained and removed on exiting.
-   *
-   * If this is `false`, newly created elements with `createElement` will not be maintained.
+   * UITool options
    */
-  public elementOptions: {
-    /**
-     * If elements created with `createElement` should be recorded.
-     */
-    enableElementRecord: boolean;
-    /**
-     * If the input of `createElementFromJSON` should be logged.
-     */
-    enableElementJSONLog: boolean;
-  };
+  protected _basicOptions: UIOptions;
+
+  public get basicOptions(): UIOptions {
+    return this._basicOptions;
+  }
   /**
    * Store elements created with this instance
    *
@@ -33,15 +22,17 @@ export class UITool extends BasicTool {
    *
    * This API does this for you.
    */
-  private elementCache: Element[];
+  protected elementCache: Element[];
 
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.elementCache = [];
-    this.elementOptions = {
-      enableElementRecord: true,
-      enableElementJSONLog: true,
-    };
+    if (!this._basicOptions.ui) {
+      this._basicOptions.ui = {
+        enableElementRecord: true,
+        enableElementJSONLog: true,
+      };
+    }
   }
 
   /**
@@ -55,65 +46,6 @@ export class UITool extends BasicTool {
    * This API does this for you.
    */
   unregisterAll(): void {
-    this.removeElements();
-  }
-
-  /**
-   * Create an element on doc under specific namespace
-   * The element will be maintained by toolkit.
-   *
-   * @remarks
-   * > What is this for?
-   *
-   * In boostrap plugins, elements must be manually maintained and removed on exiting.
-   *
-   * This API does this for you.
-   *
-   * @param doc target document, e.g. Zotero main window.document
-   * @param tagName element tag name, e.g. `hbox`, `div`
-   * @param namespace default "html"
-   * @param enableElementRecord If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal
-   * @example
-   * Create an element
-   * ```ts
-   * // assume tool: ZoteroTool, ui: ZoteroUI exist
-   * const doc = tool.getWindow().document;
-   * const elem = ui.createElement(doc, "hbox", "xul");
-   * ```
-   * Please call `ui.removeAddonElements()` on shutdown.
-   */
-  createElement(
-    doc: Document,
-    tagName: string,
-    namespace: "html" | "svg" | "xul" = "html",
-    enableElementRecord: boolean = undefined
-  ): HTMLElement | XUL.Element | SVGElement | DocumentFragment {
-    namespace = namespace || "html";
-    const namespaces = {
-      html: "http://www.w3.org/1999/xhtml",
-      svg: "http://www.w3.org/2000/svg",
-    };
-    let elem: HTMLElement | XUL.Element | SVGElement | DocumentFragment;
-    if (tagName === "fragment") {
-      elem = doc.createDocumentFragment();
-      return elem;
-    } else if (namespace === "xul") {
-      elem = this.createXULElement(doc, tagName);
-    } else {
-      elem = doc.createElementNS(namespaces[namespace], tagName) as
-        | HTMLElement
-        | SVGElement;
-    }
-    if (
-      (typeof enableElementRecord !== "undefined" && enableElementRecord) ||
-      this.elementOptions.enableElementRecord
-    ) {
-      this.elementCache.push(elem);
-    }
-    return elem;
-  }
-
-  private removeElements() {
     this.elementCache.forEach((e) => {
       try {
         e?.remove();
@@ -122,163 +54,262 @@ export class UITool extends BasicTool {
       }
     });
   }
-  /**
-   * Create elements in batch, based on `createElement`.
-   * 
-   * The return element will also be maintained by toolkit.
-   * @param doc 
-   * @param options See {@link https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts | source code:options.ts}
-   * @param options.tag tagName
-   * @param options.id element id
-   * @param options.namespace namespace, "html" | "svg" | "xul". Default "html".
-   * subElements will inherit namespace if not assigned.
-   * @param options.classList class list
-   * @param options.styles styles
-   * @param options.directAttributes attributes that can be directly set by`elem.attr = "value"`
-   * @param options.attributes attributes set by `elem.setAttribute("key", "value")`
-   * @param options.listeners event listeners
-   * @param options.ignoreIfExists Skip element creation and return the existing element immediately if the target element with specific `id` exists, default `false`.
-   * @param options.skipIfExists Skip element creation and continue if the target element with specific `id` exists, default `false`.
-   * @param options.removeIfExists Remove element before creation if the target element with specific `id` exists, default `false`.
-   * @param options.checkExistanceParent When `ignoreIfExists` or `removeIfExists` is `true`, toolkit will try to search the element with specific `id`.
-   * If this element is undefined, search under `document` node; otherwise under this `checkExistanceParent` node.
-   * @param options.customCheck Custom check hook. If it returns false, skip element creation and return immediately.
-   * @param options.subElementOptions Child nodes options
-   * @example
-   * Create multiple menu item/menu. This code is part of Zotero Better Notes.
-   * ```ts
-   * const ui = new ZoteroUI();
-   * 
-   * const imageSelected = () => {
-   *   // Return false to skip current element
-   *   return true;
-   * };
-   * 
-   * const popup = document.getElementById("popup")!;
 
-   * const elementOptions = {
-   *   tag: "fragment",
-   *   namespace: "xul",
-   *   subElementOptions: [
-   *     {
-   *       tag: "menuseparator",
-   *       id: "menupopup-betternotessplitter",
-   *       checkExistanceParent: popup,
-   *       ignoreIfExists: true,
-   *     },
-   *     {
-   *       tag: "menuitem",
-   *       id: "menupopup-resizeImage",
-   *       checkExistanceParent: popup,
-   *       ignoreIfExists: true,
-   *       attributes: { label: "Resize Image" },
-   *       customCheck: imageSelected,
-   *       listeners: [
-   *         {
-   *           type: "command",
-   *           listener: (e) => {
-   *             postMessage({ type: "resizeImage", width: 100 }, "   * ");
-   *           },
-   *         ],
-   *       ],
-   *     },
-   *   ],
-   * };
-   * 
-   * const fragment = ui.creatElementsFromJSON(
-   *   popup.ownerDocument,
-   *   elementOptions
+  /**
+   * Create `DocumentFragment`.
+   * @param doc
+   * @param tagName
+   * @param props
+   * @example
+   * ```ts
+   * const frag: DocumentFragment = ui.createElement(
+   *   document, "fragment",
+   *   {
+   *     children:
+   *     [
+   *       { tag: "h1", properties: { innerText: "Hello World!" } }
+   *     ]
+   *   }
    * );
-   * if (fragment) {
-   *   popup.append(fragment);
-   * }
    * ```
    */
-  creatElementsFromJSON(
+  createElement(
     doc: Document,
-    options: ElementOptions,
-    enableElementJSONLog: boolean = undefined
-  ) {
-    if (
-      (typeof enableElementJSONLog !== "undefined" && enableElementJSONLog) ||
-      this.elementOptions.enableElementJSONLog
-    )
-      this.log(options);
-    let element: Element | DocumentFragment | undefined =
-      options.id &&
-      options.tag !== "fragment" &&
-      (options.checkExistanceParent
-        ? options.checkExistanceParent
-        : doc
-      ).querySelector(`#${options.id}`);
-    if (element && options.ignoreIfExists) {
-      return element;
-    }
-    if (element && options.removeIfExists) {
-      element.remove();
-      element = undefined;
-    }
-    if (options.customCheck && !options.customCheck(doc, options)) {
-      return undefined;
-    }
-    if (!element || !options.skipIfExists) {
-      element = this.createElement(doc, options.tag, options.namespace);
+    tagName: "fragment",
+    props?: FragmentElementOptions
+  ): DocumentFragment;
+  /**
+   * Create `HTMLElement`.
+   * @param doc
+   * @param tagName
+   * @param props See {@link ElementProps }
+   * @example
+   * ```ts
+   * const div: HTMLDivElement = ui.createElement(document, "div");
+   * ```
+   * @example
+   * Attributes(for `elem.setAttribute()`), properties(for `elem.prop=`), listeners, and children.
+   * ```ts
+   * const div: HTMLDivElement = ui.createElement(
+   *   document, "div",
+   *   {
+   *     id: "hi-div",
+   *     skipIfExists: true,
+   *     listeners:
+   *     [
+   *       { type: "click", listener: (e)=>ui.log("Clicked!") }
+   *     ],
+   *     children:
+   *     [
+   *       { tag: "h1", properties: { innerText: "Hello World!" } },
+   *       { tag: "a", attributes: { href: "https://www.zotero.org" } },
+   *     ]
+   *   }
+   * );
+   * ```
+   */
+  createElement<
+    HTML_TAG extends keyof HTMLElementTagNameMap,
+    T extends HTMLElementTagNameMap[HTML_TAG]
+  >(doc: Document, tagName: HTML_TAG, props?: HTMLElementOptions): T;
+  /**
+   * Create `XUL.Element`.
+   * @see ElementProps
+   * @param doc
+   * @param tagName
+   * @param props See {@link ElementProps }
+   * @example
+   * ```ts
+   * const menuitem: XUL.MenuItem = ui.createElement(document, "menuitem", { attributes: { label: "Click Me!" } });
+   * ```
+   */
+  createElement<
+    XUL_TAG extends keyof XULElementTagNameMap,
+    T extends XULElementTagNameMap[XUL_TAG]
+  >(doc: Document, tagName: XUL_TAG, props?: XULElementOptions): T;
+  /**
+   * Create `SVGElement`
+   * @param doc
+   * @param tagName
+   * @param props See {@link ElementProps }
+   */
+  createElement<
+    SVG_TAG extends keyof SVGElementTagNameMap,
+    T extends SVGElementTagNameMap[SVG_TAG]
+  >(doc: Document, tagName: SVG_TAG, props?: SVGElementOptions): T;
+  /**
+   * Create Element
+   * @param doc
+   * @param tagName
+   * @param props See {@link ElementProps }
+   */
+  createElement(
+    doc: Document,
+    tagName: string,
+    props?: ElementProps
+  ): HTMLElement | XUL.Element | SVGElement;
+  /**
+   * @deprecated
+   * @param doc target document, e.g. Zotero main window.document
+   * @param tagName element tag name, e.g. `hbox`, `div`
+   * @param namespace default "html"
+   * @param enableElementRecord If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal
+   */
+  createElement(
+    doc: Document,
+    tagName: string,
+    namespace?: "html" | "svg" | "xul",
+    enableElementRecord?: boolean
+  ): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
+  createElement(...args: any) {
+    const doc = args[0] as Document;
+    const tagName = args[1].toLowerCase() as string;
+    let props: ElementProps = args[2] || {};
+    // string, use the old create
+    if (typeof args[2] === "string") {
+      props = {
+        namespace: args[2] as "html" | "xul" | "svg",
+        enableElementRecord: args[3],
+      };
     }
 
-    let _DocumentFragment: typeof DocumentFragment;
-    if (typeof DocumentFragment === "undefined") {
-      _DocumentFragment = (doc as any).ownerGlobal.DocumentFragment;
-    } else {
-      _DocumentFragment = DocumentFragment;
+    if (
+      (typeof props.enableElementJSONLog !== "undefined" &&
+        props.enableElementJSONLog) ||
+      this.basicOptions.ui.enableElementJSONLog
+    ) {
+      this.log(props);
     }
-    if (!(element instanceof _DocumentFragment)) {
-      if (options.id) {
-        element.id = options.id;
+    //
+    props.properties = props.properties || props.directAttributes;
+    props.children = props.children || props.subElementOptions;
+
+    let elem: HTMLElement | DocumentFragment | SVGElement | XUL.Element;
+    if (tagName === "fragment") {
+      const fragElem = doc.createDocumentFragment();
+      elem = fragElem;
+    } else {
+      let realElem =
+        props.id &&
+        ((props.checkExistanceParent
+          ? props.checkExistanceParent
+          : doc
+        ).querySelector(`#${props.id}`) as
+          | HTMLElement
+          | SVGElement
+          | XUL.Element
+          | undefined);
+      if (realElem && props.ignoreIfExists) {
+        return realElem;
       }
-      if (options.styles && Object.keys(options.styles).length) {
-        Object.keys(options.styles).forEach((k) => {
-          const v = options.styles[k];
-          typeof v !== "undefined" && ((element as HTMLElement).style[k] = v);
+      if (realElem && props.removeIfExists) {
+        realElem.remove();
+        realElem = undefined;
+      }
+      if (props.customCheck && !props.customCheck(doc, props)) {
+        return undefined;
+      }
+      if (!realElem || !props.skipIfExists) {
+        let namespace = props.namespace;
+        if (!namespace) {
+          const mightHTML = HTMLElementTagNames.includes(tagName);
+          const mightXUL = XULElementTagNames.includes(tagName);
+          const mightSVG = SVGElementTagNames.includes(tagName);
+          if (Number(mightHTML) + Number(mightXUL) + Number(mightSVG) > 1) {
+            this.log(
+              `[Warning] Creating element ${tagName} with no namespace specified. Found multiply namespace matches.`
+            );
+          }
+          if (mightHTML) {
+            namespace = "html";
+          } else if (mightXUL) {
+            namespace = "xul";
+          } else if (mightSVG) {
+            namespace = "svg";
+          } else {
+            namespace = "html";
+          }
+        }
+
+        if (namespace === "xul") {
+          realElem = this.createXULElement(doc, tagName) as XUL.Element;
+        } else {
+          realElem = doc.createElementNS(
+            {
+              html: "http://www.w3.org/1999/xhtml",
+              svg: "http://www.w3.org/2000/svg",
+            }[namespace],
+            tagName
+          ) as HTMLElement | SVGElement;
+        }
+      }
+
+      if (props.id) {
+        realElem.id = props.id;
+      }
+      if (props.styles && Object.keys(props.styles).length) {
+        Object.keys(props.styles).forEach((k) => {
+          const v = props.styles[k];
+          typeof v !== "undefined" && (realElem.style[k] = v);
         });
       }
-      if (
-        options.directAttributes &&
-        Object.keys(options.directAttributes).length
-      ) {
-        Object.keys(options.directAttributes).forEach((k) => {
-          const v = options.directAttributes[k];
-          typeof v !== "undefined" && (element[k] = v);
+      if (props.properties && Object.keys(props.properties).length) {
+        Object.keys(props.properties).forEach((k) => {
+          const v = props.properties[k];
+          typeof v !== "undefined" && (realElem[k] = v);
         });
       }
-      if (options.attributes && Object.keys(options.attributes).length) {
-        Object.keys(options.attributes).forEach((k) => {
-          const v = options.attributes[k];
-          typeof v !== "undefined" &&
-            (element as HTMLElement).setAttribute(k, String(v));
+      if (props.attributes && Object.keys(props.attributes).length) {
+        Object.keys(props.attributes).forEach((k) => {
+          const v = props.attributes[k];
+          typeof v !== "undefined" && realElem.setAttribute(k, String(v));
         });
       }
       // Add classes after attributes, as user may set the class attribute
-      if (options.classList?.length) {
-        element.classList.add(...options.classList);
+      if (props.classList?.length) {
+        realElem.classList.add(...props.classList);
       }
-      if (options.listeners?.length) {
-        options.listeners.forEach(({ type, listener, options }) => {
+      if (props.listeners?.length) {
+        props.listeners.forEach(({ type, listener, options }) => {
           typeof listener !== "undefined" &&
-            element.addEventListener(type, listener, options);
+            realElem.addEventListener(type, listener, options);
         });
       }
+      elem = realElem;
     }
 
-    if (options.subElementOptions?.length) {
-      const subElements = options.subElementOptions
-        .map((_options) => {
-          _options.namespace = _options.namespace || options.namespace;
-          return this.creatElementsFromJSON(doc, _options);
+    if (props.children?.length) {
+      const subElements = props.children
+        .map((childProps) => {
+          childProps.namespace = childProps.namespace || props.namespace;
+          return this.createElement(doc, childProps.tag, childProps);
         })
         .filter((e) => e);
-      element.append(...subElements);
+      elem.append(...subElements);
     }
-    return element;
+    return elem;
+  }
+
+  /**
+   * @deprecated Use `createElement`. Will be removed in the next major version update.
+   * @param doc
+   * @param options
+   * @param enableElementJSONLog
+   */
+  creatElementsFromJSON(
+    doc: Document,
+    options: ElementProps,
+    enableElementJSONLog: boolean = undefined
+  ) {
+    return this.createElement(
+      doc,
+      options.tag,
+      typeof enableElementJSONLog !== "undefined"
+        ? Object.assign(options, {
+            enableElementJSONLog,
+          })
+        : options
+    );
   }
 
   /**
@@ -305,10 +336,10 @@ export class UITool extends BasicTool {
     const wrappedStr = `${
       entities.length
         ? `<!DOCTYPE bindings [ ${entities.reduce((preamble, url, index) => {
-      return (
-        preamble +
+            return (
+              preamble +
               `<!ENTITY % _dtd-${index} SYSTEM "${url}"> %_dtd-${index}; `
-      );
+            );
           }, "")}]>`
         : ""
     }
@@ -333,23 +364,523 @@ export class UITool extends BasicTool {
   }
 }
 
-export interface ElementOptions {
-  tag: string;
+export interface UIOptions extends BasicOptions {
+  ui: {
+    /**
+     * If elements created with `createElement` should be recorded.
+     */
+    enableElementRecord: boolean;
+    /**
+     * If the input of `createElementFromJSON` should be logged.
+     */
+    enableElementJSONLog: boolean;
+  };
+}
+
+/**
+ * `props` of `UITool.createElement`. See {@link UITool}
+ */
+export interface ElementProps {
+  /**
+   * tagName
+   */
+  tag?: string;
+  /**
+   * id
+   */
   id?: string;
-  namespace?: "html" | "svg" | "xul";
+  /**
+   * xul | html | svg
+   */
+  namespace?: string;
+  /**
+   * classList
+   */
   classList?: Array<string>;
+  /**
+   * styles
+   */
   styles?: { [key: string]: string };
+  /**
+   * Set with `elem.prop =`
+   */
+  properties?: { [key: string]: string | boolean | number };
+  /**
+   * @deprecated Use `properties`
+   */
   directAttributes?: { [key: string]: string | boolean | number };
+  /**
+   * Set with `elem.setAttribute()`
+   */
   attributes?: { [key: string]: string | boolean | number };
+  /**
+   * Event listeners
+   *  */
   listeners?: Array<{
     type: string;
     listener: EventListenerOrEventListenerObject | ((e: Event) => void);
     options?: boolean | AddEventListenerOptions;
   }>;
-  checkExistanceParent?: HTMLElement;
+  /**
+   * Child elements. Will be created and appended to this element.
+   */
+  children?: Array<ElementProps>;
+  /**
+   * Set true to check if the element exists using `id`. If exists, return this element and do not do anything.
+   */
   ignoreIfExists?: boolean;
+  /**
+   * Set true to check if the element exists using `id`. If exists, skip element creation and continue with props/attrs/children.
+   */
   skipIfExists?: boolean;
+  /**
+   * Set true to check if the element exists using `id`. If exists, remove and re-create it, then continue with props/attrs/children.
+   */
   removeIfExists?: boolean;
-  customCheck?: (doc: Document, options: ElementOptions) => boolean;
-  subElementOptions?: Array<ElementOptions>;
+  /**
+   * Existance check will be processed under this element, default `document`
+   */
+  checkExistanceParent?: HTMLElement;
+  /**
+   * Custom check hook. If it returns false, return undefined and do not do anything.
+   * @param doc
+   * @param options
+   */
+  customCheck?: (doc: Document, options: ElementProps) => boolean;
+  /**
+   * @deprecated Use `children`
+   */
+  subElementOptions?: Array<ElementProps>;
+  /**
+   * Enable elements to be recorded by the tookit so it can be removed when calling `unregisterAll`.
+   */
+  enableElementRecord?: boolean;
+  /**
+   * Enable elements to be printed to console & Zotero.debug.
+   */
+  enableElementJSONLog?: boolean;
 }
+
+interface HTMLElementOptions extends Exclude<ElementProps, { tag: any }> {
+  namespace?: "html";
+}
+
+interface SVGElementOptions extends Exclude<ElementProps, { tag: any }> {
+  namespace?: "svg";
+}
+
+interface XULElementOptions extends Exclude<ElementProps, { tag: any }> {
+  namespace?: "xul";
+}
+
+interface FragmentElementOptions {
+  children?: Array<ElementProps>;
+}
+
+interface XULElementTagNameMap {
+  action: XUL.Element;
+  arrowscrollbox: XUL.Element;
+  bbox: XUL.Element;
+  binding: XUL.Element;
+  bindings: XUL.Element;
+  box: XUL.Box;
+  broadcaster: XUL.Element;
+  broadcasterset: XUL.Element;
+  button: XUL.Button;
+  browser: XUL.Element;
+  checkbox: XUL.Checkbox;
+  caption: XUL.Element;
+  colorpicker: XUL.Element;
+  column: XUL.Element;
+  columns: XUL.Element;
+  commandset: XUL.Element;
+  command: XUL.Command;
+  conditions: XUL.Element;
+  content: XUL.Element;
+  deck: XUL.Deck;
+  description: XUL.Description;
+  dialog: XUL.Element;
+  dialogheader: XUL.Element;
+  editor: XUL.Element;
+  grid: XUL.Element;
+  grippy: XUL.Grippy;
+  groupbox: XUL.GroupBox;
+  hbox: XUL.Box;
+  iframe: XUL.Element;
+  image: XUL.Element;
+  key: XUL.Element;
+  keyset: XUL.Element;
+  label: XUL.Label;
+  listbox: XUL.Element;
+  listcell: XUL.Element;
+  listcol: XUL.Element;
+  listcols: XUL.Element;
+  listhead: XUL.Element;
+  listheader: XUL.Element;
+  listitem: XUL.ListItem;
+  member: XUL.Element;
+  menu: XUL.Menu;
+  menubar: XUL.MenuBar;
+  menuitem: XUL.MenuItem;
+  menulist: XUL.MenuList;
+  menupopup: XUL.MenuPopup;
+  menuseparator: XUL.MenuSeparator;
+  observes: XUL.Element;
+  overlay: XUL.Element;
+  page: XUL.Element;
+  popup: XUL.Popup;
+  popupset: XUL.Element;
+  preference: XUL.Element;
+  preferences: XUL.Element;
+  prefpane: XUL.Element;
+  prefwindow: XUL.Element;
+  progressmeter: XUL.Element;
+  radio: XUL.Radio;
+  radiogroup: XUL.RadioGroup;
+  resizer: XUL.Element;
+  richlistbox: XUL.Element;
+  richlistitem: XUL.Element;
+  row: XUL.Element;
+  rows: XUL.Element;
+  rule: XUL.Element;
+  script: XUL.Element;
+  scrollbar: XUL.ScrollBar;
+  scrollbox: XUL.Element;
+  scrollcorner: XUL.Element;
+  separator: XUL.Separator;
+  spacer: XUL.Spacer;
+  splitter: XUL.Splitter;
+  stack: XUL.Element;
+  statusbar: XUL.StatusBar;
+  statusbarpanel: XUL.StatusBarPanel;
+  stringbundle: XUL.Element;
+  stringbundleset: XUL.Element;
+  tab: XUL.Tab;
+  tabbrowser: XUL.Element;
+  tabbox: XUL.TabBox;
+  tabpanel: XUL.TabPanel;
+  tabpanels: XUL.TabPanels;
+  tabs: XUL.Tabs;
+  template: XUL.Element;
+  textnode: XUL.Element;
+  textbox: XUL.Textbox;
+  titlebar: XUL.Element;
+  toolbar: XUL.ToolBar;
+  toolbarbutton: XUL.ToolBarButton;
+  toolbargrippy: XUL.ToolBarGrippy;
+  toolbaritem: XUL.ToolBarItem;
+  toolbarpalette: XUL.ToolBarPalette;
+  toolbarseparator: XUL.ToolBarSeparator;
+  toolbarset: XUL.ToolBarSet;
+  toolbarspacer: XUL.ToolBarSpacer;
+  toolbarspring: XUL.ToolBarSpring;
+  toolbox: XUL.ToolBox;
+  tooltip: XUL.Tooltip;
+  tree: XUL.Tree;
+  treecell: XUL.TreeCell;
+  treechildren: XUL.TreeChildren;
+  treecol: XUL.TreeCol;
+  treecols: XUL.TreeCols;
+  treeitem: XUL.TreeItem;
+  treerow: XUL.TreeRow;
+  treeseparator: XUL.TreeSeparator;
+  triple: XUL.Element;
+  vbox: XUL.Box;
+  window: XUL.Element;
+  wizard: XUL.Element;
+  wizardpage: XUL.Element;
+}
+
+const HTMLElementTagNames = [
+  "a",
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "bdi",
+  "bdo",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "menu",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "picture",
+  "pre",
+  "progress",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "slot",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+];
+
+const XULElementTagNames = [
+  "action",
+  "arrowscrollbox",
+  "bbox",
+  "binding",
+  "bindings",
+  "box",
+  "broadcaster",
+  "broadcasterset",
+  "button",
+  "browser",
+  "checkbox",
+  "caption",
+  "colorpicker",
+  "column",
+  "columns",
+  "commandset",
+  "command",
+  "conditions",
+  "content",
+  "deck",
+  "description",
+  "dialog",
+  "dialogheader",
+  "editor",
+  "grid",
+  "grippy",
+  "groupbox",
+  "hbox",
+  "iframe",
+  "image",
+  "key",
+  "keyset",
+  "label",
+  "listbox",
+  "listcell",
+  "listcol",
+  "listcols",
+  "listhead",
+  "listheader",
+  "listitem",
+  "member",
+  "menu",
+  "menubar",
+  "menuitem",
+  "menulist",
+  "menupopup",
+  "menuseparator",
+  "observes",
+  "overlay",
+  "page",
+  "popup",
+  "popupset",
+  "preference",
+  "preferences",
+  "prefpane",
+  "prefwindow",
+  "progressmeter",
+  "radio",
+  "radiogroup",
+  "resizer",
+  "richlistbox",
+  "richlistitem",
+  "row",
+  "rows",
+  "rule",
+  "script",
+  "scrollbar",
+  "scrollbox",
+  "scrollcorner",
+  "separator",
+  "spacer",
+  "splitter",
+  "stack",
+  "statusbar",
+  "statusbarpanel",
+  "stringbundle",
+  "stringbundleset",
+  "tab",
+  "tabbrowser",
+  "tabbox",
+  "tabpanel",
+  "tabpanels",
+  "tabs",
+  "template",
+  "textnode",
+  "textbox",
+  "titlebar",
+  "toolbar",
+  "toolbarbutton",
+  "toolbargrippy",
+  "toolbaritem",
+  "toolbarpalette",
+  "toolbarseparator",
+  "toolbarset",
+  "toolbarspacer",
+  "toolbarspring",
+  "toolbox",
+  "tooltip",
+  "tree",
+  "treecell",
+  "treechildren",
+  "treecol",
+  "treecols",
+  "treeitem",
+  "treerow",
+  "treeseparator",
+  "triple",
+  "vbox",
+  "window",
+  "wizard",
+  "wizardpage",
+];
+
+const SVGElementTagNames = [
+  "a",
+  "animate",
+  "animateMotion",
+  "animateTransform",
+  "circle",
+  "clipPath",
+  "defs",
+  "desc",
+  "ellipse",
+  "feBlend",
+  "feColorMatrix",
+  "feComponentTransfer",
+  "feComposite",
+  "feConvolveMatrix",
+  "feDiffuseLighting",
+  "feDisplacementMap",
+  "feDistantLight",
+  "feDropShadow",
+  "feFlood",
+  "feFuncA",
+  "feFuncB",
+  "feFuncG",
+  "feFuncR",
+  "feGaussianBlur",
+  "feImage",
+  "feMerge",
+  "feMergeNode",
+  "feMorphology",
+  "feOffset",
+  "fePointLight",
+  "feSpecularLighting",
+  "feSpotLight",
+  "feTile",
+  "feTurbulence",
+  "filter",
+  "foreignObject",
+  "g",
+  "image",
+  "line",
+  "linearGradient",
+  "marker",
+  "mask",
+  "metadata",
+  "mpath",
+  "path",
+  "pattern",
+  "polygon",
+  "polyline",
+  "radialGradient",
+  "rect",
+  "script",
+  "set",
+  "stop",
+  "style",
+  "svg",
+  "switch",
+  "symbol",
+  "text",
+  "textPath",
+  "title",
+  "tspan",
+  "use",
+  "view",
+];

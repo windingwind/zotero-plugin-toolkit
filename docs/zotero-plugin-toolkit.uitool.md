@@ -23,14 +23,21 @@ export declare class UITool extends BasicTool
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [elementOptions](./zotero-plugin-toolkit.uitool.elementoptions.md) |  | { enableElementRecord: boolean; enableElementJSONLog: boolean; } | Element management options |
+|  [\_basicOptions](./zotero-plugin-toolkit.uitool._basicoptions.md) | <code>protected</code> | UIOptions | UITool options |
+|  [basicOptions](./zotero-plugin-toolkit.uitool.basicoptions.md) | <code>readonly</code> | UIOptions |  |
+|  [elementCache](./zotero-plugin-toolkit.uitool.elementcache.md) | <code>protected</code> | Element\[\] | Store elements created with this instance |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.uitool.createelement.md) |  | Create an element on doc under specific namespace The element will be maintained by toolkit. |
-|  [creatElementsFromJSON(doc, options, enableElementJSONLog)](./zotero-plugin-toolkit.uitool.createlementsfromjson.md) |  | <p>Create elements in batch, based on <code>createElement</code>.</p><p>The return element will also be maintained by toolkit.</p> |
+|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement.md) |  | Create <code>DocumentFragment</code>. |
+|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_1.md) |  | Create <code>HTMLElement</code>. |
+|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_2.md) |  | Create <code>XUL.Element</code>. |
+|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_3.md) |  | Create <code>SVGElement</code> |
+|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_4.md) |  | Create Element |
+|  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.uitool.createelement_5.md) |  |  |
+|  [creatElementsFromJSON(doc, options, enableElementJSONLog)](./zotero-plugin-toolkit.uitool.createlementsfromjson.md) |  |  |
 |  [parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.uitool.parsexhtmltofragment.md) |  | <p>Parse XHTML to XUL fragment. For Zotero 6.</p><p>To load preferences from a Zotero 7's <code>.xhtml</code>, use this method to parse it.</p> |
 |  [unregisterAll()](./zotero-plugin-toolkit.uitool.unregisterall.md) |  | Remove all elements created by <code>createElement</code>. |
 

@@ -4,14 +4,15 @@
 
 ## UITool.creatElementsFromJSON() method
 
-Create elements in batch, based on `createElement`<!-- -->.
-
-The return element will also be maintained by toolkit.
+> Warning: This API is now obsolete.
+> 
+> Use `createElement`<!-- -->. Will be removed in the next major version update.
+> 
 
 <b>Signature:</b>
 
 ```typescript
-creatElementsFromJSON(doc: Document, options: ElementOptions, enableElementJSONLog?: boolean): Element | DocumentFragment;
+creatElementsFromJSON(doc: Document, options: ElementProps, enableElementJSONLog?: boolean): XUL.Element | HTMLElement | SVGElement;
 ```
 
 ## Parameters
@@ -19,62 +20,10 @@ creatElementsFromJSON(doc: Document, options: ElementOptions, enableElementJSONL
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  doc | Document |  |
-|  options | ElementOptions | See [source code:options.ts](https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts) |
+|  options | [ElementProps](./zotero-plugin-toolkit.elementprops.md) |  |
 |  enableElementJSONLog | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
-Element \| DocumentFragment
-
-## Example
-
-Create multiple menu item/menu. This code is part of Zotero Better Notes.
-
-```ts
-const ui = new ZoteroUI();
-
-const imageSelected = () => {
-  // Return false to skip current element
-  return true;
-};
-
-const popup = document.getElementById("popup")!;
-
-const elementOptions = {
-  tag: "fragment",
-  namespace: "xul",
-  subElementOptions: [
-    {
-      tag: "menuseparator",
-      id: "menupopup-betternotessplitter",
-      checkExistanceParent: popup,
-      ignoreIfExists: true,
-    },
-    {
-      tag: "menuitem",
-      id: "menupopup-resizeImage",
-      checkExistanceParent: popup,
-      ignoreIfExists: true,
-      attributes: { label: "Resize Image" },
-      customCheck: imageSelected,
-      listeners: [
-        {
-          type: "command",
-          listener: (e) => {
-            postMessage({ type: "resizeImage", width: 100 }, "   * ");
-          },
-        ],
-      ],
-    },
-  ],
-};
-
-const fragment = ui.creatElementsFromJSON(
-  popup.ownerDocument,
-  elementOptions
-);
-if (fragment) {
-  popup.append(fragment);
-}
-```
+XUL.Element \| HTMLElement \| SVGElement
 

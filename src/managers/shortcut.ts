@@ -335,12 +335,10 @@ export class ShortcutManager extends ManagerTool {
    */
   private registerElementCommandset(commandSetOptions: ElementCommandSet) {
     commandSetOptions.document.querySelector("window").appendChild(
-      this.ui.creatElementsFromJSON(commandSetOptions.document, {
-        tag: "commandset",
-        namespace: "xul",
+      this.ui.createElement(commandSetOptions.document, "commandset", {
         id: commandSetOptions.id,
         skipIfExists: true,
-        subElementOptions: commandSetOptions.commands.map((cmd) => ({
+        children: commandSetOptions.commands.map((cmd) => ({
           tag: "command",
           id: cmd.id,
           attributes: {
@@ -368,9 +366,7 @@ export class ShortcutManager extends ManagerTool {
     commandOptions.document
       .querySelector(`commandset#${commandOptions._parentId}`)
       ?.appendChild(
-        this.ui.creatElementsFromJSON(commandOptions.document, {
-          tag: "command",
-          namespace: "xul",
+        this.ui.createElement(commandOptions.document, "command", {
           id: commandOptions.id,
           skipIfExists: true,
           attributes: {
@@ -388,12 +384,10 @@ export class ShortcutManager extends ManagerTool {
    */
   private registerElementKeyset(keySetOptions: ElementKeySet) {
     keySetOptions.document.querySelector("window").appendChild(
-      this.ui.creatElementsFromJSON(keySetOptions.document, {
-        tag: "keyset",
-        namespace: "xul",
+      this.ui.createElement(keySetOptions.document, "keyset", {
         id: keySetOptions.id,
         skipIfExists: true,
-        subElementOptions: keySetOptions.keys.map((keyOptions) => ({
+        children: keySetOptions.keys.map((keyOptions) => ({
           tag: "key",
           id: keyOptions.id,
           attributes: {
@@ -432,9 +426,7 @@ export class ShortcutManager extends ManagerTool {
       });
     }
     doc.querySelector(`keyset#${keyOptions.xulData._parentId}`)?.appendChild(
-      this.ui.creatElementsFromJSON(doc, {
-        tag: "key",
-        namespace: "xul",
+      this.ui.createElement(doc, "key", {
         id: keyOptions.id,
         skipIfExists: true,
         attributes: {

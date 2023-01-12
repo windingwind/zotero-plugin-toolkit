@@ -24,3 +24,9 @@
 |  [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) | VirtualizedTable helper. |
 |  [ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md) | ⭐Contains all tools in this lib. Start from here if you are new to this lib. |
 
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [ElementProps](./zotero-plugin-toolkit.elementprops.md) | <code>props</code> of <code>UITool.createElement</code>. See [UITool](./zotero-plugin-toolkit.uitool.md) |
+

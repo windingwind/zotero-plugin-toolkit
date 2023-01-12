@@ -97,7 +97,7 @@ export class MenuManager extends ManagerTool {
       let elementOption = {
         tag: menuitemOption.tag,
         id: menuitemOption.id,
-        namespace: "xul" as "xul",
+        namespace: "xul",
         attributes: {
           label: menuitemOption.label,
           hidden: Boolean(menuitemOption.hidden),
@@ -110,7 +110,7 @@ export class MenuManager extends ManagerTool {
         listeners: [
           { type: "command", listener: menuitemOption.commandListener },
         ],
-        subElementOptions: [],
+        children: [],
       };
       if (menuitemOption.icon) {
         elementOption.attributes["class"] += " menuitem-iconic";
@@ -119,22 +119,21 @@ export class MenuManager extends ManagerTool {
         ] = `url(${menuitemOption.icon})`;
       }
       if (menuitemOption.tag === "menu") {
-        elementOption.subElementOptions.push({
+        elementOption.children.push({
           tag: "menupopup",
           id: menuitemOption.popupId,
-          namespace: "xul",
           attributes: { onpopupshowing: menuitemOption.onpopupshowing },
-          subElementOptions: menuitemOption.subElementOptions.map(
-            generateElementOptions
-          ),
+          children: (
+            menuitemOption.children ||
+            menuitemOption.subElementOptions ||
+            []
+          ).map(generateElementOptions),
         });
       }
       return elementOption;
     };
-    const menuItem = this.ui.creatElementsFromJSON(
-      doc,
-      generateElementOptions(options)
-    );
+    const props = generateElementOptions(options);
+    const menuItem = this.ui.createElement(doc, options.tag, props);
     if (!anchorElement) {
       anchorElement = (
         insertPosition === "after"
@@ -177,9 +176,15 @@ export interface MenuitemOptions {
   hidden?: boolean;
   disabled?: boolean;
   oncommand?: string;
-  commandListener?: EventListenerOrEventListenerObject;
+  commandListener?:
+    | EventListenerOrEventListenerObject
+    | ((event: Event) => any);
   // Attributes below are used when type === "menu"
   popupId?: string;
   onpopupshowing?: string;
+  children?: Array<MenuitemOptions>;
+  /**
+   * @deprecated Use `children`.
+   */
   subElementOptions?: Array<MenuitemOptions>;
 }
