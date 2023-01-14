@@ -31,6 +31,7 @@ export declare class UITool extends BasicTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [appendElement(properties, container)](./zotero-plugin-toolkit.uitool.appendelement.md) |  | Append element(s) to a node. |
 |  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement.md) |  | Create <code>DocumentFragment</code>. |
 |  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_1.md) |  | Create <code>HTMLElement</code>. |
 |  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_2.md) |  | Create <code>XUL.Element</code>. |
@@ -38,6 +39,8 @@ export declare class UITool extends BasicTool
 |  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_4.md) |  | Create Element |
 |  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.uitool.createelement_5.md) |  |  |
 |  [creatElementsFromJSON(doc, options, enableElementJSONLog)](./zotero-plugin-toolkit.uitool.createlementsfromjson.md) |  |  |
+|  [insertElementBefore(properties, referenceNode)](./zotero-plugin-toolkit.uitool.insertelementbefore.md) |  | Inserts a node before a reference node as a child of its parent node. |
 |  [parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.uitool.parsexhtmltofragment.md) |  | <p>Parse XHTML to XUL fragment. For Zotero 6.</p><p>To load preferences from a Zotero 7's <code>.xhtml</code>, use this method to parse it.</p> |
+|  [replaceElement(properties, oldNode)](./zotero-plugin-toolkit.uitool.replaceelement.md) |  | Replace oldNode with a new one. |
 |  [unregisterAll()](./zotero-plugin-toolkit.uitool.unregisterall.md) |  | Remove all elements created by <code>createElement</code>. |
 
