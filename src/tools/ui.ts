@@ -291,6 +291,49 @@ export class UITool extends BasicTool {
   }
 
   /**
+   * Append element(s) to a node.
+   * @param container The parent node to append to.
+   * @param properties See {@link ElementProps}
+   * @returns A Node that is the appended child (aChild), 
+   *          except when aChild is a DocumentFragment, 
+   *          in which case the empty DocumentFragment is returned.
+   */
+  appendElement(container: Element, properties: ElementProps & { tag: string }) {
+    return container.appendChild(
+      this.createElement(container.ownerDocument, properties.tag, properties)
+    );
+  }
+
+  /**
+   * Inserts a node before a reference node as a child of its parent node.
+   * @param properties See {@link ElementProps}
+   * @param referenceNode The node before which newNode is inserted. 
+   * @returns 
+   */
+  insertElementBefore(properties: ElementProps & { tag: string }, referenceNode: Element) {
+    if (referenceNode.parentNode)
+      return referenceNode.parentNode.insertBefore(
+        this.createElement(referenceNode.ownerDocument, properties.tag, properties),
+        referenceNode
+      );
+    else this.log(referenceNode.tagName + ' has no parent, cannot insert ' + properties.tag);
+  }
+
+  /**
+   * Replace oldNode with a new one.
+   * @param properties See {@link ElementProps}
+   * @param oldNode The child to be replaced.
+   * @returns The replaced Node. This is the same node as oldChild.
+   */
+  replaceElement(properties: ElementProps & { tag: string }, oldNode: Element) {
+    if (oldNode.parentNode)
+      return oldNode.parentNode.replaceChild(
+        this.createElement(oldNode.ownerDocument, properties.tag, properties), oldNode
+      );
+    else this.log(oldNode.tagName + ' has no parent, cannot replace it with ' + properties.tag);
+  }
+  
+  /**
    * @deprecated Use `createElement`. Will be removed in the next major version update.
    * @param doc
    * @param options
