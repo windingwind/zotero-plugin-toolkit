@@ -17,6 +17,7 @@ import { ClibpoardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
+import { DialogHelper } from "./helpers/dialog";
 
 export {
   BasicTool,
@@ -35,4 +36,5 @@ export {
   FilePickerHelper,
   ProgressWindowHelper,
   VirtualizedTableHelper,
+  DialogHelper,
 };

@@ -28,6 +28,7 @@ To minimize your plugin, import the modules you need manually.
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [Clibpoard](./zotero-plugin-toolkit.zoterotoolkit.clibpoard.md) |  | typeof [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) |  |
+|  [Dialog](./zotero-plugin-toolkit.zoterotoolkit.dialog.md) |  | typeof [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) |  |
 |  [ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md) |  | [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) |  |
 |  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
 |  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) |  |

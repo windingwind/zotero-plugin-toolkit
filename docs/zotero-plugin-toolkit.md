@@ -10,6 +10,7 @@
 |  --- | --- |
 |  [BasicTool](./zotero-plugin-toolkit.basictool.md) | Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers |
 |  [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) | Copy helper for text/richtext/image. |
+|  [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) | Dialog window helper. A superset of XUL dialog. |
 |  [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) | Get/set extra field APIs. |
 |  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
 |  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
