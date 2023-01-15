@@ -1,18 +1,18 @@
 /**
-   * File picker helper.
-   * @param title window title
-   * @param mode 
-   * @param filters Array<[hint string, filter string]>
-   * @param suggestion default file/foler
-   * @example
-   * ```ts
-   * await new FilePickerHelper(
-   *   `${Zotero.getString("fileInterface.import")} MarkDown Document`,
-   *   "open",
-   *   [["MarkDown File(*.md)", "*.md"]]
-   * ).open();
-   * ```
-   */
+ * File picker helper.
+ * @param title window title
+ * @param mode
+ * @param filters Array<[hint string, filter string]>
+ * @param suggestion default file/foler
+ * @example
+ * ```ts
+ * await new FilePickerHelper(
+ *   `${Zotero.getString("fileInterface.import")} MarkDown Document`,
+ *   "open",
+ *   [["MarkDown File(*.md)", "*.md"]]
+ * ).open();
+ * ```
+ */
 export class FilePickerHelper {
   private title: string;
   private mode: "open" | "save" | "folder";
@@ -30,7 +30,7 @@ export class FilePickerHelper {
     this.suggestion = suggestion;
   }
 
-  open(): Promise<string> {
+  open(): Promise<string | false> {
     const fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(
       Components.interfaces.nsIFilePicker
     );
@@ -59,7 +59,7 @@ export class FilePickerHelper {
             break;
 
           default: // aka returnCancel
-            resolve("");
+            resolve(false);
             break;
         }
       });

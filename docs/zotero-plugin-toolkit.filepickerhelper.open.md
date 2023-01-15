@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-open(): Promise<string>;
+open(): Promise<string | false>;
 ```
 <b>Returns:</b>
 
-Promise&lt;string&gt;
+Promise&lt;string \| false&gt;
 
