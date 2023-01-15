@@ -49,13 +49,15 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [VirtualizedTable](docs/zotero-plugin-toolkit.virtualizedtablehelper.md): Create a VirtualizedTable (an advanced table view element, which is used by the Zotero item tree, collections tree, item picker, etc.)
 
+  - [Dialog](docs/zotero-plugin-toolkit.dialoghelper.md): Create a dialog window(a superset of XUL dialog). With data-binding, auto-layout, and control buttons.
+
 ## Usage
 
 1. Run `npm install --save zotero-plugin-toolkit`.
 
 2. Import the toolkit class
 
-```ts
+````ts
 import ZoteroToolkit from "zotero-plugin-toolkit";
 /* Alternatively, import class you need to minify the plugin size
  * ```ts
@@ -63,7 +65,7 @@ import ZoteroToolkit from "zotero-plugin-toolkit";
  * import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
  */
 const ztoolkit = new ZoteroToolkit();
-```
+````
 
 3. Use the toolkit following this [API Documentation](./docs/index.md)
 
