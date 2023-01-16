@@ -32,6 +32,7 @@ export declare class BasicTool
 |  [createXULElement(doc, type)](./zotero-plugin-toolkit.basictool.createxulelement.md) |  | <p>Create an XUL element</p><p>For Zotero 6, use <code>createElementNS</code>;</p><p>For Zotero 7+, use <code>createXULElement</code>.</p> |
 |  [getDOMParser()](./zotero-plugin-toolkit.basictool.getdomparser.md) |  | <p>Get DOMParser.</p><p>For Zotero 6: mainWindow.DOMParser or nsIDOMParser</p><p>For Zotero 7: Firefox 102 support DOMParser natively</p> |
 |  [getGlobal(k)](./zotero-plugin-toolkit.basictool.getglobal_12.md) |  | Get global variables. |
+|  [getZotero()](./zotero-plugin-toolkit.basictool.getzotero.md) | <code>static</code> |  |
 |  [isXULElement(elem)](./zotero-plugin-toolkit.basictool.isxulelement.md) |  | If it's an XUL element |
 |  [isZotero7()](./zotero-plugin-toolkit.basictool.iszotero7.md) |  | Check if it's running on Zotero 7 (Firefox 102) |
 |  [log(data)](./zotero-plugin-toolkit.basictool.log.md) |  | Output to both Zotero.debug and console.log |
