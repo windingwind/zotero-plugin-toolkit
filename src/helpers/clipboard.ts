@@ -1,3 +1,5 @@
+import { BasicTool } from "../basic";
+
 /**
  * Copy helper for text/richtext/image.
  *
@@ -61,12 +63,21 @@ export class ClibpoardHelper {
     let imgTools = Components.classes["@mozilla.org/image/tools;1"].getService(
       Components.interfaces.imgITools
     );
-    let imgPtr = Components.classes[
-      "@mozilla.org/supports-interface-pointer;1"
-    ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
-    imgPtr.data = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
-    this.transferable.addDataFlavor(mime);
-    this.transferable.setTransferData(mime, imgPtr, 0);
+    let mimeType: string;
+    let img: unknown;
+    if (BasicTool.getZotero().platformMajorVersion >= 102) {
+      img = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
+      mimeType = 'application/x-moz-nativeimage';
+    }
+    else {
+      mimeType = `image/png`;
+      img = Components.classes[
+        "@mozilla.org/supports-interface-pointer;1"
+      ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
+      (img as any).data = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mimeType);
+    }
+    this.transferable.addDataFlavor(mimeType);
+    this.transferable.setTransferData(mimeType, img, 0);
     return this;
   }
 

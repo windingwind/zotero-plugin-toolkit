@@ -263,6 +263,12 @@ export class BasicTool {
       this._basicOptions = source;
     }
   }
+
+  static getZotero() {
+    return Zotero || Components.classes["@zotero.org/Zotero;1"].getService(
+      Components.interfaces.nsISupports
+    ).wrappedJSObject;
+  }
 }
 
 export interface BasicOptions {
