@@ -33,7 +33,7 @@ export class BasicTool {
    * @alpha
    * @param k
    */
-  getGlobal(k: "Zotero" | "zotero"): _ZoteroConstructable;
+  getGlobal(k: "Zotero" | "zotero"): _ZoteroTypes.Zotero;
   /**
    * @alpha
    * @param k
