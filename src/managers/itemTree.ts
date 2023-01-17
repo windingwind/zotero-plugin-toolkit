@@ -1,6 +1,7 @@
 import React = require("react");
 import { BasicOptions, BasicTool } from "../basic";
 import { ManagerTool } from "../basic";
+import ToolkitGlobal from "./toolkitGlobal";
 
 /**
  * Register customized new columns to the library itemTree.
@@ -98,7 +99,7 @@ export class ItemTreeManager extends ManagerTool {
         column: ColumnOptions,
         original: Function
       ) => HTMLElement;
-    }
+    } = {}
   ) {
     await this.initializationLock.promise;
     if (
@@ -257,15 +258,10 @@ export class ItemTreeManager extends ManagerTool {
   private async initializeGlobal() {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
-    const window = this.getGlobal("window");
-    if (!Zotero._ItemTreeExtraColumnsGlobal) {
-      let globalCache = {
-        columns: [],
-        fieldHooks: {},
-        renderCellHooks: {},
-      } as ItemTreeExtraColumnsGlobal;
-      this.globalCache = Zotero._ItemTreeExtraColumnsGlobal = globalCache;
-
+    const window = this.getGlobal("window"),
+      globalCache = this.globalCache = ToolkitGlobal.getInstance(Zotero).itemTree;
+    if (!globalCache.initialized) {
+      globalCache.initialized = true;
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       this.patch(
@@ -282,7 +278,7 @@ export class ItemTreeManager extends ManagerTool {
             columns.splice(
               insertAfter + 1,
               0,
-              ...Zotero._ItemTreeExtraColumnsGlobal.columns
+              ...globalCache.columns
             );
             return columns;
           }
@@ -351,8 +347,6 @@ export class ItemTreeManager extends ManagerTool {
             return original.apply(this, arguments);
           }
       );
-    } else {
-      this.globalCache = Zotero._ItemTreeExtraColumnsGlobal;
     }
     this.initializationLock.resolve();
   }
@@ -408,6 +402,7 @@ export class ItemTreeManager extends ManagerTool {
 }
 
 export interface ItemTreeExtraColumnsGlobal {
+  initialized: boolean;
   columns: ColumnOptions[];
   fieldHooks: {
     [key: string]: (
