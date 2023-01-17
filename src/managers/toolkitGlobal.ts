@@ -5,7 +5,7 @@ export default class ToolkitGlobal {
 
     private constructor() {
         this.itemTree = {
-            initialized: false,
+            state: 'idle',
             columns: [],
             fieldHooks: {},
             renderCellHooks: {},

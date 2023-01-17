@@ -260,8 +260,8 @@ export class ItemTreeManager extends ManagerTool {
     await Zotero.uiReadyPromise;
     const window = this.getGlobal("window"),
       globalCache = this.globalCache = ToolkitGlobal.getInstance(Zotero).itemTree;
-    if (!globalCache.initialized) {
-      globalCache.initialized = true;
+    if (globalCache.state == 'idle') {
+      globalCache.state = 'loading';
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       this.patch(
@@ -347,6 +347,7 @@ export class ItemTreeManager extends ManagerTool {
             return original.apply(this, arguments);
           }
       );
+      globalCache.state = 'ready';
     }
     this.initializationLock.resolve();
   }
@@ -402,7 +403,7 @@ export class ItemTreeManager extends ManagerTool {
 }
 
 export interface ItemTreeExtraColumnsGlobal {
-  initialized: boolean;
+  state: 'idle' | 'loading' | 'ready';
   columns: ColumnOptions[];
   fieldHooks: {
     [key: string]: (
