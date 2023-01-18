@@ -259,7 +259,7 @@ export class ItemTreeManager extends ManagerTool {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
     const window = this.getGlobal("window"),
-      globalCache = this.globalCache = ToolkitGlobal.getInstance(Zotero).itemTree;
+      globalCache = this.globalCache = ToolkitGlobal.getInstance().itemTree;
     if (globalCache.state == 'idle') {
       globalCache.state = 'loading';
       // @ts-ignore
