@@ -265,9 +265,12 @@ export class BasicTool {
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
-    return Zotero || Components.classes["@zotero.org/Zotero;1"].getService(
-      Components.interfaces.nsISupports
-    ).wrappedJSObject;
+    return (
+      Zotero ||
+      Components.classes["@zotero.org/Zotero;1"].getService(
+        Components.interfaces.nsISupports
+      ).wrappedJSObject
+    );
   }
 }
 

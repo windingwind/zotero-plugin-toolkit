@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
-    "release": "release-it"
+    "build": "prettier --write src && tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "release": "release-it",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,13 +41,20 @@
     "lib": "dist",
     "doc": "docs"
   },
+  "prettier": {},
   "devDependencies": {
     "@microsoft/api-documenter": "^7.19.27",
     "@microsoft/api-extractor": "^7.33.7",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@types/react-intl": "^3.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "2.8.3",
     "react-intl": "^6.2.5",
     "release-it": "^15.5.1"
+  },
+  "lint-staged": {
+    "*.{ts,js,css,md}": "prettier --write src"
   }
 }

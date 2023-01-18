@@ -67,14 +67,16 @@ export class ClibpoardHelper {
     let img: unknown;
     if (BasicTool.getZotero().platformMajorVersion >= 102) {
       img = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
-      mimeType = 'application/x-moz-nativeimage';
-    }
-    else {
+      mimeType = "application/x-moz-nativeimage";
+    } else {
       mimeType = `image/png`;
       img = Components.classes[
         "@mozilla.org/supports-interface-pointer;1"
       ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
-      (img as any).data = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mimeType);
+      (img as any).data = imgTools.decodeImageFromArrayBuffer(
+        u8arr.buffer,
+        mimeType
+      );
     }
     this.transferable.addDataFlavor(mimeType);
     this.transferable.setTransferData(mimeType, img, 0);
