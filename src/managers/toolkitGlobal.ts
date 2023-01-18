@@ -12,13 +12,13 @@ export default class ToolkitGlobal {
 
   private constructor() {
     this.itemTree = {
-      _state: "idle",
+      _ready: false,
       columns: [],
       fieldHooks: {},
       renderCellHooks: {},
     };
     this.shortcut = {
-      _state: "idle",
+      _ready: false,
       eventKeys: [],
     };
   }
@@ -33,22 +33,8 @@ export default class ToolkitGlobal {
       Zotero._toolkitGlobal = new ToolkitGlobal();
     return Zotero._toolkitGlobal;
   }
-
-  /**
-   * Wait for instance if it is loading.
-   * @param instence
-   */
-  static async waitGlobalInstance(instence: GlobalInstance) {
-    const Zotero = BasicTool.getZotero();
-    let t = 0;
-    while (instence._state === "loading" && t <= 5000) {
-      await Zotero.Promise.delay(10);
-      t += 10;
-    }
-    return;
-  }
 }
 
 export interface GlobalInstance {
-  _state: "idle" | "loading" | "ready";
+  _ready: boolean;
 }
