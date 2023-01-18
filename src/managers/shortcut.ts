@@ -1,6 +1,7 @@
 import { BasicOptions, BasicTool } from "../basic";
-import { ElementProps, UITool } from "../tools/ui";
+import { UITool } from "../tools/ui";
 import { ManagerTool } from "../basic";
+import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
  * Register shortcut keys.
@@ -275,14 +276,15 @@ export class ShortcutManager extends ManagerTool {
       .forEach((keyOptions) => this.unregister(keyOptions));
   }
 
-  private initializeGlobal() {
+  private async initializeGlobal() {
     const Zotero = this.getGlobal("Zotero");
+    await Zotero.uiReadyPromise;
     const window = this.getGlobal("window");
-    if (!Zotero._ToolkitKeysGlobal) {
-      this.globalCache = {
-        eventKeys: [],
-      };
-      Zotero._ToolkitKeysGlobal = this.globalCache;
+
+    this.globalCache = ToolkitGlobal.getInstance().shortcut;
+    await ToolkitGlobal.waitGlobalInstance(this.globalCache);
+    if (this.globalCache._state === "idle") {
+      this.globalCache._state = "loading";
       window.addEventListener("keypress", (event) => {
         let eventMods = [];
         let eventModsWithAccel = [];
@@ -306,21 +308,22 @@ export class ShortcutManager extends ManagerTool {
         const eventModStrWithAccel = new KeyModifier(
           eventMods.join(",")
         ).getRaw();
-        this.globalCache.eventKeys.forEach((keyOptions) => {
-          if (keyOptions.disabled) {
-            return;
+        Zotero._toolkitGlobal.shortcut.eventKeys.forEach(
+          (keyOptions: BaseKey) => {
+            if (keyOptions.disabled) {
+              return;
+            }
+            const modStr = new KeyModifier(keyOptions.modifiers || "").getRaw();
+            if (
+              (modStr === eventModStr || modStr === eventModStrWithAccel) &&
+              keyOptions.key?.toLowerCase() === event.key.toLowerCase()
+            ) {
+              keyOptions.callback();
+            }
           }
-          const modStr = new KeyModifier(keyOptions.modifiers || "").getRaw();
-          if (
-            (modStr === eventModStr || modStr === eventModStrWithAccel) &&
-            keyOptions.key?.toLowerCase() === event.key.toLowerCase()
-          ) {
-            keyOptions.callback(keyOptions);
-          }
-        });
+        );
       });
-    } else {
-      this.globalCache = Zotero._ToolkitKeysGlobal;
+      this.globalCache._state = "ready";
     }
   }
 
@@ -564,12 +567,9 @@ export class ShortcutManager extends ManagerTool {
                 _parentId: keysetElem.id,
                 _commandOptions: commandOptions,
               },
-              callback: (keyOptions: ElementKey) => {
-                if (keyOptions.disabled) {
-                  return;
-                }
+              callback: () => {
                 const win = (doc as any).ownerGlobal as Window;
-                const _eval = this.getGlobal("eval").bind(win);
+                const _eval = (win as any).eval;
                 _eval(oncommand);
                 _eval(commandOptions?.oncommand || "");
               },
@@ -586,9 +586,11 @@ export class ShortcutManager extends ManagerTool {
    * @param options
    */
   private getElementKeys(doc?: Document) {
-    return Array.prototype.concat(
-      ...this.getElementKeySets(doc).map((keyset) => keyset.keys)
-    ) as ElementKey[];
+    return Array.prototype
+      .concat(...this.getElementKeySets(doc).map((keyset) => keyset.keys))
+      .filter(
+        (elemKey) => !ELEM_KEY_IGNORE.includes((elemKey as ElementKey).id)
+      ) as ElementKey[];
   }
 
   /**
@@ -612,7 +614,7 @@ export class ShortcutManager extends ManagerTool {
       (pref) =>
         ({
           id: pref.id,
-          modifiers: pref.id,
+          modifiers: pref.modifiers,
           key: Zotero.Prefs.get(pref.id),
           callback: pref.callback,
           type: "prefs",
@@ -628,7 +630,7 @@ export class ShortcutManager extends ManagerTool {
       (builtin) =>
         ({
           id: builtin.id,
-          modifiers: builtin.id,
+          modifiers: builtin.modifiers,
           key: builtin.key,
           callback: builtin.callback,
           type: "builtin",
@@ -680,7 +682,7 @@ class KeyModifier implements KeyModifierStatus {
   }
 }
 
-interface ToolkitShortcutsGlobal {
+export interface ToolkitShortcutsGlobal extends GlobalInstance {
   eventKeys: EventKey[];
 }
 
@@ -690,7 +692,7 @@ interface BaseKey {
   key?: string;
   type: string;
   disabled?: boolean;
-  callback: (keyOptions: Key) => any;
+  callback: () => any;
 }
 
 interface EventKey extends BaseKey {
@@ -861,59 +863,241 @@ enum XUL_KEYCODE_MAPS {
   VK_HELP = "Help",
 }
 
-// TODO: Finish this
+function getElementKeyCallback(keyId: string) {
+  return function () {
+    const win = BasicTool.getZotero().getMainWindow();
+    const keyElem = win.document.querySelector(`#${keyId}`);
+    if (!keyElem) {
+      return function () {};
+    }
+    const _eval = (win as any).eval;
+    _eval(keyElem.getAttribute("oncommand") || "//");
+    const cmdId = keyElem.getAttribute("command");
+    if (!cmdId) {
+      return;
+    }
+    _eval(
+      win.document.querySelector(`#${cmdId}`)?.getAttribute("oncommand") || "//"
+    );
+  };
+}
+
+function getBuiltinEventKeyCallback(eventId: string) {
+  return function () {
+    const Zotero = BasicTool.getZotero();
+    const ZoteroPane = Zotero.getActiveZoteroPane();
+    ZoteroPane.handleKeyPress({
+      metaKey: true,
+      ctrlKey: true,
+      shiftKey: true,
+      originalTarget: { id: "" },
+      preventDefault: () => {},
+      key: Zotero.Prefs.get(`extensions.zotero.keys.${eventId}`, true),
+    });
+  };
+}
+
+const ELEM_KEY_IGNORE = ["key_copyCitation", "key_copyBibliography"];
+
 const PREF_KEYS = [
   {
     id: "extensions.zotero.keys.copySelectedItemCitationsToClipboard",
     modifiers: "accel,shift",
-    callback: () => {},
+    elemId: "key_copyCitation",
+    callback: getElementKeyCallback("key_copyCitation"),
   },
   {
     id: "extensions.zotero.keys.copySelectedItemsToClipboard",
     modifiers: "accel,shift",
-    callback: () => {},
+    elemId: "key_copyBibliography",
+    callback: getElementKeyCallback("key_copyBibliography"),
   },
   {
     id: "extensions.zotero.keys.library",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("library"),
   },
   {
     id: "extensions.zotero.keys.newItem",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("newItem"),
   },
   {
     id: "extensions.zotero.keys.newNote",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("newNote"),
   },
   {
     id: "extensions.zotero.keys.quicksearch",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("quicksearch"),
   },
   {
     id: "extensions.zotero.keys.saveToZotero",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("saveToZotero"),
   },
   {
     id: "extensions.zotero.keys.sync",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("sync"),
   },
   {
     id: "extensions.zotero.keys.toggleAllRead",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("toggleAllRead"),
   },
   {
     id: "extensions.zotero.keys.toggleRead",
     modifiers: "accel,shift",
-    callback: () => {},
+    callback: getBuiltinEventKeyCallback("toggleRead"),
   },
 ];
 
-// TODO: Finish this
-const BUILTIN_KEYS: BuiltinKey[] = [];
+const BUILTIN_KEYS = [
+  {
+    id: "showItemCollection",
+    modifiers: "",
+    key: "Ctrl",
+    callback: () => {
+      const Zotero = BasicTool.getZotero();
+      const ZoteroPane = Zotero.getActiveZoteroPane();
+      ZoteroPane.handleKeyUp({
+        originalTarget: { id: ZoteroPane.itemsView.id },
+        keyCode: Zotero.isWin ? 17 : 18,
+      });
+    },
+  },
+  {
+    id: "closeSelectedTab",
+    modifiers: "accel",
+    key: "W",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      if (ztabs.selectedIndex > 0) {
+        ztabs.close("");
+      }
+    },
+  },
+  {
+    id: "undoCloseTab",
+    modifiers: "accel,shift",
+    key: "T",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.undoClose();
+    },
+  },
+  {
+    id: "selectNextTab",
+    modifiers: "control",
+    key: "Tab",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.selectPrev();
+    },
+  },
+  {
+    id: "selectPreviousTab",
+    modifiers: "control,shift",
+    key: "Tab",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.selectNext();
+    },
+  },
+  {
+    id: "selectTab1",
+    modifiers: "accel",
+    key: "1",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(0);
+    },
+  },
+  {
+    id: "selectTab2",
+    modifiers: "accel",
+    key: "2",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(1);
+    },
+  },
+  {
+    id: "selectTab3",
+    modifiers: "accel",
+    key: "3",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(2);
+    },
+  },
+  {
+    id: "selectTab4",
+    modifiers: "accel",
+    key: "4",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(3);
+    },
+  },
+  {
+    id: "selectTab5",
+    modifiers: "accel",
+    key: "5",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(4);
+    },
+  },
+  {
+    id: "selectTab6",
+    modifiers: "accel",
+    key: "6",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(5);
+    },
+  },
+  {
+    id: "selectTab7",
+    modifiers: "accel",
+    key: "7",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(6);
+    },
+  },
+  {
+    id: "selectTab8",
+    modifiers: "accel",
+    key: "8",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.jump(7);
+    },
+  },
+  {
+    id: "selectTabLast",
+    modifiers: "accel",
+    key: "9",
+    callback: () => {
+      const ztabs = (BasicTool.getZotero().getMainWindow() as any)
+        .Zotero_Tabs as typeof Zotero_Tabs;
+      ztabs.selectLast();
+    },
+  },
+];

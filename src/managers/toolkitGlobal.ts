@@ -1,19 +1,25 @@
 import { BasicTool } from "../basic";
-import { ItemTreeExtraColumnsGlobal } from "./itemTree";
+import { ItemTreeGlobal } from "./itemTree";
+import { ToolkitShortcutsGlobal } from "./shortcut";
 
 /**
  * The Singleton class of global parameters used by managers.
  * @example `ToolkitGlobal.getInstance().itemTree.state`
  */
 export default class ToolkitGlobal {
-  readonly itemTree: ItemTreeExtraColumnsGlobal;
+  readonly itemTree: ItemTreeGlobal;
+  readonly shortcut: ToolkitShortcutsGlobal;
 
   private constructor() {
     this.itemTree = {
-      state: "idle",
+      _state: "idle",
       columns: [],
       fieldHooks: {},
       renderCellHooks: {},
+    };
+    this.shortcut = {
+      _state: "idle",
+      eventKeys: [],
     };
   }
 
@@ -22,9 +28,27 @@ export default class ToolkitGlobal {
    * @returns An instance of `ToolkitGlobal`.
    */
   static getInstance(): ToolkitGlobal {
-    const zotero = BasicTool.getZotero();
-    if (!("_toolkitGlobal" in zotero))
-      zotero._toolkitGlobal = new ToolkitGlobal();
-    return zotero._toolkitGlobal;
+    const Zotero = BasicTool.getZotero();
+    if (!("_toolkitGlobal" in Zotero))
+      Zotero._toolkitGlobal = new ToolkitGlobal();
+    return Zotero._toolkitGlobal;
   }
+
+  /**
+   * Wait for instance if it is loading.
+   * @param instence
+   */
+  static async waitGlobalInstance(instence: GlobalInstance) {
+    const Zotero = BasicTool.getZotero();
+    let t = 0;
+    while (instence._state === "loading" && t <= 5000) {
+      await Zotero.Promise.delay(10);
+      t += 10;
+    }
+    return;
+  }
+}
+
+export interface GlobalInstance {
+  _state: "idle" | "loading" | "ready";
 }

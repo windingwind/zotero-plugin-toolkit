@@ -1,7 +1,7 @@
 import React = require("react");
 import { BasicOptions, BasicTool } from "../basic";
 import { ManagerTool } from "../basic";
-import ToolkitGlobal from "./toolkitGlobal";
+import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
  * Register customized new columns to the library itemTree.
@@ -11,7 +11,7 @@ export class ItemTreeManager extends ManagerTool {
    * Signature to avoid patching more than once.
    */
   private patchSign: string;
-  private globalCache!: ItemTreeExtraColumnsGlobal;
+  private globalCache!: ItemTreeGlobal;
   private localColumnCache: string[];
   private localFieldCache: string[];
   private localRenderCellCache: string[];
@@ -258,10 +258,11 @@ export class ItemTreeManager extends ManagerTool {
   private async initializeGlobal() {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
-    const window = this.getGlobal("window"),
-      globalCache = (this.globalCache = ToolkitGlobal.getInstance().itemTree);
-    if (globalCache.state == "idle") {
-      globalCache.state = "loading";
+    const window = this.getGlobal("window");
+    this.globalCache = ToolkitGlobal.getInstance().itemTree;
+    await ToolkitGlobal.waitGlobalInstance(this.globalCache);
+    if (this.globalCache._state == "idle") {
+      this.globalCache._state = "loading";
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       this.patch(
@@ -275,7 +276,11 @@ export class ItemTreeManager extends ManagerTool {
             const insertAfter = columns.findIndex(
               (column) => column.dataKey === "title"
             );
-            columns.splice(insertAfter + 1, 0, ...globalCache.columns);
+            columns.splice(
+              insertAfter + 1,
+              0,
+              ...Zotero._toolkitGlobal.itemTree.columns
+            );
             return columns;
           }
       );
@@ -285,11 +290,16 @@ export class ItemTreeManager extends ManagerTool {
         this.patchSign,
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
-            if (!(column.dataKey in globalCache.renderCellHooks)) {
+            if (
+              !(
+                column.dataKey in Zotero._toolkitGlobal.itemTree.renderCellHooks
+              )
+            ) {
               // @ts-ignore
               return original.apply(this, arguments);
             }
-            const hook = globalCache.renderCellHooks[column.dataKey];
+            const hook =
+              Zotero._toolkitGlobal.itemTree.renderCellHooks[column.dataKey];
             // @ts-ignore
             const elem = hook(index, data, column, original.bind(this));
             if (elem.classList.contains("cell")) {
@@ -322,12 +332,12 @@ export class ItemTreeManager extends ManagerTool {
             includeBaseMapped: boolean
           ) {
             if (
-              globalCache.columns
+              Zotero._toolkitGlobal.itemTree.columns
                 .map((_c: ColumnOptions) => _c.dataKey)
                 .includes(field)
             ) {
               try {
-                const hook = globalCache.fieldHooks[field];
+                const hook = Zotero._toolkitGlobal.itemTree.fieldHooks[field];
                 // @ts-ignore
                 return hook(
                   field,
@@ -346,7 +356,7 @@ export class ItemTreeManager extends ManagerTool {
             return original.apply(this, arguments);
           }
       );
-      globalCache.state = "ready";
+      this.globalCache._state = "ready";
     }
     this.initializationLock.resolve();
   }
@@ -401,8 +411,7 @@ export class ItemTreeManager extends ManagerTool {
   }
 }
 
-export interface ItemTreeExtraColumnsGlobal {
-  state: "idle" | "loading" | "ready";
+export interface ItemTreeGlobal extends GlobalInstance {
   columns: ColumnOptions[];
   fieldHooks: {
     [key: string]: (
