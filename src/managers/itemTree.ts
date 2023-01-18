@@ -11,7 +11,7 @@ export class ItemTreeManager extends ManagerTool {
    * Signature to avoid patching more than once.
    */
   private patchSign: string;
-  private globalCache: ItemTreeExtraColumnsGlobal;
+  private globalCache!: ItemTreeExtraColumnsGlobal;
   private localColumnCache: string[];
   private localFieldCache: string[];
   private localRenderCellCache: string[];
@@ -259,9 +259,9 @@ export class ItemTreeManager extends ManagerTool {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
     const window = this.getGlobal("window"),
-      globalCache = this.globalCache = ToolkitGlobal.getInstance().itemTree;
-    if (globalCache.state == 'idle') {
-      globalCache.state = 'loading';
+      globalCache = (this.globalCache = ToolkitGlobal.getInstance().itemTree);
+    if (globalCache.state == "idle") {
+      globalCache.state = "loading";
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       this.patch(
@@ -275,11 +275,7 @@ export class ItemTreeManager extends ManagerTool {
             const insertAfter = columns.findIndex(
               (column) => column.dataKey === "title"
             );
-            columns.splice(
-              insertAfter + 1,
-              0,
-              ...globalCache.columns
-            );
+            columns.splice(insertAfter + 1, 0, ...globalCache.columns);
             return columns;
           }
       );
@@ -294,6 +290,7 @@ export class ItemTreeManager extends ManagerTool {
               return original.apply(this, arguments);
             }
             const hook = globalCache.renderCellHooks[column.dataKey];
+            // @ts-ignore
             const elem = hook(index, data, column, original.bind(this));
             if (elem.classList.contains("cell")) {
               return elem;
@@ -336,7 +333,9 @@ export class ItemTreeManager extends ManagerTool {
                   field,
                   unformatted,
                   includeBaseMapped,
+                  // @ts-ignore
                   this,
+                  // @ts-ignore
                   original.bind(this)
                 );
               } catch (e) {
@@ -347,7 +346,7 @@ export class ItemTreeManager extends ManagerTool {
             return original.apply(this, arguments);
           }
       );
-      globalCache.state = 'ready';
+      globalCache.state = "ready";
     }
     this.initializationLock.resolve();
   }
@@ -403,7 +402,7 @@ export class ItemTreeManager extends ManagerTool {
 }
 
 export interface ItemTreeExtraColumnsGlobal {
-  state: 'idle' | 'loading' | 'ready';
+  state: "idle" | "loading" | "ready";
   columns: ColumnOptions[];
   fieldHooks: {
     [key: string]: (

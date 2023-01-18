@@ -1,5 +1,5 @@
 import { BasicOptions, BasicTool } from "../basic";
-import { UITool } from "../tools/ui";
+import { ElementProps, TagElementProps, UITool } from "../tools/ui";
 import { ManagerTool } from "../basic";
 
 /**
@@ -81,9 +81,9 @@ export class MenuManager extends ManagerTool {
     menuPopup: XUL.MenuPopup | keyof typeof MenuSelector,
     options: MenuitemOptions,
     insertPosition: "before" | "after" = "after",
-    anchorElement: XUL.Element = undefined
+    anchorElement?: XUL.Element
   ) {
-    let popup: XUL.MenuPopup;
+    let popup: XUL.MenuPopup | null;
     if (typeof menuPopup === "string") {
       popup = this.getGlobal("document").querySelector(MenuSelector[menuPopup]);
     } else {
@@ -94,40 +94,44 @@ export class MenuManager extends ManagerTool {
     }
     const doc: Document = popup.ownerDocument;
     const generateElementOptions = (menuitemOption: MenuitemOptions) => {
-      let elementOption = {
+      const elementOption: TagElementProps = {
         tag: menuitemOption.tag,
         id: menuitemOption.id,
         namespace: "xul",
         attributes: {
-          label: menuitemOption.label,
+          label: menuitemOption.label || "",
           hidden: Boolean(menuitemOption.hidden),
           disaled: Boolean(menuitemOption.disabled),
           class: menuitemOption.class || "",
-          oncommand: menuitemOption.oncommand,
+          oncommand: menuitemOption.oncommand || "",
         },
         classList: menuitemOption.classList,
         styles: menuitemOption.styles || {},
-        listeners: [
-          { type: "command", listener: menuitemOption.commandListener },
-        ],
+        listeners: [],
         children: [],
       };
       if (menuitemOption.icon) {
-        elementOption.attributes["class"] += " menuitem-iconic";
-        elementOption.styles[
+        elementOption.attributes!["class"] += " menuitem-iconic";
+        elementOption.styles![
           "list-style-image"
         ] = `url(${menuitemOption.icon})`;
       }
       if (menuitemOption.tag === "menu") {
-        elementOption.children.push({
+        elementOption.children!.push({
           tag: "menupopup",
           id: menuitemOption.popupId,
-          attributes: { onpopupshowing: menuitemOption.onpopupshowing },
+          attributes: { onpopupshowing: menuitemOption.onpopupshowing || "" },
           children: (
             menuitemOption.children ||
             menuitemOption.subElementOptions ||
             []
           ).map(generateElementOptions),
+        });
+      }
+      if (menuitemOption.commandListener) {
+        elementOption.listeners?.push({
+          type: "command",
+          listener: menuitemOption.commandListener!,
         });
       }
       return elementOption;

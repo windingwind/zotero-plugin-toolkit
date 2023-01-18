@@ -116,7 +116,7 @@ export class BasicTool {
       case "ZoteroPane_Local":
         return _Zotero.getActiveZoteroPane();
       default:
-        return window[k];
+        return window[k as any] as unknown;
     }
   }
 
@@ -215,7 +215,7 @@ export class BasicTool {
       if (!options.disableZLog) {
         Zotero.debug(
           data
-            .map((d) => {
+            .map((d: any) => {
               try {
                 return typeof d === "object" ? JSON.stringify(d) : String(d);
               } catch (e) {
@@ -281,8 +281,8 @@ export interface BasicOptions {
 }
 
 export abstract class ManagerTool extends BasicTool {
-  abstract register(...data): any;
-  abstract unregister(...data): any;
+  abstract register(...data: any[]): any;
+  abstract unregister(...data: any[]): any;
   /**
    * Unregister everything
    */

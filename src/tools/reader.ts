@@ -58,7 +58,7 @@ export class ReaderTool extends BasicTool {
   getReaderTabPanelDeck(): XUL.Deck {
     const deck = this.getGlobal("window").document.querySelector(
       ".notes-pane-deck"
-    ).previousElementSibling as XUL.Deck;
+    )?.previousElementSibling as XUL.Deck;
     return deck as XUL.Deck;
   }
 
@@ -100,14 +100,17 @@ export class ReaderTool extends BasicTool {
     if (!currentReader) {
       return "";
     }
-    let _ =
-      currentReader._iframeWindow.document.getElementsByTagName("textarea");
+    let textArea =
+      currentReader._iframeWindow.document.querySelectorAll("textarea");
 
-    for (let i = 0; i < _.length; i++) {
+    for (let i = 0; i < textArea.length; i++) {
       // Choose the selection textare
-      if (_[i].style["z-index"] == -1 && _[i].style["width"] == "0px") {
+      if (
+        textArea[i].style.zIndex === "-1" &&
+        textArea[i].style["width"] === "0px"
+      ) {
         // Trim
-        return _[i].value.replace(/(^\s*)|(\s*$)/g, "");
+        return textArea[i].value.replace(/(^\s*)|(\s*$)/g, "");
       }
     }
     return "";

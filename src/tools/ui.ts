@@ -7,7 +7,7 @@ export class UITool extends BasicTool {
   /**
    * UITool options
    */
-  protected _basicOptions: UIOptions;
+  protected _basicOptions!: UIOptions;
 
   public get basicOptions(): UIOptions {
     return this._basicOptions;
@@ -76,7 +76,7 @@ export class UITool extends BasicTool {
   createElement(
     doc: Document,
     tagName: "fragment",
-    props?: FragmentElementOptions
+    props?: FragmentElementProps
   ): DocumentFragment;
   /**
    * Create `HTMLElement`.
@@ -111,7 +111,7 @@ export class UITool extends BasicTool {
   createElement<
     HTML_TAG extends keyof HTMLElementTagNameMap,
     T extends HTMLElementTagNameMap[HTML_TAG]
-  >(doc: Document, tagName: HTML_TAG, props?: HTMLElementOptions): T;
+  >(doc: Document, tagName: HTML_TAG, props?: HTMLElementProps): T;
   /**
    * Create `XUL.Element`.
    * @see ElementProps
@@ -126,7 +126,7 @@ export class UITool extends BasicTool {
   createElement<
     XUL_TAG extends keyof XULElementTagNameMap,
     T extends XULElementTagNameMap[XUL_TAG]
-  >(doc: Document, tagName: XUL_TAG, props?: XULElementOptions): T;
+  >(doc: Document, tagName: XUL_TAG, props?: XULElementProps): T;
   /**
    * Create `SVGElement`
    * @param doc
@@ -136,7 +136,7 @@ export class UITool extends BasicTool {
   createElement<
     SVG_TAG extends keyof SVGElementTagNameMap,
     T extends SVGElementTagNameMap[SVG_TAG]
-  >(doc: Document, tagName: SVG_TAG, props?: SVGElementOptions): T;
+  >(doc: Document, tagName: SVG_TAG, props?: SVGElementProps): T;
   /**
    * Create Element
    * @param doc
@@ -161,10 +161,13 @@ export class UITool extends BasicTool {
     namespace?: "html" | "svg" | "xul",
     enableElementRecord?: boolean
   ): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
-  createElement(...args: any) {
+  createElement(...args: any[]) {
     const doc = args[0] as Document;
     const tagName = args[1].toLowerCase() as string;
     let props: ElementProps = args[2] || {};
+    if (!tagName) {
+      return;
+    }
     // string, use the old create
     if (typeof args[2] === "string") {
       props = {
@@ -189,16 +192,15 @@ export class UITool extends BasicTool {
       const fragElem = doc.createDocumentFragment();
       elem = fragElem;
     } else {
-      let realElem =
-        props.id &&
-        ((props.checkExistanceParent
+      let realElem = (props.id &&
+        (props.checkExistanceParent
           ? props.checkExistanceParent
           : doc
-        ).querySelector(`#${props.id}`) as
-          | HTMLElement
-          | SVGElement
-          | XUL.Element
-          | undefined);
+        ).querySelector(`#${props.id}`)) as
+        | HTMLElement
+        | SVGElement
+        | XUL.Element
+        | undefined;
       if (realElem && props.ignoreIfExists) {
         return realElem;
       }
@@ -210,7 +212,7 @@ export class UITool extends BasicTool {
         return undefined;
       }
       if (!realElem || !props.skipIfExists) {
-        let namespace = props.namespace;
+        let namespace = props.namespace as "html" | "xul" | "svg";
         if (!namespace) {
           const mightHTML = HTMLElementTagNames.includes(tagName);
           const mightXUL = XULElementTagNames.includes(tagName);
@@ -250,20 +252,20 @@ export class UITool extends BasicTool {
       }
       if (props.styles && Object.keys(props.styles).length) {
         Object.keys(props.styles).forEach((k) => {
-          const v = props.styles[k];
-          typeof v !== "undefined" && (realElem.style[k] = v);
+          const v = props.styles![k];
+          typeof v !== "undefined" && (realElem!.style[k as any] = v);
         });
       }
       if (props.properties && Object.keys(props.properties).length) {
         Object.keys(props.properties).forEach((k) => {
-          const v = props.properties[k];
-          typeof v !== "undefined" && (realElem[k] = v);
+          const v = props.properties![k];
+          typeof v !== "undefined" && ((realElem as any)[k] = v);
         });
       }
       if (props.attributes && Object.keys(props.attributes).length) {
         Object.keys(props.attributes).forEach((k) => {
-          const v = props.attributes[k];
-          typeof v !== "undefined" && realElem.setAttribute(k, String(v));
+          const v = props.attributes![k];
+          typeof v !== "undefined" && realElem!.setAttribute(k, String(v));
         });
       }
       // Add classes after attributes, as user may set the class attribute
@@ -272,8 +274,7 @@ export class UITool extends BasicTool {
       }
       if (props.listeners?.length) {
         props.listeners.forEach(({ type, listener, options }) => {
-          typeof listener !== "undefined" &&
-            realElem.addEventListener(type, listener, options);
+          listener && realElem!.addEventListener(type, listener, options);
         });
       }
       elem = realElem;
@@ -363,8 +364,8 @@ export class UITool extends BasicTool {
    */
   creatElementsFromJSON(
     doc: Document,
-    options: ElementProps,
-    enableElementJSONLog: boolean = undefined
+    options: TagElementProps,
+    enableElementJSONLog: boolean = false
   ) {
     return this.createElement(
       doc,
@@ -424,7 +425,7 @@ export class UITool extends BasicTool {
     // We use a range here so that we don't access the inner DOM elements from
     // JavaScript before they are imported and inserted into a document.
     let range = doc.createRange();
-    range.selectNodeContents(doc.querySelector("div"));
+    range.selectNodeContents(doc.querySelector("div")!);
     return range.extractContents();
   }
 }
@@ -469,27 +470,33 @@ export interface ElementProps {
   /**
    * Set with `elem.prop =`
    */
-  properties?: { [key: string]: string | boolean | number };
+  properties?: { [key: string]: string | boolean | number | null | undefined };
   /**
    * @deprecated Use `properties`
    */
-  directAttributes?: { [key: string]: string | boolean | number };
+  directAttributes?: {
+    [key: string]: string | boolean | number | null | undefined;
+  };
   /**
    * Set with `elem.setAttribute()`
    */
-  attributes?: { [key: string]: string | boolean | number };
+  attributes?: { [key: string]: string | boolean | number | null | undefined };
   /**
    * Event listeners
    *  */
   listeners?: Array<{
     type: string;
-    listener: EventListenerOrEventListenerObject | ((e: Event) => void);
+    listener:
+      | EventListenerOrEventListenerObject
+      | ((e: Event) => void)
+      | null
+      | undefined;
     options?: boolean | AddEventListenerOptions;
   }>;
   /**
    * Child elements. Will be created and appended to this element.
    */
-  children?: Array<ElementProps>;
+  children?: Array<TagElementProps>;
   /**
    * Set true to check if the element exists using `id`. If exists, return this element and do not do anything.
    */
@@ -515,7 +522,7 @@ export interface ElementProps {
   /**
    * @deprecated Use `children`
    */
-  subElementOptions?: Array<ElementProps>;
+  subElementOptions?: Array<TagElementProps>;
   /**
    * Enable elements to be recorded by the tookit so it can be removed when calling `unregisterAll`.
    */
@@ -526,19 +533,23 @@ export interface ElementProps {
   enableElementJSONLog?: boolean;
 }
 
-interface HTMLElementOptions extends Exclude<ElementProps, { tag: any }> {
+export interface TagElementProps extends ElementProps {
+  tag: string;
+}
+
+export interface HTMLElementProps extends Exclude<ElementProps, { tag: any }> {
   namespace?: "html";
 }
 
-interface SVGElementOptions extends Exclude<ElementProps, { tag: any }> {
+interface SVGElementProps extends Exclude<ElementProps, { tag: any }> {
   namespace?: "svg";
 }
 
-interface XULElementOptions extends Exclude<ElementProps, { tag: any }> {
+export interface XULElementProps extends Exclude<ElementProps, { tag: any }> {
   namespace?: "xul";
 }
 
-interface FragmentElementOptions {
+export interface FragmentElementProps {
   children?: Array<ElementProps>;
 }
 

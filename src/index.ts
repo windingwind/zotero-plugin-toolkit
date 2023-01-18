@@ -12,7 +12,7 @@ import { ClibpoardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
-import { DialogHelper } from "./_doc";
+import { DialogHelper } from "./helpers/dialog";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.

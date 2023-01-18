@@ -23,8 +23,8 @@ export class ReaderTabPanelManager extends ManagerTool {
       targetIndex: number;
       selectPanel?: boolean;
     }[];
-    observer: MutationObserver;
-    initializeLock: _ZoteroTypes.PromiseObject;
+    observer?: MutationObserver;
+    initializeLock?: _ZoteroTypes.PromiseObject;
   };
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
@@ -163,7 +163,7 @@ export class ReaderTabPanelManager extends ManagerTool {
     if (typeof this.readerTabCache.initializeLock === "undefined") {
       await this.initializeReaderTabObserver();
     }
-    await this.readerTabCache.initializeLock.promise;
+    await this.readerTabCache.initializeLock?.promise;
     const randomId = `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
     const tabId = options.tabId || `toolkit-readertab-${randomId}`;
     const panelId = options.panelId || `toolkit-readertabpanel-${randomId}`;
@@ -194,7 +194,7 @@ export class ReaderTabPanelManager extends ManagerTool {
       this.readerTabCache.optionsList.splice(idx, 1);
     }
     if (this.readerTabCache.optionsList.length === 0) {
-      this.readerTabCache.observer.disconnect();
+      this.readerTabCache.observer?.disconnect();
       this.readerTabCache = {
         optionsList: [],
         observer: undefined,
@@ -270,9 +270,9 @@ export class ReaderTabPanelManager extends ManagerTool {
         const tabs = tabbox.querySelector("tabs");
         const tabpanels = tabbox.querySelector("tabpanels");
         if (options.targetIndex >= 0) {
-          tabs.querySelectorAll("tab")[options.targetIndex].before(tab);
+          tabs?.querySelectorAll("tab")[options.targetIndex].before(tab);
           tabpanels
-            .querySelectorAll("tabpanel")
+            ?.querySelectorAll("tabpanel")
             [options.targetIndex].before(tabpanel);
           if (tabbox.getAttribute("toolkit-select-fixed") !== "true") {
             // Tabs after current tab will not be correctly selected
@@ -288,8 +288,8 @@ export class ReaderTabPanelManager extends ManagerTool {
             tabbox.setAttribute("toolkit-select-fixed", "true");
           }
         } else {
-          tabs.appendChild(tab);
-          tabpanels.appendChild(tabpanel);
+          tabs?.appendChild(tab);
+          tabpanels?.appendChild(tabpanel);
         }
         if (options.selectPanel) {
           tabbox.selectedTab = tab;

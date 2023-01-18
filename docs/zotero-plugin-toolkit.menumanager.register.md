@@ -9,7 +9,7 @@ Insert an menu item/menu(with popup)/menuseprator into a menupopup
 <b>Signature:</b>
 
 ```typescript
-register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: MenuitemOptions, insertPosition?: "before" | "after", anchorElement?: XUL.Element): boolean;
+register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: MenuitemOptions, insertPosition?: "before" | "after", anchorElement?: XUL.Element): false | undefined;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: Menuitem
 
 <b>Returns:</b>
 
-boolean
+false \| undefined
 
 ## Remarks
 

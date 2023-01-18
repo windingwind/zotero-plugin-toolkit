@@ -53,7 +53,7 @@ export class ClibpoardHelper {
     if (!parts[0].includes("base64")) {
       return this;
     }
-    let mime = parts[0].match(/:(.*?);/)[1];
+    let mime = parts[0].match(/:(.*?);/)![1];
     let bstr = atob(parts[1]);
     let n = bstr.length;
     let u8arr = new Uint8Array(n);

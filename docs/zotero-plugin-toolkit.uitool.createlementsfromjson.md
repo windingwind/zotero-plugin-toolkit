@@ -12,7 +12,7 @@
 <b>Signature:</b>
 
 ```typescript
-creatElementsFromJSON(doc: Document, options: ElementProps, enableElementJSONLog?: boolean): XUL.Element | HTMLElement | SVGElement;
+creatElementsFromJSON(doc: Document, options: TagElementProps, enableElementJSONLog?: boolean): XUL.Element | HTMLElement | SVGElement;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ creatElementsFromJSON(doc: Document, options: ElementProps, enableElementJSONLog
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  doc | Document |  |
-|  options | [ElementProps](./zotero-plugin-toolkit.elementprops.md) |  |
+|  options | TagElementProps |  |
 |  enableElementJSONLog | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>

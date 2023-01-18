@@ -9,8 +9,8 @@ import { BasicTool } from "../basic";
 export class VirtualizedTableHelper {
   public props: VirtualizedTableProps;
   public localeStrings: { [name: string]: string };
-  public containerId: string;
-  public treeInstance: VirtualizedTable;
+  public containerId!: string;
+  public treeInstance!: VirtualizedTable;
   private window: Window;
   private React: typeof React;
   private ReactDOM: typeof ReactDOM;
@@ -121,11 +121,11 @@ export class VirtualizedTableHelper {
    * ```
    */
   public setProp(data: Partial<VirtualizedTableProps>): VirtualizedTableHelper;
-  public setProp(...args: any) {
+  public setProp(...args: any[]) {
     if (args.length === 1) {
       Object.assign(this.props, args[0]);
     } else if (args.length === 2) {
-      this.props[args[0]] = args[1];
+      (this.props[args[0] as keyof VirtualizedTableProps] as unknown) = args[1];
     }
     return this;
   }
@@ -169,7 +169,7 @@ export class VirtualizedTableHelper {
     };
     if (!this.treeInstance) {
       const vtableProps = Object.assign({}, this.props, {
-        ref: (ref) => (this.treeInstance = ref),
+        ref: (ref: VirtualizedTable) => (this.treeInstance = ref),
       });
       if (vtableProps.getRowData && !vtableProps.renderItem) {
         Object.assign(vtableProps, {
@@ -353,7 +353,7 @@ interface TreeSelection {
    * @param tree {VirtualizedTable} The tree where selection occurs. Will be used to issue
    * updates.
    */
-  new (tree: VirtualizedTable);
+  new (tree: VirtualizedTable): this;
 
   /**
    * Returns whether the given index is selected.

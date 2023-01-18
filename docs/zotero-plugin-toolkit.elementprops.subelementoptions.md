@@ -12,5 +12,5 @@
 <b>Signature:</b>
 
 ```typescript
-subElementOptions?: Array<ElementProps>;
+subElementOptions?: Array<TagElementProps>;
 ```

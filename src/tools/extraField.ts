@@ -48,7 +48,7 @@ export class ExtraFieldTool extends BasicTool {
     item: Zotero.Item,
     fields: Map<string, string>
   ): Promise<void> {
-    let kvs = [];
+    let kvs: string[] = [];
     fields.forEach((v, k) => {
       kvs.push(`${k}: ${v}`);
     });

@@ -11,7 +11,7 @@ Replace oldNode with a new one.
 ```typescript
 replaceElement(properties: ElementProps & {
         tag: string;
-    }, oldNode: Element): Element;
+    }, oldNode: Element): Element | undefined;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ replaceElement(properties: ElementProps & {
 
 <b>Returns:</b>
 
-Element
+Element \| undefined
 
 The replaced Node. This is the same node as oldChild.
 

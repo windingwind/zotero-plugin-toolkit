@@ -1,5 +1,5 @@
 import { BasicOptions, BasicTool } from "../basic";
-import { UITool } from "../tools/ui";
+import { ElementProps, UITool } from "../tools/ui";
 import { ManagerTool } from "../basic";
 
 /**
@@ -7,7 +7,7 @@ import { ManagerTool } from "../basic";
  */
 export class ShortcutManager extends ManagerTool {
   private ui: UITool;
-  private globalCache: ToolkitShortcutsGlobal;
+  private globalCache!: ToolkitShortcutsGlobal;
   private creatorId: string;
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
@@ -95,28 +95,28 @@ export class ShortcutManager extends ManagerTool {
       unregister: (keyOptions: CustomKey) => boolean | Promise<boolean>;
     }
   ): Promise<boolean> | boolean;
-  public register(
-    type: string,
-    keyOptions: Partial<Key>
-  ): Promise<boolean> | boolean {
-    keyOptions.type = type;
-    switch (keyOptions.type) {
+  public register(type: string, keyOptions: any): Promise<boolean> | boolean {
+    const _keyOptions = keyOptions as Key;
+    _keyOptions.type = type;
+    switch (_keyOptions.type) {
       case "event":
-        this.registerEventKey(keyOptions as EventKey);
+        this.registerEventKey(_keyOptions as EventKey);
         return true;
       case "element":
-        this.registerElementKey(keyOptions as ElementKey);
+        this.registerElementKey(_keyOptions as ElementKey);
         return true;
       case "prefs":
         this.getGlobal("Zotero").Prefs.set(
-          (keyOptions as PrefKey).id,
-          keyOptions.key
+          (_keyOptions as PrefKey).id,
+          _keyOptions.key || ""
         );
         return true;
       default:
         try {
-          if ((keyOptions as CustomKey).register) {
-            return (keyOptions as CustomKey).register(keyOptions as CustomKey);
+          if ((_keyOptions as CustomKey).register) {
+            return (_keyOptions as CustomKey).register!(
+              _keyOptions as CustomKey
+            );
           } else {
             return false;
           }
@@ -153,7 +153,7 @@ export class ShortcutManager extends ManagerTool {
     } = { includeEmpty: false, customKeys: [] }
   ) {
     inputKeyOptions.modifiers = new KeyModifier(
-      inputKeyOptions.modifiers
+      inputKeyOptions.modifiers || ""
     ).getRaw();
     let allKeys = this.getAll();
     if (options.customKeys?.length) {
@@ -165,7 +165,7 @@ export class ShortcutManager extends ManagerTool {
     return allKeys.filter(
       (_keyOptions) =>
         _keyOptions.id !== inputKeyOptions.id &&
-        _keyOptions.key.toLowerCase() === inputKeyOptions.key.toLowerCase() &&
+        _keyOptions.key?.toLowerCase() === inputKeyOptions.key?.toLowerCase() &&
         _keyOptions.modifiers === inputKeyOptions.modifiers
     );
   }
@@ -190,10 +190,10 @@ export class ShortcutManager extends ManagerTool {
     }
     const conflctions: Key[][] = [];
     while (allKeys.length > 0) {
-      const checkKey = allKeys.pop();
+      const checkKey = allKeys.pop()!;
       const conflictKeys = allKeys.filter(
         (_keyOptions) =>
-          _keyOptions.key.toLowerCase() === checkKey.key.toLowerCase() &&
+          _keyOptions.key?.toLowerCase() === checkKey.key?.toLowerCase() &&
           _keyOptions.modifiers === checkKey.modifiers
       );
       if (conflictKeys.length) {
@@ -201,7 +201,7 @@ export class ShortcutManager extends ManagerTool {
         conflctions.push(conflictKeys);
         const conflctionKeyIds = conflictKeys.map((key) => key.id);
         // Find index in allKeys
-        const toRemoveIds = [];
+        const toRemoveIds: number[] = [];
         allKeys.forEach(
           (key, i) => conflctionKeyIds.includes(key.id) && toRemoveIds.push(i)
         );
@@ -250,7 +250,7 @@ export class ShortcutManager extends ManagerTool {
       default:
         try {
           if ((keyOptions as CustomKey).unregister) {
-            return await (keyOptions as CustomKey).unregister(
+            return await (keyOptions as CustomKey).unregister!(
               keyOptions as CustomKey
             );
           } else {
@@ -310,10 +310,10 @@ export class ShortcutManager extends ManagerTool {
           if (keyOptions.disabled) {
             return;
           }
-          const modStr = new KeyModifier(keyOptions.modifiers).getRaw();
+          const modStr = new KeyModifier(keyOptions.modifiers || "").getRaw();
           if (
             (modStr === eventModStr || modStr === eventModStrWithAccel) &&
-            keyOptions.key.toLowerCase() === event.key.toLowerCase()
+            keyOptions.key?.toLowerCase() === event.key.toLowerCase()
           ) {
             keyOptions.callback(keyOptions);
           }
@@ -334,7 +334,7 @@ export class ShortcutManager extends ManagerTool {
    * @param commandSetOptions
    */
   private registerElementCommandset(commandSetOptions: ElementCommandSet) {
-    commandSetOptions.document.querySelector("window").appendChild(
+    commandSetOptions.document.querySelector("window")?.appendChild(
       this.ui.createElement(commandSetOptions.document, "commandset", {
         id: commandSetOptions.id,
         skipIfExists: true,
@@ -383,7 +383,7 @@ export class ShortcutManager extends ManagerTool {
    * @param keySetOptions
    */
   private registerElementKeyset(keySetOptions: ElementKeySet) {
-    keySetOptions.document.querySelector("window").appendChild(
+    keySetOptions.document.querySelector("window")?.appendChild(
       this.ui.createElement(keySetOptions.document, "keyset", {
         id: keySetOptions.id,
         skipIfExists: true,
@@ -448,7 +448,7 @@ export class ShortcutManager extends ManagerTool {
     K extends keyof typeof XUL_KEYCODE_MAPS,
     V extends `${XUL_KEYCODE_MAPS}`
   >(standardKey: V): undefined;
-  private getXULKey(standardKey: string): string;
+  private getXULKey(standardKey: string | null | undefined): string | undefined;
   private getXULKey(standardKey: string) {
     if (standardKey.length === 1) {
       return standardKey;
@@ -460,7 +460,7 @@ export class ShortcutManager extends ManagerTool {
     K extends keyof typeof XUL_KEYCODE_MAPS,
     V extends `${XUL_KEYCODE_MAPS}`
   >(standardKey: V): K;
-  private getXULKeyCode(standardKey: string): undefined;
+  private getXULKeyCode(standardKey: string | null | undefined): undefined;
   private getXULKeyCode(standardKey: string) {
     const idx = Object.values(XUL_KEYCODE_MAPS).findIndex(
       (value) => value === standardKey
@@ -475,10 +475,13 @@ export class ShortcutManager extends ManagerTool {
     K extends keyof typeof XUL_KEYCODE_MAPS,
     V extends `${XUL_KEYCODE_MAPS}`
   >(XULKey: string, XULKeyCode: K): V;
-  private getStandardKey(XULKey: string, XULKeyCode: string): string;
+  private getStandardKey(
+    XULKey: string | null | undefined,
+    XULKeyCode: string | null | undefined
+  ): string | undefined;
   private getStandardKey(XULKey: string, XULKeyCode: string) {
     if (XULKeyCode && Object.keys(XUL_KEYCODE_MAPS).includes(XULKeyCode)) {
-      return XUL_KEYCODE_MAPS[XULKeyCode];
+      return XUL_KEYCODE_MAPS[XULKeyCode as keyof typeof XUL_KEYCODE_MAPS];
     } else {
       return XULKey;
     }
@@ -495,8 +498,10 @@ export class ShortcutManager extends ManagerTool {
       (cmdset) =>
         ({
           id: cmdset.id,
-          commands: Array.from(cmdset.querySelectorAll("command")).map(
-            (cmd: XUL.Element) =>
+          commands: (
+            Array.from(cmdset.querySelectorAll("command")) as XUL.Command[]
+          ).map(
+            (cmd) =>
               ({
                 id: cmd.id,
                 oncommand: cmd.getAttribute("oncommand"),
@@ -533,44 +538,44 @@ export class ShortcutManager extends ManagerTool {
         ({
           id: keysetElem.id,
           document: doc,
-          keys: Array.from(keysetElem.querySelectorAll("key")).map(
-            (keyElem: XUL.Element) => {
-              const oncommand = keyElem.getAttribute("oncommand");
-              const commandId = keyElem.getAttribute("command");
-              const commandOptions = allCommends.find(
-                (cmd) => cmd.id === commandId
-              );
-              const key = {
-                type: "element",
-                id: keyElem.id,
-                key: this.getStandardKey(
-                  keyElem.getAttribute("key"),
-                  keyElem.getAttribute("keycode")
-                ),
-                modifiers: new KeyModifier(
-                  keyElem.getAttribute("modifiers")
-                ).getRaw(),
-                disabled: keyElem.getAttribute("disabled") === "true",
-                xulData: {
-                  document: doc,
-                  oncommand: oncommand,
-                  command: commandId,
-                  _parentId: keysetElem.id,
-                  _commandOptions: commandOptions,
-                },
-                callback: (keyOptions: ElementKey) => {
-                  if (keyOptions.disabled) {
-                    return;
-                  }
-                  const win = (doc as any).ownerGlobal as Window;
-                  const _eval = this.getGlobal("eval").bind(win);
-                  _eval(oncommand);
-                  _eval(commandOptions.oncommand);
-                },
-              } as ElementKey;
-              return key;
-            }
-          ),
+          keys: (
+            Array.from(keysetElem.querySelectorAll("key")) as XUL.Element[]
+          ).map((keyElem) => {
+            const oncommand = keyElem.getAttribute("oncommand") || "";
+            const commandId = keyElem.getAttribute("command") || "";
+            const commandOptions = allCommends.find(
+              (cmd) => cmd.id === commandId
+            );
+            const key = {
+              type: "element",
+              id: keyElem.id,
+              key: this.getStandardKey(
+                keyElem.getAttribute("key") || "",
+                keyElem.getAttribute("keycode") || ""
+              ),
+              modifiers: new KeyModifier(
+                keyElem.getAttribute("modifiers") || ""
+              ).getRaw(),
+              disabled: keyElem.getAttribute("disabled") === "true",
+              xulData: {
+                document: doc,
+                oncommand: oncommand,
+                command: commandId,
+                _parentId: keysetElem.id,
+                _commandOptions: commandOptions,
+              },
+              callback: (keyOptions: ElementKey) => {
+                if (keyOptions.disabled) {
+                  return;
+                }
+                const win = (doc as any).ownerGlobal as Window;
+                const _eval = this.getGlobal("eval").bind(win);
+                _eval(oncommand);
+                _eval(commandOptions?.oncommand || "");
+              },
+            } as ElementKey;
+            return key;
+          }),
         } as ElementKeySet)
     );
   }
@@ -911,4 +916,4 @@ const PREF_KEYS = [
 ];
 
 // TODO: Finish this
-const BUILTIN_KEYS = [];
+const BUILTIN_KEYS: BuiltinKey[] = [];

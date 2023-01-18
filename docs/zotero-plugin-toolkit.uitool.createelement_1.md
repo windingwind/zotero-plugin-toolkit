@@ -9,7 +9,7 @@ Create `HTMLElement`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-createElement<HTML_TAG extends keyof HTMLElementTagNameMap, T extends HTMLElementTagNameMap[HTML_TAG]>(doc: Document, tagName: HTML_TAG, props?: HTMLElementOptions): T;
+createElement<HTML_TAG extends keyof HTMLElementTagNameMap, T extends HTMLElementTagNameMap[HTML_TAG]>(doc: Document, tagName: HTML_TAG, props?: HTMLElementProps): T;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createElement<HTML_TAG extends keyof HTMLElementTagNameMap, T extends HTMLElemen
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | HTML\_TAG |  |
-|  props | HTMLElementOptions | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  props | HTMLElementProps | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 
 <b>Returns:</b>
 

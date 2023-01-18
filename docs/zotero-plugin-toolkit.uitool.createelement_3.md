@@ -9,7 +9,7 @@ Create `SVGElement`
 <b>Signature:</b>
 
 ```typescript
-createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTagNameMap[SVG_TAG]>(doc: Document, tagName: SVG_TAG, props?: SVGElementOptions): T;
+createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTagNameMap[SVG_TAG]>(doc: Document, tagName: SVG_TAG, props?: SVGElementProps): T;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTa
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | SVG\_TAG |  |
-|  props | SVGElementOptions | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  props | SVGElementProps | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 
 <b>Returns:</b>
 

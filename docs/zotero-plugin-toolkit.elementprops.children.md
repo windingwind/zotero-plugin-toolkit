@@ -9,5 +9,5 @@ Child elements. Will be created and appended to this element.
 <b>Signature:</b>
 
 ```typescript
-children?: Array<ElementProps>;
+children?: Array<TagElementProps>;
 ```

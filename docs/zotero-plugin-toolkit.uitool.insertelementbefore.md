@@ -11,7 +11,7 @@ Inserts a node before a reference node as a child of its parent node.
 ```typescript
 insertElementBefore(properties: ElementProps & {
         tag: string;
-    }, referenceNode: Element): XUL.Element | HTMLElement | SVGElement;
+    }, referenceNode: Element): HTMLElement | SVGElement | undefined;
 ```
 
 ## Parameters
@@ -23,6 +23,6 @@ insertElementBefore(properties: ElementProps & {
 
 <b>Returns:</b>
 
-XUL.Element \| HTMLElement \| SVGElement
+HTMLElement \| SVGElement \| undefined
 
 

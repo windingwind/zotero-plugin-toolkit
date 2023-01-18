@@ -32,20 +32,20 @@ export class DialogHelper {
       children: [],
     };
     for (let i = 0; i < Math.max(row, 1); i++) {
-      this.elementProps.children.push({
+      this.elementProps.children!.push({
         tag: "hbox",
         attributes: { flex: 1 },
         children: [],
       });
       for (let j = 0; j < Math.max(column, 1); j++) {
-        this.elementProps.children[i].children.push({
+        this.elementProps.children![i].children!.push({
           tag: "vbox",
           attributes: { flex: 1 },
           children: [],
         });
       }
     }
-    this.elementProps.children.push({
+    this.elementProps.children!.push({
       tag: "hbox",
       attributes: { flex: 0, pack: "end" },
       children: [],
@@ -67,17 +67,20 @@ export class DialogHelper {
     cellFlex: boolean = true
   ) {
     if (
-      row >= this.elementProps.children.length ||
-      column >= this.elementProps.children[row].children.length
+      row >= this.elementProps.children!.length ||
+      column >= this.elementProps.children![row].children!.length
     ) {
       throw Error(
-        `Cell index (${row}, ${column}) is invalid, maximum (${this.elementProps.children.length}, ${this.elementProps.children[0].children.length})`
+        `Cell index (${row}, ${column}) is invalid, maximum (${
+          this.elementProps.children!.length
+        }, ${this.elementProps.children![0].children!.length})`
       );
     }
-    this.elementProps.children[row].children[column].children = [elementProps];
-    this.elementProps.children[row].children[column].attributes.flex = cellFlex
-      ? 1
-      : 0;
+    this.elementProps.children![row].children![column].children = [
+      elementProps,
+    ];
+    this.elementProps.children![row].children![column].attributes!.flex =
+      cellFlex ? 1 : 0;
     return this;
   }
 
@@ -98,9 +101,9 @@ export class DialogHelper {
     } = {}
   ) {
     id = id || `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
-    this.elementProps.children[
-      this.elementProps.children.length - 1
-    ].children.push({
+    this.elementProps.children![
+      this.elementProps.children!.length - 1
+    ].children!.push({
       tag: "vbox",
       styles: {
         margin: "10px",
@@ -302,7 +305,7 @@ function openDialog(
           const bindProp = elem.getAttribute("data-prop");
           if (bindKey && dialogData && dialogData[bindKey]) {
             if (bindProp) {
-              elem[bindProp] = dialogData[bindKey];
+              (elem as any)[bindProp] = dialogData[bindKey];
             } else {
               elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
             }
@@ -345,7 +348,7 @@ function openDialog(
         const bindProp = elem.getAttribute("data-prop");
         if (bindKey && dialogData) {
           if (bindProp) {
-            dialogData[bindKey] = elem[bindProp];
+            dialogData[bindKey] = (elem as any)[bindProp];
           } else {
             dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
           }

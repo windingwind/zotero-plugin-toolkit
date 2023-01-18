@@ -82,7 +82,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
 
   /**
    * Change the line content
-   * @param options 
+   * @param options
    */
   changeLine(options: {
     type?: string;
@@ -141,7 +141,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
  * };
  * ```
  */
-const icons = {
+const icons: { [key: string | number]: string } = {
   success: "chrome://zotero/skin/tick.png",
   fail: "chrome://zotero/skin/cross.png",
 };

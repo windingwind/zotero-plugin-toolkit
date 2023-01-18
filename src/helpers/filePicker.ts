@@ -51,7 +51,7 @@ export class FilePickerHelper {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return new Promise((resolve) => {
-      fp.open((userChoice) => {
+      fp.open((userChoice: unknown) => {
         switch (userChoice) {
           case Components.interfaces.nsIFilePicker.returnOK:
           case Components.interfaces.nsIFilePicker.returnReplace:

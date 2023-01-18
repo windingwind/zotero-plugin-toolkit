@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-static getZotero(): any;
+static getZotero(): _ZoteroTypes.Zotero;
 ```
 <b>Returns:</b>
 
-any
+\_ZoteroTypes.Zotero
 

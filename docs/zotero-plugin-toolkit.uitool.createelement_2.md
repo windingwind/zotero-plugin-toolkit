@@ -9,7 +9,7 @@ Create `XUL.Element`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-createElement<XUL_TAG extends keyof XULElementTagNameMap, T extends XULElementTagNameMap[XUL_TAG]>(doc: Document, tagName: XUL_TAG, props?: XULElementOptions): T;
+createElement<XUL_TAG extends keyof XULElementTagNameMap, T extends XULElementTagNameMap[XUL_TAG]>(doc: Document, tagName: XUL_TAG, props?: XULElementProps): T;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createElement<XUL_TAG extends keyof XULElementTagNameMap, T extends XULElementTa
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | XUL\_TAG |  |
-|  props | XULElementOptions | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  props | XULElementProps | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 
 <b>Returns:</b>
 

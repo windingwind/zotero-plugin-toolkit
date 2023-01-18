@@ -9,7 +9,7 @@ Create `DocumentFragment`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-createElement(doc: Document, tagName: "fragment", props?: FragmentElementOptions): DocumentFragment;
+createElement(doc: Document, tagName: "fragment", props?: FragmentElementProps): DocumentFragment;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createElement(doc: Document, tagName: "fragment", props?: FragmentElementOptions
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | "fragment" |  |
-|  props | FragmentElementOptions | <i>(Optional)</i> |
+|  props | FragmentElementProps | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

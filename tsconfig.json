@@ -4,11 +4,11 @@
     "module": "commonjs",
     "outDir": "dist",
     "declaration": true,
-    // "sourceMap": true,
-    // "declarationMap": true,
-    // "esModuleInterop": true,
-    // "forceConsistentCasingInFileNames": true,
-    // "strict": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "skipLibCheck": true
   },
   "include": [

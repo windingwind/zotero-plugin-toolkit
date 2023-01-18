@@ -7,7 +7,7 @@ import { ManagerTool } from "../basic";
  */
 export class PreferencePaneManager extends ManagerTool {
   private ui: UITool;
-  private prefPaneCache: { win: Window; listeners: { [id: string]: any } };
+  private prefPaneCache: { win?: Window; listeners: { [id: string]: any } };
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.ui = new UITool(this);
@@ -74,42 +74,42 @@ export class PreferencePaneManager extends ManagerTool {
       this.getGlobal("Zotero").PreferencePanes.register(options);
       return;
     }
-    const _initImportedNodesPostInsert = (container) => {
+    const _initImportedNodesPostInsert = (container: Element) => {
       const _observerSymbols = new Map();
       const Zotero = this.getGlobal("Zotero");
-      const window = container.ownerGlobal;
-      let useChecked = (elem) =>
-        (elem instanceof window.HTMLInputElement && elem.type == "checkbox") ||
+      const window = (container as any).ownerGlobal;
+      let useChecked = (elem: Element) =>
+        (elem instanceof window.HTMLInputElement &&
+          (elem as HTMLInputElement).type == "checkbox") ||
         elem.tagName == "checkbox";
 
-      let syncFromPref = (elem, preference) => {
+      let syncFromPref = (elem: Element, preference: string) => {
         let value = Zotero.Prefs.get(preference, true);
         if (useChecked(elem)) {
-          elem.checked = value;
+          (elem as HTMLInputElement).checked = value as boolean;
         } else {
-          elem.value = value;
+          (elem as HTMLInputElement).value = value as string;
         }
         elem.dispatchEvent(new window.Event("syncfrompreference"));
       };
 
       // We use a single listener function shared between all elements so we can easily detach it later
-      let syncToPrefOnModify = (event) => {
-        if (event.currentTarget.getAttribute("preference")) {
-          let value = useChecked(event.currentTarget)
-            ? event.currentTarget.checked
-            : event.currentTarget.value;
+      let syncToPrefOnModify = (event: Event) => {
+        const targetNode = event.currentTarget as Element;
+        if (targetNode?.getAttribute("preference")) {
+          let value = useChecked(targetNode)
+            ? (targetNode as HTMLInputElement).checked
+            : (targetNode as HTMLInputElement).value;
           Zotero.Prefs.set(
-            event.currentTarget.getAttribute("preference"),
+            targetNode.getAttribute("preference") || "",
             value,
             true
           );
-          event.currentTarget.dispatchEvent(
-            new window.Event("synctopreference")
-          );
+          targetNode.dispatchEvent(new window.Event("synctopreference"));
         }
       };
 
-      let attachToPreference = (elem, preference) => {
+      let attachToPreference = (elem: Element, preference: string) => {
         Zotero.debug(`Attaching <${elem.tagName}> element to ${preference}`);
         // @ts-ignore
         let symbol = Zotero.Prefs.registerObserver(
@@ -120,7 +120,7 @@ export class PreferencePaneManager extends ManagerTool {
         _observerSymbols.set(elem, symbol);
       };
 
-      let detachFromPreference = (elem) => {
+      let detachFromPreference = (elem: Element) => {
         if (_observerSymbols.has(elem)) {
           Zotero.debug(`Detaching <${elem.tagName}> element from preference`);
           // @ts-ignore
@@ -131,7 +131,7 @@ export class PreferencePaneManager extends ManagerTool {
 
       // Activate `preference` attributes
       for (let elem of container.querySelectorAll("[preference]")) {
-        let preference = elem.getAttribute("preference");
+        let preference = elem.getAttribute("preference")!;
         if (container.querySelector("preferences > preference#" + preference)) {
           Zotero.warn(
             "<preference> is deprecated -- `preference` attribute values " +
@@ -139,7 +139,7 @@ export class PreferencePaneManager extends ManagerTool {
           );
           preference = container
             .querySelector("preferences > preference#" + preference)
-            .getAttribute("name");
+            ?.getAttribute("name")!;
         }
 
         attachToPreference(elem, preference);
@@ -155,13 +155,16 @@ export class PreferencePaneManager extends ManagerTool {
         });
       }
 
-      new window.MutationObserver((mutations) => {
+      new window.MutationObserver((mutations: MutationRecord[]) => {
         for (let mutation of mutations) {
           if (mutation.type == "attributes") {
             let target = mutation.target as Element;
             detachFromPreference(target);
             if (target.hasAttribute("preference")) {
-              attachToPreference(target, target.getAttribute("preference"));
+              attachToPreference(
+                target,
+                target.getAttribute("preference") || ""
+              );
               target.addEventListener(
                 this.isXULElement(target) ? "command" : "input",
                 syncToPrefOnModify
@@ -169,7 +172,7 @@ export class PreferencePaneManager extends ManagerTool {
             }
           } else if (mutation.type == "childList") {
             for (let node of mutation.removedNodes) {
-              detachFromPreference(node);
+              detachFromPreference(node as Element);
             }
             for (let node of mutation.addedNodes) {
               if (
@@ -177,8 +180,8 @@ export class PreferencePaneManager extends ManagerTool {
                 (node as Element).hasAttribute("preference")
               ) {
                 attachToPreference(
-                  node,
-                  (node as Element).getAttribute("preference")
+                  node as Element,
+                  (node as Element).getAttribute("preference") || ""
                 );
                 node.addEventListener(
                   this.isXULElement(node as Element) ? "command" : "input",
@@ -197,7 +200,7 @@ export class PreferencePaneManager extends ManagerTool {
       // parseXULToFragment() doesn't convert oncommand attributes into actual
       // listeners, so we'll do it here
       for (let elem of container.querySelectorAll("[oncommand]")) {
-        elem.oncommand = elem.getAttribute("oncommand");
+        (elem as any).oncommand = elem.getAttribute("oncommand");
       }
 
       for (let child of container.children) {
@@ -205,7 +208,7 @@ export class PreferencePaneManager extends ManagerTool {
       }
     };
     const windowListener = {
-      onOpenWindow: (xulWindow) => {
+      onOpenWindow: (xulWindow: any) => {
         const win: Window = xulWindow
           .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
           .getInterface(Components.interfaces.nsIDOMWindow);
@@ -240,9 +243,9 @@ export class PreferencePaneManager extends ManagerTool {
                 options.defaultXUL
               );
               this.log(frag);
-              const prefWindow = win.document.querySelector("prefwindow");
+              const prefWindow = win.document.querySelector("prefwindow")!;
               prefWindow.appendChild(frag);
-              const prefPane = win.document.querySelector(`#${options.id}`);
+              const prefPane = win.document.querySelector(`#${options.id}`)!;
               // @ts-ignore
               prefWindow.addPane(prefPane);
               // Resize window, otherwise the new prefpane may be placed out of the window

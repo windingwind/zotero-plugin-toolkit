@@ -12,10 +12,7 @@ export class LibraryTabPanelManager extends ManagerTool {
       tabId: string;
       tabLabel: string;
       panelId: string;
-      renderPanelHook: (
-        panel: XUL.TabPanel | undefined,
-        ownerWindow: Window
-      ) => void;
+      renderPanelHook: (panel: XUL.TabPanel, ownerWindow: Window) => void;
       targetIndex: number;
       selectPanel?: boolean;
     }[];
@@ -130,8 +127,8 @@ export class LibraryTabPanelManager extends ManagerTool {
       classList: [`toolkit-ui-tabs-${tabId}`],
       ignoreIfExists: true,
     });
-    const tabs = tabbox.querySelector("tabs");
-    const tabpanels = tabbox.querySelector("tabpanels");
+    const tabs = tabbox.querySelector("tabs")!;
+    const tabpanels = tabbox.querySelector("tabpanels")!;
     const targetIndex =
       typeof options.targetIndex === "number" ? options.targetIndex : -1;
     if (targetIndex >= 0) {
