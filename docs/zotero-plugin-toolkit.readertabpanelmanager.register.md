@@ -9,7 +9,7 @@ Register a tabpanel for every reader.
 <b>Signature:</b>
 
 ```typescript
-register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel | undefined, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: _ZoteroTypes.ReaderInstance) => void, options?: {
+register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: _ZoteroTypes.ReaderInstance) => void, options?: {
         tabId?: string;
         panelId?: string;
         targetIndex?: number;
@@ -19,11 +19,11 @@ register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel | undefined, ow
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tabLabel | string | Label of panel tab. |
-|  renderPanelHook | (panel: XUL.TabPanel \| undefined, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: \_ZoteroTypes.ReaderInstance) =&gt; void | <p>Called when panel is ready. Add elements to the panel.</p><p>The panel might be <code>undefined</code> when opening a PDF without parent item.</p><p>The owner deck is the top container of right-side bar.</p><p>The readerInstance is the reader of current tabpanel.</p> |
-|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | <i>(Optional)</i> Other optional parameters. |
+| Parameter       | Type                                                                                                                     | Description                                                                                                                                                                                                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| tabLabel        | string                                                                                                                   | Label of panel tab.                                                                                                                                                                                                                                                            |
+| renderPanelHook | (panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: \_ZoteroTypes.ReaderInstance) =&gt; void | <p>Called when panel is ready. Add elements to the panel.</p><p>The panel might be <code>undefined</code> when opening a PDF without parent item.</p><p>The owner deck is the top container of right-side bar.</p><p>The readerInstance is the reader of current tabpanel.</p> |
+| options         | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; }                                       | <i>(Optional)</i> Other optional parameters.                                                                                                                                                                                                                                   |
 
 <b>Returns:</b>
 
@@ -56,61 +56,56 @@ this._Addon.toolkit.UI.registerReaderTabPanel(
       return;
     }
     this._Addon.toolkit.Tool.log(reader);
-    const elem = this._Addon.toolkit.UI.creatElementsFromJSON(
-      win.document,
-      {
-        tag: "vbox",
-        id: `${config.addonRef}-${reader._instanceID}-extra-reader-tab-div`,
-        namespace: "xul",
-        // This is important! Don't create content for multiple times
-        ignoreIfExists: true,
-        subElementOptions: [
-          {
-            tag: "h2",
-            directAttributes: {
-              innerText: "Hello World!",
-            },
+    const elem = this._Addon.toolkit.UI.creatElementsFromJSON(win.document, {
+      tag: "vbox",
+      id: `${config.addonRef}-${reader._instanceID}-extra-reader-tab-div`,
+      namespace: "xul",
+      // This is important! Don't create content for multiple times
+      ignoreIfExists: true,
+      subElementOptions: [
+        {
+          tag: "h2",
+          directAttributes: {
+            innerText: "Hello World!",
           },
-          {
-            tag: "label",
-            namespace: "xul",
-            directAttributes: {
-              value: "This is a reader tab.",
-            },
+        },
+        {
+          tag: "label",
+          namespace: "xul",
+          directAttributes: {
+            value: "This is a reader tab.",
           },
-          {
-            tag: "label",
-            namespace: "xul",
-            directAttributes: {
-              value: `Reader: ${reader._title.slice(0, 20)}`,
-            },
+        },
+        {
+          tag: "label",
+          namespace: "xul",
+          directAttributes: {
+            value: `Reader: ${reader._title.slice(0, 20)}`,
           },
-          {
-            tag: "label",
-            namespace: "xul",
-            directAttributes: {
-              value: `itemID: ${reader.itemID}.`,
-            },
+        },
+        {
+          tag: "label",
+          namespace: "xul",
+          directAttributes: {
+            value: `itemID: ${reader.itemID}.`,
           },
-          {
-            tag: "button",
-            directAttributes: {
-              innerText: "Unregister",
-            },
-            listeners: [
-              {
-                type: "click",
-                listener: () => {
-                  this._Addon.toolkit.UI.unregisterReaderTabPanel(
-                    readerTabId
-                  );
-                },
+        },
+        {
+          tag: "button",
+          directAttributes: {
+            innerText: "Unregister",
+          },
+          listeners: [
+            {
+              type: "click",
+              listener: () => {
+                this._Addon.toolkit.UI.unregisterReaderTabPanel(readerTabId);
               },
-            ],
-          },
-        ],
-      }
-    );
+            },
+          ],
+        },
+      ],
+    });
     panel.append(elem);
   },
   {
@@ -118,4 +113,3 @@ this._Addon.toolkit.UI.registerReaderTabPanel(
   }
 );
 ```
-
