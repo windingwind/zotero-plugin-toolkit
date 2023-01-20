@@ -6,7 +6,7 @@ import { ToolkitShortcutsGlobal } from "./shortcut";
  * The Singleton class of global parameters used by managers.
  * @example `ToolkitGlobal.getInstance().itemTree.state`
  */
-export default class ToolkitGlobal {
+export class ToolkitGlobal {
   readonly itemTree: ItemTreeGlobal;
   readonly shortcut: ToolkitShortcutsGlobal;
 
@@ -38,3 +38,5 @@ export default class ToolkitGlobal {
 export interface GlobalInstance {
   _ready: boolean;
 }
+
+export default ToolkitGlobal;
