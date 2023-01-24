@@ -55,6 +55,6 @@
     "release-it": "^15.5.1"
   },
   "lint-staged": {
-    "*.{ts,js,css,md}": "prettier --write src"
+    "*.{ts,js,css}": "prettier --write src"
   }
 }
