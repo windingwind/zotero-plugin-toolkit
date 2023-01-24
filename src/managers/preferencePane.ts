@@ -133,9 +133,8 @@ export class PreferencePaneManager extends ManagerTool {
       for (let elem of container.querySelectorAll("[preference]")) {
         let preference = elem.getAttribute("preference")!;
         if (container.querySelector("preferences > preference#" + preference)) {
-          Zotero.warn(
-            "<preference> is deprecated -- `preference` attribute values " +
-              "should be full preference keys, not <preference> IDs"
+          this.log(
+            "<preference> is deprecated -- `preference` attribute values should be full preference keys, not <preference> IDs"
           );
           preference = container
             .querySelector("preferences > preference#" + preference)

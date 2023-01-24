@@ -16,7 +16,7 @@ export class ExtraFieldTool extends BasicTool {
     if (backend === "default") {
       return this.getGlobal("Zotero").Utilities.Internal.extractExtraFields(
         extraFiledRaw
-      ).fields;
+      ).fields as Map<string, string>;
     } else {
       const map = new Map<string, string>();
       extraFiledRaw.split("\n").forEach((line) => {

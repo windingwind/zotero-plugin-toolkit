@@ -226,9 +226,9 @@ export class BasicTool {
             .join("\n")
         );
       }
-    } catch (e) {
+    } catch (e: unknown) {
       console.error(e);
-      Zotero.logError(e);
+      Zotero.logError(e as Error);
     }
   }
 
