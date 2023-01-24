@@ -1,6 +1,6 @@
 import { BasicTool, BasicOptions } from "../basic";
 import { ManagerTool } from "../basic";
-import { UITool } from "../_doc";
+import { UITool } from "../tools/ui";
 import ToolkitGlobal from "./toolkitGlobal";
 
 /**
@@ -13,7 +13,6 @@ export class Prompt {
   private ui: UITool;
   private base: BasicTool;
   private document: Document;
-
   /**
    * Record the last text entered
    */
@@ -48,6 +47,7 @@ export class Prompt {
     this.base = new BasicTool();
     this.ui = new UITool();
     this.document = this.base.getGlobal("document");
+    this.initializeUI();
   }
 
   /**
@@ -215,9 +215,9 @@ export class Prompt {
   }
 
   /**
-   * Create a command item with passed name and label for `Prompt` UI.
-   *
-   * Should append it to `commandsNode` manually.
+   * Create a command item for `Prompt` UI.
+   * @param command
+   * @returns
    */
   public createCommandNode(command: Command): HTMLElement {
     const commandNode = this.ui.createElement(this.document, "div", {
@@ -662,7 +662,7 @@ export class Prompt {
       let Zotero = Components.classes["@zotero.org/Zotero;1"].getService(
         Components.interfaces.nsISupports
       ).wrappedJSObject;
-      const prompt = Zotero._toolkitGlobal.prompt;
+      const prompt = Zotero._toolkitGlobal.prompt.instance;
       let promptNode = prompt.promptNode;
       let inputNode = prompt.inputNode;
       if (promptNode.style.display == "none") {
@@ -689,7 +689,11 @@ export class PromptManager extends ManagerTool {
   private commands: Command[] = [];
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    this.prompt = ToolkitGlobal.getInstance().prompt;
+    let prompt = ToolkitGlobal.getInstance().prompt.instance;
+    if (!prompt) {
+      ToolkitGlobal.getInstance().prompt.instance = prompt = new Prompt();
+    }
+    this.prompt = prompt as Prompt;
   }
 
   /**
@@ -730,7 +734,6 @@ export class PromptManager extends ManagerTool {
         | Command[];
     }[]
   ) {
-    this.prompt.initializeUI();
     // this.prompt.commands records all commands by all addons
     this.prompt.commands = [...this.prompt.commands, ...commands];
     // this.commands records all commands by the addon creating this PromptManager
@@ -775,4 +778,8 @@ export interface Command {
     | ((prompt: Prompt) => Promise<void>)
     | ((prompt: Prompt) => void)
     | Command[];
+}
+
+export interface PromptGlobal {
+  instance: Prompt | undefined;
 }
