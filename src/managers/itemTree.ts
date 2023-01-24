@@ -259,10 +259,10 @@ export class ItemTreeManager extends ManagerTool {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
     const window = this.getGlobal("window");
-    this.globalCache = ToolkitGlobal.getInstance().itemTree;
-    await ToolkitGlobal.waitGlobalInstance(this.globalCache);
-    if (this.globalCache._state == "idle") {
-      this.globalCache._state = "loading";
+    const globalCache = (this.globalCache =
+      ToolkitGlobal.getInstance().itemTree);
+    if (!globalCache._ready) {
+      globalCache._ready = true;
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       this.patch(
@@ -276,11 +276,7 @@ export class ItemTreeManager extends ManagerTool {
             const insertAfter = columns.findIndex(
               (column) => column.dataKey === "title"
             );
-            columns.splice(
-              insertAfter + 1,
-              0,
-              ...Zotero._toolkitGlobal.itemTree.columns
-            );
+            columns.splice(insertAfter + 1, 0, ...globalCache.columns);
             return columns;
           }
       );
@@ -290,16 +286,11 @@ export class ItemTreeManager extends ManagerTool {
         this.patchSign,
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
-            if (
-              !(
-                column.dataKey in Zotero._toolkitGlobal.itemTree.renderCellHooks
-              )
-            ) {
+            if (!(column.dataKey in globalCache.renderCellHooks)) {
               // @ts-ignore
               return original.apply(this, arguments);
             }
-            const hook =
-              Zotero._toolkitGlobal.itemTree.renderCellHooks[column.dataKey];
+            const hook = globalCache.renderCellHooks[column.dataKey];
             // @ts-ignore
             const elem = hook(index, data, column, original.bind(this));
             if (elem.classList.contains("cell")) {
@@ -332,12 +323,12 @@ export class ItemTreeManager extends ManagerTool {
             includeBaseMapped: boolean
           ) {
             if (
-              Zotero._toolkitGlobal.itemTree.columns
+              globalCache.columns
                 .map((_c: ColumnOptions) => _c.dataKey)
                 .includes(field)
             ) {
               try {
-                const hook = Zotero._toolkitGlobal.itemTree.fieldHooks[field];
+                const hook = globalCache.fieldHooks[field];
                 // @ts-ignore
                 return hook(
                   field,
@@ -356,7 +347,6 @@ export class ItemTreeManager extends ManagerTool {
             return original.apply(this, arguments);
           }
       );
-      this.globalCache._state = "ready";
     }
     this.initializationLock.resolve();
   }

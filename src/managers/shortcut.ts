@@ -276,15 +276,13 @@ export class ShortcutManager extends ManagerTool {
       .forEach((keyOptions) => this.unregister(keyOptions));
   }
 
-  private async initializeGlobal() {
+  private initializeGlobal() {
     const Zotero = this.getGlobal("Zotero");
-    await Zotero.uiReadyPromise;
     const window = this.getGlobal("window");
 
     this.globalCache = ToolkitGlobal.getInstance().shortcut;
-    await ToolkitGlobal.waitGlobalInstance(this.globalCache);
-    if (this.globalCache._state === "idle") {
-      this.globalCache._state = "loading";
+    if (!this.globalCache._ready) {
+      this.globalCache._ready = true;
       window.addEventListener("keypress", (event) => {
         let eventMods = [];
         let eventModsWithAccel = [];
@@ -308,22 +306,19 @@ export class ShortcutManager extends ManagerTool {
         const eventModStrWithAccel = new KeyModifier(
           eventMods.join(",")
         ).getRaw();
-        Zotero._toolkitGlobal.shortcut.eventKeys.forEach(
-          (keyOptions: BaseKey) => {
-            if (keyOptions.disabled) {
-              return;
-            }
-            const modStr = new KeyModifier(keyOptions.modifiers || "").getRaw();
-            if (
-              (modStr === eventModStr || modStr === eventModStrWithAccel) &&
-              keyOptions.key?.toLowerCase() === event.key.toLowerCase()
-            ) {
-              keyOptions.callback();
-            }
+        this.globalCache.eventKeys.forEach((keyOptions: BaseKey) => {
+          if (keyOptions.disabled) {
+            return;
           }
-        );
+          const modStr = new KeyModifier(keyOptions.modifiers || "").getRaw();
+          if (
+            (modStr === eventModStr || modStr === eventModStrWithAccel) &&
+            keyOptions.key?.toLowerCase() === event.key.toLowerCase()
+          ) {
+            keyOptions.callback();
+          }
+        });
       });
-      this.globalCache._state = "ready";
     }
   }
 
