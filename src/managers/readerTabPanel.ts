@@ -214,6 +214,15 @@ export class ReaderTabPanelManager extends ManagerTool {
     tabIds.forEach(this.unregister.bind(this));
   }
 
+  changeTabPanel(tabId: string, options: { [key: string]: unknown }) {
+    const idx = this.readerTabCache.optionsList.findIndex(
+      (v) => v.tabId === tabId
+    );
+    if (idx >= 0) {
+      Object.assign(this.readerTabCache.optionsList[idx], options);
+    }
+  }
+
   private removeTabPanel(tabId: string) {
     const doc = this.getGlobal("document");
     Array.prototype.forEach.call(
@@ -242,6 +251,10 @@ export class ReaderTabPanelManager extends ManagerTool {
   private async addReaderTabPanel() {
     const window = this.getGlobal("window");
     const deck = this.readerTool.getReaderTabPanelDeck();
+    // Trigger initialization only once
+    if (deck.selectedPanel?.getAttribute("toolkit-initialized")) {
+      return;
+    }
     const reader = await this.readerTool.getReader();
     if (!reader) {
       return;
@@ -329,5 +342,6 @@ export class ReaderTabPanelManager extends ManagerTool {
       }
       options.renderPanelHook(tabpanel, deck, window, reader);
     });
+    deck.selectedPanel?.setAttribute("toolkit-initialized", "true");
   }
 }

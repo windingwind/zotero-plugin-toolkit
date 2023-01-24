@@ -23,6 +23,7 @@ export declare class ReaderTabPanelManager extends ManagerTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [changeTabPanel(tabId, options)](./zotero-plugin-toolkit.readertabpanelmanager.changetabpanel.md) |  |  |
 |  [register(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.readertabpanelmanager.register.md) |  | Register a tabpanel for every reader. |
 |  [unregister(tabId)](./zotero-plugin-toolkit.readertabpanelmanager.unregister.md) |  | Unregister the reader tabpanel. |
 |  [unregisterAll()](./zotero-plugin-toolkit.readertabpanelmanager.unregisterall.md) |  | Unregister all library tabpanel. |
