@@ -470,7 +470,7 @@ export interface ElementProps {
   /**
    * Set with `elem.prop =`
    */
-  properties?: { [key: string]: string | boolean | number | null | undefined };
+  properties?: { [key: string]: unknown };
   /**
    * @deprecated Use `properties`
    */

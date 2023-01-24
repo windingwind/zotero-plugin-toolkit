@@ -10,6 +10,6 @@ Set with `elem.prop =`
 
 ```typescript
 properties?: {
-        [key: string]: string | boolean | number | null | undefined;
+        [key: string]: unknown;
     };
 ```
