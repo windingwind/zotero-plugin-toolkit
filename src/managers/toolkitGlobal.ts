@@ -1,5 +1,6 @@
 import { BasicTool } from "../basic";
 import { ItemTreeGlobal } from "./itemTree";
+import { PromptGlobal } from "./prompt";
 import { ToolkitShortcutsGlobal } from "./shortcut";
 
 /**
@@ -9,7 +10,7 @@ import { ToolkitShortcutsGlobal } from "./shortcut";
 export class ToolkitGlobal {
   readonly itemTree: ItemTreeGlobal;
   readonly shortcut: ToolkitShortcutsGlobal;
-
+  readonly prompt: PromptGlobal;
   private constructor() {
     this.itemTree = {
       _ready: false,
@@ -20,6 +21,9 @@ export class ToolkitGlobal {
     this.shortcut = {
       _ready: false,
       eventKeys: [],
+    };
+    this.prompt = {
+      instance: undefined,
     };
   }
 

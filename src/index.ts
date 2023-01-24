@@ -3,6 +3,7 @@ import { UITool } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
 import { ItemTreeManager } from "./managers/itemTree";
+import { PromptManager } from "./managers/prompt";
 import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
 import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { MenuManager } from "./managers/menu";
@@ -24,6 +25,7 @@ class ZoteroToolkit extends BasicTool {
   Reader: ReaderTool;
   ExtraField: ExtraFieldTool;
   ItemTree: ItemTreeManager;
+  Prompt: PromptManager;
   LibraryTabPanel: LibraryTabPanelManager;
   ReaderTabPanel: ReaderTabPanelManager;
   Menu: MenuManager;
@@ -41,6 +43,7 @@ class ZoteroToolkit extends BasicTool {
     this.Reader = new ReaderTool(this);
     this.ExtraField = new ExtraFieldTool(this);
     this.ItemTree = new ItemTreeManager(this);
+    this.Prompt = new PromptManager(this);
     this.LibraryTabPanel = new LibraryTabPanelManager(this);
     this.ReaderTabPanel = new ReaderTabPanelManager(this);
     this.Menu = new MenuManager(this);
