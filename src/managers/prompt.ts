@@ -1,6 +1,7 @@
 import { BasicTool, BasicOptions } from "../basic";
 import { ManagerTool } from "../basic";
 import { UITool } from "../tools/ui";
+import { ShortcutManager } from "./shortcut";
 import ToolkitGlobal from "./toolkitGlobal";
 
 /**
@@ -644,40 +645,22 @@ export class Prompt {
     this.document.documentElement.appendChild(style);
   }
 
-  private removeKeys() {
-    if (this.keyset) {
-      this.keyset.remove();
-    }
-  }
-
   private registerShortcut() {
-    this.removeKeys();
-    let keyset = document.createElement("keyset") as XUL.Element;
-    keyset.setAttribute("id", "toolkit-keyset");
-
-    let key = document.createElement("key");
-    key.setAttribute("id", "toolkit-prompt-key");
-    key.setAttribute("oncommand", "console.log(1)");
-    key.addEventListener("command", function () {
-      let Zotero = Components.classes["@zotero.org/Zotero;1"].getService(
-        Components.interfaces.nsISupports
-      ).wrappedJSObject;
-      const prompt = Zotero._toolkitGlobal.prompt.instance;
-      let promptNode = prompt.promptNode;
-      let inputNode = prompt.inputNode;
-      if (promptNode.style.display == "none") {
-        promptNode.style.display = "flex";
-        inputNode.focus();
-        prompt.showCommands(prompt.commands, true);
-      } else {
-        promptNode.style.display = "none";
-      }
+    const shortCut = new ShortcutManager();
+    shortCut.register("event", {
+      id: "toolkit-prompt-key",
+      modifiers: "shift",
+      key: "p",
+      callback: () => {
+        if (this.promptNode.style.display == "none") {
+          this.promptNode.style.display = "flex";
+          this.inputNode.focus();
+          this.showCommands(this.commands, true);
+        } else {
+          this.promptNode.style.display = "none";
+        }
+      },
     });
-    key.setAttribute("key", "p");
-    key.setAttribute("modifiers", "shift");
-    keyset.appendChild(key);
-    this.keyset = keyset;
-    document.getElementById("mainKeyset")!.parentNode!.appendChild(keyset);
   }
 }
 

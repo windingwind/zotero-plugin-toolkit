@@ -1,6 +1,6 @@
 import { BasicTool } from "../basic";
 import { ItemTreeGlobal } from "./itemTree";
-import { Prompt, PromptGlobal } from "./prompt";
+import { PromptGlobal } from "./prompt";
 import { ToolkitShortcutsGlobal } from "./shortcut";
 
 /**
