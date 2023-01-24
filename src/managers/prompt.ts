@@ -10,7 +10,6 @@ import ToolkitGlobal from "./toolkitGlobal";
  * `Shift + P` can show/hide its UI anywhere after registering commands.
  */
 export class Prompt {
-  private keyset!: XUL.Element;
   private ui: UITool;
   private base: BasicTool;
   private document: Document;
@@ -63,98 +62,124 @@ export class Prompt {
 
   private createHTML() {
     this.promptNode = this.ui.createElement(this.document, "div", {
-      id: `zotero-plugin-toolkit-prompt`,
-      classList: ["prompt-container"],
       styles: {
         display: "none",
       },
       children: [
         {
           tag: "div",
-          classList: ["input-container"],
-          children: [
+          styles: {
+            position: "fixed",
+            left: "0",
+            top: "0",
+            backgroundColor: "rgba(220, 220, 220, 0.4)",
+            width: "100%",
+            height: "100%",
+            opacity: "0.5",
+          },
+          listeners: [
             {
-              tag: "input",
-              attributes: {
-                type: "text",
-                placeholder: this.defaultText.placeholder,
+              type: "click",
+              listener: () => {
+                this.promptNode.style.display = "none";
               },
-            },
-            {
-              tag: "div",
-              classList: ["cta"],
-            },
-          ],
-        },
-        {
-          tag: "div",
-          classList: ["commands-containers"],
-        },
-        {
-          tag: "div",
-          classList: ["instructions"],
-          children: [
-            {
-              tag: "div",
-              classList: ["instruction"],
-              children: [
-                {
-                  tag: "span",
-                  classList: ["key"],
-                  properties: {
-                    innerText: "↑↓",
-                  },
-                },
-                {
-                  tag: "span",
-                  properties: {
-                    innerText: "to navigate",
-                  },
-                },
-              ],
-            },
-            {
-              tag: "div",
-              classList: ["instruction"],
-              children: [
-                {
-                  tag: "span",
-                  classList: ["key"],
-                  properties: {
-                    innerText: "enter",
-                  },
-                },
-                {
-                  tag: "span",
-                  properties: {
-                    innerText: "to trigger",
-                  },
-                },
-              ],
-            },
-            {
-              tag: "div",
-              classList: ["instruction"],
-              children: [
-                {
-                  tag: "span",
-                  classList: ["key"],
-                  properties: {
-                    innerText: "esc",
-                  },
-                },
-                {
-                  tag: "span",
-                  properties: {
-                    innerText: "to exit",
-                  },
-                },
-              ],
             },
           ],
         },
       ],
     });
+    this.promptNode.appendChild(
+      this.ui.createElement(this.document, "div", {
+        id: `zotero-plugin-toolkit-prompt`,
+        classList: ["prompt-container"],
+        children: [
+          {
+            tag: "div",
+            classList: ["input-container"],
+            children: [
+              {
+                tag: "input",
+                attributes: {
+                  type: "text",
+                  placeholder: this.defaultText.placeholder,
+                },
+              },
+              {
+                tag: "div",
+                classList: ["cta"],
+              },
+            ],
+          },
+          {
+            tag: "div",
+            classList: ["commands-containers"],
+          },
+          {
+            tag: "div",
+            classList: ["instructions"],
+            children: [
+              {
+                tag: "div",
+                classList: ["instruction"],
+                children: [
+                  {
+                    tag: "span",
+                    classList: ["key"],
+                    properties: {
+                      innerText: "↑↓",
+                    },
+                  },
+                  {
+                    tag: "span",
+                    properties: {
+                      innerText: "to navigate",
+                    },
+                  },
+                ],
+              },
+              {
+                tag: "div",
+                classList: ["instruction"],
+                children: [
+                  {
+                    tag: "span",
+                    classList: ["key"],
+                    properties: {
+                      innerText: "enter",
+                    },
+                  },
+                  {
+                    tag: "span",
+                    properties: {
+                      innerText: "to trigger",
+                    },
+                  },
+                ],
+              },
+              {
+                tag: "div",
+                classList: ["instruction"],
+                children: [
+                  {
+                    tag: "span",
+                    classList: ["key"],
+                    properties: {
+                      innerText: "esc",
+                    },
+                  },
+                  {
+                    tag: "span",
+                    properties: {
+                      innerText: "to exit",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      })
+    );
 
     this.inputNode = this.promptNode.querySelector("input")!;
 
