@@ -29,6 +29,10 @@ export class Prompt {
    */
   private maxLineNum: number = 12;
   /**
+   * It controls the max number of suggestions.
+   */
+  private maxSuggestionNum: number = 100;
+  /**
    * The top-level HTML div node of `Prompt`
    */
   private promptNode!: HTMLDivElement;
@@ -302,6 +306,8 @@ export class Prompt {
         },
       ],
     });
+    // @ts-ignore
+    commandNode.command = command;
     return commandNode;
   }
 
@@ -344,6 +350,146 @@ export class Prompt {
     }
   }
 
+  /**
+   * Match suggestions for user's entered text.
+   */
+  private showSuggestions(inputText: string) {
+    // From Obsidian
+    var _w =
+        /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/,
+      jw = /\s/,
+      Ww =
+        /[\u0F00-\u0FFF\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/;
+
+    function Yw(e: any, t: any, n: any, i: any) {
+      if (0 === e.length) return 0;
+      var r = 0;
+      (r -= Math.max(0, e.length - 1)), (r -= i / 10);
+      var o = e[0][0];
+      return (
+        (r -= (e[e.length - 1][1] - o + 1 - t) / 100),
+        (r -= o / 1e3),
+        (r -= n / 1e4)
+      );
+    }
+
+    function $w(e: any, t: any, n: any, i: any) {
+      if (0 === e.length) return null;
+      for (
+        var r = n.toLowerCase(), o = 0, a = 0, s = [], l = 0;
+        l < e.length;
+        l++
+      ) {
+        var c = e[l],
+          u = r.indexOf(c, a);
+        if (-1 === u) return null;
+        var h = n.charAt(u);
+        if (u > 0 && !_w.test(h) && !Ww.test(h)) {
+          var p = n.charAt(u - 1);
+          if (
+            (h.toLowerCase() !== h && p.toLowerCase() !== p) ||
+            (h.toUpperCase() !== h && !_w.test(p) && !jw.test(p) && !Ww.test(p))
+          )
+            if (i) {
+              if (u !== a) {
+                (a += c.length), l--;
+                continue;
+              }
+            } else o += 1;
+        }
+        if (0 === s.length) s.push([u, u + c.length]);
+        else {
+          var d = s[s.length - 1];
+          d[1] < u ? s.push([u, u + c.length]) : (d[1] = u + c.length);
+        }
+        a = u + c.length;
+      }
+      return {
+        matches: s,
+        score: Yw(s, t.length, r.length, o),
+      };
+    }
+
+    function Gw(e: any): { query: string; tokens: string[]; fuzzy: string[] } {
+      for (var t = e.toLowerCase(), n = [], i = 0, r = 0; r < t.length; r++) {
+        var o = t.charAt(r);
+        jw.test(o)
+          ? (i !== r && n.push(t.substring(i, r)), (i = r + 1))
+          : (_w.test(o) || Ww.test(o)) &&
+            (i !== r && n.push(t.substring(i, r)), n.push(o), (i = r + 1));
+      }
+      return (
+        i !== t.length && n.push(t.substring(i, t.length)),
+        {
+          query: e,
+          tokens: n,
+          fuzzy: t.split(""),
+        }
+      );
+    }
+
+    function Xw(e: any, t: any): { matches: number[][]; score: number } | null {
+      if ("" === e.query)
+        return {
+          score: 0,
+          matches: [],
+        };
+      var n = $w(e.tokens, e.query, t, !1);
+      return n || $w(e.fuzzy, e.query, t, !0);
+    }
+    var e = Gw(inputText);
+    let container = this.getCommandsContainer();
+    if (container.classList.contains("suggestions")) {
+      this.exit();
+    }
+    if (inputText.trim() == "") {
+      return;
+    }
+    let suggestions: {
+      score: number;
+      commandNode: HTMLDivElement;
+    }[] = [];
+    this.getCommandsContainer()
+      .querySelectorAll(".command")
+      .forEach((commandNode: any) => {
+        let spanNode = commandNode.querySelector(".name span") as HTMLElement;
+        let spanText = spanNode.innerText;
+        let res = Xw(e, spanText);
+        if (res) {
+          commandNode = this.createCommandNode(commandNode.command);
+          let spanHTML = "";
+          let i = 0;
+          for (let j = 0; j < res.matches.length; j++) {
+            let [start, end] = res.matches[j];
+            if (start > i) {
+              spanHTML += spanText.slice(i, start);
+            }
+            spanHTML += `<span class="highlight">${spanText.slice(
+              start,
+              end
+            )}</span>`;
+            i = end;
+          }
+          if (i < spanText.length) {
+            spanHTML += spanText.slice(i, spanText.length);
+          }
+          commandNode.querySelector(".name span").innerHTML = spanHTML;
+          suggestions.push({ score: res.score, commandNode });
+        }
+      });
+    if (suggestions.length > 0) {
+      suggestions
+        .sort((a, b) => b.score - a.score)
+        .slice(this.maxSuggestionNum);
+      container = this.createCommandsContainer();
+      container.classList.add("suggestions");
+      suggestions.forEach((suggestion) => {
+        container.appendChild(suggestion.commandNode);
+      });
+    } else {
+      this.showTip(this.defaultText.empty);
+    }
+  }
   /**
    * Bind events of pressing `keydown` and `keyup` key.
    */
@@ -398,100 +544,20 @@ export class Prompt {
       } else if (event.key == "Escape") {
         if (this.inputNode.value.length > 0) {
           this.inputNode.value = "";
-          return;
+        } else {
+          this.exit();
         }
-        this.exit();
-      }
-      if (this.inputNode.value == this.lastInputText) {
+      } else if (["ArrowUp", "ArrowDown"].indexOf(event.key) != -1) {
         return;
       }
-      let commandsContainer = this.getCommandsContainer();
-      let tipNode = commandsContainer.querySelector(".tip");
-      if (tipNode) {
-        this.exit();
-        commandsContainer = this.getCommandsContainer();
+      const currentInputText = this.inputNode.value;
+      if (currentInputText == this.lastInputText) {
+        return;
       }
-      commandsContainer
-        .querySelectorAll(".command .name span")
-        .forEach((spanNode: any) => {
-          spanNode.innerText = spanNode.innerText;
-        });
-      if (this.inputNode.value.trim().length == 0) {
-        [...commandsContainer.querySelectorAll(".command")].forEach(
-          (e: any) => {
-            e.style.display = "flex";
-          }
-        );
-      }
-      this.lastInputText = this.inputNode.value;
-
-      let inputText = this.inputNode.value.replace(/\s+/g, "");
-      let matchedArray: any[][] = [];
-      commandsContainer
-        .querySelectorAll(".command")
-        .forEach((commandNode: any) => {
-          let spanNode = commandNode.querySelector(".name span") as HTMLElement;
-          let spanHTML = spanNode.innerText;
-          let matchedNum = 0;
-          let innerHTML = "";
-          let tightness = 0;
-          let lasti = undefined;
-          for (let i = 0; i < spanHTML.length; i++) {
-            if (
-              inputText[matchedNum].toLowerCase() == spanHTML[i].toLowerCase()
-            ) {
-              if (lasti == undefined) {
-                lasti = i;
-              }
-              tightness += i - lasti;
-              matchedNum++;
-              innerHTML += `<span class="highlight">${spanHTML[i]}</span>`;
-            } else {
-              innerHTML += spanHTML[i];
-            }
-            if (matchedNum == inputText.length) {
-              innerHTML += spanHTML.slice(i + 1);
-              try {
-                spanNode.innerHTML = innerHTML;
-              } catch {
-                spanNode.innerHTML = spanHTML;
-              }
-              matchedArray.push([
-                tightness,
-                commandNode,
-                commandNode.innerText,
-              ]);
-              break;
-            }
-          }
-          commandNode.style.display = "none";
-          commandNode.classList.remove("selected");
-        });
-      // select the first 3
-      matchedArray = matchedArray.sort((x, y) => y[0] - x[0]).slice(-3);
-      // compute rmse
-      let tightnessArray = matchedArray.map((e) => e[0]);
-      // mean
-      let s = 0;
-      for (let i = 0; i < tightnessArray.length; i++) {
-        s += tightnessArray[i];
-      }
-      let mean = s / tightnessArray.length;
-      // variance
-      let v = 0;
-      for (let i = 0; i < tightnessArray.length; i++) {
-        v += (mean - tightnessArray[i]) ** 2;
-      }
-      v = v / tightnessArray.length;
-      if (v > 200) {
-        matchedArray = matchedArray.slice(-1);
-      }
-      matchedArray.forEach((arr) => (arr[1].style.display = "flex"));
-      if (matchedArray.length > 0) {
-        matchedArray[0][1].classList.add("selected");
-      } else {
-        this.showTip(this.defaultText.empty);
-      }
+      this.lastInputText = currentInputText;
+      window.setTimeout(() => {
+        this.showSuggestions(currentInputText);
+      });
     });
   }
 
@@ -505,7 +571,9 @@ export class Prompt {
         innerText: text,
       },
     });
-    this.createCommandsContainer().appendChild(tipNode);
+    let container = this.createCommandsContainer();
+    container.classList.add("suggestions");
+    container.appendChild(tipNode);
     return tipNode;
   }
 
