@@ -133,9 +133,8 @@ export class PreferencePaneManager extends ManagerTool {
       for (let elem of container.querySelectorAll("[preference]")) {
         let preference = elem.getAttribute("preference")!;
         if (container.querySelector("preferences > preference#" + preference)) {
-          Zotero.warn(
-            "<preference> is deprecated -- `preference` attribute values " +
-              "should be full preference keys, not <preference> IDs"
+          this.log(
+            "<preference> is deprecated -- `preference` attribute values should be full preference keys, not <preference> IDs"
           );
           preference = container
             .querySelector("preferences > preference#" + preference)
@@ -248,9 +247,20 @@ export class PreferencePaneManager extends ManagerTool {
               const prefPane = win.document.querySelector(`#${options.id}`)!;
               // @ts-ignore
               prefWindow.addPane(prefPane);
+              // Enable scroll. Check if the content does overflow the box later.
+              // @ts-ignore
+              const contentBox = win.document.getAnonymousNodes(
+                win.document.querySelector(`#${options.id}`)
+              )[0] as XUL.Box;
+              contentBox.style.overflowY = "scroll";
+              contentBox.style.height = "440px";
               // Resize window, otherwise the new prefpane may be placed out of the window
               // @ts-ignore
               win.sizeToContent();
+              // Disable scroll if the content does not overflow.
+              if (contentBox.scrollHeight === contentBox.clientHeight) {
+                contentBox.style.overflowY = "hidden";
+              }
               this.prefPaneCache.win = win;
               this.prefPaneCache.listeners[options.id] = windowListener;
               // Binding preferences

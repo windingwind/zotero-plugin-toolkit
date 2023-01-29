@@ -28,7 +28,7 @@ export interface ElementProps
 |  [ignoreIfExists?](./zotero-plugin-toolkit.elementprops.ignoreifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, return this element and do not do anything. |
 |  [listeners?](./zotero-plugin-toolkit.elementprops.listeners.md) |  | Array&lt;{ type: string; listener: EventListenerOrEventListenerObject \| ((e: Event) =&gt; void) \| null \| undefined; options?: boolean \| AddEventListenerOptions; }&gt; | <i>(Optional)</i> Event listeners |
 |  [namespace?](./zotero-plugin-toolkit.elementprops.namespace.md) |  | string | <i>(Optional)</i> xul \| html \| svg |
-|  [properties?](./zotero-plugin-toolkit.elementprops.properties.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | <i>(Optional)</i> Set with <code>elem.prop =</code> |
+|  [properties?](./zotero-plugin-toolkit.elementprops.properties.md) |  | { \[key: string\]: unknown; } | <i>(Optional)</i> Set with <code>elem.prop =</code> |
 |  [removeIfExists?](./zotero-plugin-toolkit.elementprops.removeifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, remove and re-create it, then continue with props/attrs/children. |
 |  [skipIfExists?](./zotero-plugin-toolkit.elementprops.skipifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, skip element creation and continue with props/attrs/children. |
 |  [styles?](./zotero-plugin-toolkit.elementprops.styles.md) |  | { \[key: string\]: string; } | <i>(Optional)</i> styles |

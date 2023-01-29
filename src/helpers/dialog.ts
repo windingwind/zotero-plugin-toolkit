@@ -331,8 +331,8 @@ function openDialog(
   win.addEventListener(
     "DOMContentLoaded",
     function onWindowLoad(ev: Event) {
-      (this.window as any).arguments[0]?.loadLock?.resolve();
-      this.window.removeEventListener("DOMContentLoaded", onWindowLoad, false);
+      (win as any).arguments[0]?.loadLock?.resolve();
+      win.removeEventListener("DOMContentLoaded", onWindowLoad, false);
     },
     false
   );

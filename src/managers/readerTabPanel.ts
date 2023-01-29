@@ -15,7 +15,7 @@ export class ReaderTabPanelManager extends ManagerTool {
       tabLabel: string;
       panelId: string;
       renderPanelHook: (
-        panel: XUL.TabPanel | undefined,
+        panel: XUL.TabPanel,
         ownerDeck: XUL.Deck,
         ownerWindow: Window,
         readerInstance: _ZoteroTypes.ReaderInstance
@@ -142,7 +142,7 @@ export class ReaderTabPanelManager extends ManagerTool {
   async register(
     tabLabel: string,
     renderPanelHook: (
-      panel: XUL.TabPanel | undefined,
+      panel: XUL.TabPanel,
       ownerDeck: XUL.Deck,
       ownerWindow: Window,
       readerInstance: _ZoteroTypes.ReaderInstance
@@ -214,6 +214,15 @@ export class ReaderTabPanelManager extends ManagerTool {
     tabIds.forEach(this.unregister.bind(this));
   }
 
+  changeTabPanel(tabId: string, options: { [key: string]: unknown }) {
+    const idx = this.readerTabCache.optionsList.findIndex(
+      (v) => v.tabId === tabId
+    );
+    if (idx >= 0) {
+      Object.assign(this.readerTabCache.optionsList[idx], options);
+    }
+  }
+
   private removeTabPanel(tabId: string) {
     const doc = this.getGlobal("document");
     Array.prototype.forEach.call(
@@ -242,62 +251,97 @@ export class ReaderTabPanelManager extends ManagerTool {
   private async addReaderTabPanel() {
     const window = this.getGlobal("window");
     const deck = this.readerTool.getReaderTabPanelDeck();
-    const tabbox = deck.selectedPanel?.querySelector("tabbox") as
-      | XUL.TabBox
-      | undefined;
-    if (!tabbox) {
+    // Trigger initialization only once
+    if (deck.selectedPanel?.getAttribute("toolkit-initialized")) {
       return;
     }
     const reader = await this.readerTool.getReader();
     if (!reader) {
       return;
     }
-    this.readerTabCache.optionsList.forEach((options) => {
-      if (tabbox) {
-        const tab = this.ui.createElement(window.document, "tab", {
-          id: `${options.tabId}-${reader._instanceID}`,
-          classList: [`toolkit-ui-tabs-${options.tabId}`],
+    // PDF without parent item does not have tabpanel. Create one.
+    if (deck.selectedPanel?.children[0].tagName === "vbox") {
+      const container = deck.selectedPanel;
+      container.innerHTML = "";
+      this.ui.appendElement(
+        {
+          tag: "tabbox",
+          classList: ["zotero-view-tabbox"],
           attributes: {
-            label: options.tabLabel,
+            flex: "1",
           },
-          ignoreIfExists: true,
-        }) as XUL.Tab;
-        const tabpanel = this.ui.createElement(window.document, "tabpanel", {
-          id: `${options.panelId}-${reader._instanceID}`,
-          classList: [`toolkit-ui-tabs-${options.tabId}`],
-          ignoreIfExists: true,
-        }) as XUL.TabPanel;
-        const tabs = tabbox.querySelector("tabs");
-        const tabpanels = tabbox.querySelector("tabpanels");
-        if (options.targetIndex >= 0) {
-          tabs?.querySelectorAll("tab")[options.targetIndex].before(tab);
-          tabpanels
-            ?.querySelectorAll("tabpanel")
-            [options.targetIndex].before(tabpanel);
-          if (tabbox.getAttribute("toolkit-select-fixed") !== "true") {
-            // Tabs after current tab will not be correctly selected
-            // A workaround to manually set selection.
-            tabbox.tabpanels.addEventListener("select", () => {
-              this.getGlobal("setTimeout")(() => {
-                // @ts-ignore
-                tabbox.tabpanels.selectedPanel = tabbox.tabs.getRelatedElement(
-                  tabbox.tabs.selectedItem
-                );
-              }, 0);
-            });
-            tabbox.setAttribute("toolkit-select-fixed", "true");
-          }
-        } else {
-          tabs?.appendChild(tab);
-          tabpanels?.appendChild(tabpanel);
+          enableElementRecord: false,
+          children: [
+            {
+              tag: "tabs",
+              classList: ["zotero-editpane-tabs"],
+              attributes: {
+                orient: "horizontal",
+              },
+              enableElementRecord: false,
+            },
+            {
+              tag: "tabpanels",
+              classList: ["zotero-view-item"],
+              attributes: {
+                flex: "1",
+              },
+              enableElementRecord: false,
+            },
+          ],
+        },
+        container
+      );
+    }
+
+    let tabbox = deck.selectedPanel?.querySelector("tabbox") as XUL.TabBox;
+    if (!tabbox) {
+      return;
+    }
+
+    this.readerTabCache.optionsList.forEach((options) => {
+      const tab = this.ui.createElement(window.document, "tab", {
+        id: `${options.tabId}-${reader._instanceID}`,
+        classList: [`toolkit-ui-tabs-${options.tabId}`],
+        attributes: {
+          label: options.tabLabel,
+        },
+        ignoreIfExists: true,
+      }) as XUL.Tab;
+      const tabpanel = this.ui.createElement(window.document, "tabpanel", {
+        id: `${options.panelId}-${reader._instanceID}`,
+        classList: [`toolkit-ui-tabs-${options.tabId}`],
+        ignoreIfExists: true,
+      }) as XUL.TabPanel;
+      const tabs = tabbox.querySelector("tabs");
+      const tabpanels = tabbox.querySelector("tabpanels");
+      if (options.targetIndex >= 0) {
+        tabs?.querySelectorAll("tab")[options.targetIndex].before(tab);
+        tabpanels
+          ?.querySelectorAll("tabpanel")
+          [options.targetIndex].before(tabpanel);
+        if (tabbox.getAttribute("toolkit-select-fixed") !== "true") {
+          // Tabs after current tab will not be correctly selected
+          // A workaround to manually set selection.
+          tabbox.tabpanels.addEventListener("select", () => {
+            this.getGlobal("setTimeout")(() => {
+              // @ts-ignore
+              tabbox.tabpanels.selectedPanel = tabbox.tabs.getRelatedElement(
+                tabbox?.tabs.selectedItem
+              );
+            }, 0);
+          });
+          tabbox.setAttribute("toolkit-select-fixed", "true");
         }
-        if (options.selectPanel) {
-          tabbox.selectedTab = tab;
-        }
-        options.renderPanelHook(tabpanel, deck, window, reader);
       } else {
-        options.renderPanelHook(undefined, deck, window, reader);
+        tabs?.appendChild(tab);
+        tabpanels?.appendChild(tabpanel);
       }
+      if (options.selectPanel) {
+        tabbox.selectedTab = tab;
+      }
+      options.renderPanelHook(tabpanel, deck, window, reader);
     });
+    deck.selectedPanel?.setAttribute("toolkit-initialized", "true");
   }
 }
