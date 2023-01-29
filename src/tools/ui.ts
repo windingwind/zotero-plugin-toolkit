@@ -31,7 +31,7 @@ export class UITool extends BasicTool {
       this._basicOptions.ui = {
         enableElementRecord: true,
         enableElementJSONLog: false,
-        enableElementDOMLog: true
+        enableElementDOMLog: true,
       };
     }
   }
@@ -290,8 +290,13 @@ export class UITool extends BasicTool {
         .filter((e) => e);
       elem.append(...subElements);
     }
-    if (props.enableElementDOMLog || this._basicOptions.ui.enableElementDOMLog)
+    if (
+      (typeof props.enableElementDOMLog !== "undefined" &&
+        props.enableElementDOMLog) ||
+      this.basicOptions.ui.enableElementDOMLog
+    ) {
       this.log(elem);
+    }
     return elem;
   }
 
@@ -444,7 +449,7 @@ export interface UIOptions extends BasicOptions {
      */
     enableElementJSONLog: boolean;
     /**
-     * Wether to log the DOM node mounted by `createElement`. 
+     * Wether to log the DOM node mounted by `createElement`.
      */
     enableElementDOMLog: boolean;
   };
