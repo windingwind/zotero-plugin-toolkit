@@ -22,6 +22,7 @@ export interface ElementProps
 |  [classList?](./zotero-plugin-toolkit.elementprops.classlist.md) |  | Array&lt;string&gt; | <i>(Optional)</i> classList |
 |  [customCheck?](./zotero-plugin-toolkit.elementprops.customcheck.md) |  | (doc: Document, options: [ElementProps](./zotero-plugin-toolkit.elementprops.md)<!-- -->) =&gt; boolean | <i>(Optional)</i> Custom check hook. If it returns false, return undefined and do not do anything. |
 |  [directAttributes?](./zotero-plugin-toolkit.elementprops.directattributes.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | <i>(Optional)</i> |
+|  [enableElementDOMLog?](./zotero-plugin-toolkit.elementprops.enableelementdomlog.md) |  | boolean | <i>(Optional)</i> Enable elements to be printed to console &amp; Zotero.debug. |
 |  [enableElementJSONLog?](./zotero-plugin-toolkit.elementprops.enableelementjsonlog.md) |  | boolean | <i>(Optional)</i> Enable elements to be printed to console &amp; Zotero.debug. |
 |  [enableElementRecord?](./zotero-plugin-toolkit.elementprops.enableelementrecord.md) |  | boolean | <i>(Optional)</i> Enable elements to be recorded by the tookit so it can be removed when calling <code>unregisterAll</code>. |
 |  [id?](./zotero-plugin-toolkit.elementprops.id.md) |  | string | <i>(Optional)</i> id |
