@@ -30,7 +30,8 @@ export class UITool extends BasicTool {
     if (!this._basicOptions.ui) {
       this._basicOptions.ui = {
         enableElementRecord: true,
-        enableElementJSONLog: true,
+        enableElementJSONLog: false,
+        enableElementDOMLog: true
       };
     }
   }
@@ -289,6 +290,8 @@ export class UITool extends BasicTool {
         .filter((e) => e);
       elem.append(...subElements);
     }
+    if (props.enableElementDOMLog || this._basicOptions.ui.enableElementDOMLog)
+      this.log(elem);
     return elem;
   }
 
@@ -433,13 +436,17 @@ export class UITool extends BasicTool {
 export interface UIOptions extends BasicOptions {
   ui: {
     /**
-     * If elements created with `createElement` should be recorded.
+     * Whether to record elements created with `createElement`.
      */
     enableElementRecord: boolean;
     /**
-     * If the input of `createElementFromJSON` should be logged.
+     * Wether to log the `ElementProps` parameter in `createElement`.
      */
     enableElementJSONLog: boolean;
+    /**
+     * Wether to log the DOM node mounted by `createElement`. 
+     */
+    enableElementDOMLog: boolean;
   };
 }
 
@@ -531,6 +538,10 @@ export interface ElementProps {
    * Enable elements to be printed to console & Zotero.debug.
    */
   enableElementJSONLog?: boolean;
+  /**
+   * Enable elements to be printed to console & Zotero.debug.
+   */
+  enableElementDOMLog?: boolean;
 }
 
 export interface TagElementProps extends ElementProps {
