@@ -136,7 +136,7 @@ export class BasicTool {
    */
   getDOMParser(): DOMParser {
     if (this.isZotero7()) {
-      return new DOMParser();
+      return new (this.getGlobal("DOMParser"))();
     }
     try {
       return new (this.getGlobal("DOMParser"))();
