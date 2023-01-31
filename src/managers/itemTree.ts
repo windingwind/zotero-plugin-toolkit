@@ -25,7 +25,7 @@ export class ItemTreeManager extends ManagerTool {
    */
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    this.patchSign = "zotero-plugin-toolkit@0.0.1";
+    this.patchSign = "zotero-plugin-toolkit@1.1.3";
     this.localColumnCache = [];
     this.localFieldCache = [];
     this.localRenderCellCache = [];
