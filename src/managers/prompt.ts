@@ -103,6 +103,7 @@ export class Prompt {
             children: [
               {
                 tag: "input",
+                classList: ["prompt-input"],
                 attributes: {
                   type: "text",
                   placeholder: this.defaultText.placeholder,
@@ -745,6 +746,16 @@ export class Prompt {
       modifiers: "shift",
       key: "p",
       callback: () => {
+        const activeElement = document?.activeElement;
+        if (
+          activeElement?.tagName.match(/input/i) ||
+          (activeElement?.tagName.includes("browser") &&
+            (
+              activeElement as HTMLIFrameElement
+            ).contentDocument!.activeElement?.tagName.match(/input/i))
+        ) {
+          return;
+        }
         if (this.promptNode.style.display == "none") {
           this.promptNode.style.display = "flex";
           this.inputNode.focus();
