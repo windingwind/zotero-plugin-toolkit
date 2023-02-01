@@ -8,7 +8,7 @@ import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
  */
 export class ShortcutManager extends ManagerTool {
   private ui: UITool;
-  private globalCache!: ToolkitShortcutsGlobal;
+  private globalCache!: ShortcutsGlobal;
   private creatorId: string;
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
@@ -677,7 +677,7 @@ class KeyModifier implements KeyModifierStatus {
   }
 }
 
-export interface ToolkitShortcutsGlobal extends GlobalInstance {
+export interface ShortcutsGlobal extends GlobalInstance {
   eventKeys: EventKey[];
 }
 

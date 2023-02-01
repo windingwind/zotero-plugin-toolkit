@@ -38,6 +38,7 @@ To minimize your plugin, import the modules you need manually.
 |  [ProgressWindow](./zotero-plugin-toolkit.zoterotoolkit.progresswindow.md) |  | typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) |  |
 |  [Prompt](./zotero-plugin-toolkit.zoterotoolkit.prompt.md) |  | PromptManager |  |
 |  [Reader](./zotero-plugin-toolkit.zoterotoolkit.reader.md) |  | [ReaderTool](./zotero-plugin-toolkit.readertool.md) |  |
+|  [ReaderInstance](./zotero-plugin-toolkit.zoterotoolkit.readerinstance.md) |  | [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) |  |
 |  [ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md) |  | [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) |  |
 |  [Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md) |  | [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) |  |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [UITool](./zotero-plugin-toolkit.uitool.md) |  |

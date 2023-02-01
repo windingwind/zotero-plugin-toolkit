@@ -14,6 +14,7 @@ import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
+import { ReaderInstanceManager } from "./managers/readerInstance";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -28,6 +29,7 @@ class ZoteroToolkit extends BasicTool {
   Prompt: PromptManager;
   LibraryTabPanel: LibraryTabPanelManager;
   ReaderTabPanel: ReaderTabPanelManager;
+  ReaderInstance: ReaderInstanceManager;
   Menu: MenuManager;
   PreferencePane: PreferencePaneManager;
   Shortcut: ShortcutManager;
@@ -46,6 +48,7 @@ class ZoteroToolkit extends BasicTool {
     this.Prompt = new PromptManager(this);
     this.LibraryTabPanel = new LibraryTabPanelManager(this);
     this.ReaderTabPanel = new ReaderTabPanelManager(this);
+    this.ReaderInstance = new ReaderInstanceManager(this);
     this.Menu = new MenuManager(this);
     this.PreferencePane = new PreferencePaneManager(this);
     this.Shortcut = new ShortcutManager(this);

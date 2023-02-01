@@ -18,6 +18,7 @@
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
 |  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xtml</code>, for Zotero 6 &amp; 7. |
 |  [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) | ProgressWindow helper. |
+|  [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) | Reader instance hooks. |
 |  [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) | Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar. |
 |  [ReaderTool](./zotero-plugin-toolkit.readertool.md) | Zotero ReaderInstance APIs. |
 |  [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) | Register shortcut keys. |

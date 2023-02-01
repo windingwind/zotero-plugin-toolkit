@@ -25,7 +25,7 @@ export class ItemTreeManager extends ManagerTool {
    */
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    this.patchSign = "zotero-plugin-toolkit@0.0.1";
+    this.patchSign = "zotero-plugin-toolkit@1.1.3";
     this.localColumnCache = [];
     this.localFieldCache = [];
     this.localRenderCellCache = [];
@@ -380,7 +380,7 @@ export class ItemTreeManager extends ManagerTool {
   /**
    * Refresh itemView. You don't need to call it manually.
    */
-  private async refresh() {
+  public async refresh() {
     await this.initializationLock.promise;
     const ZoteroPane = this.getGlobal("ZoteroPane");
     ZoteroPane.itemsView._columnsId = null;

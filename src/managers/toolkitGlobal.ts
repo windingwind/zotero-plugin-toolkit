@@ -1,7 +1,8 @@
 import { BasicTool } from "../basic";
 import { ItemTreeGlobal } from "./itemTree";
 import { PromptGlobal } from "./prompt";
-import { ToolkitShortcutsGlobal } from "./shortcut";
+import { ReaderInstanceGlobal } from "./readerInstance";
+import { ShortcutsGlobal } from "./shortcut";
 
 /**
  * The Singleton class of global parameters used by managers.
@@ -9,8 +10,9 @@ import { ToolkitShortcutsGlobal } from "./shortcut";
  */
 export class ToolkitGlobal {
   readonly itemTree: ItemTreeGlobal;
-  readonly shortcut: ToolkitShortcutsGlobal;
+  readonly shortcut: ShortcutsGlobal;
   readonly prompt: PromptGlobal;
+  readonly readerInstance: ReaderInstanceGlobal;
   private constructor() {
     this.itemTree = {
       _ready: false,
@@ -23,7 +25,12 @@ export class ToolkitGlobal {
       eventKeys: [],
     };
     this.prompt = {
+      _ready: false,
       instance: undefined,
+    };
+    this.readerInstance = {
+      _ready: false,
+      initializedHooks: {},
     };
   }
 
