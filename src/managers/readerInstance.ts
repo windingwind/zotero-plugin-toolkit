@@ -33,6 +33,7 @@ export class ReaderInstanceManager extends ManagerTool {
       default:
         break;
     }
+    this.cachedHookIds.push(id);
   }
 
   /**
