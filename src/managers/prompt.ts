@@ -2,7 +2,7 @@ import { BasicTool, BasicOptions } from "../basic";
 import { ManagerTool } from "../basic";
 import { UITool } from "../tools/ui";
 import { ShortcutManager } from "./shortcut";
-import ToolkitGlobal from "./toolkitGlobal";
+import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
  * Prompt for setting up or executing some commands quickly.
@@ -765,11 +765,12 @@ export class PromptManager extends ManagerTool {
   private commands: Command[] = [];
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    let prompt = ToolkitGlobal.getInstance().prompt.instance;
-    if (!prompt) {
-      ToolkitGlobal.getInstance().prompt.instance = prompt = new Prompt();
+    const globalCache = ToolkitGlobal.getInstance().prompt;
+    if (!globalCache._ready) {
+      globalCache._ready = true;
+      globalCache.instance = new Prompt();
     }
-    this.prompt = prompt as Prompt;
+    this.prompt = globalCache.instance!;
   }
 
   /**
@@ -856,6 +857,6 @@ export interface Command {
     | Command[];
 }
 
-export interface PromptGlobal {
+export interface PromptGlobal extends GlobalInstance {
   instance: Prompt | undefined;
 }

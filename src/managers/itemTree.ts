@@ -380,7 +380,7 @@ export class ItemTreeManager extends ManagerTool {
   /**
    * Refresh itemView. You don't need to call it manually.
    */
-  private async refresh() {
+  public async refresh() {
     await this.initializationLock.promise;
     const ZoteroPane = this.getGlobal("ZoteroPane");
     ZoteroPane.itemsView._columnsId = null;

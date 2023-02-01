@@ -10,6 +10,7 @@ import { ExtraFieldTool } from "./tools/extraField";
 import { ItemTreeManager } from "./managers/itemTree";
 import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
 import { ReaderTabPanelManager } from "./managers/readerTabPanel";
+import { ReaderInstanceManager } from "./managers/readerInstance";
 import { MenuManager } from "./managers/menu";
 import { PreferencePaneManager } from "./managers/preferencePane";
 import { ShortcutManager } from "./managers/shortcut";
@@ -29,6 +30,7 @@ export {
   ItemTreeManager,
   LibraryTabPanelManager,
   ReaderTabPanelManager,
+  ReaderInstanceManager,
   MenuManager,
   PreferencePaneManager,
   ShortcutManager,
