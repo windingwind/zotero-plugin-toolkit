@@ -1,3 +1,4 @@
+import { BasicTool } from "../basic";
 import { ElementProps, UITool } from "../tools/ui";
 
 /**
@@ -282,40 +283,15 @@ function openDialog(
         })
       );
       // Add style according to Zotero prefs
-      // For custom select(menulist)
+      // For custom select(menulist) and a link
       win.document.head.appendChild(
         uiTool.createElement(win.document, "style", {
           properties: {
-            innerText: `html,body{ font-size: calc(12px * ${Zotero.Prefs.get(
-              "fontSize"
-            )}) };
-            .dropdown {
-              position: relative;
-              display: inline-block;
-            }
-            .dropdown-content {
-              display: none;
-              position: absolute;
-              background-color: #f9f9fb;
-              min-width: 160px;
-              box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-              border-radius: 5px;
-              padding: 5px 0 5px 0;
-              z-index: 999;
-            }
-            .dropdown-item {
-              margin: 0px;
-              padding: 5px 10px 5px 10px;
-            }
-            .dropdown-item:hover {
-              background-color: #efeff3;
-            }`,
+            innerHTML: style,
           },
         })
       );
-      if (uiTool.isZotero7()) {
-        replaceSelectElement(elementProps);
-      }
+      replaceElement(elementProps, uiTool);
       // Create element
       win.document.body.appendChild(
         uiTool.createElement(win.document, "fragment", {
@@ -402,8 +378,13 @@ function openDialog(
   return win;
 }
 
-function replaceSelectElement(elementProps: ElementProps & { tag: string }) {
-  if (elementProps.tag === "select") {
+function replaceElement(
+  elementProps: ElementProps & { tag: string },
+  uiTool: UITool
+) {
+  let checkChildren = true;
+  if (elementProps.tag === "select" && uiTool.isZotero7()) {
+    checkChildren = false;
     const customSelectProps = {
       tag: "div",
       classList: ["dropdown"],
@@ -484,10 +465,64 @@ function replaceSelectElement(elementProps: ElementProps & { tag: string }) {
       delete elementProps[key as keyof ElementProps];
     }
     Object.assign(elementProps, customSelectProps);
-  } else {
-    elementProps.children?.forEach((child) => replaceSelectElement(child));
+  } else if (elementProps.tag === "a") {
+    const href = (elementProps?.properties?.href || "") as string;
+    elementProps.properties ??= {};
+    elementProps.properties.href = "javascript:void(0);";
+    elementProps.attributes ??= {};
+    elementProps.attributes["zotero-href"] = href;
+    elementProps.listeners ??= [];
+    elementProps.listeners.push({
+      type: "click",
+      listener: (ev: Event) => {
+        const href = (ev.target as HTMLLinkElement)?.getAttribute(
+          "zotero-href"
+        );
+        href && uiTool.getGlobal("Zotero").launchURL(href);
+      },
+    });
+    elementProps.classList ??= [];
+    elementProps.classList.push("zotero-text-link");
+  }
+  if (checkChildren) {
+    elementProps.children?.forEach((child) => replaceElement(child, uiTool));
   }
 }
+
+const style = `
+html,
+body {
+  font-size: calc(12px * 1);
+}
+.zotero-text-link {
+  -moz-user-focus: normal;
+  color: -moz-nativehyperlinktext;
+  text-decoration: underline;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9fb;
+  min-width: 160px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 5px 0 5px 0;
+  z-index: 999;
+}
+.dropdown-item {
+  margin: 0px;
+  padding: 5px 10px 5px 10px;
+}
+.dropdown-item:hover {
+  background-color: #efeff3;
+}
+`;
 
 interface DialogData {
   [key: string | number | symbol]: any;
