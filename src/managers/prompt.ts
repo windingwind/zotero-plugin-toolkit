@@ -837,9 +837,9 @@ export class PromptManager extends ManagerTool {
    */
   public unregister(name: string) {
     // Delete it in this.prompt.commands
+    const command = this.commands.find((c) => c.name == name);
     this.prompt.commands = this.prompt.commands.filter((c) => {
-      JSON.stringify(this.commands.find((c) => c.name == name)) !=
-        JSON.stringify(c);
+      return JSON.stringify(command) != JSON.stringify(c);
     });
     // Delete it in this.commands
     this.commands = this.commands.filter((c) => c.name != name);
@@ -850,7 +850,7 @@ export class PromptManager extends ManagerTool {
    */
   public unregisterAll() {
     this.prompt.commands = this.prompt.commands.filter((c) => {
-      return this.commands.every((_c) => {
+      return this.commands.find((_c) => {
         JSON.stringify(_c) != JSON.stringify(c);
       });
     });
