@@ -740,12 +740,9 @@ export class Prompt {
   }
 
   private registerShortcut() {
-    const shortCut = new ShortcutManager();
-    shortCut.register("event", {
-      id: "toolkit-prompt-key",
-      modifiers: "shift",
-      key: "p",
-      callback: () => {
+    this.document.addEventListener(
+      "keydown",
+      (event: any) => {
         const activeElement = document?.activeElement;
         if (
           activeElement?.tagName.match(/input/i) ||
@@ -756,15 +753,31 @@ export class Prompt {
         ) {
           return;
         }
-        if (this.promptNode.style.display == "none") {
-          this.promptNode.style.display = "flex";
-          this.inputNode.focus();
-          this.showCommands(this.commands, true);
-        } else {
-          this.promptNode.style.display = "none";
+        if (event.shiftKey && event.key.toLowerCase() == "p") {
+          event.preventDefault();
+          event.stopPropagation();
+          const activeElement = document?.activeElement;
+          if (
+            activeElement?.tagName.match(/input/i) ||
+            (activeElement?.tagName.includes("browser") &&
+              (
+                activeElement as HTMLIFrameElement
+              ).contentDocument!.activeElement?.tagName.match(/input/i))
+          ) {
+            return;
+          }
+          if (this.promptNode.style.display == "none") {
+            this.promptNode.style.display = "flex";
+            this.showCommands(this.commands, true);
+            this.promptNode.focus();
+            this.inputNode.focus();
+          } else {
+            this.promptNode.style.display = "none";
+          }
         }
       },
-    });
+      true
+    );
   }
 }
 
