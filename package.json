@@ -52,7 +52,8 @@
     "lint-staged": "^13.1.0",
     "prettier": "2.8.3",
     "react-intl": "^6.2.5",
-    "release-it": "^15.5.1"
+    "release-it": "^15.5.1",
+    "typescript": "^4.9.5"
   },
   "lint-staged": {
     "*.{ts,js,css}": "prettier --write src"

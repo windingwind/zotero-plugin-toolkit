@@ -102,6 +102,9 @@ export class ReaderTool extends BasicTool {
     }
     let textArea =
       currentReader._iframeWindow.document.querySelectorAll("textarea");
+    if (!textArea) {
+      return "";
+    }
 
     for (let i = 0; i < textArea.length; i++) {
       // Choose the selection textare
