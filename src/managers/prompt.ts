@@ -206,7 +206,10 @@ export class Prompt {
     this.inputNode.placeholder = this.defaultText.placeholder;
     const commandsContainer = this.createCommandsContainer();
     for (let command of commands) {
-      if (command.when && !command.when()) {
+      /**
+       * Filter out anonymous commands
+       */
+      if (command.name && command.when && !command.when()) {
         continue;
       }
       commandsContainer.appendChild(this.createCommandNode(command));
@@ -298,11 +301,7 @@ export class Prompt {
         {
           type: "click",
           listener: async () => {
-            if (Array.isArray(command.callback)) {
-              this.showCommands(command.callback);
-            } else {
-              await command.callback(this);
-            }
+            await this.execCallback(command.callback);
           },
         },
       ],
@@ -315,7 +314,7 @@ export class Prompt {
   /**
    * Called when `enter` key is pressed.
    */
-  public trigger() {
+  private trigger() {
     (
       [...this.promptNode.querySelectorAll(".commands-container")]
         .find((e: any) => e.style.display != "none")!
@@ -326,7 +325,7 @@ export class Prompt {
   /**
    * Called when `escape` key is pressed.
    */
-  public exit() {
+  private exit() {
     this.inputNode.placeholder = this.defaultText.placeholder;
     if (
       this.promptNode.querySelectorAll(
@@ -351,6 +350,13 @@ export class Prompt {
     }
   }
 
+  private async execCallback(callback: Command["callback"]) {
+    if (Array.isArray(callback)) {
+      this.showCommands(callback as Command[]);
+    } else {
+      await callback(this);
+    }
+  }
   /**
    * Match suggestions for user's entered text.
    */
@@ -487,8 +493,9 @@ export class Prompt {
       suggestions.forEach((suggestion) => {
         container.appendChild(suggestion.commandNode);
       });
+      return true;
     } else {
-      this.showTip(this.defaultText.empty);
+      return false;
     }
   }
   /**
@@ -556,8 +563,21 @@ export class Prompt {
         return;
       }
       this.lastInputText = currentInputText;
-      window.setTimeout(() => {
-        this.showSuggestions(currentInputText);
+      window.setTimeout(async () => {
+        if (!this.showSuggestions(currentInputText)) {
+          /**
+           * Execute anonymous command
+           * The first match
+           */
+          const anonymousCommand = this.commands.find(
+            (c) => !c.name && (!c.when || c.when!())
+          );
+          if (anonymousCommand) {
+            await this.execCallback(anonymousCommand.callback);
+          } else {
+            this.showTip(this.defaultText.empty);
+          }
+        }
       });
     });
   }
@@ -872,7 +892,7 @@ export class PromptManager extends ManagerTool {
 }
 
 export interface Command {
-  name: string;
+  name?: string;
   label?: string;
   when?: () => boolean;
   callback:
