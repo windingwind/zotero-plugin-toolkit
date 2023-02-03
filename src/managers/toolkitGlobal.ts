@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic";
+import { DebugBridge } from "../utils/debugBridge";
 import { ItemTreeGlobal } from "./itemTree";
 import { PromptGlobal } from "./prompt";
 import { ReaderInstanceGlobal } from "./readerInstance";
@@ -9,6 +10,7 @@ import { ShortcutsGlobal } from "./shortcut";
  * @example `ToolkitGlobal.getInstance().itemTree.state`
  */
 export class ToolkitGlobal {
+  public debugBridge?: DebugBridge;
   public itemTree?: ItemTreeGlobal;
   public shortcut?: ShortcutsGlobal;
   public prompt?: PromptGlobal;
@@ -57,6 +59,7 @@ function initializeModules(instance: ToolkitGlobal) {
     _ready: false,
     initializedHooks: {},
   });
+  DebugBridge.setModule(instance);
 }
 
 function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(

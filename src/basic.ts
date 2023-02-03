@@ -1,3 +1,5 @@
+import ToolkitGlobal from "./managers/toolkitGlobal";
+
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
  * See also https://www.zotero.org/support/dev/zotero_7_for_developers
@@ -24,6 +26,7 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
+      debug: ToolkitGlobal.getInstance().debugBridge,
     };
     this.updateOptions(data);
     return;
@@ -280,6 +283,10 @@ export interface BasicOptions {
     disableConsole: boolean;
     disableZLog: boolean;
     prefix: string;
+  };
+  debug: {
+    disableDebugBridgePassword: boolean;
+    password: string;
   };
 }
 

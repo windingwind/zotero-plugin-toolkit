@@ -12,7 +12,7 @@
 <b>Signature:</b>
 
 ```typescript
-creatElementsFromJSON(doc: Document, options: TagElementProps, enableElementJSONLog?: boolean): XUL.Element | HTMLElement | SVGElement;
+creatElementsFromJSON(doc: Document, options: TagElementProps, enableElementJSONLog?: boolean): HTMLElement | SVGElement | XUL.Element;
 ```
 
 ## Parameters
@@ -25,5 +25,5 @@ creatElementsFromJSON(doc: Document, options: TagElementProps, enableElementJSON
 
 <b>Returns:</b>
 
-XUL.Element \| HTMLElement \| SVGElement
+HTMLElement \| SVGElement \| XUL.Element
 
