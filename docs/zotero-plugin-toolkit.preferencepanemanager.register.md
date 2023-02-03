@@ -46,8 +46,7 @@ export interface PrefPaneOptions {
 
 
 ```ts
-const compat = new ZoteroCompat();
-const tool = new ZoteroTool();
+const prefsManager = new PreferencePaneManager();
 function initPrefs() {
   const prefOptions = {
     pluginID: addonID,
@@ -55,19 +54,13 @@ function initPrefs() {
     label: "Template",
     image: `chrome://${addonRef}/content/icons/favicon.png`,
     extraDTD: [`chrome://${addonRef}/locale/overlay.dtd`],
-    defaultXUL: true,
-    onload: (win: Window) => {
-      // Triggered after loading
-      return;
-    },
+    defaultXUL: true
   };
-  compat.registerPrefPane(prefOptions);
+  prefsManager.registerPrefPane(prefOptions);
 };
 
 function unInitPrefs() {
-  if (!compat.isZotero7()) {
-    compat.unregisterPrefPane();
-  }
+  prefsManager.unregisterAll();
 };
 ```
 // bootstrap.js:startup initPrefs();

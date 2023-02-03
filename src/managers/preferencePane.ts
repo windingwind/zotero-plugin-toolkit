@@ -39,8 +39,7 @@ export class PreferencePaneManager extends ManagerTool {
    * @param options See {@link https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts | source code:options.ts}
    * @example
    * ```ts
-   * const compat = new ZoteroCompat();
-   * const tool = new ZoteroTool();
+   * const prefsManager = new PreferencePaneManager();
    * function initPrefs() {
    *   const prefOptions = {
    *     pluginID: addonID,
@@ -48,19 +47,13 @@ export class PreferencePaneManager extends ManagerTool {
    *     label: "Template",
    *     image: `chrome://${addonRef}/content/icons/favicon.png`,
    *     extraDTD: [`chrome://${addonRef}/locale/overlay.dtd`],
-   *     defaultXUL: true,
-   *     onload: (win: Window) => {
-   *       // Triggered after loading
-   *       return;
-   *     },
+   *     defaultXUL: true
    *   };
-   *   compat.registerPrefPane(prefOptions);
+   *   prefsManager.registerPrefPane(prefOptions);
    * };
    *
    * function unInitPrefs() {
-   *   if (!compat.isZotero7()) {
-   *     compat.unregisterPrefPane();
-   *   }
+   *   prefsManager.unregisterAll();
    * };
    * ```
    * // bootstrap.js:startup
