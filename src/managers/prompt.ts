@@ -1,7 +1,6 @@
 import { BasicTool, BasicOptions } from "../basic";
 import { ManagerTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ShortcutManager } from "./shortcut";
 import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
@@ -51,6 +50,17 @@ export class Prompt {
     this.base = new BasicTool();
     this.ui = new UITool();
     this.document = this.base.getGlobal("document");
+    this.commands.push({
+      when: () => {
+        return /^\/s(earch)?/i.test(this.inputNode.value);
+      },
+      callback: (prompt: Prompt) => {
+        const text = this.inputNode.value
+          .match(/^\/s(earch)?\s*(.+)/i)
+          ?.slice(-1)[0];
+        this.showTip(text ?? "");
+      },
+    });
     this.initializeUI();
   }
 
@@ -209,7 +219,7 @@ export class Prompt {
       /**
        * Filter out anonymous commands
        */
-      if (command.name && command.when && !command.when()) {
+      if (!command.name || (command.when && !command.when())) {
         continue;
       }
       commandsContainer.appendChild(this.createCommandNode(command));
@@ -450,7 +460,7 @@ export class Prompt {
       this.exit();
     }
     if (inputText.trim() == "") {
-      return;
+      return true;
     }
     let suggestions: {
       score: number;
@@ -763,32 +773,24 @@ export class Prompt {
     this.document.addEventListener(
       "keydown",
       (event: any) => {
-        const activeElement = document?.activeElement;
-        if (
-          activeElement?.tagName.match(/input/i) ||
-          (activeElement?.tagName.includes("browser") &&
-            (
-              activeElement as HTMLIFrameElement
-            ).contentDocument!.activeElement?.tagName.match(/input/i))
-        ) {
-          return;
-        }
         if (event.shiftKey && event.key.toLowerCase() == "p") {
-          event.preventDefault();
-          event.stopPropagation();
-          const activeElement = document?.activeElement;
+          console.log(event);
           if (
-            activeElement?.tagName.match(/input/i) ||
-            (activeElement?.tagName.includes("browser") &&
-              (
-                activeElement as HTMLIFrameElement
-              ).contentDocument!.activeElement?.tagName.match(/input/i))
+            event.originalTarget.isContentEditable ||
+            "value" in event.originalTarget
           ) {
             return;
           }
+          event.preventDefault();
+          event.stopPropagation();
           if (this.promptNode.style.display == "none") {
             this.promptNode.style.display = "flex";
-            this.showCommands(this.commands, true);
+            if (
+              this.promptNode.querySelectorAll(".commands-container").length ==
+              1
+            ) {
+              this.showCommands(this.commands, true);
+            }
             this.promptNode.focus();
             this.inputNode.focus();
           } else {
