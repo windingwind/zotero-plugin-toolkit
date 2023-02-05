@@ -398,13 +398,8 @@ function replaceElement(
         },
       ],
       children: [
-        {
+        Object.assign({}, elementProps, {
           tag: "select",
-          id: "dictLib",
-          attributes: {
-            "data-bind": "dictNo",
-            "data-prop": "value",
-          },
           listeners: [
             {
               type: "focus",
@@ -429,8 +424,7 @@ function replaceElement(
               },
             },
           ],
-          children: elementProps.children,
-        },
+        }),
         {
           tag: "div",
           classList: ["dropdown-content"],
