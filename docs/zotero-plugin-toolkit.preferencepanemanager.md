@@ -4,7 +4,7 @@
 
 ## PreferencePaneManager class
 
-Register preference pane from Zotero 7's `xtml`<!-- -->, for Zotero 6 &amp; 7.
+Register preference pane from Zotero 7's `xhtml`<!-- -->, for Zotero 6 &amp; 7.
 
 <b>Signature:</b>
 

@@ -16,7 +16,7 @@ protected elementCache: Element[];
 
 &gt; What is this for?
 
-In boostrap plugins, elements must be manually maintained and removed on exiting.
+In bootstrap plugins, elements must be manually maintained and removed on exiting.
 
 This API does this for you.
 

@@ -31,7 +31,7 @@ export declare class VirtualizedTableHelper
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [render(selecteId, onfulfilled, onrejected)](./zotero-plugin-toolkit.virtualizedtablehelper.render.md) |  | Render the table. |
+|  [render(selectId, onfulfilled, onrejected)](./zotero-plugin-toolkit.virtualizedtablehelper.render.md) |  | Render the table. |
 |  [setContainerId(id)](./zotero-plugin-toolkit.virtualizedtablehelper.setcontainerid.md) |  | Set container element id that the table will be rendered on. |
 |  [setLocale(localeStrings)](./zotero-plugin-toolkit.virtualizedtablehelper.setlocale.md) |  | Set locale strings, which replaces the table header's label if matches. Default it's <code>Zotero.Intl.strings</code> |
 |  [setProp(propName, propValue)](./zotero-plugin-toolkit.virtualizedtablehelper.setprop.md) |  | Set properties by name. |

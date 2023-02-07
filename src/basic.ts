@@ -170,7 +170,7 @@ export class BasicTool {
    * @param doc
    * @param type
    * @example
-   * Ceate a `<menuitem>`:
+   * Create a `<menuitem>`:
    * ```ts
    * const compat = new ZoteroCompat();
    * const doc = compat.getWindow().document;

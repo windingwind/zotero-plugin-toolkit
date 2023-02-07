@@ -9,7 +9,7 @@ import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { MenuManager } from "./managers/menu";
 import { PreferencePaneManager } from "./managers/preferencePane";
 import { ShortcutManager } from "./managers/shortcut";
-import { ClibpoardHelper } from "./helpers/clipboard";
+import { ClipboardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
@@ -33,10 +33,10 @@ class ZoteroToolkit extends BasicTool {
   Menu: MenuManager;
   PreferencePane: PreferencePaneManager;
   Shortcut: ShortcutManager;
-  Clibpoard: typeof ClibpoardHelper;
+  Clipboard: typeof ClipboardHelper;
   FilePicker: typeof FilePickerHelper;
   ProgressWindow: typeof ProgressWindowHelper;
-  VirtualizedTabel: typeof VirtualizedTableHelper;
+  VirtualizedTable: typeof VirtualizedTableHelper;
   Dialog: typeof DialogHelper;
 
   constructor() {
@@ -52,10 +52,10 @@ class ZoteroToolkit extends BasicTool {
     this.Menu = new MenuManager(this);
     this.PreferencePane = new PreferencePaneManager(this);
     this.Shortcut = new ShortcutManager(this);
-    this.Clibpoard = ClibpoardHelper;
+    this.Clipboard = ClipboardHelper;
     this.FilePicker = FilePickerHelper;
     this.ProgressWindow = ProgressWindowHelper;
-    this.VirtualizedTabel = VirtualizedTableHelper;
+    this.VirtualizedTable = VirtualizedTableHelper;
     this.Dialog = DialogHelper;
   }
 

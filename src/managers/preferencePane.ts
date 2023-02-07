@@ -3,7 +3,7 @@ import { UITool } from "../tools/ui";
 import { ManagerTool } from "../basic";
 
 /**
- * Register preference pane from Zotero 7's `xtml`, for Zotero 6 & 7.
+ * Register preference pane from Zotero 7's `xhtml`, for Zotero 6 & 7.
  */
 export class PreferencePaneManager extends ManagerTool {
   private ui: UITool;
@@ -215,13 +215,13 @@ export class PreferencePaneManager extends ManagerTool {
               const Zotero = this.getGlobal("Zotero");
               options.id ||
                 (options.id = `plugin-${Zotero.Utilities.randomString()}-${new Date().getTime()}`);
-              const contenrOrXHR = await Zotero.File.getContentsAsync(
+              const contentOrXHR = await Zotero.File.getContentsAsync(
                 options.src
               );
               const content =
-                typeof contenrOrXHR === "string"
-                  ? contenrOrXHR
-                  : (contenrOrXHR as any as XMLHttpRequest).response;
+                typeof contentOrXHR === "string"
+                  ? contentOrXHR
+                  : (contentOrXHR as any as XMLHttpRequest).response;
               const src = `<prefpane xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" id="${
                 options.id
               }" insertafter="zotero-prefpane-advanced" label="${

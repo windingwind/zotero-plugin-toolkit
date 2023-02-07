@@ -27,7 +27,7 @@ To minimize your plugin, import the modules you need manually.
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [Clibpoard](./zotero-plugin-toolkit.zoterotoolkit.clibpoard.md) |  | typeof [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) |  |
+|  [Clipboard](./zotero-plugin-toolkit.zoterotoolkit.clipboard.md) |  | typeof [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) |  |
 |  [Dialog](./zotero-plugin-toolkit.zoterotoolkit.dialog.md) |  | typeof [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) |  |
 |  [ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md) |  | [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) |  |
 |  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
@@ -42,7 +42,7 @@ To minimize your plugin, import the modules you need manually.
 |  [ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md) |  | [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) |  |
 |  [Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md) |  | [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) |  |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [UITool](./zotero-plugin-toolkit.uitool.md) |  |
-|  [VirtualizedTabel](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtabel.md) |  | typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
+|  [VirtualizedTable](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtable.md) |  | typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
 
 ## Methods
 

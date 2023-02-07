@@ -126,8 +126,8 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
     icons[key] = uri;
   }
 
-  private getIcon(type: string | undefined, defaulIcon?: string | undefined) {
-    return type && type in icons ? icons[type] : defaulIcon;
+  private getIcon(type: string | undefined, defaultIcon?: string | undefined) {
+    return type && type in icons ? icons[type] : defaultIcon;
   }
 }
 

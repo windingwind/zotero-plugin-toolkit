@@ -4,7 +4,7 @@
 
 ## DialogHelper.dialogData property
 
-Passed to dialog window for data-binding and lifecycle controll. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md)
+Passed to dialog window for data-binding and lifecycle controls. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md)
 
 <b>Signature:</b>
 

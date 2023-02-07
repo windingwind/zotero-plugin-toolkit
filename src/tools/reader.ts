@@ -107,7 +107,7 @@ export class ReaderTool extends BasicTool {
     }
 
     for (let i = 0; i < textArea.length; i++) {
-      // Choose the selection textare
+      // Choose the selection textarea
       if (
         textArea[i].style.zIndex === "-1" &&
         textArea[i].style["width"] === "0px"

@@ -16,7 +16,7 @@ setProp<K extends keyof VirtualizedTableProps, V extends VirtualizedTableProps[K
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  propName | K | Porperty name |
+|  propName | K | Property name |
 |  propValue | V | Property value |
 
 <b>Returns:</b>

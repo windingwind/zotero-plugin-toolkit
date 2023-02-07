@@ -23,11 +23,11 @@ export declare class ShortcutManager extends ManagerTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [checkAllKeyConfliction(options)](./zotero-plugin-toolkit.shortcutmanager.checkallkeyconfliction.md) |  | Find all key conflictions. |
-|  [checkKeyConfliction(inputKeyOptions, options)](./zotero-plugin-toolkit.shortcutmanager.checkkeyconfliction.md) |  | Check key confliction of <code>inputKeyOptions</code>. |
+|  [checkAllKeyConflicting(options)](./zotero-plugin-toolkit.shortcutmanager.checkallkeyconflicting.md) |  | Find all key conflicting. |
+|  [checkKeyConflicting(inputKeyOptions, options)](./zotero-plugin-toolkit.shortcutmanager.checkkeyconflicting.md) |  | Check key conflicting of <code>inputKeyOptions</code>. |
 |  [getAll()](./zotero-plugin-toolkit.shortcutmanager.getall.md) |  | Get all shortcuts(element, event, prefs, builtin) |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register.md) |  | <p>Register a shortcut key with window.addEventListener("keypress").</p><p>The callback will not be affected by conflictions.</p> |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_1.md) |  | <p>Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.</p><p>The command might not be triggered if there are conflictions.</p> |
+|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register.md) |  | <p>Register a shortcut key with window.addEventListener("keypress").</p><p>The callback will not be affected by conflicting.</p> |
+|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_1.md) |  | <p>Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.</p><p>The command might not be triggered if there are conflicting.</p> |
 |  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_2.md) |  | <p>Register a Zotero key in preferences.</p><p>Requires restarting Zotero to take effects.</p> |
 |  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_3.md) |  | <p>Register a custom key.</p><p>This is possibly not what you want to use. An API for future extensions.</p> |
 |  [unregister(keyOptions)](./zotero-plugin-toolkit.shortcutmanager.unregister.md) |  | Unregister a key. |

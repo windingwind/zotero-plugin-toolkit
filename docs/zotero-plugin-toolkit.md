@@ -9,14 +9,14 @@
 |  Class | Description |
 |  --- | --- |
 |  [BasicTool](./zotero-plugin-toolkit.basictool.md) | Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers |
-|  [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) | Copy helper for text/richtext/image. |
+|  [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) | Copy helper for text/richtext/image. |
 |  [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) | Dialog window helper. A superset of XUL dialog. |
 |  [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) | Get/set extra field APIs. |
 |  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
 |  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
 |  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
-|  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xtml</code>, for Zotero 6 &amp; 7. |
+|  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xhtml</code>, for Zotero 6 &amp; 7. |
 |  [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) | ProgressWindow helper. |
 |  [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) | Reader instance hooks. |
 |  [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) | Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar. |

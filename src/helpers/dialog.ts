@@ -6,7 +6,7 @@ import { ElementProps, UITool } from "../tools/ui";
  */
 export class DialogHelper {
   /**
-   * Passed to dialog window for data-binding and lifecycle controll. See {@link DialogHelper.setDialogData}
+   * Passed to dialog window for data-binding and lifecycle controls. See {@link DialogHelper.setDialogData}
    */
   dialogData: DialogData;
   /**
@@ -239,7 +239,7 @@ function openDialog(
   const Zotero = uiTool.getGlobal("Zotero");
   dialogData = dialogData || {};
 
-  // Make winowfeature string
+  // Make windowfeature string
   if (!dialogData.loadLock) {
     dialogData.loadLock = Zotero.Promise.defer();
   }
@@ -328,7 +328,7 @@ function openDialog(
     dialogData?.unloadCallback && dialogData.unloadCallback();
   });
 
-  // Wati for window loading to resolve the lock promise
+  // Wait for window loading to resolve the lock promise
   win.addEventListener(
     "DOMContentLoaded",
     function onWindowLoad(ev: Event) {

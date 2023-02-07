@@ -6,7 +6,7 @@
 
 Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.
 
-The command might not be triggered if there are conflictions.
+The command might not be triggered if there are conflicting.
 
 <b>Signature:</b>
 

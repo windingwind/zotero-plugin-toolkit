@@ -6,7 +6,7 @@
 
 Register a shortcut key with window.addEventListener("keypress").
 
-The callback will not be affected by conflictions.
+The callback will not be affected by conflicting.
 
 <b>Signature:</b>
 

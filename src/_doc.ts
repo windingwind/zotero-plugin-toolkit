@@ -1,5 +1,5 @@
 /**
- * This file is for api-extractor. Things here will apear in the docs.
+ * This file is for api-extractor. Things here will appear in the docs.
  */
 
 import { BasicTool } from "./basic";
@@ -14,7 +14,7 @@ import { ReaderInstanceManager } from "./managers/readerInstance";
 import { MenuManager } from "./managers/menu";
 import { PreferencePaneManager } from "./managers/preferencePane";
 import { ShortcutManager } from "./managers/shortcut";
-import { ClibpoardHelper } from "./helpers/clipboard";
+import { ClipboardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
@@ -34,7 +34,7 @@ export {
   MenuManager,
   PreferencePaneManager,
   ShortcutManager,
-  ClibpoardHelper,
+  ClipboardHelper,
   FilePickerHelper,
   ProgressWindowHelper,
   VirtualizedTableHelper,

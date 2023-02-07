@@ -819,7 +819,7 @@ export class PromptManager extends ManagerTool {
   }
 
   /**
-   * You can delete a command registed before by its name.
+   * You can delete a command registered before by its name.
    * @remarks
    * There is a premise here that the names of all commands registered by a single plugin are not duplicated.
    * @param name Command.name

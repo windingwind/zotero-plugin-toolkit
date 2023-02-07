@@ -18,7 +18,7 @@ export class UITool extends BasicTool {
    * @remarks
    * > What is this for?
    *
-   * In boostrap plugins, elements must be manually maintained and removed on exiting.
+   * In bootstrap plugins, elements must be manually maintained and removed on exiting.
    *
    * This API does this for you.
    */
@@ -42,7 +42,7 @@ export class UITool extends BasicTool {
    * @remarks
    * > What is this for?
    *
-   * In boostrap plugins, elements must be manually maintained and removed on exiting.
+   * In bootstrap plugins, elements must be manually maintained and removed on exiting.
    *
    * This API does this for you.
    */
@@ -194,8 +194,8 @@ export class UITool extends BasicTool {
       elem = fragElem;
     } else {
       let realElem = (props.id &&
-        (props.checkExistanceParent
-          ? props.checkExistanceParent
+        (props.checkExistenceParent
+          ? props.checkExistenceParent
           : doc
         ).querySelector(`#${props.id}`)) as
         | HTMLElement
@@ -365,28 +365,6 @@ export class UITool extends BasicTool {
   }
 
   /**
-   * @deprecated Use `createElement`. Will be removed in the next major version update.
-   * @param doc
-   * @param options
-   * @param enableElementJSONLog
-   */
-  creatElementsFromJSON(
-    doc: Document,
-    options: TagElementProps,
-    enableElementJSONLog: boolean = false
-  ) {
-    return this.createElement(
-      doc,
-      options.tag,
-      typeof enableElementJSONLog !== "undefined"
-        ? Object.assign(options, {
-            enableElementJSONLog,
-          })
-        : options
-    );
-  }
-
-  /**
    * Parse XHTML to XUL fragment. For Zotero 6.
    *
    * To load preferences from a Zotero 7's `.xhtml`, use this method to parse it.
@@ -404,6 +382,7 @@ export class UITool extends BasicTool {
     /* eslint-disable indent */
     let parser = this.getDOMParser();
     // parser.forceEnableXULXBL();
+    /* cspell:words xulns htmlns */
     const xulns =
       "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
     const htmlns = "http://www.w3.org/1999/xhtml";
@@ -522,9 +501,9 @@ export interface ElementProps {
    */
   removeIfExists?: boolean;
   /**
-   * Existance check will be processed under this element, default `document`
+   * Existence check will be processed under this element, default `document`
    */
-  checkExistanceParent?: HTMLElement;
+  checkExistenceParent?: HTMLElement;
   /**
    * Custom check hook. If it returns false, return undefined and do not do anything.
    * @param doc
@@ -536,7 +515,7 @@ export interface ElementProps {
    */
   subElementOptions?: Array<TagElementProps>;
   /**
-   * Enable elements to be recorded by the tookit so it can be removed when calling `unregisterAll`.
+   * Enable elements to be recorded by the toolkit so it can be removed when calling `unregisterAll`.
    */
   enableElementRecord?: boolean;
   /**
@@ -569,6 +548,7 @@ export interface FragmentElementProps {
   children?: Array<ElementProps>;
 }
 
+/* cspell:disable */
 interface XULElementTagNameMap {
   action: XUL.Element;
   arrowscrollbox: XUL.Element;
@@ -976,3 +956,5 @@ const SVGElementTagNames = [
   "use",
   "view",
 ];
+
+/* cspell:enable */

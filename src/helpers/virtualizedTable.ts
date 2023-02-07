@@ -14,7 +14,7 @@ export class VirtualizedTableHelper {
   private window: Window;
   private React: typeof React;
   private ReactDOM: typeof ReactDOM;
-  private VirtualizedTable: VirtualizedTabelConstructor;
+  private VirtualizedTable: VirtualizedTableConstructor;
   private IntlProvider: typeof IntlProvider;
   private basicTool: BasicTool;
 
@@ -40,7 +40,7 @@ export class VirtualizedTableHelper {
    * @remarks
    * `id` and `getRowCount` are required.
    * If `id` is not set, it's a random string.
-   * @param propName Porperty name
+   * @param propName Property name
    * @param propValue Property value
    */
   public setProp<
@@ -150,19 +150,19 @@ export class VirtualizedTableHelper {
 
   /**
    * Render the table.
-   * @param selecteId Which row to select after rendering
+   * @param selectId Which row to select after rendering
    * @param onfulfilled callback after successfully rendered
    * @param onrejected callback after rendering with error
    */
   public render(
-    selecteId?: number,
+    selectId?: number,
     onfulfilled?: (value: unknown) => unknown,
     onrejected?: (reason: any) => PromiseLike<never>
   ) {
     const refreshSelection = () => {
       this.treeInstance.invalidate();
-      if (typeof selecteId !== "undefined" && selecteId >= 0) {
-        this.treeInstance.selection.select(selecteId);
+      if (typeof selectId !== "undefined" && selectId >= 0) {
+        this.treeInstance.selection.select(selectId);
       } else {
         this.treeInstance.selection.clearSelection();
       }
@@ -302,7 +302,7 @@ interface VirtualizedTableProps {
   ) => boolean;
 }
 
-interface VirtualizedTabelConstructor
+interface VirtualizedTableConstructor
   extends React.ComponentClass<VirtualizedTableProps, {}> {
   renderCell(
     index: number,
