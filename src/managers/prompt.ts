@@ -621,6 +621,7 @@ export class Prompt {
 
   private addStyle() {
     const style = this.ui.createElement(this.document, "style", {
+      namespace: "html",
       id: "prompt-style",
     });
     style.innerText = `
