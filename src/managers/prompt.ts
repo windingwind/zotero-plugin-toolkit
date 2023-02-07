@@ -1,7 +1,6 @@
 import { BasicTool, BasicOptions } from "../basic";
 import { ManagerTool } from "../basic";
 import { UITool } from "../tools/ui";
-import { ShortcutManager } from "./shortcut";
 import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
@@ -51,6 +50,17 @@ export class Prompt {
     this.base = new BasicTool();
     this.ui = new UITool();
     this.document = this.base.getGlobal("document");
+    this.commands.push({
+      when: () => {
+        return /^\/s(earch)?/i.test(this.inputNode.value);
+      },
+      callback: (prompt: Prompt) => {
+        const text = this.inputNode.value
+          .match(/^\/s(earch)?\s*(.+)/i)
+          ?.slice(-1)[0];
+        this.showTip(text ?? "");
+      },
+    });
     this.initializeUI();
   }
 
@@ -103,6 +113,7 @@ export class Prompt {
             children: [
               {
                 tag: "input",
+                classList: ["prompt-input"],
                 attributes: {
                   type: "text",
                   placeholder: this.defaultText.placeholder,
@@ -205,7 +216,10 @@ export class Prompt {
     this.inputNode.placeholder = this.defaultText.placeholder;
     const commandsContainer = this.createCommandsContainer();
     for (let command of commands) {
-      if (command.when && !command.when()) {
+      /**
+       * Filter out anonymous commands
+       */
+      if (!command.name || (command.when && !command.when())) {
         continue;
       }
       commandsContainer.appendChild(this.createCommandNode(command));
@@ -297,11 +311,7 @@ export class Prompt {
         {
           type: "click",
           listener: async () => {
-            if (Array.isArray(command.callback)) {
-              this.showCommands(command.callback);
-            } else {
-              await command.callback(this);
-            }
+            await this.execCallback(command.callback);
           },
         },
       ],
@@ -314,7 +324,7 @@ export class Prompt {
   /**
    * Called when `enter` key is pressed.
    */
-  public trigger() {
+  private trigger() {
     (
       [...this.promptNode.querySelectorAll(".commands-container")]
         .find((e: any) => e.style.display != "none")!
@@ -325,7 +335,7 @@ export class Prompt {
   /**
    * Called when `escape` key is pressed.
    */
-  public exit() {
+  private exit() {
     this.inputNode.placeholder = this.defaultText.placeholder;
     if (
       this.promptNode.querySelectorAll(
@@ -350,6 +360,13 @@ export class Prompt {
     }
   }
 
+  private async execCallback(callback: Command["callback"]) {
+    if (Array.isArray(callback)) {
+      this.showCommands(callback as Command[]);
+    } else {
+      await callback(this);
+    }
+  }
   /**
    * Match suggestions for user's entered text.
    */
@@ -443,7 +460,7 @@ export class Prompt {
       this.exit();
     }
     if (inputText.trim() == "") {
-      return;
+      return true;
     }
     let suggestions: {
       score: number;
@@ -486,8 +503,9 @@ export class Prompt {
       suggestions.forEach((suggestion) => {
         container.appendChild(suggestion.commandNode);
       });
+      return true;
     } else {
-      this.showTip(this.defaultText.empty);
+      return false;
     }
   }
   /**
@@ -555,8 +573,21 @@ export class Prompt {
         return;
       }
       this.lastInputText = currentInputText;
-      window.setTimeout(() => {
-        this.showSuggestions(currentInputText);
+      window.setTimeout(async () => {
+        if (!this.showSuggestions(currentInputText)) {
+          /**
+           * Execute anonymous command
+           * The first match
+           */
+          const anonymousCommand = this.commands.find(
+            (c) => !c.name && (!c.when || c.when!())
+          );
+          if (anonymousCommand) {
+            await this.execCallback(anonymousCommand.callback);
+          } else {
+            this.showTip(this.defaultText.empty);
+          }
+        }
       });
     });
   }
@@ -590,6 +621,7 @@ export class Prompt {
 
   private addStyle() {
     const style = this.ui.createElement(this.document, "style", {
+      namespace: "html",
       id: "prompt-style",
     });
     style.innerText = `
@@ -739,21 +771,36 @@ export class Prompt {
   }
 
   private registerShortcut() {
-    const shortCut = new ShortcutManager();
-    shortCut.register("event", {
-      id: "toolkit-prompt-key",
-      modifiers: "shift",
-      key: "p",
-      callback: () => {
-        if (this.promptNode.style.display == "none") {
-          this.promptNode.style.display = "flex";
-          this.inputNode.focus();
-          this.showCommands(this.commands, true);
-        } else {
-          this.promptNode.style.display = "none";
+    this.document.addEventListener(
+      "keydown",
+      (event: any) => {
+        if (event.shiftKey && event.key.toLowerCase() == "p") {
+          console.log(event);
+          if (
+            event.originalTarget.isContentEditable ||
+            "value" in event.originalTarget
+          ) {
+            return;
+          }
+          event.preventDefault();
+          event.stopPropagation();
+          if (this.promptNode.style.display == "none") {
+            this.promptNode.style.display = "flex";
+            if (
+              this.promptNode.querySelectorAll(".commands-container").length ==
+              1
+            ) {
+              this.showCommands(this.commands, true);
+            }
+            this.promptNode.focus();
+            this.inputNode.focus();
+          } else {
+            this.promptNode.style.display = "none";
+          }
         }
       },
-    });
+      true
+    );
   }
 }
 
@@ -826,9 +873,9 @@ export class PromptManager extends ManagerTool {
    */
   public unregister(name: string) {
     // Delete it in this.prompt.commands
+    const command = this.commands.find((c) => c.name == name);
     this.prompt.commands = this.prompt.commands.filter((c) => {
-      JSON.stringify(this.commands.find((c) => c.name == name)) !=
-        JSON.stringify(c);
+      return JSON.stringify(command) != JSON.stringify(c);
     });
     // Delete it in this.commands
     this.commands = this.commands.filter((c) => c.name != name);
@@ -839,7 +886,7 @@ export class PromptManager extends ManagerTool {
    */
   public unregisterAll() {
     this.prompt.commands = this.prompt.commands.filter((c) => {
-      return this.commands.every((_c) => {
+      return this.commands.find((_c) => {
         JSON.stringify(_c) != JSON.stringify(c);
       });
     });
@@ -848,7 +895,7 @@ export class PromptManager extends ManagerTool {
 }
 
 export interface Command {
-  name: string;
+  name?: string;
   label?: string;
   when?: () => boolean;
   callback:
