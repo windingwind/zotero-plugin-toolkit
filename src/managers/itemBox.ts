@@ -143,22 +143,29 @@ export class ItemBoxManager extends ManagerTool {
     if (!globalCache._ready) {
       globalCache._ready = true;
 
-      let itemBoxInstance = window.document.querySelector(
-        "#zotero-editpane-item-box"
-      );
-      const wait = 5000;
-      let t = 0;
-      while (!itemBoxInstance && t < wait) {
+      let itemBoxInstance;
+      if (inZotero7) {
+        itemBoxInstance = new (this.getGlobal("customElements").get(
+          "item-box"
+        )!)();
+      } else {
         itemBoxInstance = window.document.querySelector(
           "#zotero-editpane-item-box"
         );
-        await Zotero.Promise.delay(10);
-        t += 10;
-      }
-      if (!itemBoxInstance) {
-        globalCache._ready = false;
-        this.log("ItemBox initialization failed");
-        return;
+        const wait = 5000;
+        let t = 0;
+        while (!itemBoxInstance && t < wait) {
+          itemBoxInstance = window.document.querySelector(
+            "#zotero-editpane-item-box"
+          );
+          await Zotero.Promise.delay(10);
+          t += 10;
+        }
+        if (!itemBoxInstance) {
+          globalCache._ready = false;
+          this.log("ItemBox initialization failed");
+          return;
+        }
       }
 
       this.patch(
@@ -204,8 +211,14 @@ export class ItemBoxManager extends ManagerTool {
               ) as HTMLElement;
               originalThis.clickable = _clickable;
 
+              // Zotero 6 is multiline by default, while Zotero 7 is not
               if (extraField.multiline && !Zotero.Prefs.get(prefKey, true)) {
                 fieldValue.classList.add("multiline");
+              } else if (!inZotero7) {
+                // disable multiline in Zotero 6
+                fieldValue.setAttribute("crop", "end");
+                fieldValue.setAttribute("value", fieldValue.innerHTML);
+                fieldValue.innerHTML = "";
               }
 
               if (extraField.collapsible) {
