@@ -7,7 +7,9 @@ import { ZoteroToolkit } from "./index";
 import { UITool, ElementProps } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
+import { FieldHookManager } from "./managers/fieldHook";
 import { ItemTreeManager } from "./managers/itemTree";
+import { ItemBoxManager } from "./managers/itemBox";
 import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
 import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { ReaderInstanceManager } from "./managers/readerInstance";
@@ -27,7 +29,9 @@ export {
   ElementProps,
   ReaderTool,
   ExtraFieldTool,
+  FieldHookManager,
   ItemTreeManager,
+  ItemBoxManager,
   LibraryTabPanelManager,
   ReaderTabPanelManager,
   ReaderInstanceManager,

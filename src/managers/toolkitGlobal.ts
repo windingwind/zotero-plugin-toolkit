@@ -1,5 +1,7 @@
 import { BasicTool } from "../basic";
 import { DebugBridge } from "../utils/debugBridge";
+import { FieldHooksGlobal } from "./fieldHook";
+import { ItemBoxGlobal } from "./itemBox";
 import { ItemTreeGlobal } from "./itemTree";
 import { PromptGlobal } from "./prompt";
 import { ReaderInstanceGlobal } from "./readerInstance";
@@ -11,7 +13,9 @@ import { ShortcutsGlobal } from "./shortcut";
  */
 export class ToolkitGlobal {
   public debugBridge?: DebugBridge;
+  public fieldHooks?: FieldHooksGlobal;
   public itemTree?: ItemTreeGlobal;
+  public itemBox?: ItemBoxGlobal;
   public shortcut?: ShortcutsGlobal;
   public prompt?: PromptGlobal;
   public readerInstance?: ReaderInstanceGlobal;
@@ -41,11 +45,20 @@ export class ToolkitGlobal {
  * @param instance ToolkitGlobal instance
  */
 function initializeModules(instance: ToolkitGlobal) {
+  setModule(instance, "fieldHooks", {
+    _ready: false,
+    getFieldHooks: {},
+    setFieldHooks: {},
+    isFieldOfBaseHooks: {},
+  });
   setModule(instance, "itemTree", {
     _ready: false,
     columns: [],
-    fieldHooks: {},
     renderCellHooks: {},
+  });
+  setModule(instance, "itemBox", {
+    _ready: false,
+    fieldOptions: {},
   });
   setModule(instance, "shortcut", {
     _ready: false,

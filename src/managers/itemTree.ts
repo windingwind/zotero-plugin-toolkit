@@ -1,6 +1,7 @@
 import React = require("react");
 import { BasicOptions, BasicTool } from "../basic";
 import { ManagerTool } from "../basic";
+import { FieldHookManager, getFieldHookFunc } from "./fieldHook";
 import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
@@ -10,12 +11,11 @@ export class ItemTreeManager extends ManagerTool {
   /**
    * Signature to avoid patching more than once.
    */
-  private patchSign: string;
   private globalCache!: ItemTreeGlobal;
   private localColumnCache: string[];
-  private localFieldCache: string[];
   private localRenderCellCache: string[];
   private initializationLock: _ZoteroTypes.PromiseObject;
+  private fieldHooks: FieldHookManager;
   /**
    * Initialize Zotero._ItemTreeExtraColumnsGlobal if it doesn't exist.
    *
@@ -25,28 +25,32 @@ export class ItemTreeManager extends ManagerTool {
    */
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    this.patchSign = "zotero-plugin-toolkit@1.1.3";
     this.localColumnCache = [];
-    this.localFieldCache = [];
     this.localRenderCellCache = [];
+    this.fieldHooks = new FieldHookManager(base);
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
 
     this.initializeGlobal();
   }
 
   unregisterAll(): void {
-    [...this.localColumnCache].forEach(this.unregister.bind(this));
-    [...this.localFieldCache].forEach(this.removeFieldHook.bind(this));
+    // Skip field hook unregister and use fieldHooks.unregisterAll
+    // to unregister those created by this manager only
+    [...this.localColumnCache].forEach((key) =>
+      this.unregister(key, { skipGetField: true })
+    );
     [...this.localRenderCellCache].forEach(
       this.removeRenderCellHook.bind(this)
     );
+    this.fieldHooks.unregisterAll();
   }
 
   /**
    * Register a new column. Don't forget to call `unregister` on plugin exit.
    * @param key Column dataKey
    * @param label Column display label
-   * @param fieldHook Called when loading cell content
+   * @param getFieldHook Called when loading cell content.
+   * If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined.
    * @param options See zotero source code:chrome/content/zotero/itemTreeColumns.jsx
    * @param options.renderCellHook Called when rendering cell. This will override
    *
@@ -73,13 +77,7 @@ export class ItemTreeManager extends ManagerTool {
   public async register(
     key: string,
     label: string,
-    fieldHook: (
-      field: string,
-      unformatted: boolean,
-      includeBaseMapped: boolean,
-      item: Zotero.Item,
-      original: Function
-    ) => string,
+    getFieldHook: typeof getFieldHookFunc | undefined,
     options: {
       defaultIn?: Set<"default" | "feeds" | "feed" | string>;
       disabledIn?: Set<"default" | "feeds" | "feed" | string>;
@@ -133,8 +131,8 @@ export class ItemTreeManager extends ManagerTool {
       ignoreInColumnPicker: options.ignoreInColumnPicker,
       submenu: options.submenu,
     };
-    if (fieldHook) {
-      await this.addFieldHook(key, fieldHook);
+    if (getFieldHook) {
+      this.fieldHooks.register("getField", key, getFieldHook);
     }
     if (options.renderCellHook) {
       await this.addRenderCellHook(key, options.renderCellHook);
@@ -147,8 +145,13 @@ export class ItemTreeManager extends ManagerTool {
   /**
    * Unregister an extra column. Call it on plugin exit.
    * @param key Column dataKey, should be same as the one used in `register`
+   * @param options.skipGetField skip unregister of getField hook.
+   * This is useful when the hook is not initialized by this instance
    */
-  public async unregister(key: string) {
+  public async unregister(
+    key: string,
+    options: { skipGetField?: boolean } = {}
+  ) {
     const Zotero = this.getGlobal("Zotero");
     await this.initializationLock.promise;
     let persisted = Zotero.Prefs.get("pane.persist") as string;
@@ -161,53 +164,14 @@ export class ItemTreeManager extends ManagerTool {
     if (idx >= 0) {
       this.globalCache.columns.splice(idx, 1);
     }
-    this.removeFieldHook(key);
+    if (!options.skipGetField) {
+      this.fieldHooks.unregister("getField", key);
+    }
     this.removeRenderCellHook(key);
     await this.refresh();
     const localKeyIdx = this.localColumnCache.indexOf(key);
     if (localKeyIdx >= 0) {
       this.localColumnCache.splice(localKeyIdx, 1);
-    }
-  }
-
-  /**
-   * Add a patch hook for `getField`, which is called when custom cell is rendered(and in many other cases).
-   *
-   * Don't patch a Zotero's built-in field.
-   * @remarks
-   * Don't call it manually unless you understand what you are doing.
-   * @param dataKey Cell `dataKey`, e.g. 'title'
-   * @param fieldHook patch hook
-   */
-  public async addFieldHook(
-    dataKey: string,
-    fieldHook: (
-      field: string,
-      unformatted: boolean,
-      includeBaseMapped: boolean,
-      item: Zotero.Item,
-      original: Function
-    ) => string
-  ) {
-    await this.initializationLock.promise;
-    if (dataKey in this.globalCache.fieldHooks) {
-      this.log(
-        "[WARNING] ItemTreeTool.addFieldHook overwrites an existing hook:",
-        dataKey
-      );
-    }
-    this.globalCache.fieldHooks[dataKey] = fieldHook;
-    this.localFieldCache.push(dataKey);
-  }
-
-  /**
-   * Remove a patch hook by `dataKey`.
-   */
-  public removeFieldHook(dataKey: string) {
-    delete this.globalCache.fieldHooks[dataKey];
-    const idx = this.localFieldCache.indexOf(dataKey);
-    if (idx >= 0) {
-      this.localFieldCache.splice(idx, 1);
     }
   }
 
@@ -230,7 +194,7 @@ export class ItemTreeManager extends ManagerTool {
     ) => HTMLElement
   ) {
     await this.initializationLock.promise;
-    if (dataKey in this.globalCache.fieldHooks) {
+    if (dataKey in this.globalCache.renderCellHooks) {
       this.log(
         "[WARNING] ItemTreeTool.addRenderCellHook overwrites an existing hook:",
         dataKey
@@ -312,41 +276,6 @@ export class ItemTreeManager extends ManagerTool {
             return span;
           }
       );
-      this.patch(
-        Zotero.Item.prototype,
-        "getField",
-        this.patchSign,
-        (original) =>
-          function (
-            field: string,
-            unformatted: boolean,
-            includeBaseMapped: boolean
-          ) {
-            if (
-              globalCache.columns
-                .map((_c: ColumnOptions) => _c.dataKey)
-                .includes(field)
-            ) {
-              try {
-                const hook = globalCache.fieldHooks[field];
-                // @ts-ignore
-                return hook(
-                  field,
-                  unformatted,
-                  includeBaseMapped,
-                  // @ts-ignore
-                  this,
-                  // @ts-ignore
-                  original.bind(this)
-                );
-              } catch (e) {
-                return field + String(e);
-              }
-            }
-            // @ts-ignore
-            return original.apply(this, arguments);
-          }
-      );
     }
     this.initializationLock.resolve();
   }
@@ -403,15 +332,6 @@ export class ItemTreeManager extends ManagerTool {
 
 export interface ItemTreeGlobal extends GlobalInstance {
   columns: ColumnOptions[];
-  fieldHooks: {
-    [key: string]: (
-      field: string,
-      unformatted: boolean,
-      includeBaseMapped: boolean,
-      item: Zotero.Item,
-      original: Function
-    ) => string;
-  };
   renderCellHooks: {
     [key: string]: (
       index: number,

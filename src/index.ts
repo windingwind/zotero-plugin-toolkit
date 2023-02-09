@@ -15,6 +15,8 @@ import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
 import { ReaderInstanceManager } from "./managers/readerInstance";
+import { FieldHookManager } from "./managers/fieldHook";
+import { ItemBoxManager } from "./managers/itemBox";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -25,7 +27,9 @@ class ZoteroToolkit extends BasicTool {
   UI: UITool;
   Reader: ReaderTool;
   ExtraField: ExtraFieldTool;
+  FieldHooks: FieldHookManager;
   ItemTree: ItemTreeManager;
+  ItemBox: ItemBoxManager;
   Prompt: PromptManager;
   LibraryTabPanel: LibraryTabPanelManager;
   ReaderTabPanel: ReaderTabPanelManager;
@@ -44,7 +48,9 @@ class ZoteroToolkit extends BasicTool {
     this.UI = new UITool(this);
     this.Reader = new ReaderTool(this);
     this.ExtraField = new ExtraFieldTool(this);
+    this.FieldHooks = new FieldHookManager(this);
     this.ItemTree = new ItemTreeManager(this);
+    this.ItemBox = new ItemBoxManager(this);
     this.Prompt = new PromptManager(this);
     this.LibraryTabPanel = new LibraryTabPanelManager(this);
     this.ReaderTabPanel = new ReaderTabPanelManager(this);

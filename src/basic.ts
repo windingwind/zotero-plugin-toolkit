@@ -10,6 +10,8 @@ export class BasicTool {
    */
   protected _basicOptions: BasicOptions;
 
+  protected readonly patchSign: string = "zotero-plugin-toolkit@2.0.0";
+
   public get basicOptions(): BasicOptions {
     return this._basicOptions;
   }

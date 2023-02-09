@@ -12,7 +12,9 @@
 |  [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) | Copy helper for text/richtext/image. |
 |  [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) | Dialog window helper. A superset of XUL dialog. |
 |  [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) | Get/set extra field APIs. |
+|  [FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md) | Item field hooks manager. |
 |  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
+|  [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) | Register customized new row to the library itemBox (right-side info tab). |
 |  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
 |  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
