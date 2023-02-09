@@ -33,6 +33,8 @@ export class ItemBoxManager extends ManagerTool {
    * To edit a row, either the `options.setFieldHook` or a custom hook for `setField` created by FieldHookManager is required.
    * @param options.setFieldHook The `setField` hook.
    * @param options.index Target index. By default it's placed at the end of rows.
+   * @param options.multiline If the row content is multiline.
+   * @param options.collapsible If the row content is collapsible (like abstract field).
    */
   public async register(
     field: string,
@@ -42,6 +44,8 @@ export class ItemBoxManager extends ManagerTool {
       editable?: boolean;
       setFieldHook?: typeof setFieldHookFunc;
       index?: number;
+      multiline?: boolean;
+      collapsible?: boolean;
     } = {}
   ) {
     this.fieldHooks.register("isFieldOfBase", field, () => false);
@@ -56,6 +60,8 @@ export class ItemBoxManager extends ManagerTool {
       displayName,
       editable: options.editable || false,
       index: options.index || -1,
+      multiline: options.multiline || false,
+      collapsible: options.collapsible || false,
     };
     this.localCache.push(field);
     await this.initializationLock.promise;
@@ -165,28 +171,53 @@ export class ItemBoxManager extends ManagerTool {
             const originalThis = this;
             original.apply(originalThis, arguments);
             for (const extraField of Object.values(globalCache.fieldOptions)) {
-              let fieldHeader = document.createElement(
+              const fieldHeader = document.createElement(
                 inZotero7 ? "th" : "label"
               );
               fieldHeader.setAttribute("fieldname", extraField.field);
 
+              const prefKey = `extensions.zotero.pluginToolkit.fieldCollapsed.${extraField.field}`;
+              const collapsed =
+                extraField.multiline &&
+                extraField.collapsible &&
+                Zotero.Prefs.get(prefKey, true);
+
+              let headerContent = extraField.displayName;
+              if (collapsed) {
+                headerContent = `(...)${headerContent}`;
+              }
               if (inZotero7) {
                 let label = document.createElement("label");
                 label.className = "key";
-                label.textContent = extraField.displayName;
+                label.textContent = headerContent;
                 fieldHeader.appendChild(label);
               } else {
-                fieldHeader.setAttribute("value", extraField.displayName);
+                fieldHeader.setAttribute("value", headerContent);
               }
 
               const _clickable = originalThis.clickable;
               originalThis.clickable = extraField.editable;
-              let fieldValue = originalThis.createValueElement(
+              const fieldValue = originalThis.createValueElement(
                 originalThis.item.getField(extraField.field),
                 extraField.field,
                 1099
-              );
+              ) as HTMLElement;
               originalThis.clickable = _clickable;
+
+              if (extraField.multiline && !Zotero.Prefs.get(prefKey, true)) {
+                fieldValue.classList.add("multiline");
+              }
+
+              if (extraField.collapsible) {
+                fieldHeader.addEventListener("click", function (ev) {
+                  Zotero.Prefs.set(
+                    prefKey,
+                    !(Zotero.Prefs.get(prefKey, true) || false),
+                    true
+                  );
+                  originalThis.refresh();
+                });
+              }
 
               fieldHeader.addEventListener(
                 "click",
@@ -247,6 +278,8 @@ export interface ItemBoxGlobal {
       displayName: string;
       index: number | undefined;
       editable: boolean;
+      multiline: boolean;
+      collapsible: boolean;
     };
   };
 }

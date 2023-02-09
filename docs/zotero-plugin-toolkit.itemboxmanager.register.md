@@ -13,6 +13,8 @@ register(field: string, displayName: string, getFieldHook: typeof getFieldHookFu
         editable?: boolean;
         setFieldHook?: typeof setFieldHookFunc;
         index?: number;
+        multiline?: boolean;
+        collapsible?: boolean;
     }): Promise<void>;
 ```
 
@@ -23,7 +25,7 @@ register(field: string, displayName: string, getFieldHook: typeof getFieldHookFu
 |  field | string | Field name. Used in <code>getField</code> and <code>setField</code>. |
 |  displayName | string | The row header display text. |
 |  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading row content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
-|  options | { editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; } | <i>(Optional)</i> |
+|  options | { editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; multiline?: boolean; collapsible?: boolean; } | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
