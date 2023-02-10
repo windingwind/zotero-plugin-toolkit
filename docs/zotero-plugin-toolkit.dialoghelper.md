@@ -22,7 +22,7 @@ export declare class DialogHelper
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [dialogData](./zotero-plugin-toolkit.dialoghelper.dialogdata.md) |  | DialogData | Passed to dialog window for data-binding and lifecycle controll. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md) |
+|  [dialogData](./zotero-plugin-toolkit.dialoghelper.dialogdata.md) |  | DialogData | Passed to dialog window for data-binding and lifecycle controls. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md) |
 |  [window](./zotero-plugin-toolkit.dialoghelper.window.md) |  | Window | Dialog window instance |
 
 ## Methods

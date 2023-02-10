@@ -101,10 +101,13 @@ export class ReaderTool extends BasicTool {
       return "";
     }
     let textArea =
-      currentReader._iframeWindow.document.querySelectorAll("textarea");
+      currentReader._iframeWindow?.document.querySelectorAll("textarea");
+    if (!textArea) {
+      return "";
+    }
 
     for (let i = 0; i < textArea.length; i++) {
-      // Choose the selection textare
+      // Choose the selection textarea
       if (
         textArea[i].style.zIndex === "-1" &&
         textArea[i].style["width"] === "0px"

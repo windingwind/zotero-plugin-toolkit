@@ -9,7 +9,7 @@ Register a new column. Don't forget to call `unregister` on plugin exit.
 <b>Signature:</b>
 
 ```typescript
-register(key: string, label: string, fieldHook: (field: string, unformatted: boolean, includeBaseMapped: boolean, item: Zotero.Item, original: Function) => string, options?: {
+register(key: string, label: string, getFieldHook: typeof getFieldHookFunc | undefined, options?: {
         defaultIn?: Set<"default" | "feeds" | "feed" | string>;
         disabledIn?: Set<"default" | "feeds" | "feed" | string>;
         defaultSort?: 1 | -1;
@@ -32,7 +32,7 @@ register(key: string, label: string, fieldHook: (field: string, unformatted: boo
 |  --- | --- | --- |
 |  key | string | Column dataKey |
 |  label | string | Column display label |
-|  fieldHook | (field: string, unformatted: boolean, includeBaseMapped: boolean, item: Zotero.Item, original: Function) =&gt; string | Called when loading cell content |
+|  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading cell content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
 |  options | { defaultIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; disabledIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; defaultSort?: 1 \| -1; flex?: number; width?: number; fixedWidth?: boolean; staticWidth?: boolean; minWidth?: number; iconPath?: string; ignoreInColumnPicker?: boolean; submenu?: boolean; zoteroPersist?: Set&lt;string&gt;; renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement; } | <i>(Optional)</i> See zotero source code:chrome/content/zotero/itemTreeColumns.jsx |
 
 <b>Returns:</b>

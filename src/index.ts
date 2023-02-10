@@ -9,12 +9,14 @@ import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { MenuManager } from "./managers/menu";
 import { PreferencePaneManager } from "./managers/preferencePane";
 import { ShortcutManager } from "./managers/shortcut";
-import { ClibpoardHelper } from "./helpers/clipboard";
+import { ClipboardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
 import { ReaderInstanceManager } from "./managers/readerInstance";
+import { FieldHookManager } from "./managers/fieldHook";
+import { ItemBoxManager } from "./managers/itemBox";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -25,7 +27,9 @@ class ZoteroToolkit extends BasicTool {
   UI: UITool;
   Reader: ReaderTool;
   ExtraField: ExtraFieldTool;
+  FieldHooks: FieldHookManager;
   ItemTree: ItemTreeManager;
+  ItemBox: ItemBoxManager;
   Prompt: PromptManager;
   LibraryTabPanel: LibraryTabPanelManager;
   ReaderTabPanel: ReaderTabPanelManager;
@@ -33,10 +37,10 @@ class ZoteroToolkit extends BasicTool {
   Menu: MenuManager;
   PreferencePane: PreferencePaneManager;
   Shortcut: ShortcutManager;
-  Clibpoard: typeof ClibpoardHelper;
+  Clipboard: typeof ClipboardHelper;
   FilePicker: typeof FilePickerHelper;
   ProgressWindow: typeof ProgressWindowHelper;
-  VirtualizedTabel: typeof VirtualizedTableHelper;
+  VirtualizedTable: typeof VirtualizedTableHelper;
   Dialog: typeof DialogHelper;
 
   constructor() {
@@ -44,7 +48,9 @@ class ZoteroToolkit extends BasicTool {
     this.UI = new UITool(this);
     this.Reader = new ReaderTool(this);
     this.ExtraField = new ExtraFieldTool(this);
+    this.FieldHooks = new FieldHookManager(this);
     this.ItemTree = new ItemTreeManager(this);
+    this.ItemBox = new ItemBoxManager(this);
     this.Prompt = new PromptManager(this);
     this.LibraryTabPanel = new LibraryTabPanelManager(this);
     this.ReaderTabPanel = new ReaderTabPanelManager(this);
@@ -52,10 +58,10 @@ class ZoteroToolkit extends BasicTool {
     this.Menu = new MenuManager(this);
     this.PreferencePane = new PreferencePaneManager(this);
     this.Shortcut = new ShortcutManager(this);
-    this.Clibpoard = ClibpoardHelper;
+    this.Clipboard = ClipboardHelper;
     this.FilePicker = FilePickerHelper;
     this.ProgressWindow = ProgressWindowHelper;
-    this.VirtualizedTabel = VirtualizedTableHelper;
+    this.VirtualizedTable = VirtualizedTableHelper;
     this.Dialog = DialogHelper;
   }
 

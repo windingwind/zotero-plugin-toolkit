@@ -6,25 +6,25 @@ import { BasicTool } from "../basic";
  * @example
  * Copy plain text
  * ```ts
- * new ClibpoardHelper().addText("plain", "text/unicode").copy();
+ * new ClipboardHelper().addText("plain", "text/unicode").copy();
  * ```
  * @example
  * Copy plain text & rich text
  * ```ts
- * new ClibpoardHelper().addText("plain", "text/unicode")
+ * new ClipboardHelper().addText("plain", "text/unicode")
  *                     .addText("<h1>rich text</h1>", "text/html")
  *                     .copy();
  * ```
  * @example
  * Copy plain text, rich text & image
  * ```ts
- * new ClibpoardHelper().addText("plain", "text/unicode")
+ * new ClipboardHelper().addText("plain", "text/unicode")
  *                     .addText("<h1>rich text</h1>", "text/html")
  *                     .addImage("data:image/png;base64,...")
  *                     .copy();
  * ```
  */
-export class ClibpoardHelper {
+export class ClipboardHelper {
   private transferable: any;
   private clipboardService: any;
 

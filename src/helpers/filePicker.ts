@@ -3,7 +3,7 @@
  * @param title window title
  * @param mode
  * @param filters Array<[hint string, filter string]>
- * @param suggestion default file/foler
+ * @param suggestion default file/folder
  * @example
  * ```ts
  * await new FilePickerHelper(

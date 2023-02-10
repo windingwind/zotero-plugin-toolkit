@@ -9,14 +9,14 @@ Render the table.
 <b>Signature:</b>
 
 ```typescript
-render(selecteId?: number, onfulfilled?: (value: unknown) => unknown, onrejected?: (reason: any) => PromiseLike<never>): this;
+render(selectId?: number, onfulfilled?: (value: unknown) => unknown, onrejected?: (reason: any) => PromiseLike<never>): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  selecteId | number | <i>(Optional)</i> Which row to select after rendering |
+|  selectId | number | <i>(Optional)</i> Which row to select after rendering |
 |  onfulfilled | (value: unknown) =&gt; unknown | <i>(Optional)</i> callback after successfully rendered |
 |  onrejected | (reason: any) =&gt; PromiseLike&lt;never&gt; | <i>(Optional)</i> callback after rendering with error |
 

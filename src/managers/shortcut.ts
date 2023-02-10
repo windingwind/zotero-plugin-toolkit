@@ -20,7 +20,7 @@ export class ShortcutManager extends ManagerTool {
   /**
    * Register a shortcut key with window.addEventListener("keypress").
    *
-   * The callback will not be affected by conflictions.
+   * The callback will not be affected by conflicting.
    * @param type
    * @param keyOptions
    */
@@ -37,7 +37,7 @@ export class ShortcutManager extends ManagerTool {
   /**
    * Register a key using XUL element \<key\>.
    *
-   * The command might not be triggered if there are conflictions.
+   * The command might not be triggered if there are conflicting.
    * @param keyOptions
    * @returns `true` for success and `false` for failure.
    */
@@ -141,12 +141,12 @@ export class ShortcutManager extends ManagerTool {
   }
 
   /**
-   * Check key confliction of `inputKeyOptions`.
+   * Check key conflicting of `inputKeyOptions`.
    * @param inputKeyOptions
    * @param options
-   * @returns Confliction keys array
+   * @returns conflicting keys array
    */
-  checkKeyConfliction(
+  checkKeyConflicting(
     inputKeyOptions: Key,
     options: {
       customKeys?: CustomKey[];
@@ -172,11 +172,11 @@ export class ShortcutManager extends ManagerTool {
   }
 
   /**
-   * Find all key conflictions.
+   * Find all key conflicting.
    * @param options
-   * @returns An array of confliction keys arrays. Same confliction keys are put together.
+   * @returns An array of conflicting keys arrays. Same conflicting keys are put together.
    */
-  checkAllKeyConfliction(
+  checkAllKeyConflicting(
     options: {
       customKeys?: CustomKey[];
       includeEmpty: boolean;
@@ -189,7 +189,7 @@ export class ShortcutManager extends ManagerTool {
     if (!options.includeEmpty) {
       allKeys = allKeys.filter((_keyOptions) => _keyOptions.key);
     }
-    const conflctions: Key[][] = [];
+    const conflicting: Key[][] = [];
     while (allKeys.length > 0) {
       const checkKey = allKeys.pop()!;
       const conflictKeys = allKeys.filter(
@@ -199,12 +199,12 @@ export class ShortcutManager extends ManagerTool {
       );
       if (conflictKeys.length) {
         conflictKeys.push(checkKey);
-        conflctions.push(conflictKeys);
-        const conflctionKeyIds = conflictKeys.map((key) => key.id);
+        conflicting.push(conflictKeys);
+        const conflictingKeyIds = conflictKeys.map((key) => key.id);
         // Find index in allKeys
         const toRemoveIds: number[] = [];
         allKeys.forEach(
-          (key, i) => conflctionKeyIds.includes(key.id) && toRemoveIds.push(i)
+          (key, i) => conflictingKeyIds.includes(key.id) && toRemoveIds.push(i)
         );
         // Sort toRemoveIds in decrease and remove these keys by id
         toRemoveIds
@@ -212,7 +212,7 @@ export class ShortcutManager extends ManagerTool {
           .forEach((id) => allKeys.splice(id, 1));
       }
     }
-    return conflctions;
+    return conflicting;
   }
 
   /**
@@ -493,11 +493,11 @@ export class ShortcutManager extends ManagerTool {
     return Array.from(
       (doc || this.getGlobal("document")).querySelectorAll("commandset")
     ).map(
-      (cmdset) =>
+      (cmdSet) =>
         ({
-          id: cmdset.id,
+          id: cmdSet.id,
           commands: (
-            Array.from(cmdset.querySelectorAll("command")) as XUL.Command[]
+            Array.from(cmdSet.querySelectorAll("command")) as XUL.Command[]
           ).map(
             (cmd) =>
               ({
@@ -505,7 +505,7 @@ export class ShortcutManager extends ManagerTool {
                 oncommand: cmd.getAttribute("oncommand"),
                 disabled: cmd.getAttribute("disabled") === "true",
                 label: cmd.getAttribute("label"),
-                _parentId: cmdset.id,
+                _parentId: cmdSet.id,
               } as ElementCommand)
           ),
         } as ElementCommandSet)
@@ -518,7 +518,7 @@ export class ShortcutManager extends ManagerTool {
    */
   private getElementCommands(doc?: Document) {
     return Array.prototype.concat(
-      ...this.getElementCommandSets(doc).map((cmdset) => cmdset.commands)
+      ...this.getElementCommandSets(doc).map((cmdSet) => cmdSet.commands)
     ) as ElementCommand[];
   }
 

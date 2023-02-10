@@ -27,10 +27,12 @@ To minimize your plugin, import the modules you need manually.
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [Clibpoard](./zotero-plugin-toolkit.zoterotoolkit.clibpoard.md) |  | typeof [ClibpoardHelper](./zotero-plugin-toolkit.clibpoardhelper.md) |  |
+|  [Clipboard](./zotero-plugin-toolkit.zoterotoolkit.clipboard.md) |  | typeof [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) |  |
 |  [Dialog](./zotero-plugin-toolkit.zoterotoolkit.dialog.md) |  | typeof [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) |  |
 |  [ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md) |  | [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) |  |
+|  [FieldHooks](./zotero-plugin-toolkit.zoterotoolkit.fieldhooks.md) |  | [FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md) |  |
 |  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
+|  [ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md) |  | [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) |  |
 |  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) |  |
 |  [LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md) |  | [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) |  |
 |  [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md) |  | [MenuManager](./zotero-plugin-toolkit.menumanager.md) |  |
@@ -42,7 +44,7 @@ To minimize your plugin, import the modules you need manually.
 |  [ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md) |  | [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) |  |
 |  [Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md) |  | [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) |  |
 |  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [UITool](./zotero-plugin-toolkit.uitool.md) |  |
-|  [VirtualizedTabel](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtabel.md) |  | typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
+|  [VirtualizedTable](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtable.md) |  | typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
 
 ## Methods
 

@@ -29,7 +29,7 @@ XUL.Element
 
 ## Example
 
-Ceate a `<menuitem>`<!-- -->:
+Create a `<menuitem>`<!-- -->:
 
 ```ts
 const compat = new ZoteroCompat();

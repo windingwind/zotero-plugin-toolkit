@@ -1,3 +1,4 @@
+import { BasicTool } from "../basic";
 import { ElementProps, UITool } from "../tools/ui";
 
 /**
@@ -5,14 +6,14 @@ import { ElementProps, UITool } from "../tools/ui";
  */
 export class DialogHelper {
   /**
-   * Passed to dialog window for data-binding and lifecycle controll. See {@link DialogHelper.setDialogData}
+   * Passed to dialog window for data-binding and lifecycle controls. See {@link DialogHelper.setDialogData}
    */
   dialogData: DialogData;
   /**
    * Dialog window instance
    */
   window!: Window;
-  private elementProps: ElementProps;
+  private elementProps: ElementProps & { tag: string };
   /**
    * Create a dialog helper with row \* column grids.
    * @param row
@@ -215,7 +216,7 @@ export class DialogHelper {
 function openDialog(
   targetId: string,
   title: string,
-  elementProps: any,
+  elementProps: ElementProps & { tag: string },
   dialogData?: DialogData,
   windowFeatures: {
     width?: number;
@@ -238,7 +239,7 @@ function openDialog(
   const Zotero = uiTool.getGlobal("Zotero");
   dialogData = dialogData || {};
 
-  // Make winowfeature string
+  // Make windowfeature string
   if (!dialogData.loadLock) {
     dialogData.loadLock = Zotero.Promise.defer();
   }
@@ -282,15 +283,15 @@ function openDialog(
         })
       );
       // Add style according to Zotero prefs
+      // For custom select(menulist) and a link
       win.document.head.appendChild(
         uiTool.createElement(win.document, "style", {
           properties: {
-            innerText: `html,body{ font-size: calc(12px * ${Zotero.Prefs.get(
-              "fontSize"
-            )}) }`,
+            innerHTML: style,
           },
         })
       );
+      replaceElement(elementProps, uiTool);
       // Create element
       win.document.body.appendChild(
         uiTool.createElement(win.document, "fragment", {
@@ -327,7 +328,7 @@ function openDialog(
     dialogData?.unloadCallback && dialogData.unloadCallback();
   });
 
-  // Wati for window loading to resolve the lock promise
+  // Wait for window loading to resolve the lock promise
   win.addEventListener(
     "DOMContentLoaded",
     function onWindowLoad(ev: Event) {
@@ -376,6 +377,146 @@ function openDialog(
   }
   return win;
 }
+
+function replaceElement(
+  elementProps: ElementProps & { tag: string },
+  uiTool: UITool
+) {
+  let checkChildren = true;
+  if (elementProps.tag === "select" && uiTool.isZotero7()) {
+    checkChildren = false;
+    const customSelectProps = {
+      tag: "div",
+      classList: ["dropdown"],
+      listeners: [
+        {
+          type: "mouseleave",
+          listener: (ev: Event) => {
+            const select = (ev.target as HTMLElement).querySelector("select");
+            select?.blur();
+          },
+        },
+      ],
+      children: [
+        Object.assign({}, elementProps, {
+          tag: "select",
+          listeners: [
+            {
+              type: "focus",
+              listener: (ev: Event) => {
+                const select = ev.target as HTMLElement;
+                const dropdown = select.parentElement?.querySelector(
+                  ".dropdown-content"
+                ) as HTMLDivElement;
+                dropdown && (dropdown.style.display = "block");
+                select.setAttribute("focus", "true");
+              },
+            },
+            {
+              type: "blur",
+              listener: (ev: Event) => {
+                const select = ev.target as HTMLElement;
+                const dropdown = select.parentElement?.querySelector(
+                  ".dropdown-content"
+                ) as HTMLDivElement;
+                dropdown && (dropdown.style.display = "none");
+                select.removeAttribute("focus");
+              },
+            },
+          ],
+        }),
+        {
+          tag: "div",
+          classList: ["dropdown-content"],
+          children: elementProps.children?.map((option) => ({
+            tag: "p",
+            attributes: {
+              value: option.properties?.value,
+            },
+            properties: {
+              innerHTML:
+                option.properties?.innerHTML || option.properties?.innerText,
+            },
+            classList: ["dropdown-item"],
+            listeners: [
+              {
+                type: "click",
+                listener: (ev: Event) => {
+                  const select = (ev.target as HTMLElement).parentElement
+                    ?.previousElementSibling as HTMLSelectElement;
+                  select &&
+                    (select.value =
+                      (ev.target as HTMLElement).getAttribute("value") || "");
+                  select?.blur();
+                },
+              },
+            ],
+          })),
+        },
+      ],
+    };
+    for (const key in elementProps) {
+      delete elementProps[key as keyof ElementProps];
+    }
+    Object.assign(elementProps, customSelectProps);
+  } else if (elementProps.tag === "a") {
+    const href = (elementProps?.properties?.href || "") as string;
+    elementProps.properties ??= {};
+    elementProps.properties.href = "javascript:void(0);";
+    elementProps.attributes ??= {};
+    elementProps.attributes["zotero-href"] = href;
+    elementProps.listeners ??= [];
+    elementProps.listeners.push({
+      type: "click",
+      listener: (ev: Event) => {
+        const href = (ev.target as HTMLLinkElement)?.getAttribute(
+          "zotero-href"
+        );
+        href && uiTool.getGlobal("Zotero").launchURL(href);
+      },
+    });
+    elementProps.classList ??= [];
+    elementProps.classList.push("zotero-text-link");
+  }
+  if (checkChildren) {
+    elementProps.children?.forEach((child) => replaceElement(child, uiTool));
+  }
+}
+
+const style = `
+html,
+body {
+  font-size: calc(12px * 1);
+}
+.zotero-text-link {
+  -moz-user-focus: normal;
+  color: -moz-nativehyperlinktext;
+  text-decoration: underline;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9fb;
+  min-width: 160px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 5px 0 5px 0;
+  z-index: 999;
+}
+.dropdown-item {
+  margin: 0px;
+  padding: 5px 10px 5px 10px;
+}
+.dropdown-item:hover {
+  background-color: #efeff3;
+}
+`;
 
 interface DialogData {
   [key: string | number | symbol]: any;

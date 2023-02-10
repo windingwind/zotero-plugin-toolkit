@@ -1,3 +1,5 @@
+import ToolkitGlobal from "./managers/toolkitGlobal";
+
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
  * See also https://www.zotero.org/support/dev/zotero_7_for_developers
@@ -7,6 +9,8 @@ export class BasicTool {
    * configurations.
    */
   protected _basicOptions: BasicOptions;
+
+  protected readonly patchSign: string = "zotero-plugin-toolkit@2.0.0";
 
   public get basicOptions(): BasicOptions {
     return this._basicOptions;
@@ -24,6 +28,7 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
+      debug: ToolkitGlobal.getInstance().debugBridge,
     };
     this.updateOptions(data);
     return;
@@ -99,10 +104,11 @@ export class BasicTool {
   getGlobal(k: string): any;
   getGlobal(k: string) {
     const _Zotero =
-      Zotero ||
-      Components.classes["@zotero.org/Zotero;1"].getService(
-        Components.interfaces.nsISupports
-      ).wrappedJSObject;
+      typeof Zotero !== "undefined"
+        ? Zotero
+        : Components.classes["@zotero.org/Zotero;1"].getService(
+            Components.interfaces.nsISupports
+          ).wrappedJSObject;
     const window = _Zotero.getMainWindow();
     switch (k) {
       case "Zotero":
@@ -167,7 +173,7 @@ export class BasicTool {
    * @param doc
    * @param type
    * @example
-   * Ceate a `<menuitem>`:
+   * Create a `<menuitem>`:
    * ```ts
    * const compat = new ZoteroCompat();
    * const doc = compat.getWindow().document;
@@ -265,12 +271,11 @@ export class BasicTool {
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
-    return (
-      Zotero ||
-      Components.classes["@zotero.org/Zotero;1"].getService(
-        Components.interfaces.nsISupports
-      ).wrappedJSObject
-    );
+    return typeof Zotero !== "undefined"
+      ? Zotero
+      : Components.classes["@zotero.org/Zotero;1"].getService(
+          Components.interfaces.nsISupports
+        ).wrappedJSObject;
   }
 }
 
@@ -280,6 +285,10 @@ export interface BasicOptions {
     disableConsole: boolean;
     disableZLog: boolean;
     prefix: string;
+  };
+  debug: {
+    disableDebugBridgePassword: boolean;
+    password: string;
   };
 }
 

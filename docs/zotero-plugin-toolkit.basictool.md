@@ -24,6 +24,7 @@ export declare class BasicTool
 |  --- | --- | --- | --- |
 |  [\_basicOptions](./zotero-plugin-toolkit.basictool._basicoptions.md) | <code>protected</code> | BasicOptions | configurations. |
 |  [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md) | <code>readonly</code> | BasicOptions |  |
+|  [patchSign](./zotero-plugin-toolkit.basictool.patchsign.md) | <p><code>protected</code></p><p><code>readonly</code></p> | string |  |
 
 ## Methods
 

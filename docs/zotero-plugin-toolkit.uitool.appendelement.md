@@ -11,7 +11,7 @@ Append element(s) to a node.
 ```typescript
 appendElement(properties: ElementProps & {
         tag: string;
-    }, container: Element): XUL.Element | HTMLElement | SVGElement;
+    }, container: Element): HTMLElement | SVGElement | XUL.Element;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ appendElement(properties: ElementProps & {
 
 <b>Returns:</b>
 
-XUL.Element \| HTMLElement \| SVGElement
+HTMLElement \| SVGElement \| XUL.Element
 
 A Node that is the appended child (aChild), except when aChild is a DocumentFragment, in which case the empty DocumentFragment is returned.
 
