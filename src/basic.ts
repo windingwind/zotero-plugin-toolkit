@@ -104,10 +104,11 @@ export class BasicTool {
   getGlobal(k: string): any;
   getGlobal(k: string) {
     const _Zotero =
-      Zotero ||
-      Components.classes["@zotero.org/Zotero;1"].getService(
-        Components.interfaces.nsISupports
-      ).wrappedJSObject;
+      typeof Zotero !== "undefined"
+        ? Zotero
+        : Components.classes["@zotero.org/Zotero;1"].getService(
+            Components.interfaces.nsISupports
+          ).wrappedJSObject;
     const window = _Zotero.getMainWindow();
     switch (k) {
       case "Zotero":
@@ -270,12 +271,11 @@ export class BasicTool {
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
-    return (
-      Zotero ||
-      Components.classes["@zotero.org/Zotero;1"].getService(
-        Components.interfaces.nsISupports
-      ).wrappedJSObject
-    );
+    return typeof Zotero !== "undefined"
+      ? Zotero
+      : Components.classes["@zotero.org/Zotero;1"].getService(
+          Components.interfaces.nsISupports
+        ).wrappedJSObject;
   }
 }
 
