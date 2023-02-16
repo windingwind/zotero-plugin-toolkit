@@ -123,6 +123,11 @@ export class FieldHookManager extends ManagerTool {
           ) {
             // @ts-ignore
             const originalThis = this;
+            const deprecatedHooks =
+              ToolkitGlobal.getInstance().itemTree.fieldHooks;
+            if (deprecatedHooks && Object.keys(deprecatedHooks).length) {
+              Object.assign(globalCache.getFieldHooks, deprecatedHooks);
+            }
             if (Object.keys(globalCache.getFieldHooks).includes(field)) {
               try {
                 const hook = globalCache.getFieldHooks[field];

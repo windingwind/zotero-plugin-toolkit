@@ -1,3 +1,5 @@
+import { BasicTool } from "../basic";
+
 /**
  * ProgressWindow helper.
  * @example
@@ -46,6 +48,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
       window?: Window;
       closeOnClick?: boolean;
       closeTime?: number;
+      closeOtherProgressWindows?: boolean;
     } = {
       closeOnClick: true,
       closeTime: 5000,
@@ -58,6 +61,9 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
     this.originalShow = this
       .show as unknown as typeof Zotero.ProgressWindow.prototype.show;
     this.show = this.showWithTimer;
+    if (options.closeOtherProgressWindows) {
+      BasicTool.getZotero().ProgressWindowSet.closeAll();
+    }
   }
 
   /**
