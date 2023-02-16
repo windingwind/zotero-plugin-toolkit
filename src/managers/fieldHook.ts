@@ -91,6 +91,18 @@ export class FieldHookManager extends ManagerTool {
   private getHooksFactory(type: string) {
     switch (type) {
       case "getField":
+        // For compatibility with older versions of toolkit
+        // The getField hooks used to be in itemTree.fieldHooks
+        // We should force the patched getField to use the same hook factory,
+        const globalItemTree = ToolkitGlobal.getInstance().itemTree;
+        const deprecatedHooks = globalItemTree.fieldHooks;
+        if (
+          deprecatedHooks &&
+          deprecatedHooks !== this.globalCache.getFieldHooks
+        ) {
+          Object.assign(this.globalCache.getFieldHooks, deprecatedHooks);
+          globalItemTree.fieldHooks = this.globalCache.getFieldHooks;
+        }
         return this.globalCache.getFieldHooks;
         break;
       case "setField":
@@ -123,11 +135,6 @@ export class FieldHookManager extends ManagerTool {
           ) {
             // @ts-ignore
             const originalThis = this;
-            const deprecatedHooks =
-              ToolkitGlobal.getInstance().itemTree.fieldHooks;
-            if (deprecatedHooks && Object.keys(deprecatedHooks).length) {
-              Object.assign(globalCache.getFieldHooks, deprecatedHooks);
-            }
             if (Object.keys(globalCache.getFieldHooks).includes(field)) {
               try {
                 const hook = globalCache.getFieldHooks[field];
