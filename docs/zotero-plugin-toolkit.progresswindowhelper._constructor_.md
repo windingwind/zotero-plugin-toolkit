@@ -13,7 +13,7 @@ constructor(header: string, options?: {
         window?: Window;
         closeOnClick?: boolean;
         closeTime?: number;
-        closeAllOthers?: boolean;
+        closeOtherProgressWindows?: boolean;
     });
 ```
 
@@ -22,5 +22,5 @@ constructor(header: string, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  header | string | window header |
-|  options | { window?: Window; closeOnClick?: boolean; closeTime?: number; closeAllOthers?: boolean; } | <i>(Optional)</i> |
+|  options | { window?: Window; closeOnClick?: boolean; closeTime?: number; closeOtherProgressWindows?: boolean; } | <i>(Optional)</i> |
 
