@@ -340,6 +340,10 @@ export interface ItemTreeGlobal extends GlobalInstance {
       original: Function
     ) => HTMLElement;
   };
+  /**
+   * @deprecated moved to fieldHooks
+   */
+  fieldHooks?: any;
 }
 
 export interface ColumnOptions {
