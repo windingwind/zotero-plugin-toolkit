@@ -28,8 +28,10 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 - Managers
 
   - [ItemTree](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
+  
+  - [ItemBox](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
 
-  - [`PreferencePane`](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+  - [PreferencePane](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
 
   - [LibraryTabPanel](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
 
