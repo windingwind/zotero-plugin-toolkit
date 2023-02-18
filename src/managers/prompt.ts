@@ -753,10 +753,10 @@ export class Prompt {
       "keydown",
       (event: any) => {
         if (event.shiftKey && event.key.toLowerCase() == "p") {
-          console.log(event);
           if (
             event.originalTarget.isContentEditable ||
-            "value" in event.originalTarget
+            "value" in event.originalTarget ||
+            this.commands.length == 0
           ) {
             return;
           }
@@ -847,7 +847,7 @@ export class PromptManager extends ManagerTool {
   }
 
   /**
-   * You can delete a command registered before by its name.
+   * You can delete a command registed before by its name.
    * @remarks
    * There is a premise here that the names of all commands registered by a single plugin are not duplicated.
    * @param id Command.name
