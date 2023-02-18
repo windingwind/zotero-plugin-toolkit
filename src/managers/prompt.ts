@@ -34,7 +34,7 @@ export class Prompt {
   /**
    * The top-level HTML div node of `Prompt`
    */
-  private promptNode!: HTMLDivElement;
+  public promptNode!: HTMLDivElement;
   /**
    * The HTML input node of `Prompt`.
    */
@@ -50,20 +50,8 @@ export class Prompt {
     this.base = new BasicTool();
     this.ui = new UITool();
     this.document = this.base.getGlobal("document");
-    this.commands.push({
-      when: () => {
-        return /^\/s(earch)?/i.test(this.inputNode.value);
-      },
-      callback: (prompt: Prompt) => {
-        const text = this.inputNode.value
-          .match(/^\/s(earch)?\s*(.+)/i)
-          ?.slice(-1)[0];
-        this.showTip(text ?? "");
-      },
-    });
     this.initializeUI();
   }
-
   /**
    * Initialize `Prompt` UI and then bind events on it.
    */
@@ -370,7 +358,7 @@ export class Prompt {
   /**
    * Match suggestions for user's entered text.
    */
-  private showSuggestions(inputText: string) {
+  private async showSuggestions(inputText: string) {
     // From Obsidian
     var _w =
         /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/,
@@ -505,6 +493,14 @@ export class Prompt {
       });
       return true;
     } else {
+      const anonymousCommand = this.commands.find(
+        (c) => !c.name && (!c.when || c.when!())
+      );
+      if (anonymousCommand) {
+        await this.execCallback(anonymousCommand.callback);
+      } else {
+        this.showTip(this.defaultText.empty);
+      }
       return false;
     }
   }
@@ -539,19 +535,14 @@ export class Prompt {
           selectedIndex = 0;
         }
         allItems[selectedIndex].classList.add("selected");
-        let exceedNum = selectedIndex - this.maxLineNum + 2;
         let commandsContainer = this.getCommandsContainer();
-        if (exceedNum > 0) {
-          commandsContainer.scrollTo(
-            0,
-            (commandsContainer.querySelector(".selected") as HTMLElement)
-              .offsetTop -
-              commandsContainer.offsetHeight -
-              15
-          );
-        } else {
-          commandsContainer.scrollTop = 0;
-        }
+        commandsContainer.scrollTo(
+          0,
+          (commandsContainer.querySelector(".selected") as HTMLElement)
+            .offsetTop -
+            commandsContainer.offsetHeight +
+            7.5
+        );
         allItems[selectedIndex].classList.add("selected");
       }
     });
@@ -574,20 +565,7 @@ export class Prompt {
       }
       this.lastInputText = currentInputText;
       window.setTimeout(async () => {
-        if (!this.showSuggestions(currentInputText)) {
-          /**
-           * Execute anonymous command
-           * The first match
-           */
-          const anonymousCommand = this.commands.find(
-            (c) => !c.name && (!c.when || c.when!())
-          );
-          if (anonymousCommand) {
-            await this.execCallback(anonymousCommand.callback);
-          } else {
-            this.showTip(this.defaultText.empty);
-          }
-        }
+        await this.showSuggestions(currentInputText);
       });
     });
   }
@@ -612,7 +590,7 @@ export class Prompt {
    * Mark the selected item with class `selected`.
    * @param item HTMLDivElement
    */
-  private selectItem(item: HTMLDivElement) {
+  public selectItem(item: HTMLDivElement) {
     this.getCommandsContainer()
       .querySelectorAll(".command")
       .forEach((e) => e.classList.remove("selected"));
@@ -775,10 +753,10 @@ export class Prompt {
       "keydown",
       (event: any) => {
         if (event.shiftKey && event.key.toLowerCase() == "p") {
-          console.log(event);
           if (
             event.originalTarget.isContentEditable ||
-            "value" in event.originalTarget
+            "value" in event.originalTarget ||
+            this.commands.length == 0
           ) {
             return;
           }
@@ -849,8 +827,9 @@ export class PromptManager extends ManagerTool {
    */
   public register(
     commands: {
-      name: string;
+      name?: string;
       label?: string;
+      id?: string;
       when?: () => boolean;
       callback:
         | ((prompt: Prompt) => Promise<void>)
@@ -858,6 +837,8 @@ export class PromptManager extends ManagerTool {
         | Command[];
     }[]
   ) {
+    // id->name
+    commands.forEach((c) => (c.id ??= c.name));
     // this.prompt.commands records all commands by all addons
     this.prompt.commands = [...this.prompt.commands, ...commands];
     // this.commands records all commands by the addon creating this PromptManager
@@ -866,19 +847,19 @@ export class PromptManager extends ManagerTool {
   }
 
   /**
-   * You can delete a command registered before by its name.
+   * You can delete a command registed before by its name.
    * @remarks
    * There is a premise here that the names of all commands registered by a single plugin are not duplicated.
-   * @param name Command.name
+   * @param id Command.name
    */
-  public unregister(name: string) {
+  public unregister(id: string) {
     // Delete it in this.prompt.commands
-    const command = this.commands.find((c) => c.name == name);
+    const command = this.commands.find((c) => c.id == id);
     this.prompt.commands = this.prompt.commands.filter((c) => {
       return JSON.stringify(command) != JSON.stringify(c);
     });
     // Delete it in this.commands
-    this.commands = this.commands.filter((c) => c.name != name);
+    this.commands = this.commands.filter((c) => c.id != id);
   }
 
   /**
@@ -897,6 +878,7 @@ export class PromptManager extends ManagerTool {
 export interface Command {
   name?: string;
   label?: string;
+  id?: string;
   when?: () => boolean;
   callback:
     | ((prompt: Prompt) => Promise<void>)
