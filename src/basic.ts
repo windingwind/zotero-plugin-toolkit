@@ -245,18 +245,18 @@ export class BasicTool {
    * @param ownerSign The signature of patch owner to avoid patching again
    * @param patcher The new wrapper of the patched funcion
    */
-  patch(
-    object: { [sign: string]: any },
-    funcSign: string,
+  patch<T, K extends FunctionNamesOf<T>>(
+    object: T,
+    funcSign: K,
     ownerSign: string,
-    patcher: (fn: Function) => Function
+    patcher: (fn: T[K]) => T[K]
   ) {
-    if (object[funcSign][ownerSign]) {
-      throw new Error(`${funcSign} re-patched`);
+    if ((object[funcSign] as any)[ownerSign]) {
+      throw new Error(`${String(funcSign)} re-patched`);
     }
     this.log("patching", funcSign, `by ${ownerSign}`);
     object[funcSign] = patcher(object[funcSign]);
-    object[funcSign][ownerSign] = true;
+    (object[funcSign] as any)[ownerSign] = true;
   }
 
   protected updateOptions(source?: BasicTool | BasicOptions) {
@@ -311,3 +311,9 @@ export function unregister(tools: { [key: string | number]: any }) {
     }
   });
 }
+
+type FunctionNamesOf<T> = keyof FunctionsOf<T>;
+
+type FunctionsOf<T> = {
+  [K in keyof T as T[K] extends Function ? K : never]: T[K];
+};
