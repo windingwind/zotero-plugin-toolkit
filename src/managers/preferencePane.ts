@@ -49,7 +49,7 @@ export class PreferencePaneManager extends ManagerTool {
    *     extraDTD: [`chrome://${addonRef}/locale/overlay.dtd`],
    *     defaultXUL: true
    *   };
-   *   prefsManager.registerPrefPane(prefOptions);
+   *   prefsManager.register(prefOptions);
    * };
    *
    * function unInitPrefs() {
