@@ -113,7 +113,7 @@ export class MenuManager extends ManagerTool {
       if (menuitemOption.icon) {
         elementOption.attributes!["class"] += " menuitem-iconic";
         elementOption.styles![
-          "list-style-image"
+          "list-style-image" as any
         ] = `url(${menuitemOption.icon})`;
       }
       if (menuitemOption.tag === "menu") {

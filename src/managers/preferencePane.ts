@@ -59,7 +59,7 @@ export class PreferencePaneManager extends ManagerTool {
    * // bootstrap.js:startup
    * initPrefs();
    *
-   * // bootstrap.js:shutsown
+   * // bootstrap.js:shutdown
    * unInitPrefs();
    */
   register(options: PrefPaneOptions) {

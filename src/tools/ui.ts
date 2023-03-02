@@ -253,7 +253,7 @@ export class UITool extends BasicTool {
       }
       if (props.styles && Object.keys(props.styles).length) {
         Object.keys(props.styles).forEach((k) => {
-          const v = props.styles![k];
+          const v: any = props.styles![k as keyof CSSStyleDeclaration];
           typeof v !== "undefined" && (realElem!.style[k as any] = v);
         });
       }
@@ -308,10 +308,7 @@ export class UITool extends BasicTool {
    *          except when aChild is a DocumentFragment,
    *          in which case the empty DocumentFragment is returned.
    */
-  appendElement(
-    properties: ElementProps & { tag: string },
-    container: Element
-  ) {
+  appendElement(properties: TagElementProps, container: Element) {
     return container.appendChild(
       this.createElement(container.ownerDocument, properties.tag, properties)
     );
@@ -323,10 +320,7 @@ export class UITool extends BasicTool {
    * @param referenceNode The node before which newNode is inserted.
    * @returns
    */
-  insertElementBefore(
-    properties: ElementProps & { tag: string },
-    referenceNode: Element
-  ) {
+  insertElementBefore(properties: TagElementProps, referenceNode: Element) {
     if (referenceNode.parentNode)
       return referenceNode.parentNode.insertBefore(
         this.createElement(
@@ -457,7 +451,7 @@ export interface ElementProps {
   /**
    * styles
    */
-  styles?: { [key: string]: string };
+  styles?: Partial<CSSStyleDeclaration>;
   /**
    * Set with `elem.prop =`
    */
