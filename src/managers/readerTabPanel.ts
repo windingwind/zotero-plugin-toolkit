@@ -251,10 +251,6 @@ export class ReaderTabPanelManager extends ManagerTool {
   private async addReaderTabPanel() {
     const window = this.getGlobal("window");
     const deck = this.readerTool.getReaderTabPanelDeck();
-    // Trigger initialization only once
-    if (deck.selectedPanel?.getAttribute("toolkit-initialized")) {
-      return;
-    }
     const reader = await this.readerTool.getReader();
     if (!reader) {
       return;
@@ -300,8 +296,12 @@ export class ReaderTabPanelManager extends ManagerTool {
     }
 
     this.readerTabCache.optionsList.forEach((options) => {
+      const tabId = `${options.tabId}-${reader._instanceID}`;
+      if (window.document.querySelector(`#${tabId}`)) {
+        return;
+      }
       const tab = this.ui.createElement(window.document, "tab", {
-        id: `${options.tabId}-${reader._instanceID}`,
+        id: tabId,
         classList: [`toolkit-ui-tabs-${options.tabId}`],
         attributes: {
           label: options.tabLabel,
@@ -342,6 +342,5 @@ export class ReaderTabPanelManager extends ManagerTool {
       }
       options.renderPanelHook(tabpanel, deck, window, reader);
     });
-    deck.selectedPanel?.setAttribute("toolkit-initialized", "true");
   }
 }
