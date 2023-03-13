@@ -9,7 +9,5 @@ styles
 <b>Signature:</b>
 
 ```typescript
-styles?: {
-        [key: string]: string;
-    };
+styles?: Partial<CSSStyleDeclaration>;
 ```

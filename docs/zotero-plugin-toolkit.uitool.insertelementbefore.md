@@ -9,16 +9,14 @@ Inserts a node before a reference node as a child of its parent node.
 <b>Signature:</b>
 
 ```typescript
-insertElementBefore(properties: ElementProps & {
-        tag: string;
-    }, referenceNode: Element): HTMLElement | SVGElement | undefined;
+insertElementBefore(properties: TagElementProps, referenceNode: Element): HTMLElement | SVGElement | undefined;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | [ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; } | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  referenceNode | Element | The node before which newNode is inserted. |
 
 <b>Returns:</b>

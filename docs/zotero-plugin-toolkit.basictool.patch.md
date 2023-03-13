@@ -9,19 +9,17 @@ Patch a function
 <b>Signature:</b>
 
 ```typescript
-patch(object: {
-        [sign: string]: any;
-    }, funcSign: string, ownerSign: string, patcher: (fn: Function) => Function): void;
+patch<T, K extends FunctionNamesOf<T>>(object: T, funcSign: K, ownerSign: string, patcher: (fn: T[K]) => T[K]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  object | { \[sign: string\]: any; } | The owner of the function |
-|  funcSign | string | The signature of the function(function name) |
+|  object | T | The owner of the function |
+|  funcSign | K | The signature of the function(function name) |
 |  ownerSign | string | The signature of patch owner to avoid patching again |
-|  patcher | (fn: Function) =&gt; Function | The new wrapper of the patched funcion |
+|  patcher | (fn: T\[K\]) =&gt; T\[K\] | The new wrapper of the patched funcion |
 
 <b>Returns:</b>
 

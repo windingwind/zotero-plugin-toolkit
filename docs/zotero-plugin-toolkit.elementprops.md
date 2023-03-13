@@ -32,7 +32,7 @@ export interface ElementProps
 |  [properties?](./zotero-plugin-toolkit.elementprops.properties.md) |  | { \[key: string\]: unknown; } | <i>(Optional)</i> Set with <code>elem.prop =</code> |
 |  [removeIfExists?](./zotero-plugin-toolkit.elementprops.removeifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, remove and re-create it, then continue with props/attrs/children. |
 |  [skipIfExists?](./zotero-plugin-toolkit.elementprops.skipifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, skip element creation and continue with props/attrs/children. |
-|  [styles?](./zotero-plugin-toolkit.elementprops.styles.md) |  | { \[key: string\]: string; } | <i>(Optional)</i> styles |
+|  [styles?](./zotero-plugin-toolkit.elementprops.styles.md) |  | Partial&lt;CSSStyleDeclaration&gt; | <i>(Optional)</i> styles |
 |  [subElementOptions?](./zotero-plugin-toolkit.elementprops.subelementoptions.md) |  | Array&lt;TagElementProps&gt; | <i>(Optional)</i> |
 |  [tag?](./zotero-plugin-toolkit.elementprops.tag.md) |  | string | <i>(Optional)</i> tagName |
 

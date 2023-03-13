@@ -56,7 +56,7 @@ function initPrefs() {
     extraDTD: [`chrome://${addonRef}/locale/overlay.dtd`],
     defaultXUL: true
   };
-  prefsManager.registerPrefPane(prefOptions);
+  prefsManager.register(prefOptions);
 };
 
 function unInitPrefs() {
@@ -65,5 +65,5 @@ function unInitPrefs() {
 ```
 // bootstrap.js:startup initPrefs();
 
-// bootstrap.js:shutsown unInitPrefs();
+// bootstrap.js:shutdown unInitPrefs();
 

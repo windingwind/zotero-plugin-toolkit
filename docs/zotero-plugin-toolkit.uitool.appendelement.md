@@ -9,16 +9,14 @@ Append element(s) to a node.
 <b>Signature:</b>
 
 ```typescript
-appendElement(properties: ElementProps & {
-        tag: string;
-    }, container: Element): HTMLElement | SVGElement | XUL.Element;
+appendElement(properties: TagElementProps, container: Element): HTMLElement | SVGElement | XUL.Element;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | [ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; } | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  container | Element | The parent node to append to. |
 
 <b>Returns:</b>
