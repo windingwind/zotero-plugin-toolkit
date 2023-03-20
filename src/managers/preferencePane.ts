@@ -6,6 +6,7 @@ import { ManagerTool } from "../basic";
  * Register preference pane from Zotero 7's `xhtml`, for Zotero 6 & 7.
  */
 export class PreferencePaneManager extends ManagerTool {
+  private alive: boolean = true;
   private ui: UITool;
   private prefPaneCache: { win?: Window; listeners: { [id: string]: any } };
   constructor(base?: BasicTool | BasicOptions) {
@@ -201,6 +202,10 @@ export class PreferencePaneManager extends ManagerTool {
     };
     const windowListener = {
       onOpenWindow: (xulWindow: any) => {
+        // Avoid multiple tabs when unregister fails
+        if (!this.alive) {
+          return;
+        }
         const win: Window = xulWindow
           .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
           .getInterface(Components.interfaces.nsIDOMWindow);
@@ -280,9 +285,9 @@ export class PreferencePaneManager extends ManagerTool {
     if (idx < 0) {
       return false;
     }
-    const listner = this.prefPaneCache.listeners[id];
-    Services.wm.removeListener(listner);
-    listner.onOpenWindow = undefined;
+    const listener = this.prefPaneCache.listeners[id];
+    Services.wm.removeListener(listener);
+    listener.onOpenWindow = undefined;
     const win = this.prefPaneCache.win;
     if (win && !win.closed) {
       win.document.querySelector(`#${id}`)?.remove();
@@ -297,6 +302,7 @@ export class PreferencePaneManager extends ManagerTool {
    * Called on exiting
    */
   unregisterAll() {
+    this.alive = false;
     for (const id in this.prefPaneCache.listeners) {
       this.unregister(id);
     }
