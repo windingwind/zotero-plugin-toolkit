@@ -27,7 +27,7 @@ await new FilePickerHelper(
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(title, mode, filters, suggestion)](./zotero-plugin-toolkit.filepickerhelper._constructor_.md) |  | Constructs a new instance of the <code>FilePickerHelper</code> class |
+|  [(constructor)(title, mode, filters, suggestion, window, filterMask)](./zotero-plugin-toolkit.filepickerhelper._constructor_.md) |  | Constructs a new instance of the <code>FilePickerHelper</code> class |
 
 ## Methods
 

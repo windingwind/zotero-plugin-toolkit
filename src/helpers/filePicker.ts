@@ -1,3 +1,5 @@
+import { BasicTool } from "../basic";
+
 /**
  * File picker helper.
  * @param title window title
@@ -15,54 +17,108 @@
  */
 export class FilePickerHelper {
   private title: string;
-  private mode: "open" | "save" | "folder";
+  private mode: "open" | "save" | "folder" | "multiple";
   private filters?: [string, string][];
   private suggestion?: string;
+  private window?: Window | undefined;
+  private filterMask?:
+    | "all"
+    | "html"
+    | "text"
+    | "images"
+    | "xml"
+    | "apps"
+    | "urls"
+    | "audio"
+    | "video";
   constructor(
     title: string,
-    mode: "open" | "save" | "folder",
+    mode: "open" | "save" | "folder" | "multiple",
     filters?: [string, string][],
-    suggestion?: string
+    suggestion?: string,
+    window?: Window,
+    filterMask?:
+      | "all"
+      | "html"
+      | "text"
+      | "images"
+      | "xml"
+      | "apps"
+      | "urls"
+      | "audio"
+      | "video"
   ) {
     this.title = title;
     this.mode = mode;
     this.filters = filters;
     this.suggestion = suggestion;
+    this.window = window;
+    this.filterMask = filterMask;
   }
 
-  open(): Promise<string | false> {
-    const fp = Components.classes["@mozilla.org/filepicker;1"].createInstance(
-      Components.interfaces.nsIFilePicker
+  async open(): Promise<string | false> {
+    const basicTool = new BasicTool();
+    const backend = basicTool.getGlobal("require")(
+      "zotero/modules/filePicker"
+    ).default;
+    const fp = new backend();
+    fp.init(
+      this.window || basicTool.getGlobal("window"),
+      this.title,
+      this.getMode(fp)
     );
-
-    if (this.suggestion) fp.defaultString = this.suggestion;
-
-    this.mode = {
-      open: Components.interfaces.nsIFilePicker.modeOpen,
-      save: Components.interfaces.nsIFilePicker.modeSave,
-      folder: Components.interfaces.nsIFilePicker.modeGetFolder,
-    }[this.mode];
-
-    fp.init(window, this.title, this.mode);
-
     for (const [label, ext] of this.filters || []) {
       fp.appendFilter(label, ext);
     }
+    if (this.filterMask) fp.appendFilters(this.getFilterMask(fp));
+    if (this.suggestion) fp.defaultString = this.suggestion;
+    const userChoice = await fp.show();
+    switch (userChoice) {
+      case fp.returnOK:
+      case fp.returnReplace:
+        return fp.file;
+      default: // aka returnCancel
+        return false;
+    }
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new Promise((resolve) => {
-      fp.open((userChoice: unknown) => {
-        switch (userChoice) {
-          case Components.interfaces.nsIFilePicker.returnOK:
-          case Components.interfaces.nsIFilePicker.returnReplace:
-            resolve(fp.file.path);
-            break;
+  private getMode(fp: any) {
+    switch (this.mode) {
+      case "open":
+        return fp.modeOpen;
+      case "save":
+        return fp.modeSave;
+      case "folder":
+        return fp.modeGetFolder;
+      case "multiple":
+        return fp.modeOpenMultiple;
+      default:
+        return 0;
+    }
+  }
 
-          default: // aka returnCancel
-            resolve(false);
-            break;
-        }
-      });
-    });
+  private getFilterMask(fp: any) {
+    switch (this.filterMask) {
+      case "all":
+        return fp.filterAll;
+      case "html":
+        return fp.filterHTML;
+      case "text":
+        return fp.filterText;
+      case "images":
+        return fp.filterImages;
+      case "xml":
+        return fp.filterXML;
+      case "apps":
+        return fp.filterApps;
+      case "urls":
+        return fp.filterAllowURLs;
+      case "audio":
+        return fp.filterAudio;
+      case "video":
+        return fp.filterVideo;
+      default:
+        return 0x001;
+    }
   }
 }
