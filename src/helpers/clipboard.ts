@@ -53,8 +53,9 @@ export class ClipboardHelper {
     if (!parts[0].includes("base64")) {
       return this;
     }
+    const basicTool = new BasicTool();
     let mime = parts[0].match(/:(.*?);/)![1];
-    let bstr = atob(parts[1]);
+    let bstr = basicTool.getGlobal("window").atob(parts[1]);
     let n = bstr.length;
     let u8arr = new Uint8Array(n);
     while (n--) {
@@ -65,7 +66,7 @@ export class ClipboardHelper {
     );
     let mimeType: string;
     let img: unknown;
-    if (BasicTool.getZotero().platformMajorVersion >= 102) {
+    if (basicTool.getGlobal("Zotero").platformMajorVersion >= 102) {
       img = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
       mimeType = "application/x-moz-nativeimage";
     } else {
