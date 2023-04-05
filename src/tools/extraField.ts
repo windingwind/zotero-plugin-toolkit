@@ -19,12 +19,16 @@ export class ExtraFieldTool extends BasicTool {
       ).fields as Map<string, string>;
     } else {
       const map = new Map<string, string>();
+      const nonStandardFields: string[] = [];
       extraFiledRaw.split("\n").forEach((line) => {
         const split = line.split(": ");
         if (split.length >= 2 && split[0]) {
           map.set(split[0], split.slice(1).join(": "));
+        } else {
+          nonStandardFields.push(line);
         }
       });
+      map.set("__nonStandard__", nonStandardFields.join("\n"));
       return map;
     }
   }
@@ -49,6 +53,10 @@ export class ExtraFieldTool extends BasicTool {
     fields: Map<string, string>
   ): Promise<void> {
     let kvs: string[] = [];
+    if (fields.has("__nonStandard__")) {
+      kvs.push(fields.get("__nonStandard__") as string);
+      fields.delete("__nonStandard__");
+    }
     fields.forEach((v, k) => {
       kvs.push(`${k}: ${v}`);
     });
