@@ -6,6 +6,8 @@ import { BasicTool } from "../basic";
  * @param mode
  * @param filters Array<[hint string, filter string]>
  * @param suggestion default file/folder
+ * @param window the parent window. By default it is the main window
+ * @param filterMask built-in filters
  * @example
  * ```ts
  * await new FilePickerHelper(

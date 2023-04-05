@@ -9,7 +9,7 @@ Add a cell at (row, column). Index starts from 0.
 <b>Signature:</b>
 
 ```typescript
-addCell(row: number, column: number, elementProps: any, cellFlex?: boolean): this;
+addCell(row: number, column: number, elementProps: TagElementProps, cellFlex?: boolean): this;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ addCell(row: number, column: number, elementProps: any, cellFlex?: boolean): thi
 |  --- | --- | --- |
 |  row | number |  |
 |  column | number |  |
-|  elementProps | any | Cell element props. See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  elementProps | TagElementProps | Cell element props. See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  cellFlex | boolean | <i>(Optional)</i> If the cell is flex. Default true. |
 
 <b>Returns:</b>

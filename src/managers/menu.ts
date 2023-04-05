@@ -42,10 +42,9 @@ export class MenuManager extends ManagerTool {
    * @example
    * Insert menuitem with icon into item menupopup
    * ```ts
-   * const ui = new ZoteroUI();
    * // base64 or chrome:// url
    * const menuIcon = "chrome://addontemplate/content/icons/favicon@0.5x.png";
-   * ui.insertMenuItem("item", {
+   * ztoolkit.Menu.register("item", {
    *   tag: "menuitem",
    *   id: "zotero-itemmenu-addontemplate-test",
    *   label: "Addon Template: Menuitem",
@@ -56,8 +55,7 @@ export class MenuManager extends ManagerTool {
    * @example
    * Insert menu into file menupopup
    * ```ts
-   * const ui = new ZoteroUI();
-   * ui.insertMenuItem(
+   * ztoolkit.Menu.register(
    *   "menuFile",
    *   {
    *     tag: "menu",
@@ -137,7 +135,10 @@ export class MenuManager extends ManagerTool {
       return elementOption;
     };
     const props = generateElementOptions(options);
-    const menuItem = this.ui.createElement(doc, options.tag, props);
+    const menuItem = this.ui.createElement(doc, options.tag, props) as
+      | XUL.MenuItem
+      | XUL.Menu
+      | XUL.MenuSeparator;
     if (!anchorElement) {
       anchorElement = (
         insertPosition === "after"
@@ -146,6 +147,16 @@ export class MenuManager extends ManagerTool {
       ) as XUL.Element;
     }
     anchorElement[insertPosition](menuItem);
+    if (options.getVisibility) {
+      popup.addEventListener("popupshowing", (ev: Event) => {
+        const showing = options.getVisibility!(menuItem, ev);
+        if (showing) {
+          menuItem.removeAttribute("hidden");
+        } else {
+          menuItem.setAttribute("hidden", "true");
+        }
+      });
+    }
   }
 
   unregister(menuId: string) {
@@ -172,7 +183,7 @@ export interface MenuitemOptions {
   tag: "menuitem" | "menu" | "menuseparator";
   id?: string;
   label?: string;
-  // data url (chrome://xxx.png) or base64 url (data:image/png;base64,xxx)
+  /* data url (chrome://xxx.png) or base64 url (data:image/png;base64,xxx) */
   icon?: string;
   classList?: string[];
   class?: string;
@@ -183,7 +194,12 @@ export interface MenuitemOptions {
   commandListener?:
     | EventListenerOrEventListenerObject
     | ((event: Event) => any);
-  // Attributes below are used when type === "menu"
+  /* return true to show and false to hide current element */
+  getVisibility?: (
+    elem: XUL.MenuItem | XUL.Menu | XUL.MenuSeparator,
+    ev: Event
+  ) => boolean;
+  /* Attributes below are used when type === "menu" */
   popupId?: string;
   onpopupshowing?: string;
   children?: Array<MenuitemOptions>;

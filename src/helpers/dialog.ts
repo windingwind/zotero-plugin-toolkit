@@ -1,5 +1,5 @@
 import { BasicTool } from "../basic";
-import { ElementProps, UITool } from "../tools/ui";
+import { ElementProps, TagElementProps, UITool } from "../tools/ui";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
@@ -64,7 +64,7 @@ export class DialogHelper {
   addCell(
     row: number,
     column: number,
-    elementProps: any,
+    elementProps: TagElementProps,
     cellFlex: boolean = true
   ) {
     if (
