@@ -259,7 +259,7 @@ function openDialog(
     featureString += `left=${windowFeatures.left},`;
   }
   if (windowFeatures.top) {
-    featureString += `left=${windowFeatures.top},`;
+    featureString += `top=${windowFeatures.top},`;
   }
   if (windowFeatures.centerscreen) {
     featureString += "centerscreen,";
