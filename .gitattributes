@@ -1,1 +1,4 @@
 *.json  linguist-language=JSON-with-Comments
+
+*.ts text eol=crlf
+*.md text eol=crlf

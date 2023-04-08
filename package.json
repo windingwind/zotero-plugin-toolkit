@@ -41,7 +41,9 @@
     "lib": "dist",
     "doc": "docs"
   },
-  "prettier": {},
+  "prettier": {
+    "endOfLine": "crlf"
+  },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.21.5",
     "@microsoft/api-extractor": "^7.34.4",
