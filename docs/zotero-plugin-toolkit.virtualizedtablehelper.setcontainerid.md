@@ -6,7 +6,7 @@
 
 Set container element id that the table will be rendered on.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 setContainerId(id: string): this;
@@ -18,7 +18,7 @@ setContainerId(id: string): this;
 |  --- | --- | --- |
 |  id | string | element id |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

@@ -6,7 +6,7 @@
 
 classList
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 classList?: Array<string>;

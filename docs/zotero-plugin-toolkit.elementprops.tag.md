@@ -6,7 +6,7 @@
 
 tagName
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tag?: string;

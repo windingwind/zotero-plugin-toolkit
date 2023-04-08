@@ -8,7 +8,7 @@ Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.
 
 The command might not be triggered if there are conflicting.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(type: "element", keyOptions: {
@@ -40,7 +40,7 @@ register(type: "element", keyOptions: {
 |  type | "element" |  |
 |  keyOptions | { id: string; key: string; modifiers?: keyof KeyModifierStatus; disabled?: boolean; xulData: { document?: Document; command?: string; oncommand?: string; \_commandOptions?: { id: string; document: Document; oncommand?: string; disabled?: boolean; label?: string; \_parentId: string; }; \_parentId: string; }; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

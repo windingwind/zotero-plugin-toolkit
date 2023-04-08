@@ -6,7 +6,7 @@
 
 xul \| html \| svg
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace?: string;

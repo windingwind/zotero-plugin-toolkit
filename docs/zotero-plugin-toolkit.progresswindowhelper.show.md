@@ -4,7 +4,7 @@
 
 ## ProgressWindowHelper.show property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 show: typeof _popupWindowShow;

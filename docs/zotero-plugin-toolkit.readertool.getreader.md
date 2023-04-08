@@ -6,7 +6,7 @@
 
 Get the selected tab reader.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getReader(waitTime?: number): Promise<_ZoteroTypes.ReaderInstance | undefined>;
@@ -16,9 +16,9 @@ getReader(waitTime?: number): Promise<_ZoteroTypes.ReaderInstance | undefined>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  waitTime | number | <i>(Optional)</i> Wait for n MS until the reader is ready |
+|  waitTime | number | _(Optional)_ Wait for n MS until the reader is ready |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;\_ZoteroTypes.ReaderInstance \| undefined&gt;
 

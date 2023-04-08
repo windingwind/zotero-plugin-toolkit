@@ -6,7 +6,7 @@
 
 Unregister an extra column. Call it on plugin exit.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(key: string, options?: {
@@ -19,9 +19,9 @@ unregister(key: string, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string | Column dataKey, should be same as the one used in <code>register</code> |
-|  options | { skipGetField?: boolean; } | <i>(Optional)</i> |
+|  options | { skipGetField?: boolean; } | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

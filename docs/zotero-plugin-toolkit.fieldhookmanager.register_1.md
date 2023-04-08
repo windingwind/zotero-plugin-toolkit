@@ -6,7 +6,7 @@
 
 Register `Zotero.Item.setField` hook.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(type: "setField", field: string, hook: typeof setFieldHookFunc): void;
@@ -20,7 +20,7 @@ register(type: "setField", field: string, hook: typeof setFieldHookFunc): void;
 |  field | string |  |
 |  hook | typeof setFieldHookFunc | ( field: string, value: string, loadIn: boolean, item: Zotero.Item, original: Function) =<!-- -->&gt; void |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

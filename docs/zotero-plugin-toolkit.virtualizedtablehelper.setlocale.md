@@ -6,7 +6,7 @@
 
 Set locale strings, which replaces the table header's label if matches. Default it's `Zotero.Intl.strings`
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 setLocale(localeStrings: {
@@ -20,7 +20,7 @@ setLocale(localeStrings: {
 |  --- | --- | --- |
 |  localeStrings | { \[name: string\]: string; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

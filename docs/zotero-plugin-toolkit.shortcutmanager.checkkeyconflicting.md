@@ -6,7 +6,7 @@
 
 Check key conflicting of `inputKeyOptions`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 checkKeyConflicting(inputKeyOptions: Key, options?: {
@@ -20,9 +20,9 @@ checkKeyConflicting(inputKeyOptions: Key, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  inputKeyOptions | Key |  |
-|  options | { customKeys?: CustomKey\[\]; includeEmpty?: boolean; } | <i>(Optional)</i> |
+|  options | { customKeys?: CustomKey\[\]; includeEmpty?: boolean; } | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 Key\[\]
 

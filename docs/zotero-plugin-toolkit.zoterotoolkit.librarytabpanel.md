@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.LibraryTabPanel property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 LibraryTabPanel: LibraryTabPanelManager;

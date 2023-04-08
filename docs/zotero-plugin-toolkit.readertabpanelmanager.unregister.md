@@ -6,7 +6,7 @@
 
 Unregister the reader tabpanel.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(tabId: string): void;
@@ -18,7 +18,7 @@ unregister(tabId: string): void;
 |  --- | --- | --- |
 |  tabId | string | tab id |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -4,7 +4,7 @@
 
 ## VirtualizedTableHelper.props property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 props: VirtualizedTableProps;

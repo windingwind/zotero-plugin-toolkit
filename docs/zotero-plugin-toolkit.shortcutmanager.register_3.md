@@ -8,7 +8,7 @@ Register a custom key.
 
 This is possibly not what you want to use. An API for future extensions.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(type: "custom", keyOptions: {
@@ -28,7 +28,7 @@ register(type: "custom", keyOptions: {
 |  type | "custom" |  |
 |  keyOptions | { id: string; key: string; callback: (keyOptions: CustomKey) =&gt; any; modifiers?: string; register: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; unregister: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;boolean&gt; \| boolean
 

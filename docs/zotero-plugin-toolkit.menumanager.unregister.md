@@ -4,7 +4,7 @@
 
 ## MenuManager.unregister() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(menuId: string): void;
@@ -16,7 +16,7 @@ unregister(menuId: string): void;
 |  --- | --- | --- |
 |  menuId | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

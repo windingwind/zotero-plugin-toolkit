@@ -4,7 +4,7 @@
 
 ## ClipboardHelper.addText() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addText(source: string, type: "text/html" | "text/unicode"): this;
@@ -17,7 +17,7 @@ addText(source: string, type: "text/html" | "text/unicode"): this;
 |  source | string |  |
 |  type | "text/html" \| "text/unicode" |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

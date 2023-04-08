@@ -10,12 +10,12 @@ For Zotero 6: mainWindow.DOMParser or nsIDOMParser
 
 For Zotero 7: Firefox 102 support DOMParser natively
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getDOMParser(): DOMParser;
 ```
-<b>Returns:</b>
+**Returns:**
 
 DOMParser
 

@@ -6,7 +6,7 @@
 
 Replace oldNode with a new one.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 replaceElement(properties: ElementProps & {
@@ -21,7 +21,7 @@ replaceElement(properties: ElementProps & {
 |  properties | [ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; } | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  oldNode | Element | The child to be replaced. |
 
-<b>Returns:</b>
+**Returns:**
 
 Element \| undefined
 

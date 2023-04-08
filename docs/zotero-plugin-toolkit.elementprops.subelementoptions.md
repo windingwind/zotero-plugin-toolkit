@@ -9,7 +9,7 @@
 > Use `children`
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 subElementOptions?: Array<TagElementProps>;

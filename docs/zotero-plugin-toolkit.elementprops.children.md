@@ -6,7 +6,7 @@
 
 Child elements. Will be created and appended to this element.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 children?: Array<TagElementProps>;

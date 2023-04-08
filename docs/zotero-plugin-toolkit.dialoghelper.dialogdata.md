@@ -6,7 +6,7 @@
 
 Passed to dialog window for data-binding and lifecycle controls. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 dialogData: DialogData;

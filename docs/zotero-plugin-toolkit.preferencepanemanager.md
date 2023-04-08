@@ -6,12 +6,12 @@
 
 Register preference pane from Zotero 7's `xhtml`<!-- -->, for Zotero 6 &amp; 7.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class PreferencePaneManager extends ManagerTool 
 ```
-<b>Extends:</b> ManagerTool
+**Extends:** ManagerTool
 
 ## Constructors
 

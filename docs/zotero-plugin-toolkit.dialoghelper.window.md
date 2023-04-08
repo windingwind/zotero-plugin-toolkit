@@ -6,7 +6,7 @@
 
 Dialog window instance
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 window: Window;

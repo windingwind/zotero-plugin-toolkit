@@ -6,7 +6,7 @@
 
 Set true to check if the element exists using `id`<!-- -->. If exists, skip element creation and continue with props/attrs/children.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipIfExists?: boolean;

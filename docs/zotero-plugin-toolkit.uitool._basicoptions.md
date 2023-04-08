@@ -6,7 +6,7 @@
 
 UITool options
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected _basicOptions: UIOptions;

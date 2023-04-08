@@ -6,7 +6,7 @@
 
 Set custom icon uri for progress window
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static setIconURI(key: string, uri: string): void;
@@ -19,7 +19,7 @@ static setIconURI(key: string, uri: string): void;
 |  key | string |  |
 |  uri | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

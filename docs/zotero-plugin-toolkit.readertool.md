@@ -6,12 +6,12 @@
 
 Zotero ReaderInstance APIs.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class ReaderTool extends BasicTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
+**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Methods
 

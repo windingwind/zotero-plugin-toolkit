@@ -6,7 +6,7 @@
 
 If it's an XUL element
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isXULElement(elem: Element): boolean;
@@ -18,7 +18,7 @@ isXULElement(elem: Element): boolean;
 |  --- | --- | --- |
 |  elem | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

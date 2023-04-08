@@ -6,7 +6,7 @@
 
 `props` of `UITool.createElement`<!-- -->. See [UITool](./zotero-plugin-toolkit.uitool.md)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface ElementProps 
@@ -16,23 +16,23 @@ export interface ElementProps
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attributes?](./zotero-plugin-toolkit.elementprops.attributes.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | <i>(Optional)</i> Set with <code>elem.setAttribute()</code> |
-|  [checkExistenceParent?](./zotero-plugin-toolkit.elementprops.checkexistenceparent.md) |  | HTMLElement | <i>(Optional)</i> Existence check will be processed under this element, default <code>document</code> |
-|  [children?](./zotero-plugin-toolkit.elementprops.children.md) |  | Array&lt;TagElementProps&gt; | <i>(Optional)</i> Child elements. Will be created and appended to this element. |
-|  [classList?](./zotero-plugin-toolkit.elementprops.classlist.md) |  | Array&lt;string&gt; | <i>(Optional)</i> classList |
-|  [customCheck?](./zotero-plugin-toolkit.elementprops.customcheck.md) |  | (doc: Document, options: [ElementProps](./zotero-plugin-toolkit.elementprops.md)<!-- -->) =&gt; boolean | <i>(Optional)</i> Custom check hook. If it returns false, return undefined and do not do anything. |
-|  [directAttributes?](./zotero-plugin-toolkit.elementprops.directattributes.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | <i>(Optional)</i> |
-|  [enableElementDOMLog?](./zotero-plugin-toolkit.elementprops.enableelementdomlog.md) |  | boolean | <i>(Optional)</i> Enable elements to be printed to console &amp; Zotero.debug. |
-|  [enableElementJSONLog?](./zotero-plugin-toolkit.elementprops.enableelementjsonlog.md) |  | boolean | <i>(Optional)</i> Enable elements to be printed to console &amp; Zotero.debug. |
-|  [enableElementRecord?](./zotero-plugin-toolkit.elementprops.enableelementrecord.md) |  | boolean | <i>(Optional)</i> Enable elements to be recorded by the toolkit so it can be removed when calling <code>unregisterAll</code>. |
-|  [id?](./zotero-plugin-toolkit.elementprops.id.md) |  | string | <i>(Optional)</i> id |
-|  [ignoreIfExists?](./zotero-plugin-toolkit.elementprops.ignoreifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, return this element and do not do anything. |
-|  [listeners?](./zotero-plugin-toolkit.elementprops.listeners.md) |  | Array&lt;{ type: string; listener: EventListenerOrEventListenerObject \| ((e: Event) =&gt; void) \| null \| undefined; options?: boolean \| AddEventListenerOptions; }&gt; | <i>(Optional)</i> Event listeners |
-|  [namespace?](./zotero-plugin-toolkit.elementprops.namespace.md) |  | string | <i>(Optional)</i> xul \| html \| svg |
-|  [properties?](./zotero-plugin-toolkit.elementprops.properties.md) |  | { \[key: string\]: unknown; } | <i>(Optional)</i> Set with <code>elem.prop =</code> |
-|  [removeIfExists?](./zotero-plugin-toolkit.elementprops.removeifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, remove and re-create it, then continue with props/attrs/children. |
-|  [skipIfExists?](./zotero-plugin-toolkit.elementprops.skipifexists.md) |  | boolean | <i>(Optional)</i> Set true to check if the element exists using <code>id</code>. If exists, skip element creation and continue with props/attrs/children. |
-|  [styles?](./zotero-plugin-toolkit.elementprops.styles.md) |  | Partial&lt;CSSStyleDeclaration&gt; | <i>(Optional)</i> styles |
-|  [subElementOptions?](./zotero-plugin-toolkit.elementprops.subelementoptions.md) |  | Array&lt;TagElementProps&gt; | <i>(Optional)</i> |
-|  [tag?](./zotero-plugin-toolkit.elementprops.tag.md) |  | string | <i>(Optional)</i> tagName |
+|  [attributes?](./zotero-plugin-toolkit.elementprops.attributes.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | _(Optional)_ Set with <code>elem.setAttribute()</code> |
+|  [checkExistenceParent?](./zotero-plugin-toolkit.elementprops.checkexistenceparent.md) |  | HTMLElement | _(Optional)_ Existence check will be processed under this element, default <code>document</code> |
+|  [children?](./zotero-plugin-toolkit.elementprops.children.md) |  | Array&lt;TagElementProps&gt; | _(Optional)_ Child elements. Will be created and appended to this element. |
+|  [classList?](./zotero-plugin-toolkit.elementprops.classlist.md) |  | Array&lt;string&gt; | _(Optional)_ classList |
+|  [customCheck?](./zotero-plugin-toolkit.elementprops.customcheck.md) |  | (doc: Document, options: [ElementProps](./zotero-plugin-toolkit.elementprops.md)<!-- -->) =&gt; boolean | _(Optional)_ Custom check hook. If it returns false, return undefined and do not do anything. |
+|  [directAttributes?](./zotero-plugin-toolkit.elementprops.directattributes.md) |  | { \[key: string\]: string \| boolean \| number \| null \| undefined; } | _(Optional)_ |
+|  [enableElementDOMLog?](./zotero-plugin-toolkit.elementprops.enableelementdomlog.md) |  | boolean | _(Optional)_ Enable elements to be printed to console &amp; Zotero.debug. |
+|  [enableElementJSONLog?](./zotero-plugin-toolkit.elementprops.enableelementjsonlog.md) |  | boolean | _(Optional)_ Enable elements to be printed to console &amp; Zotero.debug. |
+|  [enableElementRecord?](./zotero-plugin-toolkit.elementprops.enableelementrecord.md) |  | boolean | _(Optional)_ Enable elements to be recorded by the toolkit so it can be removed when calling <code>unregisterAll</code>. |
+|  [id?](./zotero-plugin-toolkit.elementprops.id.md) |  | string | _(Optional)_ id |
+|  [ignoreIfExists?](./zotero-plugin-toolkit.elementprops.ignoreifexists.md) |  | boolean | _(Optional)_ Set true to check if the element exists using <code>id</code>. If exists, return this element and do not do anything. |
+|  [listeners?](./zotero-plugin-toolkit.elementprops.listeners.md) |  | Array&lt;{ type: string; listener: EventListenerOrEventListenerObject \| ((e: Event) =&gt; void) \| null \| undefined; options?: boolean \| AddEventListenerOptions; }&gt; | _(Optional)_ Event listeners |
+|  [namespace?](./zotero-plugin-toolkit.elementprops.namespace.md) |  | string | _(Optional)_ xul \| html \| svg |
+|  [properties?](./zotero-plugin-toolkit.elementprops.properties.md) |  | { \[key: string\]: unknown; } | _(Optional)_ Set with <code>elem.prop =</code> |
+|  [removeIfExists?](./zotero-plugin-toolkit.elementprops.removeifexists.md) |  | boolean | _(Optional)_ Set true to check if the element exists using <code>id</code>. If exists, remove and re-create it, then continue with props/attrs/children. |
+|  [skipIfExists?](./zotero-plugin-toolkit.elementprops.skipifexists.md) |  | boolean | _(Optional)_ Set true to check if the element exists using <code>id</code>. If exists, skip element creation and continue with props/attrs/children. |
+|  [styles?](./zotero-plugin-toolkit.elementprops.styles.md) |  | Partial&lt;CSSStyleDeclaration&gt; | _(Optional)_ styles |
+|  [subElementOptions?](./zotero-plugin-toolkit.elementprops.subelementoptions.md) |  | Array&lt;TagElementProps&gt; | _(Optional)_ |
+|  [tag?](./zotero-plugin-toolkit.elementprops.tag.md) |  | string | _(Optional)_ tagName |
 

@@ -6,7 +6,7 @@
 
 Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class BasicTool 

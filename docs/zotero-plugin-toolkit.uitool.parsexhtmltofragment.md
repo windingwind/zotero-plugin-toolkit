@@ -8,7 +8,7 @@ Parse XHTML to XUL fragment. For Zotero 6.
 
 To load preferences from a Zotero 7's `.xhtml`<!-- -->, use this method to parse it.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseXHTMLToFragment(str: string, entities?: string[], defaultXUL?: boolean): DocumentFragment;
@@ -19,10 +19,10 @@ parseXHTMLToFragment(str: string, entities?: string[], defaultXUL?: boolean): Do
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  str | string | xhtml raw text |
-|  entities | string\[\] | <i>(Optional)</i> dtd file list ("chrome://xxx.dtd") |
-|  defaultXUL | boolean | <i>(Optional)</i> true for default XUL namespace |
+|  entities | string\[\] | _(Optional)_ dtd file list ("chrome://xxx.dtd") |
+|  defaultXUL | boolean | _(Optional)_ true for default XUL namespace |
 
-<b>Returns:</b>
+**Returns:**
 
 DocumentFragment
 

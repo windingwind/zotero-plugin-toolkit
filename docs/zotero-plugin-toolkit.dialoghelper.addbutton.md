@@ -6,7 +6,7 @@
 
 Add a control button to the bottom of the dialog.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addButton(label: string, id?: string, options?: {
@@ -20,10 +20,10 @@ addButton(label: string, id?: string, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  label | string | Button label |
-|  id | string | <i>(Optional)</i> Button id. The corresponding id of the last button user clicks before window exit will be set to <code>dialogData._lastButtonId</code>. |
-|  options | { noClose?: boolean; callback?: (ev: Event) =&gt; any; } | <i>(Optional)</i> |
+|  id | string | _(Optional)_ Button id. The corresponding id of the last button user clicks before window exit will be set to <code>dialogData._lastButtonId</code>. |
+|  options | { noClose?: boolean; callback?: (ev: Event) =&gt; any; } | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

@@ -6,7 +6,7 @@
 
 Set true to check if the element exists using `id`<!-- -->. If exists, return this element and do not do anything.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ignoreIfExists?: boolean;

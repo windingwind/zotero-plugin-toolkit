@@ -6,7 +6,7 @@
 
 Unregister hook by id
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(id: string): void;
@@ -18,7 +18,7 @@ unregister(id: string): void;
 |  --- | --- | --- |
 |  id | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

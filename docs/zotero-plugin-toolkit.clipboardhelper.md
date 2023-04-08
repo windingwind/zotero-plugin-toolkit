@@ -6,7 +6,7 @@
 
 Copy helper for text/richtext/image.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class ClipboardHelper 

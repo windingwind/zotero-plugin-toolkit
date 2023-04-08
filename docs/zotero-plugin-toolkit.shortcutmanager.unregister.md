@@ -6,7 +6,7 @@
 
 Unregister a key.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(keyOptions: Key): Promise<boolean>;
@@ -18,7 +18,7 @@ unregister(keyOptions: Key): Promise<boolean>;
 |  --- | --- | --- |
 |  keyOptions | Key |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;boolean&gt;
 

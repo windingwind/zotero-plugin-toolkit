@@ -6,7 +6,7 @@
 
 File picker helper.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class FilePickerHelper 

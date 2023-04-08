@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ExtraField property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ExtraField: ExtraFieldTool;
