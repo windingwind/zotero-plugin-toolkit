@@ -4,7 +4,7 @@
 
 ## UITool.basicOptions property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 get basicOptions(): UIOptions;

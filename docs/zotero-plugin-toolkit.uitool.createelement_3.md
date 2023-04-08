@@ -6,7 +6,7 @@
 
 Create `SVGElement`
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTagNameMap[SVG_TAG]>(doc: Document, tagName: SVG_TAG, props?: SVGElementProps): T;
@@ -18,9 +18,9 @@ createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTa
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | SVG\_TAG |  |
-|  props | SVGElementProps | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  props | SVGElementProps | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 
-**Returns:**
+<b>Returns:</b>
 
 T
 

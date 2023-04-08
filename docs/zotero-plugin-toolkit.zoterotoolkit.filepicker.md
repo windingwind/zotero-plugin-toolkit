@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.FilePicker property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 FilePicker: typeof FilePickerHelper;

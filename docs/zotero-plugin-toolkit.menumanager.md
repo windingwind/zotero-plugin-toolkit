@@ -6,12 +6,12 @@
 
 Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class MenuManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

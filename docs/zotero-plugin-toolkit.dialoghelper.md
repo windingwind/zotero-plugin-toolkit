@@ -6,7 +6,7 @@
 
 Dialog window helper. A superset of XUL dialog.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class DialogHelper 

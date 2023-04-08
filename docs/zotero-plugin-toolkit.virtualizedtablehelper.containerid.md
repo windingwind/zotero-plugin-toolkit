@@ -4,7 +4,7 @@
 
 ## VirtualizedTableHelper.containerId property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 containerId: string;

@@ -10,7 +10,7 @@ New columns and hooks are stored there.
 
 Then patch `require("zotero/itemTree").getColumns` and `Zotero.Item.getField`
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor(base?: BasicTool | BasicOptions);
@@ -20,5 +20,5 @@ constructor(base?: BasicTool | BasicOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | _(Optional)_ |
+|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 

@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `ZoteroToolkit` class
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor();

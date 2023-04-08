@@ -6,7 +6,7 @@
 
 Dialog data.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 setDialogData(dialogData: DialogData): this;
@@ -18,7 +18,7 @@ setDialogData(dialogData: DialogData): this;
 |  --- | --- | --- |
 |  dialogData | DialogData |  |
 
-**Returns:**
+<b>Returns:</b>
 
 this
 

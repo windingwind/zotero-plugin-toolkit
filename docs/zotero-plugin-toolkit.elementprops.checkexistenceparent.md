@@ -6,7 +6,7 @@
 
 Existence check will be processed under this element, default `document`
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 checkExistenceParent?: HTMLElement;

@@ -6,7 +6,7 @@
 
 Set with `elem.prop =`
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 properties?: {

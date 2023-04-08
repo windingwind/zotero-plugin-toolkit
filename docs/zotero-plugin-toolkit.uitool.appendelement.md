@@ -6,7 +6,7 @@
 
 Append element(s) to a node.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 appendElement(properties: TagElementProps, container: Element): HTMLElement | SVGElement | XUL.Element;
@@ -19,7 +19,7 @@ appendElement(properties: TagElementProps, container: Element): HTMLElement | SV
 |  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  container | Element | The parent node to append to. |
 
-**Returns:**
+<b>Returns:</b>
 
 HTMLElement \| SVGElement \| XUL.Element
 

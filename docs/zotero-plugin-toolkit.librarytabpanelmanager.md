@@ -6,12 +6,12 @@
 
 Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class LibraryTabPanelManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

@@ -6,12 +6,12 @@
 
 Get all shortcuts(element, event, prefs, builtin)
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 getAll(): Key[];
 ```
-**Returns:**
+<b>Returns:</b>
 
 Key\[\]
 

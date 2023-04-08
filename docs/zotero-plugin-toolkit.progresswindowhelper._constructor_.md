@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `ProgressWindowHelper` class
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor(header: string, options?: {
@@ -22,5 +22,5 @@ constructor(header: string, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  header | string | window header |
-|  options | { window?: Window; closeOnClick?: boolean; closeTime?: number; closeOtherProgressWindows?: boolean; } | _(Optional)_ |
+|  options | { window?: Window; closeOnClick?: boolean; closeTime?: number; closeOtherProgressWindows?: boolean; } | <i>(Optional)</i> |
 

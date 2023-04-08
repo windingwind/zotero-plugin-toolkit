@@ -6,7 +6,7 @@
 
 Render the table.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 render(selectId?: number, onfulfilled?: (value: unknown) => unknown, onrejected?: (reason: any) => PromiseLike<never>): this;
@@ -16,11 +16,11 @@ render(selectId?: number, onfulfilled?: (value: unknown) => unknown, onrejected?
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  selectId | number | _(Optional)_ Which row to select after rendering |
-|  onfulfilled | (value: unknown) =&gt; unknown | _(Optional)_ callback after successfully rendered |
-|  onrejected | (reason: any) =&gt; PromiseLike&lt;never&gt; | _(Optional)_ callback after rendering with error |
+|  selectId | number | <i>(Optional)</i> Which row to select after rendering |
+|  onfulfilled | (value: unknown) =&gt; unknown | <i>(Optional)</i> callback after successfully rendered |
+|  onrejected | (reason: any) =&gt; PromiseLike&lt;never&gt; | <i>(Optional)</i> callback after rendering with error |
 
-**Returns:**
+<b>Returns:</b>
 
 this
 

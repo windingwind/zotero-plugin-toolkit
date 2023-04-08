@@ -6,7 +6,7 @@
 
 Find all key conflicting.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 checkAllKeyConflicting(options?: {
@@ -19,9 +19,9 @@ checkAllKeyConflicting(options?: {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | { customKeys?: CustomKey\[\]; includeEmpty: boolean; } | _(Optional)_ |
+|  options | { customKeys?: CustomKey\[\]; includeEmpty: boolean; } | <i>(Optional)</i> |
 
-**Returns:**
+<b>Returns:</b>
 
 Key\[\]\[\]
 

@@ -6,7 +6,7 @@
 
 Create a dialog helper with row \* column grids.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor(row: number, column: number);

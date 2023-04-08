@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `ReaderInstanceManager` class
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor(base?: BasicTool | BasicOptions);
@@ -16,5 +16,5 @@ constructor(base?: BasicTool | BasicOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | _(Optional)_ |
+|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 

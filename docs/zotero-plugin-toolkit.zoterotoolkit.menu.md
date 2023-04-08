@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Menu property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 Menu: MenuManager;

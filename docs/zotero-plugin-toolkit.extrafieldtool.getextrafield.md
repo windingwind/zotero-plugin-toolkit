@@ -6,7 +6,7 @@
 
 Get extra field value by key. If it does not exists, return undefined.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 getExtraField(item: Zotero.Item, key: string): string | undefined;
@@ -19,7 +19,7 @@ getExtraField(item: Zotero.Item, key: string): string | undefined;
 |  item | Zotero.Item |  |
 |  key | string |  |
 
-**Returns:**
+<b>Returns:</b>
 
 string \| undefined
 

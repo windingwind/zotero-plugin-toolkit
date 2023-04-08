@@ -4,12 +4,12 @@
 
 ## BasicTool.getZotero() method
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 static getZotero(): _ZoteroTypes.Zotero;
 ```
-**Returns:**
+<b>Returns:</b>
 
 \_ZoteroTypes.Zotero
 

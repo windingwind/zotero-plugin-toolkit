@@ -4,7 +4,7 @@
 
 ## BasicTool.updateOptions() method
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 protected updateOptions(source?: BasicTool | BasicOptions): void;
@@ -14,9 +14,9 @@ protected updateOptions(source?: BasicTool | BasicOptions): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  source | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | _(Optional)_ |
+|  source | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
 
-**Returns:**
+<b>Returns:</b>
 
 void
 

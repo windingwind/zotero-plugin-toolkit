@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.PreferencePane property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 PreferencePane: PreferencePaneManager;

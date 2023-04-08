@@ -6,7 +6,7 @@
 
 Remove a patch hook by `dataKey`<!-- -->.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 removeRenderCellHook(dataKey: string): Promise<void>;
@@ -18,7 +18,7 @@ removeRenderCellHook(dataKey: string): Promise<void>;
 |  --- | --- | --- |
 |  dataKey | string |  |
 
-**Returns:**
+<b>Returns:</b>
 
 Promise&lt;void&gt;
 

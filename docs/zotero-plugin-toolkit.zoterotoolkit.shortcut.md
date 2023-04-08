@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Shortcut property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 Shortcut: ShortcutManager;

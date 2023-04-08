@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Prompt property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 Prompt: PromptManager;

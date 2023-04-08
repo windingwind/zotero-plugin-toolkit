@@ -4,7 +4,7 @@
 
 ## ReaderTabPanelManager.changeTabPanel() method
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 changeTabPanel(tabId: string, options: {
@@ -19,7 +19,7 @@ changeTabPanel(tabId: string, options: {
 |  tabId | string |  |
 |  options | { \[key: string\]: unknown; } |  |
 
-**Returns:**
+<b>Returns:</b>
 
 void
 

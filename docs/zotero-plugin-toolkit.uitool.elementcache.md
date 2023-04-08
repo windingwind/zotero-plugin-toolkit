@@ -6,7 +6,7 @@
 
 Store elements created with this instance
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 protected elementCache: Element[];

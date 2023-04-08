@@ -6,7 +6,7 @@
 
 Unregister a row of specific field.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 unregister(field: string, options?: {
@@ -22,9 +22,9 @@ unregister(field: string, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  field | string |  |
-|  options | { skipIsFieldOfBase?: boolean; skipGetField?: boolean; skipSetField?: boolean; skipRefresh?: boolean; } | _(Optional)_ Skip unregister of certain hooks. This is useful when the hook is not initialized by this instance |
+|  options | { skipIsFieldOfBase?: boolean; skipGetField?: boolean; skipSetField?: boolean; skipRefresh?: boolean; } | <i>(Optional)</i> Skip unregister of certain hooks. This is useful when the hook is not initialized by this instance |
 
-**Returns:**
+<b>Returns:</b>
 
 void
 

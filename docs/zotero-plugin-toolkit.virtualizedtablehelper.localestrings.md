@@ -4,7 +4,7 @@
 
 ## VirtualizedTableHelper.localeStrings property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 localeStrings: {

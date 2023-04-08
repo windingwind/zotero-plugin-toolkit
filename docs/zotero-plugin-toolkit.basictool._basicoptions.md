@@ -6,7 +6,7 @@
 
 configurations.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 protected _basicOptions: BasicOptions;

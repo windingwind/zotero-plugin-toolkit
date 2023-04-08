@@ -6,12 +6,12 @@
 
 UI APIs. Create elements and manage them.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class UITool extends BasicTool 
 ```
-**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
+<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Constructors
 

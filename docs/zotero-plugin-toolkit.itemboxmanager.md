@@ -6,12 +6,12 @@
 
 Register customized new row to the library itemBox (right-side info tab).
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class ItemBoxManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

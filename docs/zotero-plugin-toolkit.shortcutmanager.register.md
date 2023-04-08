@@ -8,7 +8,7 @@ Register a shortcut key with window.addEventListener("keypress").
 
 The callback will not be affected by conflicting.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 register(type: "event", keyOptions: {
@@ -27,7 +27,7 @@ register(type: "event", keyOptions: {
 |  type | "event" |  |
 |  keyOptions | { id: string; key: string; callback: (keyOptions: EventKey) =&gt; any; modifiers?: string; disabled?: boolean; } |  |
 
-**Returns:**
+<b>Returns:</b>
 
 boolean
 

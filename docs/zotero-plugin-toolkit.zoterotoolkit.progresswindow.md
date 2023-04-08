@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ProgressWindow property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 ProgressWindow: typeof ProgressWindowHelper;

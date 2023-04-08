@@ -10,7 +10,7 @@ For Zotero 6, use `createElementNS`<!-- -->;
 
 For Zotero 7+, use `createXULElement`<!-- -->.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 createXULElement(doc: Document, type: string): XUL.Element;
@@ -23,7 +23,7 @@ createXULElement(doc: Document, type: string): XUL.Element;
 |  doc | Document |  |
 |  type | string |  |
 
-**Returns:**
+<b>Returns:</b>
 
 XUL.Element
 

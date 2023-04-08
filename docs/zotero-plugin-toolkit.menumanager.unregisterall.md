@@ -4,12 +4,12 @@
 
 ## MenuManager.unregisterAll() method
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 unregisterAll(): void;
 ```
-**Returns:**
+<b>Returns:</b>
 
 void
 

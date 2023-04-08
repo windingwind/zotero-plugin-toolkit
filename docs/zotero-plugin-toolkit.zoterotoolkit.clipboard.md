@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Clipboard property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 Clipboard: typeof ClipboardHelper;

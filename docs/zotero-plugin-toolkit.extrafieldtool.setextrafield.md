@@ -6,7 +6,7 @@
 
 Set an key-value pair to the item's extra field
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 setExtraField(item: Zotero.Item, key: string, value: string): Promise<void>;
@@ -20,7 +20,7 @@ setExtraField(item: Zotero.Item, key: string, value: string): Promise<void>;
 |  key | string |  |
 |  value | string |  |
 
-**Returns:**
+<b>Returns:</b>
 
 Promise&lt;void&gt;
 

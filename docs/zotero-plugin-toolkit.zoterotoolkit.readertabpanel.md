@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ReaderTabPanel property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 ReaderTabPanel: ReaderTabPanelManager;

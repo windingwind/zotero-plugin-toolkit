@@ -6,12 +6,12 @@
 
 Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class ReaderTabPanelManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

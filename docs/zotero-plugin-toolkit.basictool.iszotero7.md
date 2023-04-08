@@ -6,12 +6,12 @@
 
 Check if it's running on Zotero 7 (Firefox 102)
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 isZotero7(): boolean;
 ```
-**Returns:**
+<b>Returns:</b>
 
 boolean
 

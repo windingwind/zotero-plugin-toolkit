@@ -6,7 +6,7 @@
 
 Output to both Zotero.debug and console.log
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 log(...data: any): void;
@@ -18,7 +18,7 @@ log(...data: any): void;
 |  --- | --- | --- |
 |  data | any | e.g. string, number, object, ... |
 
-**Returns:**
+<b>Returns:</b>
 
 void
 

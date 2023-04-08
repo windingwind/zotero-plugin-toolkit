@@ -6,12 +6,12 @@
 
 Item field hooks manager.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class FieldHookManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+<b>Extends:</b> ManagerTool
 
 ## Constructors
 

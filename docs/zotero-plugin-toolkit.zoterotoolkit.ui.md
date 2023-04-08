@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.UI property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 UI: UITool;

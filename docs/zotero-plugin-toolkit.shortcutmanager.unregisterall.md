@@ -6,12 +6,12 @@
 
 Unregister all keys created by this instance.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 unregisterAll(): void;
 ```
-**Returns:**
+<b>Returns:</b>
 
 void
 

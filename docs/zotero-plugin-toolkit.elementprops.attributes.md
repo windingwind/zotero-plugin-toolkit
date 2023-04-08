@@ -6,7 +6,7 @@
 
 Set with `elem.setAttribute()`
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 attributes?: {

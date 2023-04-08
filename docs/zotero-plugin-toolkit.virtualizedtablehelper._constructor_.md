@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `VirtualizedTableHelper` class
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 constructor(win: Window);

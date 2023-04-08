@@ -6,7 +6,7 @@
 
 Register `Zotero.ItemFields.isFieldOfBase` hook. Used in itemBox.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 register(type: "isFieldOfBase", field: string, hook: typeof isFieldOfBaseHookFunc): void;
@@ -20,7 +20,7 @@ register(type: "isFieldOfBase", field: string, hook: typeof isFieldOfBaseHookFun
 |  field | string |  |
 |  hook | typeof isFieldOfBaseHookFunc | ( field: string, baseField: string, original: Function) =<!-- -->&gt; void |
 
-**Returns:**
+<b>Returns:</b>
 
 void
 

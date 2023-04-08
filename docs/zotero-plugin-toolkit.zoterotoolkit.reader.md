@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Reader property
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 Reader: ReaderTool;

@@ -6,7 +6,7 @@
 
 Insert an menu item/menu(with popup)/menuseprator into a menupopup
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: MenuitemOptions, insertPosition?: "before" | "after", anchorElement?: XUL.Element): false | undefined;
@@ -18,10 +18,10 @@ register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: Menuitem
 |  --- | --- | --- |
 |  menuPopup | XUL.MenuPopup \| keyof typeof MenuSelector |  |
 |  options | MenuitemOptions |  |
-|  insertPosition | "before" \| "after" | _(Optional)_ |
-|  anchorElement | XUL.Element | _(Optional)_ The menuitem will be put before/after <code>anchorElement</code>. If not set, put at start/end of the menupopup. |
+|  insertPosition | "before" \| "after" | <i>(Optional)</i> |
+|  anchorElement | XUL.Element | <i>(Optional)</i> The menuitem will be put before/after <code>anchorElement</code>. If not set, put at start/end of the menupopup. |
 
-**Returns:**
+<b>Returns:</b>
 
 false \| undefined
 

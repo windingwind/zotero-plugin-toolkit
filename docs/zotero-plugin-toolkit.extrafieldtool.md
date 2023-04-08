@@ -6,12 +6,12 @@
 
 Get/set extra field APIs.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 export declare class ExtraFieldTool extends BasicTool 
 ```
-**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
+<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Methods
 

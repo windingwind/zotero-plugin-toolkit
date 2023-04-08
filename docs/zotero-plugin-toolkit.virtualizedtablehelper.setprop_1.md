@@ -6,7 +6,7 @@
 
 Set properties object.
 
-**Signature:**
+<b>Signature:</b>
 
 ```typescript
 setProp(data: Partial<VirtualizedTableProps>): VirtualizedTableHelper;
@@ -18,7 +18,7 @@ setProp(data: Partial<VirtualizedTableProps>): VirtualizedTableHelper;
 |  --- | --- | --- |
 |  data | Partial&lt;VirtualizedTableProps&gt; | property object. |
 
-**Returns:**
+<b>Returns:</b>
 
 [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)
 
