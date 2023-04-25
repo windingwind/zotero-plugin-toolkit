@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ReaderInstance property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ReaderInstance: ReaderInstanceManager;

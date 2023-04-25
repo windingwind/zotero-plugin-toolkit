@@ -6,12 +6,12 @@
 
 Reader instance hooks.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class ReaderInstanceManager extends ManagerTool 
 ```
-<b>Extends:</b> ManagerTool
+**Extends:** ManagerTool
 
 ## Constructors
 

@@ -6,7 +6,7 @@
 
 Patch a function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 patch<T, K extends FunctionNamesOf<T>>(object: T, funcSign: K, ownerSign: string, patcher: (fn: T[K]) => T[K]): void;
@@ -21,7 +21,7 @@ patch<T, K extends FunctionNamesOf<T>>(object: T, funcSign: K, ownerSign: string
 |  ownerSign | string | The signature of patch owner to avoid patching again |
 |  patcher | (fn: T\[K\]) =&gt; T\[K\] | The new wrapper of the patched funcion |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.Dialog property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Dialog: typeof DialogHelper;

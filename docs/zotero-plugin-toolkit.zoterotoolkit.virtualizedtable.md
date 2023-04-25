@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.VirtualizedTable property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 VirtualizedTable: typeof VirtualizedTableHelper;

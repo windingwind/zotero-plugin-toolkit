@@ -6,7 +6,7 @@
 
 VirtualizedTable helper.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class VirtualizedTableHelper 

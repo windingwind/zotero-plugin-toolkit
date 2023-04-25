@@ -6,7 +6,7 @@
 
 Enable elements to be recorded by the toolkit so it can be removed when calling `unregisterAll`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enableElementRecord?: boolean;

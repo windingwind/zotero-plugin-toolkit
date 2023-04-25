@@ -6,12 +6,12 @@
 
 Register shortcut keys.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class ShortcutManager extends ManagerTool 
 ```
-<b>Extends:</b> ManagerTool
+**Extends:** ManagerTool
 
 ## Constructors
 

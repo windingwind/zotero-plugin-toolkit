@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `BasicTool` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constructor(data?: BasicTool | BasicOptions);
@@ -16,5 +16,5 @@ constructor(data?: BasicTool | BasicOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  data | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
+|  data | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | _(Optional)_ |
 

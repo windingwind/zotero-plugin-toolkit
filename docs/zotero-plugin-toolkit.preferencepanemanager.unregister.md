@@ -4,7 +4,7 @@
 
 ## PreferencePaneManager.unregister() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(id: string): boolean;
@@ -16,7 +16,7 @@ unregister(id: string): boolean;
 |  --- | --- | --- |
 |  id | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

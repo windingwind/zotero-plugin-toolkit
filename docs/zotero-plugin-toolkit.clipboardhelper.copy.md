@@ -4,12 +4,12 @@
 
 ## ClipboardHelper.copy() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 copy(): this;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this
 

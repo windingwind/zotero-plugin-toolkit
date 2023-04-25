@@ -6,7 +6,7 @@
 
 Register a tabpanel for every reader.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: _ZoteroTypes.ReaderInstance) => void, options?: {
@@ -23,9 +23,9 @@ register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerDeck: XUL
 |  --- | --- | --- |
 |  tabLabel | string | Label of panel tab. |
 |  renderPanelHook | (panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: \_ZoteroTypes.ReaderInstance) =&gt; void | <p>Called when panel is ready. Add elements to the panel.</p><p>The panel might be <code>undefined</code> when opening a PDF without parent item.</p><p>The owner deck is the top container of right-side bar.</p><p>The readerInstance is the reader of current tabpanel.</p> |
-|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | <i>(Optional)</i> Other optional parameters. |
+|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | _(Optional)_ Other optional parameters. |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;string&gt;
 

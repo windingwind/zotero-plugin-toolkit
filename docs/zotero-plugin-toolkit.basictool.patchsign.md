@@ -4,7 +4,7 @@
 
 ## BasicTool.patchSign property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly patchSign: string;

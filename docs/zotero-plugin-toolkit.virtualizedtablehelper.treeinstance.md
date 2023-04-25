@@ -4,7 +4,7 @@
 
 ## VirtualizedTableHelper.treeInstance property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 treeInstance: VirtualizedTable;

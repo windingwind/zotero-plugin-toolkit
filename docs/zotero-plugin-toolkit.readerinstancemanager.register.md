@@ -6,7 +6,7 @@
 
 Register a reader instance hook
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(type: "initialized", id: string, hook: readerInstanceHook): void;
@@ -20,7 +20,7 @@ register(type: "initialized", id: string, hook: readerInstanceHook): void;
 |  id | string | hook id |
 |  hook | readerInstanceHook |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

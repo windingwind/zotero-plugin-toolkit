@@ -6,7 +6,7 @@
 
 Set properties by name.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 setProp<K extends keyof VirtualizedTableProps, V extends VirtualizedTableProps[K]>(propName: K, propValue: V): VirtualizedTableHelper;
@@ -19,7 +19,7 @@ setProp<K extends keyof VirtualizedTableProps, V extends VirtualizedTableProps[K
 |  propName | K | Property name |
 |  propValue | V | Property value |
 
-<b>Returns:</b>
+**Returns:**
 
 [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)
 

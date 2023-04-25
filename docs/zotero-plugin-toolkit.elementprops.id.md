@@ -6,7 +6,7 @@
 
 id
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 id?: string;

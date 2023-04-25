@@ -6,7 +6,7 @@
 
 Custom check hook. If it returns false, return undefined and do not do anything.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 customCheck?: (doc: Document, options: ElementProps) => boolean;

@@ -4,12 +4,12 @@
 
 ## ItemBoxManager.unregisterAll() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregisterAll(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

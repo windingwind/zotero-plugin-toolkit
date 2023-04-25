@@ -8,7 +8,7 @@ Add a patch hook for `_renderCell`<!-- -->, which is called when cell is rendere
 
 This also works for Zotero's built-in cells.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string, column: ColumnOptions, original: Function) => HTMLElement): Promise<void>;
@@ -21,7 +21,7 @@ addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string,
 |  dataKey | string | Cell <code>dataKey</code>, e.g. 'title' |
 |  renderCellHook | (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement | patch hook |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

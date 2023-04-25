@@ -6,7 +6,7 @@
 
 Register a tabpanel in library.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerWindow: Window) => void, options?: {
@@ -23,9 +23,9 @@ register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerWindow: W
 |  --- | --- | --- |
 |  tabLabel | string | Label of panel tab. |
 |  renderPanelHook | (panel: XUL.TabPanel, ownerWindow: Window) =&gt; void | Called when panel is ready. Add elements to the panel. |
-|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | <i>(Optional)</i> Other optional parameters. |
+|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | _(Optional)_ Other optional parameters. |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

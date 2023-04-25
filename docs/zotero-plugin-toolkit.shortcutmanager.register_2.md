@@ -8,7 +8,7 @@ Register a Zotero key in preferences.
 
 Requires restarting Zotero to take effects.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(type: "prefs", keyOptions: {
@@ -24,7 +24,7 @@ register(type: "prefs", keyOptions: {
 |  type | "prefs" |  |
 |  keyOptions | { id: string; key: string; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -6,12 +6,12 @@
 
 Unregister all hooks
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregisterAll(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

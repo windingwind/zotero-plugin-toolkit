@@ -6,7 +6,7 @@
 
 Get all extra fields
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getExtraFields(item: Zotero.Item, backend?: "default" | "custom"): Map<string, string>;
@@ -17,9 +17,9 @@ getExtraFields(item: Zotero.Item, backend?: "default" | "custom"): Map<string, s
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  item | Zotero.Item |  |
-|  backend | "default" \| "custom" | <i>(Optional)</i> |
+|  backend | "default" \| "custom" | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 Map&lt;string, string&gt;
 

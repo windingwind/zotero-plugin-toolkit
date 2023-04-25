@@ -6,7 +6,7 @@
 
 Register a custom row
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(field: string, displayName: string, getFieldHook: typeof getFieldHookFunc | undefined, options?: {
@@ -25,9 +25,9 @@ register(field: string, displayName: string, getFieldHook: typeof getFieldHookFu
 |  field | string | Field name. Used in <code>getField</code> and <code>setField</code>. |
 |  displayName | string | The row header display text. |
 |  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading row content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
-|  options | { editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; multiline?: boolean; collapsible?: boolean; } | <i>(Optional)</i> |
+|  options | { editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; multiline?: boolean; collapsible?: boolean; } | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

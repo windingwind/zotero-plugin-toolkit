@@ -6,7 +6,7 @@
 
 Create `DocumentFragment`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 createElement(doc: Document, tagName: "fragment", props?: FragmentElementProps): DocumentFragment;
@@ -18,9 +18,9 @@ createElement(doc: Document, tagName: "fragment", props?: FragmentElementProps):
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | "fragment" |  |
-|  props | FragmentElementProps | <i>(Optional)</i> |
+|  props | FragmentElementProps | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 DocumentFragment
 

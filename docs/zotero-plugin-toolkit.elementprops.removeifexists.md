@@ -6,7 +6,7 @@
 
 Set true to check if the element exists using `id`<!-- -->. If exists, remove and re-create it, then continue with props/attrs/children.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 removeIfExists?: boolean;

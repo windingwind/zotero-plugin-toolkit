@@ -6,7 +6,7 @@
 
 styles
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 styles?: Partial<CSSStyleDeclaration>;

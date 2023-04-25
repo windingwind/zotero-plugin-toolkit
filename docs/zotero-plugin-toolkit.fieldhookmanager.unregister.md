@@ -4,7 +4,7 @@
 
 ## FieldHookManager.unregister() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregister(type: "getField" | "setField" | "isFieldOfBase", field: string): void;
@@ -17,7 +17,7 @@ unregister(type: "getField" | "setField" | "isFieldOfBase", field: string): void
 |  type | "getField" \| "setField" \| "isFieldOfBase" |  |
 |  field | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

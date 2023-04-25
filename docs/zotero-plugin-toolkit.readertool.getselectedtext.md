@@ -6,7 +6,7 @@
 
 Get the text selection of reader.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getSelectedText(currentReader: _ZoteroTypes.ReaderInstance): string;
@@ -18,7 +18,7 @@ getSelectedText(currentReader: _ZoteroTypes.ReaderInstance): string;
 |  --- | --- | --- |
 |  currentReader | \_ZoteroTypes.ReaderInstance | Target reader |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

@@ -6,12 +6,12 @@
 
 ⭐Contains all tools in this lib. Start from here if you are new to this lib.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 declare class ZoteroToolkit extends BasicTool 
 ```
-<b>Extends:</b> [BasicTool](./zotero-plugin-toolkit.basictool.md)
+**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Remarks
 

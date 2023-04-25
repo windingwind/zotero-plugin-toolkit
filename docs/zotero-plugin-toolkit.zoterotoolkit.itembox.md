@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ItemBox property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ItemBox: ItemBoxManager;

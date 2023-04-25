@@ -9,7 +9,7 @@
 > Use `properties`
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 directAttributes?: {

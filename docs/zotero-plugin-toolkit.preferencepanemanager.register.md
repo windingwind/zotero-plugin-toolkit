@@ -6,7 +6,7 @@
 
 Register a preference pane from an xhtml, for Zotero 6 &amp; 7.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(options: PrefPaneOptions): void;
@@ -18,7 +18,7 @@ register(options: PrefPaneOptions): void;
 |  --- | --- | --- |
 |  options | PrefPaneOptions | See [source code:options.ts](https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts) |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -6,12 +6,12 @@
 
 Remove all elements created by `createElement`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregisterAll(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

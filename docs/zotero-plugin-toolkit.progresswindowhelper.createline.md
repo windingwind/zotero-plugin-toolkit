@@ -6,7 +6,7 @@
 
 Create a new line
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 createLine(options: {
@@ -24,7 +24,7 @@ createLine(options: {
 |  --- | --- | --- |
 |  options | { type?: string; icon?: string; text?: string; progress?: number; idx?: number; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

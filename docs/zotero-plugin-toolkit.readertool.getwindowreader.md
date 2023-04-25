@@ -6,12 +6,12 @@
 
 Get all window readers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getWindowReader(): Array<_ZoteroTypes.ReaderWindow>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;\_ZoteroTypes.ReaderWindow&gt;
 

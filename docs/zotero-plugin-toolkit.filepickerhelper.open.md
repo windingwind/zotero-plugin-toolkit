@@ -4,12 +4,12 @@
 
 ## FilePickerHelper.open() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 open(): Promise<string | false>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;string \| false&gt;
 

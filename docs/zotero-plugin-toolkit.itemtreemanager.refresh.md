@@ -6,12 +6,12 @@
 
 Refresh itemView. You don't need to call it manually.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 refresh(): Promise<void>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

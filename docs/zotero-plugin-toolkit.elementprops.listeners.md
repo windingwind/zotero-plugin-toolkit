@@ -6,7 +6,7 @@
 
 Event listeners
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 listeners?: Array<{

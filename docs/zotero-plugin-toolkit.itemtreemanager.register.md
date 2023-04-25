@@ -6,7 +6,7 @@
 
 Register a new column. Don't forget to call `unregister` on plugin exit.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 register(key: string, label: string, getFieldHook: typeof getFieldHookFunc | undefined, options?: {
@@ -33,9 +33,9 @@ register(key: string, label: string, getFieldHook: typeof getFieldHookFunc | und
 |  key | string | Column dataKey |
 |  label | string | Column display label |
 |  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading cell content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
-|  options | { defaultIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; disabledIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; defaultSort?: 1 \| -1; flex?: number; width?: number; fixedWidth?: boolean; staticWidth?: boolean; minWidth?: number; iconPath?: string; ignoreInColumnPicker?: boolean; submenu?: boolean; zoteroPersist?: Set&lt;string&gt;; renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement; } | <i>(Optional)</i> See zotero source code:chrome/content/zotero/itemTreeColumns.jsx |
+|  options | { defaultIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; disabledIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; defaultSort?: 1 \| -1; flex?: number; width?: number; fixedWidth?: boolean; staticWidth?: boolean; minWidth?: number; iconPath?: string; ignoreInColumnPicker?: boolean; submenu?: boolean; zoteroPersist?: Set&lt;string&gt;; renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement; } | _(Optional)_ See zotero source code:chrome/content/zotero/itemTreeColumns.jsx |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

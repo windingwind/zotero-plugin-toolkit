@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `FilePickerHelper` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constructor(title: string, mode: "open" | "save" | "folder" | "multiple", filters?: [string, string][], suggestion?: string, window?: Window, filterMask?: "all" | "html" | "text" | "images" | "xml" | "apps" | "urls" | "audio" | "video");
@@ -18,8 +18,8 @@ constructor(title: string, mode: "open" | "save" | "folder" | "multiple", filter
 |  --- | --- | --- |
 |  title | string |  |
 |  mode | "open" \| "save" \| "folder" \| "multiple" |  |
-|  filters | \[string, string\]\[\] | <i>(Optional)</i> |
-|  suggestion | string | <i>(Optional)</i> |
-|  window | Window | <i>(Optional)</i> |
-|  filterMask | "all" \| "html" \| "text" \| "images" \| "xml" \| "apps" \| "urls" \| "audio" \| "video" | <i>(Optional)</i> |
+|  filters | \[string, string\]\[\] | _(Optional)_ |
+|  suggestion | string | _(Optional)_ |
+|  window | Window | _(Optional)_ |
+|  filterMask | "all" \| "html" \| "text" \| "images" \| "xml" \| "apps" \| "urls" \| "audio" \| "video" | _(Optional)_ |
 

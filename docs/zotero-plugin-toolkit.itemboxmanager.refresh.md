@@ -6,12 +6,12 @@
 
 Refresh all item boxes.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 refresh(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

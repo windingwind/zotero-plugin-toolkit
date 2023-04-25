@@ -6,12 +6,12 @@
 
 Register customized new columns to the library itemTree.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class ItemTreeManager extends ManagerTool 
 ```
-<b>Extends:</b> ManagerTool
+**Extends:** ManagerTool
 
 ## Constructors
 

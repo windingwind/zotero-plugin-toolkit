@@ -6,7 +6,7 @@
 
 Replace extra field of an item.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 replaceExtraFields(item: Zotero.Item, fields: Map<string, string>): Promise<void>;
@@ -19,7 +19,7 @@ replaceExtraFields(item: Zotero.Item, fields: Map<string, string>): Promise<void
 |  item | Zotero.Item |  |
 |  fields | Map&lt;string, string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

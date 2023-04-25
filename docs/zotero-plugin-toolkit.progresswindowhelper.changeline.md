@@ -6,7 +6,7 @@
 
 Change the line content
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 changeLine(options: {
@@ -24,7 +24,7 @@ changeLine(options: {
 |  --- | --- | --- |
 |  options | { type?: string; icon?: string; text?: string; progress?: number; idx?: number; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

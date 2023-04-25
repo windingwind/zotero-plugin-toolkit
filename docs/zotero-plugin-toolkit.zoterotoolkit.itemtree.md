@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.ItemTree property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ItemTree: ItemTreeManager;

@@ -8,12 +8,12 @@ Unregister all preference panes added with this instance
 
 Called on exiting
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unregisterAll(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

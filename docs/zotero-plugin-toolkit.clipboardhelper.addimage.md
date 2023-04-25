@@ -4,7 +4,7 @@
 
 ## ClipboardHelper.addImage() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addImage(source: string): this;
@@ -16,7 +16,7 @@ addImage(source: string): this;
 |  --- | --- | --- |
 |  source | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

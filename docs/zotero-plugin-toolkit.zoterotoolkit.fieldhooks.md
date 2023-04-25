@@ -4,7 +4,7 @@
 
 ## ZoteroToolkit.FieldHooks property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 FieldHooks: FieldHookManager;

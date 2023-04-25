@@ -6,7 +6,7 @@
 
 Create Element
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 createElement(doc: Document, tagName: string, props?: ElementProps): HTMLElement | XUL.Element | SVGElement;
@@ -18,9 +18,9 @@ createElement(doc: Document, tagName: string, props?: ElementProps): HTMLElement
 |  --- | --- | --- |
 |  doc | Document |  |
 |  tagName | string |  |
-|  props | [ElementProps](./zotero-plugin-toolkit.elementprops.md) | <i>(Optional)</i> See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+|  props | [ElementProps](./zotero-plugin-toolkit.elementprops.md) | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 
-<b>Returns:</b>
+**Returns:**
 
 HTMLElement \| XUL.Element \| SVGElement
 

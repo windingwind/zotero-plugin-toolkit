@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `ReaderTabPanelManager` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constructor(base?: BasicTool | BasicOptions);
@@ -16,5 +16,5 @@ constructor(base?: BasicTool | BasicOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | <i>(Optional)</i> |
+|  base | [BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions | _(Optional)_ |
 

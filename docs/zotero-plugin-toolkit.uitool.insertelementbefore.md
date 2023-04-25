@@ -6,7 +6,7 @@
 
 Inserts a node before a reference node as a child of its parent node.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 insertElementBefore(properties: TagElementProps, referenceNode: Element): HTMLElement | SVGElement | undefined;
@@ -19,7 +19,7 @@ insertElementBefore(properties: TagElementProps, referenceNode: Element): HTMLEl
 |  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
 |  referenceNode | Element | The node before which newNode is inserted. |
 
-<b>Returns:</b>
+**Returns:**
 
 HTMLElement \| SVGElement \| undefined
 

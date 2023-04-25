@@ -6,7 +6,7 @@
 
 Get global variables.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getGlobal(k: string): any;
@@ -18,7 +18,7 @@ getGlobal(k: string): any;
 |  --- | --- | --- |
 |  k | string | Global variable name, <code>Zotero</code>, <code>ZoteroPane</code>, <code>window</code>, <code>document</code>, etc. |
 
-<b>Returns:</b>
+**Returns:**
 
 any
 

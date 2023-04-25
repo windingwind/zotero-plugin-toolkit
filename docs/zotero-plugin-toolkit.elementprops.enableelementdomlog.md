@@ -6,7 +6,7 @@
 
 Enable elements to be printed to console &amp; Zotero.debug.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enableElementDOMLog?: boolean;
