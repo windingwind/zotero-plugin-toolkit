@@ -184,6 +184,7 @@ export class DialogHelper {
    * @param windowFeatures.resizable If window is resizable.
    * @param windowFeatures.fitContent Resize the window to content size after elements are loaded.
    * @param windowFeatures.noDialogMode Dialog mode window only has a close button. Set `true` to make maximize and minimize button visible.
+   * @param windowFeatures.alwaysRaised Is the window always at the top.
    */
   open(
     title: string,
@@ -196,6 +197,7 @@ export class DialogHelper {
       resizable?: boolean;
       fitContent?: boolean;
       noDialogMode?: boolean;
+      alwaysRaised?: boolean;
     } = {
       centerscreen: true,
       resizable: true,
@@ -227,6 +229,7 @@ function openDialog(
     resizable?: boolean;
     fitContent?: boolean;
     noDialogMode?: boolean;
+    alwaysRaised?: boolean;
   } = {
     centerscreen: true,
     resizable: true,
@@ -256,13 +259,16 @@ function openDialog(
     featureString += `left=${windowFeatures.left},`;
   }
   if (windowFeatures.top) {
-    featureString += `left=${windowFeatures.top},`;
+    featureString += `top=${windowFeatures.top},`;
   }
   if (windowFeatures.centerscreen) {
     featureString += "centerscreen,";
   }
   if (windowFeatures.noDialogMode) {
     featureString += "dialog=no,";
+  }
+  if (windowFeatures.alwaysRaised) {
+    featureString += "alwaysRaised=yes,";
   }
 
   // Create window

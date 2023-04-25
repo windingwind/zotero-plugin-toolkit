@@ -6,7 +6,7 @@
 
 Open the dialog
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 open(title: string, windowFeatures?: {
@@ -18,6 +18,7 @@ open(title: string, windowFeatures?: {
         resizable?: boolean;
         fitContent?: boolean;
         noDialogMode?: boolean;
+        alwaysRaised?: boolean;
     }): this;
 ```
 
@@ -26,9 +27,9 @@ open(title: string, windowFeatures?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  title | string | Window title |
-|  windowFeatures | { width?: number; height?: number; left?: number; top?: number; centerscreen?: boolean; resizable?: boolean; fitContent?: boolean; noDialogMode?: boolean; } | <i>(Optional)</i> |
+|  windowFeatures | { width?: number; height?: number; left?: number; top?: number; centerscreen?: boolean; resizable?: boolean; fitContent?: boolean; noDialogMode?: boolean; alwaysRaised?: boolean; } | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 
