@@ -241,8 +241,15 @@ export class ReaderTabPanelManager extends ManagerTool {
       Zotero.unlockPromise,
       Zotero.uiReadyPromise,
     ]);
-    const observer = this.readerTool.addReaderTabPanelDeckObserver(() => {
-      this.addReaderTabPanel();
+    let lock = Zotero.Promise.defer();
+    lock.resolve();
+    const observer = this.readerTool.addReaderTabPanelDeckObserver(async () => {
+      await lock.promise;
+      lock = Zotero.Promise.defer();
+      try {
+        this.addReaderTabPanel();
+      } catch (e) {}
+      lock.resolve();
     });
     this.readerTabCache.observer = observer;
     this.readerTabCache.initializeLock.resolve();
@@ -294,15 +301,18 @@ export class ReaderTabPanelManager extends ManagerTool {
     if (!tabbox) {
       return;
     }
+    const tabs = tabbox.querySelector("tabs");
+    const tabpanels = tabbox.querySelector("tabpanels");
 
     this.readerTabCache.optionsList.forEach((options) => {
       const tabId = `${options.tabId}-${reader._instanceID}`;
-      if (window.document.querySelector(`#${tabId}`)) {
+      const tabClass = `toolkit-ui-tabs-${options.tabId}`;
+      if (tabs?.querySelector(`.${tabClass}`)) {
         return;
       }
       const tab = this.ui.createElement(window.document, "tab", {
         id: tabId,
-        classList: [`toolkit-ui-tabs-${options.tabId}`],
+        classList: [tabClass],
         attributes: {
           label: options.tabLabel,
         },
@@ -310,11 +320,9 @@ export class ReaderTabPanelManager extends ManagerTool {
       }) as XUL.Tab;
       const tabpanel = this.ui.createElement(window.document, "tabpanel", {
         id: `${options.panelId}-${reader._instanceID}`,
-        classList: [`toolkit-ui-tabs-${options.tabId}`],
+        classList: [tabClass],
         ignoreIfExists: true,
       }) as XUL.TabPanel;
-      const tabs = tabbox.querySelector("tabs");
-      const tabpanels = tabbox.querySelector("tabpanels");
       if (options.targetIndex >= 0) {
         tabs?.querySelectorAll("tab")[options.targetIndex].before(tab);
         tabpanels
