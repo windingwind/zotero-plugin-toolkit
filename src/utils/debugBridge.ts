@@ -10,11 +10,11 @@ import ToolkitGlobal from "../managers/toolkitGlobal";
  * @example
  * Run script directly. The `run` is URIencoded script.
  *
- * `chrome://ztoolkit-debug/?run=Zotero.getMainWindow().alert(%22HelloWorld!%22)`
+ * `zotero://ztoolkit-debug/?run=Zotero.getMainWindow().alert(%22HelloWorld!%22)&app=developer`
  * @example
  * Run script from file. The `file` is URIencoded path to js file starts with `file:///`
  *
- * `chrome://ztoolkit-debug/?file=file%3A%2F%2F%2FC%3A%2FUsers%2Fw_xia%2FDesktop%2Frun.js`
+ * `zotero://ztoolkit-debug/?file=file%3A%2F%2F%2FC%3A%2FUsers%2Fw_xia%2FDesktop%2Frun.js&app=developer`
  */
 export class DebugBridge {
   public static readonly version: number = 1;
@@ -73,10 +73,35 @@ export class DebugBridge {
           .forEach((p: string) => {
             params[p.split("=")[0]] = p.split("=")[1];
           });
-        if (
-          ToolkitGlobal.getInstance().debugBridge.disableDebugBridgePassword ||
-          params.password === this.password
-        ) {
+
+        const skipPasswordCheck =
+          ToolkitGlobal.getInstance().debugBridge.disableDebugBridgePassword;
+        let allowed = false;
+        if (skipPasswordCheck) {
+          allowed = true;
+        } else {
+          // If password is not set, ask permission for commands without password.
+          if (
+            typeof params.password === "undefined" &&
+            typeof this.password === "undefined"
+          ) {
+            allowed = window.confirm(
+              `External App ${
+                params.app
+              } wants to execute command without password.\nCommand:\n${(
+                params.run ||
+                params.file ||
+                ""
+              ).slice(
+                0,
+                100
+              )}\nIf you do not know what it is, please click Cancel to deny.`
+            );
+          } else {
+            allowed = this.password === params.password;
+          }
+        }
+        if (allowed) {
           if (params.run) {
             try {
               const AsyncFunction = Object.getPrototypeOf(
