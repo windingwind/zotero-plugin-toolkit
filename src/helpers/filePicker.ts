@@ -58,7 +58,7 @@ export class FilePickerHelper {
     this.filterMask = filterMask;
   }
 
-  async open(): Promise<string | false> {
+  async open(): Promise<string | string[] | false> {
     const basicTool = new BasicTool();
     const backend = basicTool.getGlobal("require")(
       "zotero/modules/filePicker"
@@ -78,7 +78,7 @@ export class FilePickerHelper {
     switch (userChoice) {
       case fp.returnOK:
       case fp.returnReplace:
-        return fp.file;
+        return this.mode === "multiple" ? fp.files : fp.file;
       default: // aka returnCancel
         return false;
     }
