@@ -9,7 +9,7 @@ Constructs a new instance of the `FilePickerHelper` class
 **Signature:**
 
 ```typescript
-constructor(title: string, mode: "open" | "save" | "folder" | "multiple", filters?: [string, string][], suggestion?: string, window?: Window, filterMask?: "all" | "html" | "text" | "images" | "xml" | "apps" | "urls" | "audio" | "video");
+constructor(title: string, mode: MODE, filters?: [string, string][], suggestion?: string, window?: Window, filterMask?: "all" | "html" | "text" | "images" | "xml" | "apps" | "urls" | "audio" | "video");
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ constructor(title: string, mode: "open" | "save" | "folder" | "multiple", filter
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  title | string |  |
-|  mode | "open" \| "save" \| "folder" \| "multiple" |  |
+|  mode | MODE |  |
 |  filters | \[string, string\]\[\] | _(Optional)_ |
 |  suggestion | string | _(Optional)_ |
 |  window | Window | _(Optional)_ |

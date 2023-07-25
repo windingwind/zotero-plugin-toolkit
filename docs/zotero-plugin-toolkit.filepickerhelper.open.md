@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-open(): Promise<string | string[] | false>;
+open(): Promise<(MODE extends "multiple" ? string[] : string) | false>;
 ```
 **Returns:**
 
-Promise&lt;string \| string\[\] \| false&gt;
+Promise&lt;(MODE extends "multiple" ? string\[\] : string) \| false&gt;
 

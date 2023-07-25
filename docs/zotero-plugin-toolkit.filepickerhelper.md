@@ -9,7 +9,7 @@ File picker helper.
 **Signature:**
 
 ```typescript
-export declare class FilePickerHelper 
+export declare class FilePickerHelper<MODE extends "open" | "save" | "folder" | "multiple"> 
 ```
 
 ## Example
