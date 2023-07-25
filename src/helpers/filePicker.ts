@@ -17,9 +17,11 @@ import { BasicTool } from "../basic";
  * ).open();
  * ```
  */
-export class FilePickerHelper {
+export class FilePickerHelper<
+  MODE extends "open" | "save" | "folder" | "multiple"
+> {
   private title: string;
-  private mode: "open" | "save" | "folder" | "multiple";
+  private mode: MODE;
   private filters?: [string, string][];
   private suggestion?: string;
   private window?: Window | undefined;
@@ -35,7 +37,7 @@ export class FilePickerHelper {
     | "video";
   constructor(
     title: string,
-    mode: "open" | "save" | "folder" | "multiple",
+    mode: MODE,
     filters?: [string, string][],
     suggestion?: string,
     window?: Window,
@@ -58,7 +60,7 @@ export class FilePickerHelper {
     this.filterMask = filterMask;
   }
 
-  async open(): Promise<string | string[] | false> {
+  async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
     const basicTool = new BasicTool();
     const backend = basicTool.getGlobal("require")(
       "zotero/modules/filePicker"
