@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-open(): Promise<string | false>;
+open(): Promise<string | string[] | false>;
 ```
 **Returns:**
 
-Promise&lt;string \| false&gt;
+Promise&lt;string \| string\[\] \| false&gt;
 
