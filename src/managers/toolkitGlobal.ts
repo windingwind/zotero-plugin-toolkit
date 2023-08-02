@@ -20,8 +20,11 @@ export class ToolkitGlobal {
   public prompt?: PromptGlobal;
   public readerInstance?: ReaderInstanceGlobal;
 
+  public currentWindow?: Window;
+
   private constructor() {
     initializeModules(this);
+    this.currentWindow = BasicTool.getZotero().getMainWindow();
   }
 
   /**
@@ -30,12 +33,33 @@ export class ToolkitGlobal {
    */
   static getInstance(): Required<ToolkitGlobal> {
     const Zotero = BasicTool.getZotero();
+    let requireInit = false;
+
     if (!("_toolkitGlobal" in Zotero)) {
       Zotero._toolkitGlobal = new ToolkitGlobal();
-    } else {
-      initializeModules(Zotero._toolkitGlobal);
+      requireInit = true;
     }
-    return Zotero._toolkitGlobal;
+
+    const currentGlobal = Zotero._toolkitGlobal as ToolkitGlobal;
+    if (currentGlobal.currentWindow !== Zotero.getMainWindow()) {
+      currentGlobal.checkWindowDependentModules();
+      requireInit = true;
+    }
+
+    if (requireInit) {
+      initializeModules(currentGlobal);
+    }
+
+    return currentGlobal as Required<ToolkitGlobal>;
+  }
+
+  private checkWindowDependentModules() {
+    this.currentWindow = BasicTool.getZotero().getMainWindow();
+    this.itemTree = undefined;
+    this.itemBox = undefined;
+    this.shortcut = undefined;
+    this.prompt = undefined;
+    this.readerInstance = undefined;
   }
 }
 

@@ -11,7 +11,9 @@ import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 export class Prompt {
   private ui: UITool;
   private base: BasicTool;
-  private document: Document;
+  public get document(): Document {
+    return this.base.getGlobal("document");
+  }
   /**
    * Record the last text entered
    */
@@ -49,7 +51,6 @@ export class Prompt {
   constructor() {
     this.base = new BasicTool();
     this.ui = new UITool();
-    this.document = this.base.getGlobal("document");
     this.initializeUI();
   }
   /**
