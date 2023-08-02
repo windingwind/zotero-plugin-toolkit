@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    "lib": ["ESNext", "DOM"],
     "module": "commonjs",
     "outDir": "dist",
     "declaration": true,

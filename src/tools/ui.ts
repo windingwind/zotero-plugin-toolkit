@@ -22,7 +22,7 @@ export class UITool extends BasicTool {
    *
    * This API does this for you.
    */
-  protected elementCache: Element[];
+  protected elementCache: WeakRef<Element>[];
 
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
@@ -49,7 +49,7 @@ export class UITool extends BasicTool {
   unregisterAll(): void {
     this.elementCache.forEach((e) => {
       try {
-        e?.remove();
+        e?.deref()?.remove();
       } catch (e) {
         this.log(e);
       }
@@ -245,7 +245,7 @@ export class UITool extends BasicTool {
             tagName
           ) as HTMLElement | SVGElement;
         }
-        this.elementCache.push(realElem);
+        this.elementCache.push(new WeakRef(realElem));
       }
 
       if (props.id) {
