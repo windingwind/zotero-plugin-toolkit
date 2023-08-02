@@ -25,7 +25,7 @@ export declare class UITool extends BasicTool
 |  --- | --- | --- | --- |
 |  [\_basicOptions](./zotero-plugin-toolkit.uitool._basicoptions.md) | <code>protected</code> | UIOptions | UITool options |
 |  [basicOptions](./zotero-plugin-toolkit.uitool.basicoptions.md) | <code>readonly</code> | UIOptions |  |
-|  [elementCache](./zotero-plugin-toolkit.uitool.elementcache.md) | <code>protected</code> | Element\[\] | Store elements created with this instance |
+|  [elementCache](./zotero-plugin-toolkit.uitool.elementcache.md) | <code>protected</code> | WeakRef&lt;Element&gt;\[\] | Store elements created with this instance |
 
 ## Methods
 

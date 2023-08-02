@@ -9,7 +9,7 @@ Store elements created with this instance
 **Signature:**
 
 ```typescript
-protected elementCache: Element[];
+protected elementCache: WeakRef<Element>[];
 ```
 
 ## Remarks
