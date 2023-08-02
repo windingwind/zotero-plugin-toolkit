@@ -124,7 +124,7 @@ export class PreferencePaneManager extends ManagerTool {
       };
 
       // Activate `preference` attributes
-      for (let elem of container.querySelectorAll("[preference]")) {
+      for (let elem of Array.from(container.querySelectorAll("[preference]"))) {
         let preference = elem.getAttribute("preference")!;
         if (container.querySelector("preferences > preference#" + preference)) {
           this.log(
@@ -164,10 +164,10 @@ export class PreferencePaneManager extends ManagerTool {
               );
             }
           } else if (mutation.type == "childList") {
-            for (let node of mutation.removedNodes) {
+            for (let node of Array.from(mutation.removedNodes)) {
               detachFromPreference(node as Element);
             }
-            for (let node of mutation.addedNodes) {
+            for (let node of Array.from(mutation.addedNodes)) {
               if (
                 node.nodeType == window.Node.ELEMENT_NODE &&
                 (node as Element).hasAttribute("preference")
@@ -192,11 +192,11 @@ export class PreferencePaneManager extends ManagerTool {
 
       // parseXULToFragment() doesn't convert oncommand attributes into actual
       // listeners, so we'll do it here
-      for (let elem of container.querySelectorAll("[oncommand]")) {
+      for (let elem of Array.from(container.querySelectorAll("[oncommand]"))) {
         (elem as any).oncommand = elem.getAttribute("oncommand");
       }
 
-      for (let child of container.children) {
+      for (let child of Array.from(container.children)) {
         child.dispatchEvent(new window.Event("load"));
       }
     };

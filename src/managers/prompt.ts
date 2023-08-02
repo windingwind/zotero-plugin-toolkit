@@ -239,7 +239,7 @@ export class Prompt {
    * @returns
    */
   private getCommandsContainer() {
-    return [...this.promptNode.querySelectorAll(".commands-container")].find(
+    return [...Array.from(this.promptNode.querySelectorAll(".commands-container"))].find(
       (e: any) => {
         return e.style.display != "none";
       }
@@ -314,7 +314,7 @@ export class Prompt {
    */
   private trigger() {
     (
-      [...this.promptNode.querySelectorAll(".commands-container")]
+      [...Array.from(this.promptNode.querySelectorAll(".commands-container"))]
         .find((e: any) => e.style.display != "none")!
         .querySelector(".selected") as HTMLDivElement
     ).click();
@@ -514,7 +514,7 @@ export class Prompt {
         // get selected item and index
         let selectedIndex;
         let allItems = [
-          ...this.getCommandsContainer().querySelectorAll(".command"),
+          ...Array.from(this.getCommandsContainer().querySelectorAll(".command")),
         ].filter((e: any) => e.style.display != "none");
         selectedIndex = allItems.findIndex((e) =>
           e.classList.contains("selected")
