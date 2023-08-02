@@ -29,6 +29,9 @@ export class BasicTool {
         prefix: "",
       },
       debug: ToolkitGlobal.getInstance().debugBridge,
+      api: {
+        pluginID: "zotero-plugin-toolkit@windingwind.com",
+      },
     };
     this.updateOptions(data);
     return;
@@ -289,6 +292,9 @@ export interface BasicOptions {
   debug: {
     disableDebugBridgePassword: boolean;
     password: string;
+  };
+  api: {
+    pluginID: string;
   };
 }
 

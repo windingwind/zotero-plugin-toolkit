@@ -16,6 +16,15 @@ export class ItemTreeManager extends ManagerTool {
   private localRenderCellCache: string[];
   private initializationLock: _ZoteroTypes.PromiseObject;
   private fieldHooks: FieldHookManager;
+  private defaultPersist = [
+    "width",
+    "ordinal",
+    "hidden",
+    "sortActive",
+    "sortDirection",
+  ];
+  // TODO: update types
+  private backend: any;
   /**
    * Initialize Zotero._ItemTreeExtraColumnsGlobal if it doesn't exist.
    *
@@ -25,11 +34,11 @@ export class ItemTreeManager extends ManagerTool {
    */
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
+    this.backend = this.getGlobal("Zotero").ItemTreeManager;
     this.localColumnCache = [];
     this.localRenderCellCache = [];
     this.fieldHooks = new FieldHookManager(base);
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
-
     this.initializeGlobal();
   }
 
@@ -79,57 +88,86 @@ export class ItemTreeManager extends ManagerTool {
     label: string,
     getFieldHook: typeof getFieldHookFunc | undefined,
     options: {
+      /** @deprecated Use `enabledTreeIDs` */
       defaultIn?: Set<"default" | "feeds" | "feed" | string>;
+      /** @deprecated Use `enabledTreeIDs` */
       disabledIn?: Set<"default" | "feeds" | "feed" | string>;
+      enabledTreeIDs?: string[];
+      /** @deprecated Use `sortReverse` */
       defaultSort?: 1 | -1;
+      sortReverse?: boolean;
       flex?: number;
       width?: number;
       fixedWidth?: boolean;
       staticWidth?: boolean;
       minWidth?: number;
       iconPath?: string;
+      htmlLabel?: string;
+      /** @deprecated Use `showInColumnPicker` */
       ignoreInColumnPicker?: boolean;
+      /** @default true */
+      showInColumnPicker?: boolean;
+      /** @deprecated Use `columnPickerSubMenu` */
       submenu?: boolean;
-      zoteroPersist?: Set<string>;
+      columnPickerSubMenu?: boolean;
+      zoteroPersist?: Set<string> | Array<string>;
+      dataProvider?: (item: Zotero.Item, dataKey: string) => string;
       renderCellHook?: (
         index: number,
         data: string,
         column: ColumnOptions,
         original: Function
       ) => HTMLElement;
-    } = {}
+    } = {
+      showInColumnPicker: true,
+    }
   ) {
-    await this.initializationLock.promise;
-    if (
-      this.globalCache.columns
-        .map((_c: ColumnOptions) => _c.dataKey)
-        .includes(key)
-    ) {
-      this.log(`ItemTreeTool: ${key} is already registered.`);
-      return;
+    await this.initializationLock?.promise;
+    if (!this.backend) {
+      if (
+        this.globalCache.columns
+          .map((_c: ColumnOptions) => _c.dataKey)
+          .includes(key)
+      ) {
+        this.log(`ItemTreeTool: ${key} is already registered.`);
+        return;
+      }
     }
     const column: ColumnOptions = {
       dataKey: key,
       label: label,
+      pluginID: this._basicOptions.api.pluginID,
       iconLabel: options.iconPath
         ? this.createIconLabel({
             iconPath: options.iconPath,
             name: label,
           })
         : undefined,
+      iconPath: options.iconPath,
+      htmlLabel: options.htmlLabel,
       zoteroPersist:
         options.zoteroPersist ||
-        new Set(["width", "ordinal", "hidden", "sortActive", "sortDirection"]),
+        (this.backend ? this.defaultPersist : new Set(this.defaultPersist)),
       defaultIn: options.defaultIn,
       disabledIn: options.disabledIn,
+      enabledTreeIDs: options.enabledTreeIDs,
       defaultSort: options.defaultSort,
+      sortReverse: options.sortReverse || options.defaultSort === -1,
       flex: typeof options.flex === "undefined" ? 1 : options.flex,
       width: options.width,
       fixedWidth: options.fixedWidth,
       staticWidth: options.staticWidth,
       minWidth: options.minWidth,
       ignoreInColumnPicker: options.ignoreInColumnPicker,
+      showInColumnPicker:
+        typeof options.ignoreInColumnPicker === "undefined"
+          ? true
+          : options.showInColumnPicker,
       submenu: options.submenu,
+      columnPickerSubMenu: options.columnPickerSubMenu || options.submenu,
+      dataProvider:
+        options.dataProvider ||
+        ((item, _dataKey) => item.getField(key as any) as string),
     };
     if (getFieldHook) {
       this.fieldHooks.register("getField", key, getFieldHook);
@@ -137,9 +175,13 @@ export class ItemTreeManager extends ManagerTool {
     if (options.renderCellHook) {
       await this.addRenderCellHook(key, options.renderCellHook);
     }
-    this.globalCache.columns.push(column);
-    this.localColumnCache.push(column.dataKey);
-    await this.refresh();
+    if (this.backend) {
+      await this.backend.registerColumns(column);
+    } else {
+      this.globalCache.columns.push(column);
+      this.localColumnCache.push(column.dataKey);
+      await this.refresh();
+    }
   }
 
   /**
@@ -152,8 +194,15 @@ export class ItemTreeManager extends ManagerTool {
     key: string,
     options: { skipGetField?: boolean } = {}
   ) {
-    const Zotero = this.getGlobal("Zotero");
     await this.initializationLock.promise;
+    if (this.backend) {
+      await this.backend.unregisterColumns(key);
+      if (!options.skipGetField) {
+        this.fieldHooks.unregister("getField", key);
+      }
+      return;
+    }
+    const Zotero = this.getGlobal("Zotero");
     let persisted = Zotero.Prefs.get("pane.persist") as string;
 
     const persistedJSON = JSON.parse(persisted) as { [key: string]: any };
@@ -229,21 +278,24 @@ export class ItemTreeManager extends ManagerTool {
       globalCache._ready = true;
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
-      this.patch(
-        itemTree.prototype,
-        "getColumns",
-        this.patchSign,
-        (original) =>
-          function () {
-            // @ts-ignore
-            const columns: ColumnOptions[] = original.apply(this, arguments);
-            const insertAfter = columns.findIndex(
-              (column) => column.dataKey === "title"
-            );
-            columns.splice(insertAfter + 1, 0, ...globalCache.columns);
-            return columns;
-          }
-      );
+      if (!this.backend) {
+        this.patch(
+          itemTree.prototype,
+          "getColumns",
+          this.patchSign,
+          (original) =>
+            function () {
+              // @ts-ignore
+              const columns: ColumnOptions[] = original.apply(this, arguments);
+              const insertAfter = columns.findIndex(
+                (column) => column.dataKey === "title"
+              );
+              columns.splice(insertAfter + 1, 0, ...globalCache.columns);
+              return columns;
+            }
+        );
+      }
+
       this.patch(
         itemTree.prototype,
         "_renderCell",
@@ -349,16 +401,30 @@ export interface ItemTreeGlobal extends GlobalInstance {
 export interface ColumnOptions {
   dataKey: string;
   label: string;
-  iconLabel?: React.ReactElement;
-  defaultIn?: Set<"default" | "feeds" | "feed" | string>;
-  disabledIn?: Set<"default" | "feeds" | "feed" | string>;
+  pluginID?: string;
+  enabledTreeIDs?: string[];
+  /** @deprecated */
+  defaultIn?: Set<"default" | "feeds" | "feed" | string> | string[];
+  /** @deprecated */
+  disabledIn?: Set<"default" | "feeds" | "feed" | string> | string[];
+  /** @deprecated */
   defaultSort?: 1 | -1;
+  sortReverse?: boolean;
   flex?: number;
   width?: number;
   fixedWidth?: boolean;
   staticWidth?: boolean;
   minWidth?: number;
+  iconLabel?: React.ReactElement;
+  iconPath?: string;
+  htmlLabel?: string;
+  /** @deprecated */
   ignoreInColumnPicker?: boolean;
+  /** @default true */
+  showInColumnPicker?: boolean;
+  /** @deprecated */
   submenu?: boolean;
-  zoteroPersist?: Set<string>;
+  columnPickerSubMenu?: boolean;
+  dataProvider?: (item: Zotero.Item, dataKey: string) => string;
+  zoteroPersist?: Set<string> | string[];
 }
