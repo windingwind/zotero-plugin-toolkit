@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic";
+import { waitUtilAsync } from "../utils/wait";
 
 /**
  * Zotero ReaderInstance APIs.
@@ -67,7 +68,8 @@ export class ReaderTool extends BasicTool {
    * @alpha
    * @param callback
    */
-  addReaderTabPanelDeckObserver(callback: Function) {
+  async addReaderTabPanelDeckObserver(callback: Function) {
+    await waitUtilAsync(() => !!this.getReaderTabPanelDeck());
     const deck = this.getReaderTabPanelDeck();
     const observer = new (this.getGlobal("MutationObserver"))(
       async (mutations) => {

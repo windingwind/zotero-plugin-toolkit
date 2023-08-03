@@ -243,14 +243,16 @@ export class ReaderTabPanelManager extends ManagerTool {
     ]);
     let lock = Zotero.Promise.defer();
     lock.resolve();
-    const observer = this.readerTool.addReaderTabPanelDeckObserver(async () => {
-      await lock.promise;
-      lock = Zotero.Promise.defer();
-      try {
-        this.addReaderTabPanel();
-      } catch (e) {}
-      lock.resolve();
-    });
+    const observer = await this.readerTool.addReaderTabPanelDeckObserver(
+      async () => {
+        await lock.promise;
+        lock = Zotero.Promise.defer();
+        try {
+          this.addReaderTabPanel();
+        } catch (e) {}
+        lock.resolve();
+      }
+    );
     this.readerTabCache.observer = observer;
     this.readerTabCache.initializeLock.resolve();
   }
