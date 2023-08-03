@@ -42,7 +42,7 @@ export class ToolkitGlobal {
 
     const currentGlobal = Zotero._toolkitGlobal as ToolkitGlobal;
     if (currentGlobal.currentWindow !== Zotero.getMainWindow()) {
-      currentGlobal.checkWindowDependentModules();
+      checkWindowDependentModules(currentGlobal);
       requireInit = true;
     }
 
@@ -51,15 +51,6 @@ export class ToolkitGlobal {
     }
 
     return currentGlobal as Required<ToolkitGlobal>;
-  }
-
-  private checkWindowDependentModules() {
-    this.currentWindow = BasicTool.getZotero().getMainWindow();
-    this.itemTree = undefined;
-    this.itemBox = undefined;
-    this.shortcut = undefined;
-    this.prompt = undefined;
-    this.readerInstance = undefined;
   }
 }
 
@@ -115,6 +106,15 @@ function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(
       moduleKey
     ];
   }
+}
+
+function checkWindowDependentModules(instance: ToolkitGlobal) {
+  instance.currentWindow = BasicTool.getZotero().getMainWindow();
+  instance.itemTree = undefined;
+  instance.itemBox = undefined;
+  instance.shortcut = undefined;
+  instance.prompt = undefined;
+  instance.readerInstance = undefined;
 }
 
 export interface GlobalInstance {
