@@ -37,7 +37,7 @@ export class PreferencePaneManager extends ManagerTool {
    * }
    * ```
    *
-   * @param options See {@link https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts | source code:options.ts}
+   * @param options See {@link PrefPaneOptions}
    * @example
    * ```ts
    * const prefsManager = new PreferencePaneManager();

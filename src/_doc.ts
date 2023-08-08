@@ -14,7 +14,10 @@ import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
 import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { ReaderInstanceManager } from "./managers/readerInstance";
 import { MenuManager } from "./managers/menu";
-import { PreferencePaneManager } from "./managers/preferencePane";
+import {
+  PreferencePaneManager,
+  PrefPaneOptions,
+} from "./managers/preferencePane";
 import { ShortcutManager } from "./managers/shortcut";
 import { ClipboardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
@@ -37,6 +40,7 @@ export {
   ReaderInstanceManager,
   MenuManager,
   PreferencePaneManager,
+  PrefPaneOptions,
   ShortcutManager,
   ClipboardHelper,
   FilePickerHelper,
