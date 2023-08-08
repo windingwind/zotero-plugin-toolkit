@@ -1,6 +1,6 @@
 {
   "name": "zotero-plugin-toolkit",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Toolkit for Zotero plugins",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
