@@ -1,4 +1,5 @@
 import { BasicOptions, BasicTool, ManagerTool } from "../basic";
+import { PatcherManager } from "./patch";
 import ToolkitGlobal from "./toolkitGlobal";
 
 /**
@@ -10,9 +11,11 @@ export class FieldHookManager extends ManagerTool {
     type: "getField" | "setField" | "isFieldOfBase";
     field: string;
   }[];
+  private patcherManager: PatcherManager;
 
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
+    this.patcherManager = new PatcherManager();
     this.localCache = [];
     this.initializeGlobal();
   }
@@ -123,10 +126,9 @@ export class FieldHookManager extends ManagerTool {
       ToolkitGlobal.getInstance().fieldHooks);
     if (!this.globalCache._ready) {
       this.globalCache._ready = true;
-      this.patch(
+      this.patcherManager.register(
         Zotero.Item.prototype,
         "getField",
-        this.patchSign,
         (original) =>
           function (
             field: string,
@@ -152,10 +154,9 @@ export class FieldHookManager extends ManagerTool {
             return original.apply(originalThis, arguments);
           }
       );
-      this.patch(
+      this.patcherManager.register(
         Zotero.Item.prototype,
         "setField",
-        this.patchSign,
         (original) =>
           function (field: string, value: string, loadIn: boolean) {
             // @ts-ignore
@@ -177,10 +178,9 @@ export class FieldHookManager extends ManagerTool {
             return original.apply(originalThis, arguments);
           }
       );
-      this.patch(
+      this.patcherManager.register(
         Zotero.ItemFields,
         "isFieldOfBase",
-        this.patchSign,
         (original) =>
           function (field: string, baseField: string) {
             // @ts-ignore

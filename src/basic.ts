@@ -10,6 +10,9 @@ export class BasicTool {
    */
   protected _basicOptions: BasicOptions;
 
+  /**
+   * @deprecated Use `patcherManager` instead.
+   */
   protected readonly patchSign: string = "zotero-plugin-toolkit@2.0.0";
 
   public get basicOptions(): BasicOptions {
@@ -243,10 +246,11 @@ export class BasicTool {
 
   /**
    * Patch a function
+   * @deprecated Use `PatchManager` instead.
    * @param object The owner of the function
    * @param funcSign The signature of the function(function name)
    * @param ownerSign The signature of patch owner to avoid patching again
-   * @param patcher The new wrapper of the patched funcion
+   * @param patcher The new wrapper of the patched function
    */
   patch<T, K extends FunctionNamesOf<T>>(
     object: T,

@@ -4,6 +4,7 @@ import {
   getFieldHookFunc,
   setFieldHookFunc,
 } from "./fieldHook";
+import { PatcherManager } from "./patch";
 import ToolkitGlobal from "./toolkitGlobal";
 
 /**
@@ -13,12 +14,15 @@ export class ItemBoxManager extends ManagerTool {
   private globalCache!: ItemBoxGlobal;
   private localCache: string[];
   private fieldHooks: FieldHookManager;
+  private patcherManager: PatcherManager;
   private initializationLock: _ZoteroTypes.PromiseObject;
+
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
     this.localCache = [];
     this.fieldHooks = new FieldHookManager();
+    this.patcherManager = new PatcherManager();
     this.initializeGlobal();
   }
 
@@ -168,10 +172,9 @@ export class ItemBoxManager extends ManagerTool {
         }
       }
 
-      this.patch(
+      this.patcherManager.register(
         (itemBoxInstance as any).__proto__,
         "refresh",
-        this.patchSign,
         (original) =>
           function () {
             // @ts-ignore

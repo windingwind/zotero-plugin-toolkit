@@ -3,6 +3,7 @@ import { BasicOptions, BasicTool } from "../basic";
 import { ManagerTool } from "../basic";
 import { FieldHookManager, getFieldHookFunc } from "./fieldHook";
 import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
+import { PatcherManager } from "./patch";
 
 /**
  * Register customized new columns to the library itemTree.
@@ -16,6 +17,7 @@ export class ItemTreeManager extends ManagerTool {
   private localRenderCellCache: string[];
   private initializationLock: _ZoteroTypes.PromiseObject;
   private fieldHooks: FieldHookManager;
+  private patcherManager: PatcherManager;
   private defaultPersist = [
     "width",
     "ordinal",
@@ -38,6 +40,7 @@ export class ItemTreeManager extends ManagerTool {
     this.localColumnCache = [];
     this.localRenderCellCache = [];
     this.fieldHooks = new FieldHookManager(base);
+    this.patcherManager = new PatcherManager(base);
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
     this.initializeGlobal();
   }
@@ -279,10 +282,9 @@ export class ItemTreeManager extends ManagerTool {
       // @ts-ignore
       const itemTree = window.require("zotero/itemTree");
       if (!this.backend) {
-        this.patch(
+        this.patcherManager.register(
           itemTree.prototype,
           "getColumns",
-          this.patchSign,
           (original) =>
             function () {
               // @ts-ignore
@@ -296,10 +298,9 @@ export class ItemTreeManager extends ManagerTool {
         );
       }
 
-      this.patch(
+      this.patcherManager.register(
         itemTree.prototype,
         "_renderCell",
-        this.patchSign,
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
             if (!(column.dataKey in globalCache.renderCellHooks)) {
