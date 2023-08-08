@@ -16,7 +16,7 @@ register(options: PrefPaneOptions): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | PrefPaneOptions | See [source code:options.ts](https://github.com/windingwind/zotero-plugin-toolkit/blob/main/src/options.ts) |
+|  options | [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) | See [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) |
 
 **Returns:**
 

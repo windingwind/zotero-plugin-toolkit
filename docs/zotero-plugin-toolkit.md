@@ -33,4 +33,5 @@
 |  Interface | Description |
 |  --- | --- |
 |  [ElementProps](./zotero-plugin-toolkit.elementprops.md) | <code>props</code> of <code>UITool.createElement</code>. See [UITool](./zotero-plugin-toolkit.uitool.md) |
+|  [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) |  |
 

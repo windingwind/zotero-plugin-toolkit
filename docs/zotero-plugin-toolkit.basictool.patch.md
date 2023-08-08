@@ -4,6 +4,11 @@
 
 ## BasicTool.patch() method
 
+> Warning: This API is now obsolete.
+> 
+> Use `PatchManager` instead.
+> 
+
 Patch a function
 
 **Signature:**
@@ -19,7 +24,7 @@ patch<T, K extends FunctionNamesOf<T>>(object: T, funcSign: K, ownerSign: string
 |  object | T | The owner of the function |
 |  funcSign | K | The signature of the function(function name) |
 |  ownerSign | string | The signature of patch owner to avoid patching again |
-|  patcher | (fn: T\[K\]) =&gt; T\[K\] | The new wrapper of the patched funcion |
+|  patcher | (fn: T\[K\]) =&gt; T\[K\] | The new wrapper of the patched function |
 
 **Returns:**
 

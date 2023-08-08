@@ -4,6 +4,11 @@
 
 ## BasicTool.patchSign property
 
+> Warning: This API is now obsolete.
+> 
+> Use `patcherManager` instead.
+> 
+
 **Signature:**
 
 ```typescript
