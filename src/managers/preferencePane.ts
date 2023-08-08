@@ -310,15 +310,66 @@ export class PreferencePaneManager extends ManagerTool {
 }
 
 export interface PrefPaneOptions {
+  /**
+   * ID of the plugin registering the pane
+   */
   pluginID: string;
+  /**
+   * URI of an XHTML fragment, optionally relative to the plugin's root
+   */
   src: string;
+  /**
+   * Represents the pane and must be unique. Automatically generated if not provided
+   */
   id?: string;
+  /**
+   * ID of parent pane (if provided, pane is hidden from the sidebar)
+   */
   parent?: string;
+  /**
+   * Displayed as the pane's label in the sidebar. If not provided, the plugin's name is used.
+   */
   label?: string;
+  /**
+   * URI of an icon to be displayed in the navigation sidebar, optionally relative to
+   * 		the plugin's root. If not provided, the plugin's icon (from manifest.json) is used.
+   */
   image?: string;
+  /**
+   * @deprecated Please migrate the localization system to fluent.
+   *
+   * Include FTL localizations directly in your pane XHTML fragment:
+   *
+   * ```XHTML
+   * <linkset>
+   *     <html:link rel="localization" href="make-it-red.ftl"/>
+   * </linkset>
+   * ```
+   *
+   */
   extraDTD?: string[];
+  /**
+   * Array of URIs of scripts to load along with the pane, optionally relative to
+   * 		the plugin's root
+   */
   scripts?: string[];
+  /**
+   * Array of URIs of CSS stylesheets to load along with the pane, optionally
+   * 		relative to the plugin's root
+   * @since Zotero 7
+   */
+  stylesheets?: string[];
+  /**
+   * If provided, a help button will be displayed under the pane
+   * 		and the provided URL will open when it is clicked
+   */
+  helpURL?: string[];
+  /**
+   * @default true
+   */
   defaultXUL?: boolean;
-  // Only for Zotero 6
+  /**
+   * @deprecated Only for Zotero 6
+   */
   onload?: (win: Window) => any;
 }
