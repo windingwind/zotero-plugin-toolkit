@@ -102,22 +102,43 @@ export class ReaderTool extends BasicTool {
     if (!currentReader) {
       return "";
     }
-    let textArea =
-      currentReader._iframeWindow?.document.querySelectorAll("textarea");
-    if (!textArea) {
+    if (this.isZotero7()) {
+      if (currentReader._internalReader._type === "pdf") {
+        const selectionRanges =
+          // @ts-ignore
+          currentReader._internalReader._lastView._selectionRanges;
+        return (
+          // @ts-ignore
+          currentReader._internalReader._lastView._getAnnotationFromSelectionRanges(
+            selectionRanges,
+            "highlight"
+          )?.text || ""
+        );
+      }
+      return (
+        // @ts-ignore
+        currentReader._internalReader._lastView._getAnnotationFromTextSelection(
+          "highlight"
+        )?.text || ""
+      );
+    } else {
+      let textArea =
+        currentReader._iframeWindow?.document.querySelectorAll("textarea");
+      if (!textArea) {
+        return "";
+      }
+
+      for (let i = 0; i < textArea.length; i++) {
+        // Choose the selection textarea
+        if (
+          textArea[i].style.zIndex === "-1" &&
+          textArea[i].style["width"] === "0px"
+        ) {
+          // Trim
+          return textArea[i].value.replace(/(^\s*)|(\s*$)/g, "");
+        }
+      }
       return "";
     }
-
-    for (let i = 0; i < textArea.length; i++) {
-      // Choose the selection textarea
-      if (
-        textArea[i].style.zIndex === "-1" &&
-        textArea[i].style["width"] === "0px"
-      ) {
-        // Trim
-        return textArea[i].value.replace(/(^\s*)|(\s*$)/g, "");
-      }
-    }
-    return "";
   }
 }

@@ -7,7 +7,8 @@
   "scripts": {
     "build": "prettier --write src && tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
     "release": "release-it",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "update-deps": "npm update --save"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,20 @@
   },
   "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
   "dependencies": {
-    "zotero-types": "^1.0.13"
+    "zotero-types": "^1.2.1"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.22.33",
+    "@microsoft/api-extractor": "^7.36.4",
+    "@types/react": "^18.2.19",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-intl": "^3.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "2.8.8",
+    "react-intl": "^6.4.4",
+    "release-it": "^15.11.0",
+    "typescript": "^5.1.6"
   },
   "publishConfig": {
     "access": "public",
@@ -42,19 +56,6 @@
     "doc": "docs"
   },
   "prettier": {},
-  "devDependencies": {
-    "@microsoft/api-documenter": "^7.21.7",
-    "@microsoft/api-extractor": "^7.34.4",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.1",
-    "@types/react-intl": "^3.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.1",
-    "prettier": "2.8.8",
-    "react-intl": "^6.4.1",
-    "release-it": "^15.10.1",
-    "typescript": "^5.0.4"
-  },
   "lint-staged": {
     "*.{ts,js,css}": "prettier --write src"
   }
