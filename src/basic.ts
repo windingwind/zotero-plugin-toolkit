@@ -115,20 +115,24 @@ export class BasicTool {
         : Components.classes["@zotero.org/Zotero;1"].getService(
             Components.interfaces.nsISupports
           ).wrappedJSObject;
-    const window = _Zotero.getMainWindow();
-    switch (k) {
-      case "Zotero":
-      case "zotero":
-        return _Zotero;
-      case "window":
-        return window;
-      case "document":
-        return window.document;
-      case "ZoteroPane":
-      case "ZoteroPane_Local":
-        return _Zotero.getActiveZoteroPane();
-      default:
-        return window[k as any] as unknown;
+    try {
+      const window = _Zotero.getMainWindow();
+      switch (k) {
+        case "Zotero":
+        case "zotero":
+          return _Zotero;
+        case "window":
+          return window;
+        case "document":
+          return window.document;
+        case "ZoteroPane":
+        case "ZoteroPane_Local":
+          return _Zotero.getActiveZoteroPane();
+        default:
+          return window[k as any] as unknown;
+      }
+    } catch (e) {
+      Zotero.logError(e as Error);
     }
   }
 
