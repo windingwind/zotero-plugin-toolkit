@@ -175,14 +175,18 @@ export class ItemTreeManager extends ManagerTool {
     if (getFieldHook) {
       this.fieldHooks.register("getField", key, getFieldHook);
     }
-    if (options.renderCellHook) {
-      await this.addRenderCellHook(key, options.renderCellHook);
-    }
     if (this.backend) {
-      await this.backend.registerColumns(column);
+      const registeredKey = await this.backend.registerColumns(column);
+      if (options.renderCellHook) {
+        await this.addRenderCellHook(registeredKey, options.renderCellHook);
+        await this.refresh();
+      }
     } else {
       this.globalCache.columns.push(column);
       this.localColumnCache.push(column.dataKey);
+      if (options.renderCellHook) {
+        await this.addRenderCellHook(key, options.renderCellHook);
+      }
       await this.refresh();
     }
   }
@@ -303,12 +307,11 @@ export class ItemTreeManager extends ManagerTool {
         "_renderCell",
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
-            const dataKey = column.dataKey.split("-").slice(-1)[0]
-            if (!(dataKey in globalCache.renderCellHooks)) {
+            if (!(column.dataKey in globalCache.renderCellHooks)) {
               // @ts-ignore
               return original.apply(this, arguments);
             }
-            const hook = globalCache.renderCellHooks[dataKey];
+            const hook = globalCache.renderCellHooks[column.dataKey];
             // @ts-ignore
             const elem = hook(index, data, column, original.bind(this));
             if (elem.classList.contains("cell")) {
