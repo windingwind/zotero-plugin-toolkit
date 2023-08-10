@@ -303,11 +303,12 @@ export class ItemTreeManager extends ManagerTool {
         "_renderCell",
         (original) =>
           function (index: number, data: string, column: ColumnOptions) {
-            if (!(column.dataKey in globalCache.renderCellHooks)) {
+            const dataKey = column.dataKey.split("-").slice(-1)[0]
+            if (!(dataKey in globalCache.renderCellHooks)) {
               // @ts-ignore
               return original.apply(this, arguments);
             }
-            const hook = globalCache.renderCellHooks[column.dataKey];
+            const hook = globalCache.renderCellHooks[dataKey];
             // @ts-ignore
             const elem = hook(index, data, column, original.bind(this));
             if (elem.classList.contains("cell")) {
