@@ -175,14 +175,18 @@ export class ItemTreeManager extends ManagerTool {
     if (getFieldHook) {
       this.fieldHooks.register("getField", key, getFieldHook);
     }
-    if (options.renderCellHook) {
-      await this.addRenderCellHook(key, options.renderCellHook);
-    }
     if (this.backend) {
-      await this.backend.registerColumns(column);
+      const registeredKey = await this.backend.registerColumns(column);
+      if (options.renderCellHook) {
+        await this.addRenderCellHook(registeredKey, options.renderCellHook);
+        await this.refresh();
+      }
     } else {
       this.globalCache.columns.push(column);
       this.localColumnCache.push(column.dataKey);
+      if (options.renderCellHook) {
+        await this.addRenderCellHook(key, options.renderCellHook);
+      }
       await this.refresh();
     }
   }
