@@ -363,7 +363,7 @@ export interface PrefPaneOptions {
    * If provided, a help button will be displayed under the pane
    * 		and the provided URL will open when it is clicked
    */
-  helpURL?: string[];
+  helpURL?: string;
   /**
    * @default true
    */
