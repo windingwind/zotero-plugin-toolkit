@@ -208,9 +208,11 @@ export class Prompt {
       /**
        * Filter out anonymous commands
        */
-      if (!command.name || (command.when && !command.when())) {
-        continue;
-      }
+      try {
+        if (!command.name || (command.when && !command.when())) {
+          continue;
+        }
+      } catch { continue }
       commandsContainer.appendChild(this.createCommandNode(command));
     }
   }
