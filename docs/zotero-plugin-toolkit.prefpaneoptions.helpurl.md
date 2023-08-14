@@ -9,5 +9,5 @@ If provided, a help button will be displayed under the pane and the provided URL
 **Signature:**
 
 ```typescript
-helpURL?: string[];
+helpURL?: string;
 ```

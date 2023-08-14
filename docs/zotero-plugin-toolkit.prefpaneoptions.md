@@ -16,7 +16,7 @@ export interface PrefPaneOptions
 |  --- | --- | --- | --- |
 |  [defaultXUL?](./zotero-plugin-toolkit.prefpaneoptions.defaultxul.md) |  | boolean | _(Optional)_  true |
 |  [extraDTD?](./zotero-plugin-toolkit.prefpaneoptions.extradtd.md) |  | string\[\] | _(Optional)_ |
-|  [helpURL?](./zotero-plugin-toolkit.prefpaneoptions.helpurl.md) |  | string\[\] | _(Optional)_ If provided, a help button will be displayed under the pane and the provided URL will open when it is clicked |
+|  [helpURL?](./zotero-plugin-toolkit.prefpaneoptions.helpurl.md) |  | string | _(Optional)_ If provided, a help button will be displayed under the pane and the provided URL will open when it is clicked |
 |  [id?](./zotero-plugin-toolkit.prefpaneoptions.id.md) |  | string | _(Optional)_ Represents the pane and must be unique. Automatically generated if not provided |
 |  [image?](./zotero-plugin-toolkit.prefpaneoptions.image.md) |  | string | _(Optional)_ URI of an icon to be displayed in the navigation sidebar, optionally relative to the plugin's root. If not provided, the plugin's icon (from manifest.json) is used. |
 |  [label?](./zotero-plugin-toolkit.prefpaneoptions.label.md) |  | string | _(Optional)_ Displayed as the pane's label in the sidebar. If not provided, the plugin's name is used. |

@@ -212,7 +212,9 @@ export class Prompt {
         if (!command.name || (command.when && !command.when())) {
           continue;
         }
-      } catch { continue }
+      } catch {
+        continue;
+      }
       commandsContainer.appendChild(this.createCommandNode(command));
     }
   }
