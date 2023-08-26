@@ -109,7 +109,7 @@ export class BasicTool {
    */
   getGlobal(k: string): any;
   getGlobal(k: string) {
-    const _Zotero =
+    const _Zotero: _ZoteroTypes.Zotero =
       typeof Zotero !== "undefined"
         ? Zotero
         : Components.classes["@zotero.org/Zotero;1"].getService(
@@ -123,6 +123,8 @@ export class BasicTool {
           return _Zotero;
         case "window":
           return window;
+        case "windows":
+          return _Zotero.getMainWindows();
         case "document":
           return window.document;
         case "ZoteroPane":
