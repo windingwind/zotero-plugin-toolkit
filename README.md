@@ -28,7 +28,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 - Managers
 
   - [ItemTree](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
-  
+
   - [ItemBox](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
 
   - [PreferencePane](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
@@ -52,6 +52,28 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
   - [VirtualizedTable](docs/zotero-plugin-toolkit.virtualizedtablehelper.md): Create a VirtualizedTable (an advanced table view element, which is used by the Zotero item tree, collections tree, item picker, etc.)
 
   - [Dialog](docs/zotero-plugin-toolkit.dialoghelper.md): Create a dialog window(a superset of XUL dialog). With data-binding, auto-layout, and control buttons.
+
+- Utils
+
+  - [Debug Bridge](src/utils/debugBridge.ts): Use `zotero://ztoolkit-debug/?file=x.js&run=y()&password=zzz&app=m`
+
+    See https://github.com/windingwind/zotero-plugin-template/blob/main/scripts/reload.mjs for example.
+
+    > Parameters (all parameters should be URLEncoded):
+    >
+    > - file: the path of JS file to run if provided. starts with `file:///`.
+    > - run: the JS script to run if provided.
+    > - password: the value of `extensions.zotero.debug-bridge.password`. If the password is not empty in Zotero and not provided in the call, the command won't run; otherwise a popup will show to ask user if to execute the command.
+    > - app: The app name to show in the popup.
+
+  - [Plugin Bridge](src/utils/pluginBridge.ts): Use `zotero://plugin/?action=install&url=x.xpi`
+
+    > Parameters (all parameters should be URLEncoded):
+    >
+    > - action: `install`.
+    > - url: the url of plugin `xpi` to install.
+    > - minVersion: the required minimal version of Zotero if provided.
+    > - maxVersion: the required maximal version of Zotero if provided.
 
 ## Usage
 

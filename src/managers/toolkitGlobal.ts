@@ -1,5 +1,6 @@
 import { BasicTool } from "../basic";
 import { DebugBridge } from "../utils/debugBridge";
+import { PluginBridge } from "../utils/pluginBridge";
 import { FieldHooksGlobal } from "./fieldHook";
 import { ItemBoxGlobal } from "./itemBox";
 import { ItemTreeGlobal } from "./itemTree";
@@ -13,6 +14,7 @@ import { ShortcutsGlobal } from "./shortcut";
  */
 export class ToolkitGlobal {
   public debugBridge?: DebugBridge;
+  public pluginBridge?: PluginBridge;
   public fieldHooks?: FieldHooksGlobal;
   public itemTree?: ItemTreeGlobal;
   public itemBox?: ItemBoxGlobal;
@@ -88,6 +90,7 @@ function initializeModules(instance: ToolkitGlobal) {
     initializedHooks: {},
   });
   DebugBridge.setModule(instance);
+  PluginBridge.setModule(instance);
 }
 
 function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(
