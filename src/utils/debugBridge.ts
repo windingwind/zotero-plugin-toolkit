@@ -17,7 +17,7 @@ import ToolkitGlobal from "../managers/toolkitGlobal";
  * `zotero://ztoolkit-debug/?file=file%3A%2F%2F%2FC%3A%2FUsers%2Fw_xia%2FDesktop%2Frun.js&app=developer`
  */
 export class DebugBridge {
-  public static readonly version: number = 1;
+  public static readonly version: number = 2;
   public static readonly passwordPref: string =
     "extensions.zotero.debug-bridge.password";
   public get version(): number {
@@ -61,6 +61,7 @@ export class DebugBridge {
       noContent: true,
       doAction: async (uri: { spec: string }) => {
         const Zotero = BasicTool.getZotero();
+        const window = Zotero.getMainWindow();
         const uriString = uri.spec.split("//").pop();
         if (!uriString) {
           return;
@@ -71,7 +72,7 @@ export class DebugBridge {
           .pop()
           ?.split("&")
           .forEach((p: string) => {
-            params[p.split("=")[0]] = p.split("=")[1];
+            params[p.split("=")[0]] = decodeURIComponent(p.split("=")[1]);
           });
 
         const skipPasswordCheck =
@@ -107,25 +108,22 @@ export class DebugBridge {
               const AsyncFunction = Object.getPrototypeOf(
                 async function () {}
               ).constructor;
-              const f = new AsyncFunction(
-                "Zotero,window",
-                decodeURIComponent(params.run)
-              );
-              await f(Zotero, Zotero.getMainWindow());
+              const f = new AsyncFunction("Zotero,window", params.run);
+              await f(Zotero, window);
             } catch (e) {
               Zotero.debug(e);
-              (Zotero.getMainWindow() as any).console.log(e);
+              (window as any).console.log(e);
             }
           }
           if (params.file) {
             try {
-              Services.scriptloader.loadSubScript(
-                decodeURIComponent(params.file),
-                { Zotero, window: Zotero.getMainWindow() }
-              );
+              Services.scriptloader.loadSubScript(params.file, {
+                Zotero,
+                window,
+              });
             } catch (e) {
               Zotero.debug(e);
-              (Zotero.getMainWindow() as any).console.log(e);
+              (window as any).console.log(e);
             }
           }
         }
