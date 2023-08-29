@@ -109,10 +109,12 @@ export class MenuManager extends ManagerTool {
         children: [],
       };
       if (menuitemOption.icon) {
-        if (menuitemOption.tag === "menu") {
-          elementOption.attributes!["class"] += " menu-iconic";
-        } else {
-          elementOption.attributes!["class"] += " menuitem-iconic";
+        if (!this.getGlobal("Zotero").isMac) {
+          if (menuitemOption.tag === "menu") {
+            elementOption.attributes!["class"] += " menu-iconic";
+          } else {
+            elementOption.attributes!["class"] += " menuitem-iconic";
+          }
         }
         elementOption.styles![
           "list-style-image" as any
