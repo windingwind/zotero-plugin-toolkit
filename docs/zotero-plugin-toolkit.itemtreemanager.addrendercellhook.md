@@ -4,9 +4,12 @@
 
 ## ItemTreeManager.addRenderCellHook() method
 
-Add a patch hook for `_renderCell`<!-- -->, which is called when cell is rendered.
+> Warning: This API is now obsolete.
+> 
+> This also works for Zotero's built-in cells.
+> 
 
-This also works for Zotero's built-in cells.
+Add a patch hook for `_renderCell`<!-- -->, which is called when cell is rendered.
 
 **Signature:**
 

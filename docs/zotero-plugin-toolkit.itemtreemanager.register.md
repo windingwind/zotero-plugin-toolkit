@@ -28,8 +28,9 @@ register(key: string, label: string, getFieldHook: typeof getFieldHookFunc | und
         columnPickerSubMenu?: boolean;
         zoteroPersist?: Set<string> | Array<string>;
         dataProvider?: (item: Zotero.Item, dataKey: string) => string;
+        renderCell?: (index: number, data: string, column: ColumnOptions) => HTMLSpanElement;
         renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) => HTMLElement;
-    }): Promise<void>;
+    }): Promise<any>;
 ```
 
 ## Parameters
@@ -39,11 +40,11 @@ register(key: string, label: string, getFieldHook: typeof getFieldHookFunc | und
 |  key | string | Column dataKey |
 |  label | string | Column display label |
 |  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading cell content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
-|  options | { defaultIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; disabledIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; enabledTreeIDs?: string\[\]; defaultSort?: 1 \| -1; sortReverse?: boolean; flex?: number; width?: number; fixedWidth?: boolean; staticWidth?: boolean; minWidth?: number; iconPath?: string; htmlLabel?: string; ignoreInColumnPicker?: boolean; showInColumnPicker?: boolean; submenu?: boolean; columnPickerSubMenu?: boolean; zoteroPersist?: Set&lt;string&gt; \| Array&lt;string&gt;; dataProvider?: (item: Zotero.Item, dataKey: string) =&gt; string; renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement; } | _(Optional)_ See zotero source code:chrome/content/zotero/itemTreeColumns.jsx |
+|  options | { defaultIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; disabledIn?: Set&lt;"default" \| "feeds" \| "feed" \| string&gt;; enabledTreeIDs?: string\[\]; defaultSort?: 1 \| -1; sortReverse?: boolean; flex?: number; width?: number; fixedWidth?: boolean; staticWidth?: boolean; minWidth?: number; iconPath?: string; htmlLabel?: string; ignoreInColumnPicker?: boolean; showInColumnPicker?: boolean; submenu?: boolean; columnPickerSubMenu?: boolean; zoteroPersist?: Set&lt;string&gt; \| Array&lt;string&gt;; dataProvider?: (item: Zotero.Item, dataKey: string) =&gt; string; renderCell?: (index: number, data: string, column: ColumnOptions) =&gt; HTMLSpanElement; renderCellHook?: (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement; } | _(Optional)_ See zotero source code:chrome/content/zotero/itemTreeColumns.jsx |
 
 **Returns:**
 
-Promise&lt;void&gt;
+Promise&lt;any&gt;
 
 ## Example
 

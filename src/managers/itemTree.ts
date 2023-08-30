@@ -37,12 +37,15 @@ export class ItemTreeManager extends ManagerTool {
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
     this.backend = this.getGlobal("Zotero").ItemTreeManager;
+    // TODO: remove these two caches
     this.localColumnCache = [];
     this.localRenderCellCache = [];
     this.fieldHooks = new FieldHookManager(base);
     this.patcherManager = new PatcherManager(base);
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
-    this.initializeGlobal();
+    if (!this.backend) {
+      this.initializeGlobal();
+    }
   }
 
   unregisterAll(): void {
@@ -115,6 +118,12 @@ export class ItemTreeManager extends ManagerTool {
       columnPickerSubMenu?: boolean;
       zoteroPersist?: Set<string> | Array<string>;
       dataProvider?: (item: Zotero.Item, dataKey: string) => string;
+      renderCell?: (
+        index: number,
+        data: string,
+        column: ColumnOptions
+      ) => HTMLSpanElement;
+      /** @deprecated Use `renderCell` */
       renderCellHook?: (
         index: number,
         data: string,
@@ -171,16 +180,13 @@ export class ItemTreeManager extends ManagerTool {
       dataProvider:
         options.dataProvider ||
         ((item, _dataKey) => item.getField(key as any) as string),
+      renderCell: options.renderCellHook as typeof options.renderCell,
     };
     if (getFieldHook) {
       this.fieldHooks.register("getField", key, getFieldHook);
     }
     if (this.backend) {
-      const registeredKey = await this.backend.registerColumns(column);
-      if (options.renderCellHook) {
-        await this.addRenderCellHook(registeredKey, options.renderCellHook);
-        await this.refresh();
-      }
+      return await this.backend.registerColumns(column);
     } else {
       this.globalCache.columns.push(column);
       this.localColumnCache.push(column.dataKey);
@@ -233,6 +239,7 @@ export class ItemTreeManager extends ManagerTool {
 
   /**
    * Add a patch hook for `_renderCell`, which is called when cell is rendered.
+   * @deprecated
    *
    * This also works for Zotero's built-in cells.
    * @remarks
@@ -262,6 +269,7 @@ export class ItemTreeManager extends ManagerTool {
 
   /**
    * Remove a patch hook by `dataKey`.
+   * @deprecated
    */
   public async removeRenderCellHook(dataKey: string) {
     delete this.globalCache.renderCellHooks[dataKey];
@@ -387,6 +395,9 @@ export class ItemTreeManager extends ManagerTool {
   }
 }
 
+/**
+ * @deprecated
+ */
 export interface ItemTreeGlobal extends GlobalInstance {
   columns: ColumnOptions[];
   renderCellHooks: {
@@ -431,5 +442,10 @@ export interface ColumnOptions {
   submenu?: boolean;
   columnPickerSubMenu?: boolean;
   dataProvider?: (item: Zotero.Item, dataKey: string) => string;
+  renderCell?: (
+    index: number,
+    data: string,
+    column: ColumnOptions
+  ) => HTMLSpanElement;
   zoteroPersist?: Set<string> | string[];
 }

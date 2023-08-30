@@ -4,6 +4,10 @@
 
 ## ItemTreeManager.removeRenderCellHook() method
 
+> Warning: This API is now obsolete.
+> 
+> 
+
 Remove a patch hook by `dataKey`<!-- -->.
 
 **Signature:**

@@ -23,7 +23,7 @@ export declare class ItemTreeManager extends ManagerTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [addRenderCellHook(dataKey, renderCellHook)](./zotero-plugin-toolkit.itemtreemanager.addrendercellhook.md) |  | <p>Add a patch hook for <code>_renderCell</code>, which is called when cell is rendered.</p><p>This also works for Zotero's built-in cells.</p> |
+|  [addRenderCellHook(dataKey, renderCellHook)](./zotero-plugin-toolkit.itemtreemanager.addrendercellhook.md) |  | Add a patch hook for <code>_renderCell</code>, which is called when cell is rendered. |
 |  [refresh()](./zotero-plugin-toolkit.itemtreemanager.refresh.md) |  | Refresh itemView. You don't need to call it manually. |
 |  [register(key, label, getFieldHook, options)](./zotero-plugin-toolkit.itemtreemanager.register.md) |  | Register a new column. Don't forget to call <code>unregister</code> on plugin exit. |
 |  [removeRenderCellHook(dataKey)](./zotero-plugin-toolkit.itemtreemanager.removerendercellhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
