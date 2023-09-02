@@ -89,7 +89,7 @@ export class LargePrefHelper {
    * @returns The value of the key.
    */
   public getValue(key: string) {
-    const value = Zotero.Prefs.get(`${this.valuePrefPrefix}.${key}`, true) as
+    const value = Zotero.Prefs.get(`${this.valuePrefPrefix}${key}`, true) as
       | string
       | undefined;
     if (typeof value === "undefined") {
@@ -111,7 +111,7 @@ export class LargePrefHelper {
       value,
     });
     this.setKey(newKey);
-    Zotero.Prefs.set(`${this.valuePrefPrefix}.${newKey}`, newValue, true);
+    Zotero.Prefs.set(`${this.valuePrefPrefix}${newKey}`, newValue, true);
     this.innerObj[newKey] = newValue;
   }
 
@@ -150,7 +150,7 @@ export class LargePrefHelper {
       // Obj is updated here
       this.setKeys(keys);
     }
-    Zotero.Prefs.clear(`${this.valuePrefPrefix}.${key}`, true);
+    Zotero.Prefs.clear(`${this.valuePrefPrefix}${key}`, true);
   }
 
   private constructProxyObj(): void {
