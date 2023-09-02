@@ -17,6 +17,7 @@ import { DialogHelper } from "./helpers/dialog";
 import { ReaderInstanceManager } from "./managers/readerInstance";
 import { FieldHookManager } from "./managers/fieldHook";
 import { ItemBoxManager } from "./managers/itemBox";
+import { LargePrefHelper } from "./helpers/largePref";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -42,6 +43,7 @@ class ZoteroToolkit extends BasicTool {
   ProgressWindow: typeof ProgressWindowHelper;
   VirtualizedTable: typeof VirtualizedTableHelper;
   Dialog: typeof DialogHelper;
+  LargePrefObject: typeof LargePrefHelper;
 
   constructor() {
     super();
@@ -63,6 +65,7 @@ class ZoteroToolkit extends BasicTool {
     this.ProgressWindow = ProgressWindowHelper;
     this.VirtualizedTable = VirtualizedTableHelper;
     this.Dialog = DialogHelper;
+    this.LargePrefObject = LargePrefHelper;
   }
 
   /**

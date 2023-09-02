@@ -34,6 +34,7 @@ To minimize your plugin, import the modules you need manually.
 |  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
 |  [ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md) |  | [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) |  |
 |  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) |  |
+|  [LargePrefObject](./zotero-plugin-toolkit.zoterotoolkit.largeprefobject.md) |  | typeof LargePrefHelper |  |
 |  [LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md) |  | [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) |  |
 |  [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md) |  | [MenuManager](./zotero-plugin-toolkit.menumanager.md) |  |
 |  [PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md) |  | [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) |  |
