@@ -9,7 +9,7 @@ Get the value of a key.
 **Signature:**
 
 ```typescript
-getValue(key: string): string | undefined;
+getValue(key: string): any;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ getValue(key: string): string | undefined;
 
 **Returns:**
 
-string \| undefined
+any
 
 The value of the key.
 

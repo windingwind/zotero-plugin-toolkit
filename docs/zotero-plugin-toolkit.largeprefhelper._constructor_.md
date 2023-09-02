@@ -9,13 +9,14 @@ Constructs a new instance of the `LargePrefHelper` class
 **Signature:**
 
 ```typescript
-constructor(keyPref: string, valuePrefPrefix: string);
+constructor(keyPref: string, valuePrefPrefix: string, hooks?: Partial<typeof defaultHooks> | "default" | "parser");
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  keyPref | string |  |
-|  valuePrefPrefix | string |  |
+|  keyPref | string | The preference name for storing the keys of the data. |
+|  valuePrefPrefix | string | The preference name prefix for storing the values of the data. |
+|  hooks | Partial&lt;typeof defaultHooks&gt; \| "default" \| "parser" | _(Optional)_ Hooks for parsing the values of the data. - <code>afterGetValue</code>: A function that takes the value of the data as input and returns the parsed value. - <code>beforeSetValue</code>: A function that takes the key and value of the data as input and returns the parsed key and value. If <code>hooks</code> is <code>&quot;default&quot;</code>, no parsing will be done. If <code>hooks</code> is <code>&quot;parser&quot;</code>, the values will be parsed as JSON. If <code>hooks</code> is an object, the values will be parsed by the hooks. |
 

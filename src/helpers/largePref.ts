@@ -1,6 +1,7 @@
 /**
  * Helper class for storing large amounts of data in Zotero preferences.
  *
+ * @remarks
  * The allowed data length for a single preference is at least 100k,
  * but if this can grow infinitely, like an Array or an Object,
  * there will be significant performance problems.
@@ -17,9 +18,33 @@ export class LargePrefHelper {
   private innerObj!: Record<string, string>;
   private exposedObj!: ProxyObj;
 
-  constructor(keyPref: string, valuePrefPrefix: string) {
+  private hooks: HooksType;
+
+  /**
+   *
+   * @param keyPref The preference name for storing the keys of the data.
+   * @param valuePrefPrefix The preference name prefix for storing the values of the data.
+   * @param hooks Hooks for parsing the values of the data.
+   * - `afterGetValue`: A function that takes the value of the data as input and returns the parsed value.
+   * - `beforeSetValue`: A function that takes the key and value of the data as input and returns the parsed key and value.
+   * If `hooks` is `"default"`, no parsing will be done.
+   * If `hooks` is `"parser"`, the values will be parsed as JSON.
+   * If `hooks` is an object, the values will be parsed by the hooks.
+   */
+  constructor(
+    keyPref: string,
+    valuePrefPrefix: string,
+    hooks: Partial<typeof defaultHooks> | "default" | "parser" = "default"
+  ) {
     this.keyPref = keyPref;
     this.valuePrefPrefix = valuePrefPrefix;
+    if (hooks === "default") {
+      this.hooks = defaultHooks;
+    } else if (hooks === "parser") {
+      this.hooks = parserHooks;
+    } else {
+      this.hooks = { ...defaultHooks, ...hooks };
+    }
     this.constructProxyObj();
   }
 
@@ -70,8 +95,9 @@ export class LargePrefHelper {
     if (typeof value === "undefined") {
       return;
     }
-    this.innerObj[key] = value;
-    return value;
+    let { value: newValue } = this.hooks.afterGetValue({ value });
+    this.innerObj[key] = newValue;
+    return newValue;
   }
 
   /**
@@ -79,10 +105,14 @@ export class LargePrefHelper {
    * @param key The key of the data.
    * @param value The value of the key.
    */
-  public setValue(key: string, value: string) {
-    this.setKey(key);
-    Zotero.Prefs.set(`${this.valuePrefPrefix}.${key}`, value, true);
-    this.innerObj[key] = value;
+  public setValue(key: string, value: any) {
+    let { key: newKey, value: newValue } = this.hooks.beforeSetValue({
+      key,
+      value,
+    });
+    this.setKey(newKey);
+    Zotero.Prefs.set(`${this.valuePrefPrefix}.${newKey}`, newValue, true);
+    this.innerObj[newKey] = newValue;
   }
 
   /**
@@ -160,3 +190,27 @@ export class LargePrefHelper {
 }
 
 type ProxyObj = Record<string | number, string | number | boolean>;
+
+type HooksType = typeof defaultHooks;
+
+const defaultHooks = {
+  afterGetValue: ({ value }: { value: string }) =>
+    ({ value } as { value: any }),
+  beforeSetValue: ({ key, value }: { key: string; value: any }) =>
+    ({ key, value } as { key: string; value: any }),
+};
+
+const parserHooks = {
+  afterGetValue: ({ value }: { value: string }) => {
+    try {
+      value = JSON.parse(value);
+    } catch (e) {
+      return { value };
+    }
+    return { value };
+  },
+  beforeSetValue: ({ key, value }: { key: string; value: any }) => {
+    value = JSON.stringify(value);
+    return { key, value };
+  },
+};

@@ -9,7 +9,7 @@ Set the value of a key.
 **Signature:**
 
 ```typescript
-setValue(key: string, value: string): void;
+setValue(key: string, value: any): void;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ setValue(key: string, value: string): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string | The key of the data. |
-|  value | string | The value of the key. |
+|  value | any | The value of the key. |
 
 **Returns:**
 

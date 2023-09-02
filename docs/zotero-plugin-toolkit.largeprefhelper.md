@@ -6,23 +6,25 @@
 
 Helper class for storing large amounts of data in Zotero preferences.
 
-The allowed data length for a single preference is at least 100k, but if this can grow infinitely, like an Array or an Object, there will be significant performance problems.
-
-This class stores the keys of data in a single preference as a JSON string of Array, and stores the values of data in separate preferences.
-
-You can either use the class as a normal object with `asObject()`<!-- -->, or use the methods to access the data.
-
 **Signature:**
 
 ```typescript
 export declare class LargePrefHelper 
 ```
 
+## Remarks
+
+The allowed data length for a single preference is at least 100k, but if this can grow infinitely, like an Array or an Object, there will be significant performance problems.
+
+This class stores the keys of data in a single preference as a JSON string of Array, and stores the values of data in separate preferences.
+
+You can either use the class as a normal object with `asObject()`<!-- -->, or use the methods to access the data.
+
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(keyPref, valuePrefPrefix)](./zotero-plugin-toolkit.largeprefhelper._constructor_.md) |  | Constructs a new instance of the <code>LargePrefHelper</code> class |
+|  [(constructor)(keyPref, valuePrefPrefix, hooks)](./zotero-plugin-toolkit.largeprefhelper._constructor_.md) |  | Constructs a new instance of the <code>LargePrefHelper</code> class |
 
 ## Methods
 
