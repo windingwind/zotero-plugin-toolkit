@@ -16,6 +16,7 @@
 |  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
 |  [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) | Register customized new row to the library itemBox (right-side info tab). |
 |  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
+|  [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) | <p>Helper class for storing large amounts of data in Zotero preferences.</p><p>The allowed data length for a single preference is at least 100k, but if this can grow infinitely, like an Array or an Object, there will be significant performance problems.</p><p>This class stores the keys of data in a single preference as a JSON string of Array, and stores the values of data in separate preferences.</p><p>You can either use the class as a normal object with <code>asObject()</code>, or use the methods to access the data.</p> |
 |  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
 |  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xhtml</code>, for Zotero 6 &amp; 7. |

@@ -24,6 +24,7 @@ import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
+import { LargePrefHelper } from "./helpers/largePref";
 
 export {
   BasicTool,
@@ -47,4 +48,5 @@ export {
   ProgressWindowHelper,
   VirtualizedTableHelper,
   DialogHelper,
+  LargePrefHelper,
 };
