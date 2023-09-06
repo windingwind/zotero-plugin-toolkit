@@ -45,6 +45,8 @@ export class ItemTreeManager extends ManagerTool {
     this.initializationLock = this.getGlobal("Zotero").Promise.defer();
     if (!this.backend) {
       this.initializeGlobal();
+    } else {
+      this.initializationLock.resolve();
     }
   }
 
