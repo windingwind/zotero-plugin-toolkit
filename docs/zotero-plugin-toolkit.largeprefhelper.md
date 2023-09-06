@@ -30,6 +30,7 @@ You can either use the class as a normal object with `asObject()`<!-- -->, or us
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [asMapLike()](./zotero-plugin-toolkit.largeprefhelper.asmaplike.md) |  | Get the Map that stores the data. |
 |  [asObject()](./zotero-plugin-toolkit.largeprefhelper.asobject.md) |  | Get the object that stores the data. |
 |  [deleteKey(key)](./zotero-plugin-toolkit.largeprefhelper.deletekey.md) |  | Delete a key. |
 |  [getKeys()](./zotero-plugin-toolkit.largeprefhelper.getkeys.md) |  | Get the keys of the data. |

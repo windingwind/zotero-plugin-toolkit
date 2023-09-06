@@ -9,7 +9,7 @@ Delete a key.
 **Signature:**
 
 ```typescript
-deleteKey(key: string): void;
+deleteKey(key: string): boolean;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ deleteKey(key: string): void;
 
 **Returns:**
 
-void
+boolean
 

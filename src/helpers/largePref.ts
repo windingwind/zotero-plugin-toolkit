@@ -57,6 +57,51 @@ export class LargePrefHelper {
   }
 
   /**
+   * Get the Map that stores the data.
+   * @returns The Map that stores the data.
+   */
+  public asMapLike(): Map<string, any> {
+    const mapLike = {
+      get: (key: string) => this.getValue(key),
+      set: (key: string, value: any) => {
+        this.setValue(key, value);
+        return mapLike;
+      },
+      has: (key: string) => this.hasKey(key),
+      delete: (key: string) => this.deleteKey(key),
+      clear: () => {
+        for (const key of this.getKeys()) {
+          this.deleteKey(key);
+        }
+      },
+      forEach: (
+        callback: (value: any, key: string, map: Map<string, any>) => void
+      ) => {
+        return this.constructTempMap().forEach(callback);
+      },
+      get size() {
+        return this._this.getKeys().length;
+      },
+      entries: () => {
+        return this.constructTempMap().values();
+      },
+      keys: () => {
+        const keys = this.getKeys();
+        return keys[Symbol.iterator]();
+      },
+      values: () => {
+        return this.constructTempMap().values();
+      },
+      [Symbol.iterator]: () => {
+        return this.constructTempMap()[Symbol.iterator]();
+      },
+      [Symbol.toStringTag]: "MapLike",
+      _this: this,
+    };
+    return mapLike;
+  }
+
+  /**
    * Get the keys of the data.
    * @returns The keys of the data.
    */
@@ -151,6 +196,7 @@ export class LargePrefHelper {
       this.setKeys(keys);
     }
     Zotero.Prefs.clear(`${this.valuePrefPrefix}${key}`, true);
+    return true;
   }
 
   private constructProxyObj(): void {
@@ -186,6 +232,14 @@ export class LargePrefHelper {
         return Reflect.deleteProperty(target, p);
       },
     });
+  }
+
+  private constructTempMap(): Map<string, any> {
+    const map = new Map();
+    for (const key of this.getKeys()) {
+      map.set(key, this.getValue(key));
+    }
+    return map;
   }
 }
 
