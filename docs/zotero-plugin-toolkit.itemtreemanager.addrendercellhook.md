@@ -14,7 +14,9 @@ Add a patch hook for `_renderCell`<!-- -->, which is called when cell is rendere
 **Signature:**
 
 ```typescript
-addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string, column: ColumnOptions, original: Function) => HTMLElement): Promise<void>;
+addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string, column: ColumnOptions & {
+        className?: string;
+    }, original: Function) => HTMLElement): Promise<void>;
 ```
 
 ## Parameters
@@ -22,7 +24,7 @@ addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string,
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  dataKey | string | Cell <code>dataKey</code>, e.g. 'title' |
-|  renderCellHook | (index: number, data: string, column: ColumnOptions, original: Function) =&gt; HTMLElement | patch hook |
+|  renderCellHook | (index: number, data: string, column: ColumnOptions &amp; { className?: string; }, original: Function) =&gt; HTMLElement | patch hook |
 
 **Returns:**
 
