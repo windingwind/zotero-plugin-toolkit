@@ -182,7 +182,9 @@ export class ItemTreeManager extends ManagerTool {
       dataProvider:
         options.dataProvider ||
         ((item, _dataKey) => item.getField(key as any) as string),
-      renderCell: options.renderCellHook as typeof options.renderCell,
+      renderCell:
+        options.renderCell ||
+        (options.renderCellHook as typeof options.renderCell),
     };
     if (getFieldHook) {
       this.fieldHooks.register("getField", key, getFieldHook);
