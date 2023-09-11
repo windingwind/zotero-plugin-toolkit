@@ -141,8 +141,8 @@ export class ItemBoxManager extends ManagerTool {
     const Zotero = this.getGlobal("Zotero");
     await Zotero.uiReadyPromise;
     const window = this.getGlobal("window");
-    const globalCache = (this.globalCache =
-      ToolkitGlobal.getInstance().itemBox);
+    this.globalCache = ToolkitGlobal.getInstance().itemBox
+    const globalCache = this.globalCache;
     const inZotero7 = this.isZotero7();
     if (!globalCache._ready) {
       globalCache._ready = true;
