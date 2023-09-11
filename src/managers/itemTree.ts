@@ -123,13 +123,13 @@ export class ItemTreeManager extends ManagerTool {
       renderCell?: (
         index: number,
         data: string,
-        column: ColumnOptions
+        column: ColumnOptions & { className: string }
       ) => HTMLSpanElement;
       /** @deprecated Use `renderCell` */
       renderCellHook?: (
         index: number,
         data: string,
-        column: ColumnOptions,
+        column: ColumnOptions & { className?: string },
         original: Function
       ) => HTMLElement;
     } = {
@@ -254,7 +254,7 @@ export class ItemTreeManager extends ManagerTool {
     renderCellHook: (
       index: number,
       data: string,
-      column: ColumnOptions,
+      column: ColumnOptions & { className?: string },
       original: Function
     ) => HTMLElement
   ) {
@@ -447,7 +447,7 @@ export interface ColumnOptions {
   renderCell?: (
     index: number,
     data: string,
-    column: ColumnOptions
+    column: ColumnOptions & { className: string }
   ) => HTMLSpanElement;
   zoteroPersist?: Set<string> | string[];
 }
