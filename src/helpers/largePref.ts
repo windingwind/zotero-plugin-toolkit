@@ -15,8 +15,7 @@
 export class LargePrefHelper {
   private keyPref: string;
   private valuePrefPrefix: string;
-  private innerObj!: Record<string, string>;
-  private exposedObj!: ProxyObj;
+  private innerObj: Record<string, string>;
 
   private hooks: HooksType;
 
@@ -45,7 +44,7 @@ export class LargePrefHelper {
     } else {
       this.hooks = { ...defaultHooks, ...hooks };
     }
-    this.constructProxyObj();
+    this.innerObj = {};
   }
 
   /**
@@ -53,7 +52,7 @@ export class LargePrefHelper {
    * @returns The object that stores the data.
    */
   public asObject(): ProxyObj {
-    return this.exposedObj;
+    return this.constructTempObj();
   }
 
   /**
@@ -199,9 +198,8 @@ export class LargePrefHelper {
     return true;
   }
 
-  private constructProxyObj(): void {
-    this.innerObj = {};
-    this.exposedObj = new Proxy(this.innerObj, {
+  private constructTempObj() {
+    return new Proxy(this.innerObj, {
       get: (target, prop, receiver) => {
         this.getKeys();
         if (typeof prop === "string" && prop in target) {
