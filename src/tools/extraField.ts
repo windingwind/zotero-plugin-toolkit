@@ -76,7 +76,11 @@ export class ExtraFieldTool extends BasicTool {
     value: string
   ): Promise<void> {
     const fields = this.getExtraFields(item);
-    fields.set(key, value);
+    if (value === "" || typeof value === "undefined") {
+      fields.delete(key);
+    } else {
+      fields.set(key, value);
+    }
     await this.replaceExtraFields(item, fields);
   }
 }
