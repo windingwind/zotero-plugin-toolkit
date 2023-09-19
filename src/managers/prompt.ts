@@ -103,10 +103,6 @@ export class Prompt {
               {
                 tag: "input",
                 classList: ["prompt-input"],
-                styles: {
-                  // fix Zotero 7 UI bug
-                  margin: "0 !important",
-                },
                 attributes: {
                   type: "text",
                   placeholder: this.defaultText.placeholder,
@@ -650,6 +646,7 @@ export class Prompt {
         border: none;
         outline: none;
         font-size: 18px;
+        margin: 0 !important;
       }
       
       .input-container .cta {
@@ -865,10 +862,7 @@ export class PromptManager extends ManagerTool {
    */
   public unregister(id: string) {
     // Delete it in this.prompt.commands
-    const command = this.commands.find((c) => c.id == id);
-    this.prompt.commands = this.prompt.commands.filter((c) => {
-      return JSON.stringify(command) != JSON.stringify(c);
-    });
+    this.prompt.commands = this.prompt.commands.filter((c) => c.id != id);
     // Delete it in this.commands
     this.commands = this.commands.filter((c) => c.id != id);
   }
