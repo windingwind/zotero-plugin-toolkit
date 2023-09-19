@@ -3,6 +3,7 @@ import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
  * Reader instance hooks.
+ * @deprecated
  */
 export class ReaderInstanceManager extends ManagerTool {
   private globalCache!: ReaderInstanceGlobal;
@@ -15,6 +16,7 @@ export class ReaderInstanceManager extends ManagerTool {
 
   /**
    * Register a reader instance hook
+   * @deprecated
    * @remarks
    * initialized: called when reader instance is ready
    * @param type hook type

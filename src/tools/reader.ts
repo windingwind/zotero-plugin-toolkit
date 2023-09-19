@@ -54,6 +54,7 @@ export class ReaderTool extends BasicTool {
 
   /**
    * Get Reader tabpanel deck element.
+   * @deprecated - use item pane api
    * @alpha
    */
   getReaderTabPanelDeck(): XUL.Deck {
@@ -65,6 +66,7 @@ export class ReaderTool extends BasicTool {
 
   /**
    * Add a reader tabpanel deck selection change observer.
+   * @deprecated - use item pane api
    * @alpha
    * @param callback
    */
@@ -95,50 +97,34 @@ export class ReaderTool extends BasicTool {
   }
 
   /**
-   * Get the text selection of reader.
-   * @param currentReader Target reader
+   * Get the selected annotation data.
+   * @param reader Target reader
+   * @returns The selected annotation data.
    */
-  getSelectedText(currentReader: _ZoteroTypes.ReaderInstance): string {
-    if (!currentReader) {
-      return "";
-    }
-    if (this.isZotero7()) {
-      if (currentReader._internalReader._type === "pdf") {
-        const selectionRanges =
-          // @ts-ignore
-          currentReader._internalReader._lastView._selectionRanges;
-        return (
-          // @ts-ignore
-          currentReader._internalReader._lastView._getAnnotationFromSelectionRanges(
-            selectionRanges,
-            "highlight"
-          )?.text || ""
-        );
-      }
-      return (
-        // @ts-ignore
-        currentReader._internalReader._lastView._getAnnotationFromTextSelection(
-          "highlight"
-        )?.text || ""
-      );
-    } else {
-      let textArea =
-        currentReader._iframeWindow?.document.querySelectorAll("textarea");
-      if (!textArea) {
-        return "";
-      }
-
-      for (let i = 0; i < textArea.length; i++) {
-        // Choose the selection textarea
-        if (
-          textArea[i].style.zIndex === "-1" &&
-          textArea[i].style["width"] === "0px"
-        ) {
-          // Trim
-          return textArea[i].value.replace(/(^\s*)|(\s*$)/g, "");
-        }
-      }
-      return "";
-    }
+  getSelectedAnnotationData(
+    reader: _ZoteroTypes.ReaderInstance
+  ): AnnotationData | undefined {
+    const annotation =
+      // @ts-ignore
+      reader?._internalReader._lastView._selectionPopup?.annotation;
+    return annotation;
   }
+
+  /**
+   * Get the text selection of reader.
+   * @param reader Target reader
+   * @returns The text selection of reader.
+   */
+  getSelectedText(reader: _ZoteroTypes.ReaderInstance): string {
+    return this.getSelectedAnnotationData(reader)?.text ?? "";
+  }
+}
+
+interface AnnotationData {
+  color?: string;
+  pageLabel: string;
+  position: Record<string, any>;
+  sortIndex: string;
+  text: string;
+  type: _ZoteroTypes.Annotations.AnnotationType;
 }
