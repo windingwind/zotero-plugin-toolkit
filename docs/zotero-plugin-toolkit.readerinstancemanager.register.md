@@ -4,6 +4,10 @@
 
 ## ReaderInstanceManager.register() method
 
+> Warning: This API is now obsolete.
+> 
+> 
+
 Register a reader instance hook
 
 **Signature:**

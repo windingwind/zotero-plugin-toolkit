@@ -18,6 +18,7 @@ export declare class ReaderTool extends BasicTool
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [getReader(waitTime)](./zotero-plugin-toolkit.readertool.getreader.md) |  | Get the selected tab reader. |
-|  [getSelectedText(currentReader)](./zotero-plugin-toolkit.readertool.getselectedtext.md) |  | Get the text selection of reader. |
+|  [getSelectedAnnotationData(reader)](./zotero-plugin-toolkit.readertool.getselectedannotationdata.md) |  | Get the selected annotation data. |
+|  [getSelectedText(reader)](./zotero-plugin-toolkit.readertool.getselectedtext.md) |  | Get the text selection of reader. |
 |  [getWindowReader()](./zotero-plugin-toolkit.readertool.getwindowreader.md) |  | Get all window readers. |
 

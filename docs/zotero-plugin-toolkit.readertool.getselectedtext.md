@@ -9,16 +9,18 @@ Get the text selection of reader.
 **Signature:**
 
 ```typescript
-getSelectedText(currentReader: _ZoteroTypes.ReaderInstance): string;
+getSelectedText(reader: _ZoteroTypes.ReaderInstance): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  currentReader | \_ZoteroTypes.ReaderInstance | Target reader |
+|  reader | \_ZoteroTypes.ReaderInstance | Target reader |
 
 **Returns:**
 
 string
+
+The text selection of reader.
 

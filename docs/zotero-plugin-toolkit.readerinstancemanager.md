@@ -4,6 +4,10 @@
 
 ## ReaderInstanceManager class
 
+> Warning: This API is now obsolete.
+> 
+> 
+
 Reader instance hooks.
 
 **Signature:**
