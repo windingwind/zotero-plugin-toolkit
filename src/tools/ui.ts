@@ -291,9 +291,9 @@ export class UITool extends BasicTool {
       elem.append(...subElements);
     }
     if (
-      (typeof props.enableElementDOMLog !== "undefined" &&
-        props.enableElementDOMLog) ||
-      this.basicOptions.ui.enableElementDOMLog
+      typeof props.enableElementDOMLog !== "undefined"
+        ? props.enableElementDOMLog
+        : this.basicOptions.ui.enableElementDOMLog
     ) {
       this.log(elem);
     }
