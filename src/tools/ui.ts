@@ -257,26 +257,51 @@ export class UITool extends BasicTool {
           typeof v !== "undefined" && (realElem!.style[k as any] = v);
         });
       }
-      if (props.properties && Object.keys(props.properties).length) {
-        Object.keys(props.properties).forEach((k) => {
-          const v = props.properties![k];
-          typeof v !== "undefined" && ((realElem as any)[k] = v);
-        });
+      if (props.properties) {
+        if (typeof props.properties == "string") {
+          props.properties = { textContent: props.attributes };
+        }
+        if (Object.keys(props.properties).length)
+          Object.keys(props.properties).forEach((k) => {
+            const v = (props.properties as any)[k];
+            typeof v !== "undefined" && ((realElem as any)[k] = v);
+          });
       }
-      if (props.attributes && Object.keys(props.attributes).length) {
-        Object.keys(props.attributes).forEach((k) => {
-          const v = props.attributes![k];
-          typeof v !== "undefined" && realElem!.setAttribute(k, String(v));
-        });
-      }
-      // Add classes after attributes, as user may set the class attribute
-      if (props.classList?.length) {
-        realElem.classList.add(...props.classList);
-      }
-      if (props.listeners?.length) {
-        props.listeners.forEach(({ type, listener, options }) => {
-          listener && realElem!.addEventListener(type, listener, options);
-        });
+      if (props.attributes) {
+        if (typeof props.attributes == "string") {
+          props.attributes = { value: props.attributes };
+        }
+        if (Object.keys(props.attributes).length) {
+          Object.keys(props.attributes).forEach((k) => {
+            const v = (props.attributes as any)[k];
+            typeof v !== "undefined" && realElem!.setAttribute(k, String(v));
+          });
+        }
+        // Add classes after attributes, as user may set the class attribute
+        if (props.classList) {
+          if (typeof props.classList === "string") {
+            props.classList = [props.classList];
+          }
+          if (props.classList?.length) {
+            realElem.classList.add(...props.classList);
+          }
+        }
+        if (props.listeners) {
+          if (typeof props.listeners == "function") {
+            props.listeners = [{ type: "click", listener: props.listeners }];
+          }
+          if (!(props.listeners instanceof Array)) {
+            props.listeners = Object.keys(props.listeners).map((type) => ({
+              type,
+              listener: (props.listeners as any)[type],
+            }));
+          }
+          if (props.listeners?.length) {
+            props.listeners.forEach(({ type, listener, options }) => {
+              listener && realElem!.addEventListener(type, listener, options);
+            });
+          }
+        }
       }
       elem = realElem;
     }
@@ -447,7 +472,7 @@ export interface ElementProps {
   /**
    * classList
    */
-  classList?: Array<string>;
+  classList?: Array<string> | string;
   /**
    * styles
    */
@@ -455,7 +480,7 @@ export interface ElementProps {
   /**
    * Set with `elem.prop =`
    */
-  properties?: { [key: string]: unknown };
+  properties?: { [key: string]: unknown } | string;
   /**
    * @deprecated Use `properties`
    */
@@ -465,19 +490,27 @@ export interface ElementProps {
   /**
    * Set with `elem.setAttribute()`
    */
-  attributes?: { [key: string]: string | boolean | number | null | undefined };
+  attributes?:
+    | { [key: string]: string | boolean | number | null | undefined }
+    | string;
   /**
    * Event listeners
    *  */
-  listeners?: Array<{
-    type: string;
-    listener:
-      | EventListenerOrEventListenerObject
-      | ((e: Event) => void)
-      | null
-      | undefined;
-    options?: boolean | AddEventListenerOptions;
-  }>;
+  listeners?:
+    | Array<{
+        type: string;
+        listener:
+          | EventListenerOrEventListenerObject
+          | ((e: Event) => void)
+          | null
+          | undefined;
+        options?: boolean | AddEventListenerOptions;
+      }>
+    | {
+        key: string;
+        value: EventListenerOrEventListenerObject | ((e: Event) => void);
+      }
+    | ((e: Event) => void);
   /**
    * Child elements. Will be created and appended to this element.
    */
