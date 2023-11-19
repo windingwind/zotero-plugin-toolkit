@@ -51,6 +51,7 @@ new ClipboardHelper().addText("plain", "text/unicode")
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [addFile(path)](./zotero-plugin-toolkit.clipboardhelper.addfile.md) |  |  |
 |  [addImage(source)](./zotero-plugin-toolkit.clipboardhelper.addimage.md) |  |  |
 |  [addText(source, type)](./zotero-plugin-toolkit.clipboardhelper.addtext.md) |  |  |
 |  [copy()](./zotero-plugin-toolkit.clipboardhelper.copy.md) |  |  |

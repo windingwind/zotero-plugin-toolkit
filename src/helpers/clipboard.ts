@@ -27,6 +27,7 @@ import { BasicTool } from "../basic";
 export class ClipboardHelper {
   private transferable: any;
   private clipboardService: any;
+  private filePath: string = "";
 
   constructor() {
     this.transferable = Components.classes[
@@ -84,12 +85,36 @@ export class ClipboardHelper {
     return this;
   }
 
-  public copy() {
-    this.clipboardService.setData(
-      this.transferable,
-      null,
-      Components.interfaces.nsIClipboard.kGlobalClipboard
+  public addFile(path: string) {
+    const file = Components.classes["@mozilla.org/file/local;1"].createInstance(
+      Components.interfaces.nsIFile
     );
+    file.initWithPath(path);
+    this.transferable.addDataFlavor("application/x-moz-file");
+    this.transferable.setTransferData("application/x-moz-file", file);
+    this.filePath = path;
+    return this;
+  }
+
+  public copy() {
+    try {
+      this.clipboardService.setData(
+        this.transferable,
+        null,
+        Components.interfaces.nsIClipboard.kGlobalClipboard
+      );
+    } catch (e) {
+      // For unknown reasons, on MacOS the copy will throw 0x80004005 error.
+      if (this.filePath && Zotero.isMac) {
+        Zotero.Utilities.Internal.exec(`/usr/bin/osascript`, [
+          `-e`,
+          `set the clipboard to POSIX file "${this.filePath}"`,
+        ]);
+      } else {
+        throw e;
+      }
+    }
+
     return this;
   }
 }
