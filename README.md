@@ -15,7 +15,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
   - [getGlobal](docs/zotero-plugin-toolkit.basictool-getglobal_12.md): Get global variables for bootstrapped plugin sandbox. `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`. With type hint.
   - [log](docs/zotero-plugin-toolkit.basictool.log.md): Output to both `Zotero.debug` and `console.log`. Can be customized depending on dev/prod environment.
   - [isZotero7](docs/zotero-plugin-toolkit.basictool.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md)
-  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md) / [getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6 & 7+. See <https://www.zotero.org/support/dev/zotero_7_for_developers>
 
 - Tools
 
@@ -31,7 +31,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [ItemBox](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
 
-  - [PreferencePane](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+  - [PreferencePane](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See <https://www.zotero.org/support/dev/zotero_7_for_developers>
 
   - [LibraryTabPanel](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
 
@@ -57,7 +57,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [Debug Bridge](src/utils/debugBridge.ts): Use `zotero://ztoolkit-debug/?file=x.js&run=y()&password=zzz&app=m`
 
-    See https://github.com/windingwind/zotero-plugin-template/blob/main/scripts/reload.mjs for example.
+    See <https://github.com/windingwind/zotero-plugin-template/blob/main/scripts/reload.mjs> for example.
 
     > Parameters (all parameters should be URLEncoded):
     >
@@ -81,24 +81,24 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 2. Import the toolkit class
 
-````ts
-import ZoteroToolkit from "zotero-plugin-toolkit";
-/* Alternatively, import class you need to minify the plugin size
- * ```ts
- * import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
- * import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
- */
-const ztoolkit = new ZoteroToolkit();
-````
+    ````ts
+    import ZoteroToolkit from "zotero-plugin-toolkit";
+    /* Alternatively, import class you need to minify the plugin size
+    * ```ts
+    * import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
+    * import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
+    */
+    const ztoolkit = new ZoteroToolkit();
+    ````
 
 3. Use the toolkit following this [API Documentation](./docs/index.md)
 
-```ts
-ztoolkit.log("This is Zotero:", toolkit.getGlobal("Zotero"));
-```
+    ```ts
+    ztoolkit.log("This is Zotero:", toolkit.getGlobal("Zotero"));
+    ```
 
 > ⚠️All Manager classes have `register` method with corresponding `unregister/unregisterAll`. Don't forget to unregister when plugin exits.
-
+>
 > This repo depends on [zotero-types](https://github.com/windingwind/zotero-types). See its hompage for more details about Zotero type definitions.
 
 ## Examples
@@ -147,7 +147,7 @@ The playground uses the latest build. No need to npm install again if you rebuil
 
 Use this code under MIT License. No warranties are provided. Keep the laws of your locality in mind!
 
-If you want to change the license, please contact me at wyzlshx@foxmail.com
+If you want to change the license, please contact me at <wyzlshx@foxmail.com>.
 
 ## My Zotero Plugins
 
