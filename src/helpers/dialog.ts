@@ -494,6 +494,20 @@ html,
 body {
   font-size: calc(12px * 1);
 }
+@media (prefers-color-scheme: light) {
+  html,
+  body {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+  }
+}
 .zotero-text-link {
   -moz-user-focus: normal;
   color: -moz-nativehyperlinktext;
