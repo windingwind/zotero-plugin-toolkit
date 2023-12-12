@@ -116,6 +116,10 @@ export class DialogHelper {
           id,
           attributes: {
             type: "button",
+            "data-l10n-id": label,
+          },
+          properties: {
+            innerHTML: label,
           },
           listeners: [
             {
@@ -128,17 +132,6 @@ export class DialogHelper {
                 if (!options.noClose) {
                   this.window.close();
                 }
-              },
-            },
-          ],
-          children: [
-            {
-              tag: "div",
-              styles: {
-                padding: "2.5px 15px",
-              },
-              properties: {
-                innerHTML: label,
               },
             },
           ],
@@ -219,7 +212,7 @@ function openDialog(
   targetId: string,
   title: string,
   elementProps: ElementProps & { tag: string },
-  dialogData?: DialogData,
+  dialogData: DialogData,
   windowFeatures: {
     width?: number;
     height?: number;
@@ -286,8 +279,23 @@ function openDialog(
       win.document.head.appendChild(
         uiTool.createElement(win.document, "title", {
           properties: { innerText: title },
+          attributes: { "data-l10n-id": title },
         })
       );
+      let l10nFiles = dialogData.l10nFiles || [];
+      if (typeof l10nFiles === "string") {
+        l10nFiles = [l10nFiles];
+      }
+      l10nFiles.forEach((file) => {
+        win.document.head.appendChild(
+          uiTool.createElement(win.document, "link", {
+            properties: {
+              rel: "localization",
+              href: file,
+            },
+          })
+        );
+      });
       // Add style according to Zotero prefs
       // For custom select(menulist) and a link
       win.document.head.appendChild(
@@ -321,7 +329,9 @@ function openDialog(
       );
       // Resize window
       if (windowFeatures.fitContent) {
-        (win as any).sizeToContent();
+        setTimeout(() => {
+          (win as any).sizeToContent();
+        }, 300);
       }
       win.focus();
     })
@@ -493,6 +503,7 @@ const style = `
 html,
 body {
   font-size: calc(12px * 1);
+  font-family: initial;
 }
 @media (prefers-color-scheme: light) {
   html,
@@ -545,4 +556,5 @@ interface DialogData {
   unloadLock?: _ZoteroTypes.PromiseObject;
   unloadCallback?: Function;
   beforeUnloadCallback?: Function;
+  l10nFiles?: string | string[];
 }
