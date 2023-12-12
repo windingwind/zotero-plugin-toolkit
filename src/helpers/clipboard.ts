@@ -39,7 +39,7 @@ export class ClipboardHelper {
     this.transferable.init(null);
   }
 
-  public addText(source: string, type: "text/html" | "text/unicode") {
+  public addText(source: string, type: "text/html" | "text/unicode" = "text/unicode") {
     const str = Components.classes[
       "@mozilla.org/supports-string;1"
     ].createInstance(Components.interfaces.nsISupportsString);
