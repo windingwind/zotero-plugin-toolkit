@@ -12,18 +12,12 @@ export class KeyboardManager extends ManagerTool {
     super(base);
     this._ensureAutoUnregisterAll();
 
-    this.addListenerCallback(
-      "onMainWindowLoad",
-      this.initWindowKeyboardListener
-    );
-    this.addListenerCallback(
-      "onMainWindowUnload",
-      this.unInitWindowKeyboardListener
-    );
+    this.addListenerCallback("onMainWindowLoad", this.initKeyboardListener);
+    this.addListenerCallback("onMainWindowUnload", this.unInitKeyboardListener);
 
     this.initReaderKeyboardListener();
     for (const win of Zotero.getMainWindows()) {
-      this.initWindowKeyboardListener(win);
+      this.initKeyboardListener(win);
     }
   }
 
@@ -48,26 +42,18 @@ export class KeyboardManager extends ManagerTool {
    */
   unregisterAll() {
     this._keyboardCallbacks.clear();
-    this.removeListenerCallback(
-      "onMainWindowLoad",
-      this.initWindowKeyboardListener
-    );
+    this.removeListenerCallback("onMainWindowLoad", this.initKeyboardListener);
     this.removeListenerCallback(
       "onMainWindowUnload",
-      this.unInitWindowKeyboardListener
+      this.unInitKeyboardListener
     );
     for (const win of Zotero.getMainWindows()) {
-      this.unInitWindowKeyboardListener(win);
+      this.unInitKeyboardListener(win);
     }
   }
 
-  private initWindowKeyboardListener(win: Window) {
-    this._initKeyboardListener(win);
-  }
-
-  private unInitWindowKeyboardListener(win: Window) {
-    this._unInitKeyboardListener(win);
-  }
+  private initKeyboardListener = this._initKeyboardListener.bind(this);
+  private unInitKeyboardListener = this._unInitKeyboardListener.bind(this);
 
   private initReaderKeyboardListener() {
     Zotero.Reader.registerEventListener(
