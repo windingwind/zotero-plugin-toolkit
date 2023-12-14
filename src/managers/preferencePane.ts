@@ -4,6 +4,7 @@ import { ManagerTool } from "../basic";
 
 /**
  * Register preference pane from Zotero 7's `xhtml`, for Zotero 6 & 7.
+ * @deprecated Use `Zotero.PreferencePanes.register` instead.
  */
 export class PreferencePaneManager extends ManagerTool {
   private alive: boolean = true;

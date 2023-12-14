@@ -10,6 +10,7 @@ import { ExtraFieldTool } from "./tools/extraField";
 import { FieldHookManager } from "./managers/fieldHook";
 import { ItemTreeManager } from "./managers/itemTree";
 import { ItemBoxManager } from "./managers/itemBox";
+import { KeyboardManager, KeyModifier } from "./managers/keyboard";
 import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
 import { ReaderTabPanelManager } from "./managers/readerTabPanel";
 import { ReaderInstanceManager } from "./managers/readerInstance";
@@ -36,6 +37,8 @@ export {
   FieldHookManager,
   ItemTreeManager,
   ItemBoxManager,
+  KeyboardManager,
+  KeyModifier,
   LibraryTabPanelManager,
   ReaderTabPanelManager,
   ReaderInstanceManager,

@@ -4,6 +4,11 @@
 
 ## ShortcutManager class
 
+> Warning: This API is now obsolete.
+> 
+> Use {  KeyboardManager<!-- -->} instead.
+> 
+
 Register shortcut keys.
 
 **Signature:**

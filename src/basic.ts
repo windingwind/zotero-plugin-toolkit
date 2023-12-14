@@ -35,6 +35,15 @@ export class BasicTool {
       api: {
         pluginID: "zotero-plugin-toolkit@windingwind.com",
       },
+      listeners: {
+        callbacks: {
+          onMainWindowLoad: new Set(),
+          onMainWindowUnload: new Set(),
+          onPluginUnload: new Set(),
+        },
+        _mainWindow: undefined,
+        _plugin: undefined,
+      },
     };
     this.updateOptions(data);
     return;
@@ -272,6 +281,136 @@ export class BasicTool {
     (object[funcSign] as any)[ownerSign] = true;
   }
 
+  /**
+   * Add a Zotero event listener callback
+   * @param type Event type
+   * @param callback Event callback
+   */
+  addListenerCallback<T extends keyof ListenerCallbackMap>(
+    type: T,
+    callback: ListenerCallbackMap[T]
+  ) {
+    if (["onMainWindowLoad", "onMainWindowUnload"].includes(type)) {
+      this._ensureMainWindowListener();
+    }
+    if (type === "onPluginUnload") {
+      this._ensurePluginListener();
+    }
+    this._basicOptions.listeners.callbacks[type].add(callback);
+  }
+
+  /**
+   * Remove a Zotero event listener callback
+   * @param type Event type
+   * @param callback Event callback
+   */
+  removeListenerCallback<T extends keyof ListenerCallbackMap>(
+    type: T,
+    callback: ListenerCallbackMap[T]
+  ) {
+    this._basicOptions.listeners.callbacks[type].delete(callback);
+    // Remove listener if no callback
+    this._ensureRemoveListener();
+  }
+
+  /**
+   * Remove all Zotero event listener callbacks when the last callback is removed.
+   */
+  protected _ensureRemoveListener() {
+    const { listeners } = this._basicOptions;
+    if (
+      listeners._mainWindow &&
+      listeners.callbacks.onMainWindowLoad.size === 0 &&
+      listeners.callbacks.onMainWindowUnload.size === 0
+    ) {
+      Services.wm.removeListener(listeners._mainWindow);
+      delete listeners._mainWindow;
+    }
+    if (listeners._plugin && listeners.callbacks.onPluginUnload.size === 0) {
+      Zotero.Plugins.removeObserver(listeners._plugin);
+      delete listeners._plugin;
+    }
+  }
+
+  /**
+   * Ensure the main window listener is registered.
+   */
+  protected _ensureMainWindowListener() {
+    if (this._basicOptions.listeners._mainWindow) {
+      return;
+    }
+    const mainWindowListener = {
+      onOpenWindow: (xulWindow: XUL.XULWindow) => {
+        // @ts-ignore
+        const domWindow = xulWindow.docShell.domWindow;
+        const onload = async () => {
+          domWindow.removeEventListener("load", onload, false);
+          if (
+            domWindow.location.href !==
+            "chrome://zotero/content/zoteroPane.xhtml"
+          ) {
+            return;
+          }
+          for (const cbk of this._basicOptions.listeners.callbacks
+            .onMainWindowLoad) {
+            try {
+              cbk(domWindow);
+            } catch (e) {
+              this.log(e);
+            }
+          }
+        };
+        domWindow.addEventListener("load", () => onload(), false);
+      },
+      onCloseWindow: async (xulWindow: XUL.XULWindow) => {
+        // @ts-ignore
+        const domWindow = xulWindow.docShell.domWindow;
+        if (
+          domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml"
+        ) {
+          return;
+        }
+        for (const cbk of this._basicOptions.listeners.callbacks
+          .onMainWindowUnload) {
+          try {
+            cbk(domWindow);
+          } catch (e) {
+            this.log(e);
+          }
+        }
+      },
+    };
+    this._basicOptions.listeners._mainWindow = mainWindowListener;
+    Services.wm.addListener(mainWindowListener);
+  }
+
+  /**
+   * Ensure the plugin listener is registered.
+   */
+  protected _ensurePluginListener() {
+    if (this._basicOptions.listeners._plugin) {
+      return;
+    }
+    const pluginListener = {
+      shutdown: (
+        ...args: Parameters<
+          NonNullable<_ZoteroTypes._PluginObserver["shutdown"]>
+        >
+      ) => {
+        for (const cbk of this._basicOptions.listeners.callbacks
+          .onPluginUnload) {
+          try {
+            cbk(...args);
+          } catch (e) {
+            this.log(e);
+          }
+        }
+      },
+    };
+    this._basicOptions.listeners._plugin = pluginListener;
+    Zotero.Plugins.addObserver(pluginListener);
+  }
+
   protected updateOptions(source?: BasicTool | BasicOptions) {
     if (!source) {
       return;
@@ -306,6 +445,13 @@ export interface BasicOptions {
   api: {
     pluginID: string;
   };
+  listeners: {
+    _mainWindow?: any;
+    _plugin?: _ZoteroTypes._PluginObserver;
+    callbacks: {
+      [K in keyof ListenerCallbackMap]: Set<ListenerCallbackMap[K]>;
+    };
+  };
 }
 
 export abstract class ManagerTool extends BasicTool {
@@ -315,6 +461,15 @@ export abstract class ManagerTool extends BasicTool {
    * Unregister everything
    */
   abstract unregisterAll(): any;
+
+  protected _ensureAutoUnregisterAll() {
+    this.addListenerCallback("onPluginUnload", (params, reason) => {
+      if (params.id !== this.basicOptions.api.pluginID) {
+        return;
+      }
+      this.unregisterAll();
+    });
+  }
 }
 
 export function unregister(tools: { [key: string | number]: any }) {
@@ -333,3 +488,11 @@ type FunctionNamesOf<T> = keyof FunctionsOf<T>;
 type FunctionsOf<T> = {
   [K in keyof T as T[K] extends Function ? K : never]: T[K];
 };
+
+interface ListenerCallbackMap {
+  onMainWindowLoad: (win: Window) => void;
+  onMainWindowUnload: (win: Window) => void;
+  onPluginUnload: (
+    ...args: Parameters<NonNullable<_ZoteroTypes._PluginObserver["shutdown"]>>
+  ) => void;
+}

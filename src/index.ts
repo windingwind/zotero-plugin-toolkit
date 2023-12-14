@@ -18,6 +18,7 @@ import { ReaderInstanceManager } from "./managers/readerInstance";
 import { FieldHookManager } from "./managers/fieldHook";
 import { ItemBoxManager } from "./managers/itemBox";
 import { LargePrefHelper } from "./helpers/largePref";
+import { KeyboardManager } from "./managers/keyboard";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -31,6 +32,7 @@ class ZoteroToolkit extends BasicTool {
   FieldHooks: FieldHookManager;
   ItemTree: ItemTreeManager;
   ItemBox: ItemBoxManager;
+  Keyboard: KeyboardManager;
   Prompt: PromptManager;
   LibraryTabPanel: LibraryTabPanelManager;
   ReaderTabPanel: ReaderTabPanelManager;
@@ -53,6 +55,7 @@ class ZoteroToolkit extends BasicTool {
     this.FieldHooks = new FieldHookManager(this);
     this.ItemTree = new ItemTreeManager(this);
     this.ItemBox = new ItemBoxManager(this);
+    this.Keyboard = new KeyboardManager(this);
     this.Prompt = new PromptManager(this);
     this.LibraryTabPanel = new LibraryTabPanelManager(this);
     this.ReaderTabPanel = new ReaderTabPanelManager(this);

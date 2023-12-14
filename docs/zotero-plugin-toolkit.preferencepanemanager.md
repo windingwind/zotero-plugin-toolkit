@@ -4,6 +4,11 @@
 
 ## PreferencePaneManager class
 
+> Warning: This API is now obsolete.
+> 
+> Use `Zotero.PreferencePanes.register` instead.
+> 
+
 Register preference pane from Zotero 7's `xhtml`<!-- -->, for Zotero 6 &amp; 7.
 
 **Signature:**

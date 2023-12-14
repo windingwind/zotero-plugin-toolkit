@@ -30,6 +30,10 @@ export declare class BasicTool
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [\_ensureMainWindowListener()](./zotero-plugin-toolkit.basictool._ensuremainwindowlistener.md) | <code>protected</code> | Ensure the main window listener is registered. |
+|  [\_ensurePluginListener()](./zotero-plugin-toolkit.basictool._ensurepluginlistener.md) | <code>protected</code> | Ensure the plugin listener is registered. |
+|  [\_ensureRemoveListener()](./zotero-plugin-toolkit.basictool._ensureremovelistener.md) | <code>protected</code> | Remove all Zotero event listener callbacks when the last callback is removed. |
+|  [addListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.addlistenercallback.md) |  | Add a Zotero event listener callback |
 |  [createXULElement(doc, type)](./zotero-plugin-toolkit.basictool.createxulelement.md) |  | <p>Create an XUL element</p><p>For Zotero 6, use <code>createElementNS</code>;</p><p>For Zotero 7+, use <code>createXULElement</code>.</p> |
 |  [getDOMParser()](./zotero-plugin-toolkit.basictool.getdomparser.md) |  | <p>Get DOMParser.</p><p>For Zotero 6: mainWindow.DOMParser or nsIDOMParser</p><p>For Zotero 7: Firefox 102 support DOMParser natively</p> |
 |  [getGlobal(k)](./zotero-plugin-toolkit.basictool.getglobal_12.md) |  | Get global variables. |
@@ -38,5 +42,6 @@ export declare class BasicTool
 |  [isZotero7()](./zotero-plugin-toolkit.basictool.iszotero7.md) |  | Check if it's running on Zotero 7 (Firefox 102) |
 |  [log(data)](./zotero-plugin-toolkit.basictool.log.md) |  | Output to both Zotero.debug and console.log |
 |  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.basictool.patch.md) |  | Patch a function |
+|  [removeListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.removelistenercallback.md) |  | Remove a Zotero event listener callback |
 |  [updateOptions(source)](./zotero-plugin-toolkit.basictool.updateoptions.md) | <code>protected</code> |  |
 

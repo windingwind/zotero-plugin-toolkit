@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-addText(source: string, type: "text/html" | "text/unicode"): this;
+addText(source: string, type?: "text/html" | "text/unicode"): this;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ addText(source: string, type: "text/html" | "text/unicode"): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  source | string |  |
-|  type | "text/html" \| "text/unicode" |  |
+|  type | "text/html" \| "text/unicode" | _(Optional)_ |
 
 **Returns:**
 

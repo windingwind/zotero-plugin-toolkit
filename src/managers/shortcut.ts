@@ -5,6 +5,7 @@ import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
 
 /**
  * Register shortcut keys.
+ * @deprecated Use { @link KeyboardManager} instead.
  */
 export class ShortcutManager extends ManagerTool {
   private ui: UITool;

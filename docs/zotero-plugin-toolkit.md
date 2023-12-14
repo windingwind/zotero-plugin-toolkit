@@ -16,6 +16,8 @@
 |  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
 |  [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) | Register customized new row to the library itemBox (right-side info tab). |
 |  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
+|  [KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md) | Register a global keyboard event listener. |
+|  [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) | Class to represent key with modifiers |
 |  [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) | Helper class for storing large amounts of data in Zotero preferences. |
 |  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
