@@ -9,14 +9,14 @@ Check if the current KeyModifier equals to another KeyModifier.
 **Signature:**
 
 ```typescript
-equals(newMod: KeyModifier): boolean;
+equals(newMod: KeyModifier | string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  newMod | [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) | the new KeyModifier |
+|  newMod | [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) \| string | the new KeyModifier |
 
 **Returns:**
 

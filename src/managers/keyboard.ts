@@ -160,17 +160,17 @@ export class KeyModifier implements KeyModifierStatus {
       this.meta = raw.includes("meta");
       this.alt = raw.includes("alt");
       // Remove all modifiers, space, comma, and dash
-      this.key = raw.replace(/(accel|shift|control|meta|alt| |,|-)/g, "");
+      this.key = raw
+        .replace(/(accel|shift|control|meta|alt| |,|-)/g, "")
+        .toLocaleLowerCase();
     } else if (raw instanceof KeyModifier) {
       this.merge(raw, { allowOverwrite: true });
     } else {
       if (options?.useAccel) {
         if (Zotero.isMac) {
           this.accel = raw.metaKey;
-          this.control = raw.ctrlKey;
         } else {
           this.accel = raw.ctrlKey;
-          this.meta = raw.metaKey;
         }
       }
       this.shift = raw.shiftKey;
@@ -205,15 +205,37 @@ export class KeyModifier implements KeyModifierStatus {
    * @param newMod the new KeyModifier
    * @returns true if equals
    */
-  equals(newMod: KeyModifier) {
-    return (
-      this.accel === newMod.accel &&
-      this.shift === newMod.shift &&
-      this.control === newMod.control &&
-      this.meta === newMod.meta &&
-      this.alt === newMod.alt &&
-      this.key === newMod.key
-    );
+  equals(newMod: KeyModifier | string) {
+    if (typeof newMod === "string") {
+      newMod = new KeyModifier(newMod);
+    }
+    // Compare key and non-platform modifiers first
+    if (
+      this.shift !== newMod.shift ||
+      this.alt !== newMod.alt ||
+      this.key.toLowerCase() !== newMod.key.toLowerCase()
+    ) {
+      return false;
+    }
+    // Compare platform modifiers
+    if (this.accel || newMod.accel) {
+      if (Zotero.isMac) {
+        if (
+          (this.accel || this.meta) !== (newMod.accel || newMod.meta) ||
+          this.control !== newMod.control
+        ) {
+          return false;
+        }
+      } else {
+        if (
+          (this.accel || this.control) !== (newMod.accel || newMod.control) ||
+          this.meta !== newMod.meta
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   /**
