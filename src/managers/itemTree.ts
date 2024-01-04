@@ -7,6 +7,7 @@ import { PatcherManager } from "./patch";
 
 /**
  * Register customized new columns to the library itemTree.
+ * @deprecated Use `Zotero.ItemTreeManager.registerColumns` instead.
  */
 export class ItemTreeManager extends ManagerTool {
   /**

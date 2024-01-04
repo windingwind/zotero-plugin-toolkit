@@ -394,7 +394,7 @@ export class BasicTool {
     const pluginListener = {
       shutdown: (
         ...args: Parameters<
-          NonNullable<_ZoteroTypes._PluginObserver["shutdown"]>
+          NonNullable<_ZoteroTypes.Plugins.observer["shutdown"]>
         >
       ) => {
         for (const cbk of this._basicOptions.listeners.callbacks
@@ -447,7 +447,7 @@ export interface BasicOptions {
   };
   listeners: {
     _mainWindow?: any;
-    _plugin?: _ZoteroTypes._PluginObserver;
+    _plugin?: _ZoteroTypes.Plugins.observer;
     callbacks: {
       [K in keyof ListenerCallbackMap]: Set<ListenerCallbackMap[K]>;
     };
@@ -493,6 +493,6 @@ interface ListenerCallbackMap {
   onMainWindowLoad: (win: Window) => void;
   onMainWindowUnload: (win: Window) => void;
   onPluginUnload: (
-    ...args: Parameters<NonNullable<_ZoteroTypes._PluginObserver["shutdown"]>>
+    ...args: Parameters<NonNullable<_ZoteroTypes.Plugins.observer["shutdown"]>>
   ) => void;
 }

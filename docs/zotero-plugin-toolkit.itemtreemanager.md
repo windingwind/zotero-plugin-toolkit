@@ -4,6 +4,11 @@
 
 ## ItemTreeManager class
 
+> Warning: This API is now obsolete.
+> 
+> Use `Zotero.ItemTreeManager.registerColumns` instead.
+> 
+
 Register customized new columns to the library itemTree.
 
 **Signature:**

@@ -8,8 +8,10 @@ import { waitUntil } from "../utils/wait";
 export class KeyboardManager extends ManagerTool {
   private _keyboardCallbacks: Set<KeyboardCallback> = new Set();
   private _cachedKey?: KeyModifier;
+  private id: string;
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
+    this.id = Zotero.Utilities.randomString();
     this._ensureAutoUnregisterAll();
 
     this.addListenerCallback("onMainWindowLoad", this.initKeyboardListener);
@@ -58,67 +60,88 @@ export class KeyboardManager extends ManagerTool {
   private initReaderKeyboardListener() {
     Zotero.Reader.registerEventListener(
       "renderToolbar",
-      (event) => {
-        const reader = event.reader;
-        this._initKeyboardListener(reader._iframeWindow);
-        waitUntil(
-          () => (reader._internalReader?._primaryView as any)?._iframeWindow,
-          () =>
-            this._initKeyboardListener(
-              (reader._internalReader._primaryView as any)?._iframeWindow
-            )
-        );
-      },
+      (event) => this.addReaderKeyboardCallback(event),
       this._basicOptions.api.pluginID
     );
+
+    Zotero.Reader._readers.forEach((reader) =>
+      this.addReaderKeyboardCallback({ reader })
+    );
+  }
+
+  private addReaderKeyboardCallback(event: {
+    reader: _ZoteroTypes.ReaderInstance;
+  }) {
+    const reader = event.reader;
+    let initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
+    // @ts-ignore extra property
+    if (reader[initializedKey]) {
+      return;
+    }
+    this._initKeyboardListener(reader._iframeWindow);
+    waitUntil(
+      () => (reader._internalReader?._primaryView as any)?._iframeWindow,
+      () =>
+        this._initKeyboardListener(
+          (reader._internalReader._primaryView as any)?._iframeWindow
+        )
+    );
+    // @ts-ignore extra property
+    reader[initializedKey] = true;
   }
 
   private _initKeyboardListener(win?: Window) {
     if (!win) {
       return;
     }
-    win.addEventListener("keydown", this.savePressedKeys);
-    win.addEventListener("keyup", this.triggerCallback);
+    win.addEventListener("keydown", this.triggerKeydown);
+    win.addEventListener("keyup", this.triggerKeyup);
   }
 
   private _unInitKeyboardListener(win?: Window) {
     if (!win) {
       return;
     }
-    win.removeEventListener("keydown", this.savePressedKeys);
-    win.removeEventListener("keyup", this.triggerCallback);
+    win.removeEventListener("keydown", this.triggerKeydown);
+    win.removeEventListener("keyup", this.triggerKeyup);
   }
 
-  private savePressedKeys = this._savePressedKeys.bind(this);
-  private triggerCallback = this._triggerCallback.bind(this);
-
-  private _savePressedKeys(e: KeyboardEvent) {
+  private triggerKeydown = (e: KeyboardEvent) => {
     if (!this._cachedKey) {
       this._cachedKey = new KeyModifier(e);
     } else {
       this._cachedKey.merge(new KeyModifier(e), { allowOverwrite: false });
     }
-  }
+    this.dispatchCallback(e, {
+      type: "keydown",
+    });
+  };
 
-  private async _triggerCallback(e: KeyboardEvent) {
+  private triggerKeyup = async (e: KeyboardEvent) => {
     if (!this._cachedKey) {
       return;
     }
 
     const currentShortcut = new KeyModifier(this._cachedKey);
     this._cachedKey = undefined;
-    this._keyboardCallbacks.forEach((cbk) =>
-      cbk(e, {
-        keyboard: currentShortcut,
-      })
-    );
+    this.dispatchCallback(e, {
+      keyboard: currentShortcut,
+      type: "keyup",
+    });
+  };
+
+  private dispatchCallback(...args: Parameters<KeyboardCallback>) {
+    this._keyboardCallbacks.forEach((cbk) => cbk(...args));
   }
 }
+
+type KeyboardEventType = "keydown" | "keyup";
 
 type KeyboardCallback = (
   event: KeyboardEvent,
   options: {
-    keyboard: KeyModifier;
+    keyboard?: KeyModifier;
+    type: KeyboardEventType;
   }
 ) => void;
 
