@@ -45,7 +45,7 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    this.updateOptions(data);
+    BasicTool.updateOptions(this, data);
     return;
   }
 
@@ -411,14 +411,14 @@ export class BasicTool {
     Zotero.Plugins.addObserver(pluginListener);
   }
 
-  protected updateOptions(source?: BasicTool | BasicOptions) {
+  static updateOptions(target: BasicTool, source?: BasicTool | BasicOptions) {
     if (!source) {
       return;
     }
     if (source instanceof BasicTool) {
-      this._basicOptions = source._basicOptions;
+      target._basicOptions = source._basicOptions;
     } else {
-      this._basicOptions = source;
+      target._basicOptions = source;
     }
   }
 

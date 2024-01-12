@@ -1,10 +1,11 @@
-import { BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic";
 import { ElementProps, TagElementProps, UITool } from "../tools/ui";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
  */
 export class DialogHelper {
+  uiTool: UITool;
   /**
    * Passed to dialog window for data-binding and lifecycle controls. See {@link DialogHelper.setDialogData}
    */
@@ -20,6 +21,7 @@ export class DialogHelper {
    * @param column
    */
   constructor(row: number, column: number) {
+    this.uiTool = new UITool();
     if (row <= 0 || column <= 0) {
       throw Error(`row and column must be positive integers.`);
     }
@@ -167,6 +169,16 @@ export class DialogHelper {
   }
 
   /**
+   * Set the helper options.
+   * @param options See {@link BasicTool.updateOptions}
+   * @alpha
+   */
+  setHelperOptions(options: BasicTool | BasicOptions) {
+    BasicTool.updateOptions(this.uiTool, options);
+    return this;
+  }
+
+  /**
    * Open the dialog
    * @param title Window title
    * @param windowFeatures.width Ignored if fitContent is `true`.
@@ -198,6 +210,7 @@ export class DialogHelper {
     }
   ) {
     this.window = openDialog(
+      this,
       `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
       title,
       this.elementProps,
@@ -209,6 +222,7 @@ export class DialogHelper {
 }
 
 function openDialog(
+  dialogHelper: DialogHelper,
   targetId: string,
   title: string,
   elementProps: ElementProps & { tag: string },
@@ -229,7 +243,7 @@ function openDialog(
     fitContent: true,
   }
 ) {
-  const uiTool = new UITool();
+  const uiTool = dialogHelper.uiTool;
   uiTool.basicOptions.ui.enableElementJSONLog = false;
   uiTool.basicOptions.ui.enableElementRecord = false;
   const Zotero = uiTool.getGlobal("Zotero");
