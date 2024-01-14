@@ -24,12 +24,13 @@ import { BasicTool } from "../basic";
  *                     .copy();
  * ```
  */
-export class ClipboardHelper {
+export class ClipboardHelper extends BasicTool {
   private transferable: any;
   private clipboardService: any;
   private filePath: string = "";
 
   constructor() {
+    super();
     this.transferable = Components.classes[
       "@mozilla.org/widget/transferable;1"
     ].createInstance(Components.interfaces.nsITransferable);
@@ -57,9 +58,8 @@ export class ClipboardHelper {
     if (!parts[0].includes("base64")) {
       return this;
     }
-    const basicTool = new BasicTool();
     let mime = parts[0].match(/:(.*?);/)![1];
-    let bstr = basicTool.getGlobal("window").atob(parts[1]);
+    let bstr = this.getGlobal("window").atob(parts[1]);
     let n = bstr.length;
     let u8arr = new Uint8Array(n);
     while (n--) {
@@ -70,7 +70,7 @@ export class ClipboardHelper {
     );
     let mimeType: string;
     let img: unknown;
-    if (basicTool.getGlobal("Zotero").platformMajorVersion >= 102) {
+    if (this.getGlobal("Zotero").platformMajorVersion >= 102) {
       img = imgTools.decodeImageFromArrayBuffer(u8arr.buffer, mime);
       mimeType = "application/x-moz-nativeimage";
     } else {

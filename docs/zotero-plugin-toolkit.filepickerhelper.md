@@ -9,8 +9,9 @@ File picker helper.
 **Signature:**
 
 ```typescript
-export declare class FilePickerHelper<MODE extends "open" | "save" | "folder" | "multiple"> 
+export declare class FilePickerHelper<MODE extends "open" | "save" | "folder" | "multiple"> extends BasicTool 
 ```
+**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Example
 

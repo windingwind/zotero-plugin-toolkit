@@ -43,5 +43,5 @@ export declare class BasicTool
 |  [log(data)](./zotero-plugin-toolkit.basictool.log.md) |  | Output to both Zotero.debug and console.log |
 |  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.basictool.patch.md) |  | Patch a function |
 |  [removeListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.removelistenercallback.md) |  | Remove a Zotero event listener callback |
-|  [updateOptions(source)](./zotero-plugin-toolkit.basictool.updateoptions.md) | <code>protected</code> |  |
+|  [updateOptions(source)](./zotero-plugin-toolkit.basictool.updateoptions.md) |  |  |
 

@@ -411,15 +411,16 @@ export class BasicTool {
     Zotero.Plugins.addObserver(pluginListener);
   }
 
-  protected updateOptions(source?: BasicTool | BasicOptions) {
+  updateOptions(source?: BasicTool | BasicOptions) {
     if (!source) {
-      return;
+      return this;
     }
     if (source instanceof BasicTool) {
       this._basicOptions = source._basicOptions;
     } else {
       this._basicOptions = source;
     }
+    return this;
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
@@ -480,6 +481,31 @@ export function unregister(tools: { [key: string | number]: any }) {
     ) {
       tool.unregisterAll();
     }
+  });
+}
+
+declare class HelperTool {
+  constructor(...args: any);
+  updateOptions: BasicTool["updateOptions"];
+}
+
+export function makeHelperTool<T extends typeof HelperTool>(
+  cls: T,
+  options: BasicTool | BasicOptions
+): T;
+export function makeHelperTool<T extends any>(
+  cls: T,
+  options: BasicTool | BasicOptions
+): T;
+export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
+  return new Proxy(cls, {
+    construct(target, args) {
+      const _origin = new cls(...args);
+      if (_origin instanceof BasicTool) {
+        _origin.updateOptions(options);
+      }
+      return _origin;
+    },
   });
 }
 

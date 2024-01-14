@@ -1,3 +1,5 @@
+import { BasicTool } from "../basic";
+
 /**
  * Helper class for storing large amounts of data in Zotero preferences.
  *
@@ -12,7 +14,7 @@
  * You can either use the class as a normal object with `asObject()`,
  * or use the methods to access the data.
  */
-export class LargePrefHelper {
+export class LargePrefHelper extends BasicTool {
   private keyPref: string;
   private valuePrefPrefix: string;
   private innerObj: Record<string, string>;
@@ -35,6 +37,7 @@ export class LargePrefHelper {
     valuePrefPrefix: string,
     hooks: Partial<typeof defaultHooks> | "default" | "parser" = "default"
   ) {
+    super();
     this.keyPref = keyPref;
     this.valuePrefPrefix = valuePrefPrefix;
     if (hooks === "default") {

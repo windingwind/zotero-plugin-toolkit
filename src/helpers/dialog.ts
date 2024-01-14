@@ -1,10 +1,9 @@
-import { BasicTool } from "../basic";
 import { ElementProps, TagElementProps, UITool } from "../tools/ui";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
  */
-export class DialogHelper {
+export class DialogHelper extends UITool {
   /**
    * Passed to dialog window for data-binding and lifecycle controls. See {@link DialogHelper.setDialogData}
    */
@@ -20,6 +19,7 @@ export class DialogHelper {
    * @param column
    */
   constructor(row: number, column: number) {
+    super();
     if (row <= 0 || column <= 0) {
       throw Error(`row and column must be positive integers.`);
     }
@@ -198,6 +198,7 @@ export class DialogHelper {
     }
   ) {
     this.window = openDialog(
+      this,
       `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
       title,
       this.elementProps,
@@ -209,6 +210,7 @@ export class DialogHelper {
 }
 
 function openDialog(
+  dialogHelper: DialogHelper,
   targetId: string,
   title: string,
   elementProps: ElementProps & { tag: string },
@@ -229,10 +231,7 @@ function openDialog(
     fitContent: true,
   }
 ) {
-  const uiTool = new UITool();
-  uiTool.basicOptions.ui.enableElementJSONLog = false;
-  uiTool.basicOptions.ui.enableElementRecord = false;
-  const Zotero = uiTool.getGlobal("Zotero");
+  const Zotero = dialogHelper.getGlobal("Zotero");
   dialogData = dialogData || {};
 
   // Make windowfeature string
@@ -265,7 +264,7 @@ function openDialog(
   }
 
   // Create window
-  const win: Window = uiTool.getGlobal("openDialog")(
+  const win: Window = dialogHelper.getGlobal("openDialog")(
     "about:blank",
     targetId || "_blank",
     featureString,
@@ -273,11 +272,11 @@ function openDialog(
   );
 
   // After load
-  dialogData.loadLock.promise
+  dialogData.loadLock?.promise
     .then(() => {
       // Set title
       win.document.head.appendChild(
-        uiTool.createElement(win.document, "title", {
+        dialogHelper.createElement(win.document, "title", {
           properties: { innerText: title },
           attributes: { "data-l10n-id": title },
         })
@@ -288,7 +287,7 @@ function openDialog(
       }
       l10nFiles.forEach((file) => {
         win.document.head.appendChild(
-          uiTool.createElement(win.document, "link", {
+          dialogHelper.createElement(win.document, "link", {
             properties: {
               rel: "localization",
               href: file,
@@ -299,16 +298,16 @@ function openDialog(
       // Add style according to Zotero prefs
       // For custom select(menulist) and a link
       win.document.head.appendChild(
-        uiTool.createElement(win.document, "style", {
+        dialogHelper.createElement(win.document, "style", {
           properties: {
             innerHTML: style,
           },
         })
       );
-      replaceElement(elementProps, uiTool);
+      replaceElement(elementProps, dialogHelper);
       // Create element
       win.document.body.appendChild(
-        uiTool.createElement(win.document, "fragment", {
+        dialogHelper.createElement(win.document, "fragment", {
           children: [elementProps],
         })
       );
