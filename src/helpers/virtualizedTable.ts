@@ -6,7 +6,7 @@ import { BasicTool } from "../basic";
 /**
  * VirtualizedTable helper.
  */
-export class VirtualizedTableHelper {
+export class VirtualizedTableHelper extends BasicTool {
   public props: VirtualizedTableProps;
   public localeStrings: { [name: string]: string };
   public containerId!: string;
@@ -16,12 +16,11 @@ export class VirtualizedTableHelper {
   private ReactDOM: typeof ReactDOM;
   private VirtualizedTable: VirtualizedTableConstructor;
   private IntlProvider: typeof IntlProvider;
-  private basicTool: BasicTool;
 
   constructor(win: Window) {
+    super();
     this.window = win;
-    this.basicTool = new BasicTool();
-    const Zotero = this.basicTool.getGlobal("Zotero");
+    const Zotero = this.getGlobal("Zotero");
     const _require = (win as any).require as Function;
     // Don't actually use any React instance, so that it won't be actually compiled.
     this.React = _require("react");
@@ -189,7 +188,7 @@ export class VirtualizedTableHelper {
       )
         .then(() => {
           // Fix style manager showing partially blank until scrolled
-          this.basicTool.getGlobal("setTimeout")(() => {
+          this.getGlobal("setTimeout")(() => {
             refreshSelection();
           });
         })

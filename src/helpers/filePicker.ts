@@ -19,7 +19,7 @@ import { BasicTool } from "../basic";
  */
 export class FilePickerHelper<
   MODE extends "open" | "save" | "folder" | "multiple"
-> {
+> extends BasicTool {
   private title: string;
   private mode: MODE;
   private filters?: [string, string][];
@@ -52,6 +52,7 @@ export class FilePickerHelper<
       | "audio"
       | "video"
   ) {
+    super();
     this.title = title;
     this.mode = mode;
     this.filters = filters;
@@ -61,13 +62,12 @@ export class FilePickerHelper<
   }
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
-    const basicTool = new BasicTool();
-    const backend = basicTool.getGlobal("require")(
+    const backend = this.getGlobal("require")(
       "zotero/modules/filePicker"
     ).default;
     const fp = new backend();
     fp.init(
-      this.window || basicTool.getGlobal("window"),
+      this.window || this.getGlobal("window"),
       this.title,
       this.getMode(fp)
     );

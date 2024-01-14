@@ -9,8 +9,9 @@ Helper class for storing large amounts of data in Zotero preferences.
 **Signature:**
 
 ```typescript
-export declare class LargePrefHelper 
+export declare class LargePrefHelper extends BasicTool 
 ```
+**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Remarks
 

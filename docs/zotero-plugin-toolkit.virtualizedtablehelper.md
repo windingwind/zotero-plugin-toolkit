@@ -9,8 +9,9 @@ VirtualizedTable helper.
 **Signature:**
 
 ```typescript
-export declare class VirtualizedTableHelper 
+export declare class VirtualizedTableHelper extends BasicTool 
 ```
+**Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
 ## Constructors
 

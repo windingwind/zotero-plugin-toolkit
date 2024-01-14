@@ -1,4 +1,4 @@
-import { BasicTool, unregister } from "./basic";
+import { BasicTool, makeHelperTool, unregister } from "./basic";
 import { UITool } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
@@ -63,12 +63,12 @@ class ZoteroToolkit extends BasicTool {
     this.Menu = new MenuManager(this);
     this.PreferencePane = new PreferencePaneManager(this);
     this.Shortcut = new ShortcutManager(this);
-    this.Clipboard = ClipboardHelper;
-    this.FilePicker = FilePickerHelper;
-    this.ProgressWindow = ProgressWindowHelper;
-    this.VirtualizedTable = VirtualizedTableHelper;
-    this.Dialog = DialogHelper;
-    this.LargePrefObject = LargePrefHelper;
+    this.Clipboard = makeHelperTool(ClipboardHelper, this);
+    this.FilePicker = makeHelperTool(FilePickerHelper, this);
+    this.ProgressWindow = makeHelperTool(ProgressWindowHelper, this);
+    this.VirtualizedTable = makeHelperTool(VirtualizedTableHelper, this);
+    this.Dialog = makeHelperTool(DialogHelper, this);
+    this.LargePrefObject = makeHelperTool(LargePrefHelper, this);
   }
 
   /**

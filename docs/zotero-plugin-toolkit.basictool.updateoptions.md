@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-protected updateOptions(source?: BasicTool | BasicOptions): void;
+updateOptions(source?: BasicTool | BasicOptions): this;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ protected updateOptions(source?: BasicTool | BasicOptions): void;
 
 **Returns:**
 
-void
+this
 

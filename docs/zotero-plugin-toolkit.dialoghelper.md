@@ -9,8 +9,9 @@ Dialog window helper. A superset of XUL dialog.
 **Signature:**
 
 ```typescript
-export declare class DialogHelper 
+export declare class DialogHelper extends UITool 
 ```
+**Extends:** [UITool](./zotero-plugin-toolkit.uitool.md)
 
 ## Constructors
 
