@@ -75,7 +75,7 @@ export class KeyboardManager extends ManagerTool {
     const reader = event.reader;
     let initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
     // @ts-ignore extra property
-    if (reader[initializedKey]) {
+    if (reader._iframeWindow[initializedKey]) {
       return;
     }
     this._initKeyboardListener(reader._iframeWindow);
@@ -87,7 +87,7 @@ export class KeyboardManager extends ManagerTool {
         )
     );
     // @ts-ignore extra property
-    reader[initializedKey] = true;
+    reader._iframeWindow[initializedKey] = true;
   }
 
   private _initKeyboardListener(win?: Window) {
