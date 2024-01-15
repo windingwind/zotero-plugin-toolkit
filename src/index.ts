@@ -19,6 +19,7 @@ import { FieldHookManager } from "./managers/fieldHook";
 import { ItemBoxManager } from "./managers/itemBox";
 import { LargePrefHelper } from "./helpers/largePref";
 import { KeyboardManager } from "./managers/keyboard";
+import { PatchHelper } from "./helpers/patch";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -26,49 +27,30 @@ import { KeyboardManager } from "./managers/keyboard";
  * To minimize your plugin, import the modules you need manually.
  */
 class ZoteroToolkit extends BasicTool {
-  UI: UITool;
-  Reader: ReaderTool;
-  ExtraField: ExtraFieldTool;
-  FieldHooks: FieldHookManager;
-  ItemTree: ItemTreeManager;
-  ItemBox: ItemBoxManager;
-  Keyboard: KeyboardManager;
-  Prompt: PromptManager;
-  LibraryTabPanel: LibraryTabPanelManager;
-  ReaderTabPanel: ReaderTabPanelManager;
-  ReaderInstance: ReaderInstanceManager;
-  Menu: MenuManager;
-  PreferencePane: PreferencePaneManager;
-  Shortcut: ShortcutManager;
-  Clipboard: typeof ClipboardHelper;
-  FilePicker: typeof FilePickerHelper;
-  ProgressWindow: typeof ProgressWindowHelper;
-  VirtualizedTable: typeof VirtualizedTableHelper;
-  Dialog: typeof DialogHelper;
-  LargePrefObject: typeof LargePrefHelper;
+  UI = new UITool(this);
+  Reader = new ReaderTool(this);
+  ExtraField = new ExtraFieldTool(this);
+  FieldHooks = new FieldHookManager(this);
+  ItemTree = new ItemTreeManager(this);
+  ItemBox = new ItemBoxManager(this);
+  Keyboard = new KeyboardManager(this);
+  Prompt = new PromptManager(this);
+  LibraryTabPanel = new LibraryTabPanelManager(this);
+  ReaderTabPanel = new ReaderTabPanelManager(this);
+  ReaderInstance = new ReaderInstanceManager(this);
+  Menu = new MenuManager(this);
+  PreferencePane = new PreferencePaneManager(this);
+  Shortcut: ShortcutManager = new ShortcutManager(this);
+  Clipboard = makeHelperTool(ClipboardHelper, this);
+  FilePicker = makeHelperTool(FilePickerHelper, this);
+  Patch = makeHelperTool(PatchHelper, this);
+  ProgressWindow = makeHelperTool(ProgressWindowHelper, this);
+  VirtualizedTable = makeHelperTool(VirtualizedTableHelper, this);
+  Dialog = makeHelperTool(DialogHelper, this);
+  LargePrefObject = makeHelperTool(LargePrefHelper, this);
 
   constructor() {
     super();
-    this.UI = new UITool(this);
-    this.Reader = new ReaderTool(this);
-    this.ExtraField = new ExtraFieldTool(this);
-    this.FieldHooks = new FieldHookManager(this);
-    this.ItemTree = new ItemTreeManager(this);
-    this.ItemBox = new ItemBoxManager(this);
-    this.Keyboard = new KeyboardManager(this);
-    this.Prompt = new PromptManager(this);
-    this.LibraryTabPanel = new LibraryTabPanelManager(this);
-    this.ReaderTabPanel = new ReaderTabPanelManager(this);
-    this.ReaderInstance = new ReaderInstanceManager(this);
-    this.Menu = new MenuManager(this);
-    this.PreferencePane = new PreferencePaneManager(this);
-    this.Shortcut = new ShortcutManager(this);
-    this.Clipboard = makeHelperTool(ClipboardHelper, this);
-    this.FilePicker = makeHelperTool(FilePickerHelper, this);
-    this.ProgressWindow = makeHelperTool(ProgressWindowHelper, this);
-    this.VirtualizedTable = makeHelperTool(VirtualizedTableHelper, this);
-    this.Dialog = makeHelperTool(DialogHelper, this);
-    this.LargePrefObject = makeHelperTool(LargePrefHelper, this);
   }
 
   /**

@@ -21,6 +21,7 @@
 |  [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) | Helper class for storing large amounts of data in Zotero preferences. |
 |  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
 |  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
+|  [PatchHelper](./zotero-plugin-toolkit.patchhelper.md) |  |
 |  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xhtml</code>, for Zotero 6 &amp; 7. |
 |  [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) | ProgressWindow helper. |
 |  [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) | Reader instance hooks. |

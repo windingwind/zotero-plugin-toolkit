@@ -6,7 +6,7 @@
 
 > Warning: This API is now obsolete.
 > 
-> Use `PatchManager` instead.
+> Use [PatchHelper](./zotero-plugin-toolkit.patchhelper.md) instead.
 > 
 
 Patch a function

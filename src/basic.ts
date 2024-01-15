@@ -261,7 +261,7 @@ export class BasicTool {
 
   /**
    * Patch a function
-   * @deprecated Use `PatchManager` instead.
+   * @deprecated Use {@link PatchHelper} instead.
    * @param object The owner of the function
    * @param funcSign The signature of the function(function name)
    * @param ownerSign The signature of patch owner to avoid patching again

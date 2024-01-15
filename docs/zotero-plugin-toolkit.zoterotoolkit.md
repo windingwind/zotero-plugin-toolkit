@@ -38,6 +38,7 @@ To minimize your plugin, import the modules you need manually.
 |  [LargePrefObject](./zotero-plugin-toolkit.zoterotoolkit.largeprefobject.md) |  | typeof [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) |  |
 |  [LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md) |  | [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) |  |
 |  [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md) |  | [MenuManager](./zotero-plugin-toolkit.menumanager.md) |  |
+|  [Patch](./zotero-plugin-toolkit.zoterotoolkit.patch.md) |  | typeof [PatchHelper](./zotero-plugin-toolkit.patchhelper.md) |  |
 |  [PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md) |  | [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) |  |
 |  [ProgressWindow](./zotero-plugin-toolkit.zoterotoolkit.progresswindow.md) |  | typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) |  |
 |  [Prompt](./zotero-plugin-toolkit.zoterotoolkit.prompt.md) |  | PromptManager |  |

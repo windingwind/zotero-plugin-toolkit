@@ -2,6 +2,7 @@ import { BasicOptions, BasicTool, ManagerTool } from "../basic";
 
 /**
  * Manage all monkey patching functions.
+ * @deprecated Use {@link PatchHelper} instead.
  */
 export class PatcherManager extends ManagerTool {
   // record wether a patcher is alive or not
