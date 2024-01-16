@@ -26,6 +26,7 @@ import { ProgressWindowHelper } from "./helpers/progressWindow";
 import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
 import { LargePrefHelper } from "./helpers/largePref";
+import { PatchHelper } from "./helpers/patch";
 
 export {
   BasicTool,
@@ -44,6 +45,7 @@ export {
   ReaderInstanceManager,
   MenuManager,
   PreferencePaneManager,
+  PatchHelper,
   PrefPaneOptions,
   ShortcutManager,
   ClipboardHelper,

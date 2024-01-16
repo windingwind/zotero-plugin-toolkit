@@ -12,5 +12,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "typing", "node_modules/zotero-types"]
+  "include": ["src/**/*.ts", "typings", "node_modules/zotero-types"]
 }

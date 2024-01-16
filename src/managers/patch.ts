@@ -2,6 +2,7 @@ import { BasicOptions, BasicTool, ManagerTool } from "../basic";
 
 /**
  * Manage all monkey patching functions.
+ * @deprecated Use {@link PatchHelper} instead.
  */
 export class PatcherManager extends ManagerTool {
   // record wether a patcher is alive or not
@@ -60,9 +61,3 @@ export class PatcherManager extends ManagerTool {
     this.patcherIDMap.clear();
   }
 }
-
-type FunctionNamesOf<T> = keyof FunctionsOf<T>;
-
-type FunctionsOf<T> = {
-  [K in keyof T as T[K] extends Function ? K : never]: T[K];
-};

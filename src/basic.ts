@@ -261,7 +261,7 @@ export class BasicTool {
 
   /**
    * Patch a function
-   * @deprecated Use `PatchManager` instead.
+   * @deprecated Use {@link PatchHelper} instead.
    * @param object The owner of the function
    * @param funcSign The signature of the function(function name)
    * @param ownerSign The signature of patch owner to avoid patching again
@@ -484,11 +484,6 @@ export function unregister(tools: { [key: string | number]: any }) {
   });
 }
 
-declare class HelperTool {
-  constructor(...args: any);
-  updateOptions: BasicTool["updateOptions"];
-}
-
 export function makeHelperTool<T extends typeof HelperTool>(
   cls: T,
   options: BasicTool | BasicOptions
@@ -509,16 +504,15 @@ export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
   });
 }
 
-type FunctionNamesOf<T> = keyof FunctionsOf<T>;
-
-type FunctionsOf<T> = {
-  [K in keyof T as T[K] extends Function ? K : never]: T[K];
-};
-
-interface ListenerCallbackMap {
+declare interface ListenerCallbackMap {
   onMainWindowLoad: (win: Window) => void;
   onMainWindowUnload: (win: Window) => void;
   onPluginUnload: (
     ...args: Parameters<NonNullable<_ZoteroTypes.Plugins.observer["shutdown"]>>
   ) => void;
+}
+
+declare class HelperTool {
+  constructor(...args: any);
+  updateOptions: BasicTool["updateOptions"];
 }
