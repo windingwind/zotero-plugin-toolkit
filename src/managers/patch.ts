@@ -61,9 +61,3 @@ export class PatcherManager extends ManagerTool {
     this.patcherIDMap.clear();
   }
 }
-
-type FunctionNamesOf<T> = keyof FunctionsOf<T>;
-
-type FunctionsOf<T> = {
-  [K in keyof T as T[K] extends Function ? K : never]: T[K];
-};

@@ -1,21 +1,21 @@
 import { BasicTool } from "../basic";
 
 export class PatchHelper extends BasicTool {
-  private data?: PatchData<any, any>;
+  private options?: PatchOptions<any, any>;
   constructor() {
     super();
-    this.data = undefined;
+    this.options = undefined;
   }
 
-  public setData<T, K extends FunctionNamesOf<T>>(data: PatchData<T, K>) {
-    this.data = data;
+  public setData<T, K extends FunctionNamesOf<T>>(options: PatchOptions<T, K>) {
+    this.options = options;
     const Zotero = this.getGlobal("Zotero");
-    const { target, funcSign, patcher } = data;
+    const { target, funcSign, patcher } = options;
     const origin = target[funcSign];
     this.log("patching ", funcSign);
 
     (target[funcSign] as any) = function (this: T, ...args: any[]) {
-      if (data.enabled)
+      if (options.enabled)
         try {
           return (patcher(origin) as Function).apply(this, args);
         } catch (e) {
@@ -27,27 +27,21 @@ export class PatchHelper extends BasicTool {
   }
 
   public enable() {
-    if (!this.data) throw new Error("No patch data set");
-    this.data.enabled = true;
+    if (!this.options) throw new Error("No patch data set");
+    this.options.enabled = true;
     return this;
   }
 
   public disable() {
-    if (!this.data) throw new Error("No patch data set");
-    this.data.enabled = false;
+    if (!this.options) throw new Error("No patch data set");
+    this.options.enabled = false;
     return this;
   }
 }
 
-interface PatchData<T, K extends FunctionNamesOf<T>> {
+declare interface PatchOptions<T, K extends FunctionNamesOf<T>> {
   target: T;
   funcSign: K;
   patcher: (origin: T[K]) => T[K];
   enabled: boolean;
 }
-
-type FunctionNamesOf<T> = keyof FunctionsOf<T>;
-
-type FunctionsOf<T> = {
-  [K in keyof T as T[K] extends Function ? K : never]: T[K];
-};
