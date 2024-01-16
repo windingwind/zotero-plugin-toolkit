@@ -258,6 +258,11 @@ export class KeyModifier implements KeyModifierStatus {
         }
       }
     }
+    else {
+      if (this.control !== newMod.control || this.meta !== newMod.meta) {
+        return false;
+      }
+    }
     return true;
   }
 
