@@ -257,8 +257,7 @@ export class KeyModifier implements KeyModifierStatus {
           return false;
         }
       }
-    }
-    else {
+    } else {
       if (this.control !== newMod.control || this.meta !== newMod.meta) {
         return false;
       }
