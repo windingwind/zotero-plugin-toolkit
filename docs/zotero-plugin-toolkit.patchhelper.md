@@ -23,5 +23,5 @@ export declare class PatchHelper extends BasicTool
 |  --- | --- | --- |
 |  [disable()](./zotero-plugin-toolkit.patchhelper.disable.md) |  |  |
 |  [enable()](./zotero-plugin-toolkit.patchhelper.enable.md) |  |  |
-|  [setData(data)](./zotero-plugin-toolkit.patchhelper.setdata.md) |  |  |
+|  [setData(options)](./zotero-plugin-toolkit.patchhelper.setdata.md) |  |  |
 

@@ -32,7 +32,7 @@
   "devDependencies": {
     "@microsoft/api-documenter": "^7.23.16",
     "@microsoft/api-extractor": "^7.39.1",
-    "@types/react": "^18.2.46",
+    "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@types/react-intl": "^3.0.0",
     "husky": "^8.0.3",

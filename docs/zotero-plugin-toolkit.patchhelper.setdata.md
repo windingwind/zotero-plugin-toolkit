@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-setData<T, K extends FunctionNamesOf<T>>(data: PatchData<T, K>): this;
+setData<T, K extends FunctionNamesOf<T>>(options: PatchOptions<T, K>): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  data | PatchData&lt;T, K&gt; |  |
+|  options | PatchOptions&lt;T, K&gt; |  |
 
 **Returns:**
 
