@@ -20,6 +20,7 @@ import { ItemBoxManager } from "./managers/itemBox";
 import { LargePrefHelper } from "./helpers/largePref";
 import { KeyboardManager } from "./managers/keyboard";
 import { PatchHelper } from "./helpers/patch";
+import { DocumentListenerManager } from "./managers/documentListener";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -41,6 +42,7 @@ class ZoteroToolkit extends BasicTool {
   Menu = new MenuManager(this);
   PreferencePane = new PreferencePaneManager(this);
   Shortcut: ShortcutManager = new ShortcutManager(this);
+  DocumentListener = new DocumentListenerManager(this);
   Clipboard = makeHelperTool(ClipboardHelper, this);
   FilePicker = makeHelperTool(FilePickerHelper, this);
   Patch = makeHelperTool(PatchHelper, this);
