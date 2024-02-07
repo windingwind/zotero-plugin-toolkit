@@ -80,7 +80,9 @@ export class KeyboardManager extends ManagerTool {
     }
     this._initKeyboardListener(reader._iframeWindow);
     waitUntil(
-      () => (reader._internalReader?._primaryView as any)?._iframeWindow,
+      () =>
+        !Components.utils.isDeadWrapper(reader._internalReader) &&
+        (reader._internalReader?._primaryView as any)?._iframeWindow,
       () =>
         this._initKeyboardListener(
           (reader._internalReader._primaryView as any)?._iframeWindow
