@@ -75,10 +75,9 @@ export class Prompt {
             position: "fixed",
             left: "0",
             top: "0",
-            backgroundColor: "rgba(220, 220, 220, 0.4)",
+            backgroundColor: "transparent",
             width: "100%",
             height: "100%",
-            opacity: "0.5",
           },
           listeners: [
             {
@@ -620,37 +619,38 @@ export class Prompt {
         top: 10%;
         width: 50%;
         border-radius: var(---radius---);
-        border: 1px solid #bdbdbd;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: white;
         font-size: 18px;
         box-shadow: 0px 1.8px 7.3px rgba(0, 0, 0, 0.071),
                     0px 6.3px 24.7px rgba(0, 0, 0, 0.112),
                     0px 30px 90px rgba(0, 0, 0, 0.2);
         font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei Light", sans-serif;
+        background-color: var(--material-background) !important;
+        border: var(--material-border-quarternary) !important;
       }
       
       /* input */
       .prompt-container .input-container  {
         width: 100%;
       }
-      
+
       .input-container input {
-        width: 100%;
+        width: -moz-available;
         height: 40px;
         padding: 24px;
-        border-radius: 50%;
         border: none;
         outline: none;
         font-size: 18px;
         margin: 0 !important;
+        border-radius: var(---radius---);
+        background-color: var(--material-background);
       }
       
       .input-container .cta {
-        border-bottom: 1px solid #f6f6f6;  
+        border-bottom: var(--material-border-quarternary);
         margin: 5px auto;
       }
       
@@ -699,14 +699,14 @@ export class Prompt {
       
       .commands-container .command .content .aux .label {
         font-size: 15px;
-        color: #5a5a5a;
+        color: var(--fill-primary);
         padding: 2px 6px;
-        background-color: #fafafa;
+        background-color: var(--color-background);
         border-radius: 5px;
       }
       
       .commands-container .selected {
-          background-color: rgba(0, 0, 0, 0.075);
+          background-color: var(--material-mix-quinary);
       }
 
       .commands-container .highlight {
@@ -714,21 +714,10 @@ export class Prompt {
       }
 
       .tip {
-        color: #5a5a5a;
+        color: var(--fill-primary);
         text-align: center;
         padding: 12px 12px;
         font-size: 18px;
-      }
-      
-      .current-value {
-        background-color: #a7b8c1;
-        color: white;
-        border-radius: 5px;
-        padding: 0 5px;
-        margin-left: 10px;
-        font-size: 14px;
-        vertical-align: middle;
-        letter-spacing: 0.05em;
       }
 
       /* instructions */
@@ -737,10 +726,10 @@ export class Prompt {
         align-content: center;
         justify-content: center;
         font-size: 15px;
-        color: rgba(0, 0, 0, 0.4);
         height: 2.5em;
         width: 100%;
-        border-top: 1px solid #f6f6f6;
+        border-top: var(--material-border-quarternary);
+        color: var(--fill-secondary);
         margin-top: 5px;
       }
       
