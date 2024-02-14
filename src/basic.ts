@@ -477,7 +477,7 @@ export function unregister(tools: { [key: string | number]: any }) {
   Object.values(tools).forEach((tool) => {
     if (
       tool instanceof ManagerTool ||
-      typeof tool.unregisterAll === "function"
+      typeof tool?.unregisterAll === "function"
     ) {
       tool.unregisterAll();
     }
