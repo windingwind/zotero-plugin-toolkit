@@ -245,7 +245,9 @@ export class UITool extends BasicTool {
             tagName
           ) as HTMLElement | SVGElement;
         }
-        this.elementCache.push(new WeakRef(realElem));
+        if (props.enableElementRecord) {
+          this.elementCache.push(new WeakRef(realElem));
+        }
       }
 
       if (props.id) {
