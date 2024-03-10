@@ -51,7 +51,7 @@ interface VirtualizedTableProps {
   // Array of column objects like the ones in itemTreeColumns.js
   columns?: Array<ColumnOptions>;
   onColumnPickerMenu?: (event: Event) => void;
-  onColumnSort?: (event: Event) => void;
+  onColumnSort?: (columnIndex: number, ascending: boolean) => void;
   getColumnPrefs?: () => { [dataKey: string]: any };
   storeColumnPrefs?: (prefs: { [dataKey: string]: any }) => void;
   getDefaultColumnOrder?: () => { [dataKey: string]: any };
