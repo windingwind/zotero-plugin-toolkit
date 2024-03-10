@@ -1,4 +1,4 @@
-import { PatchHelper } from "../_doc";
+import { PatchHelper } from "../helpers/patch";
 import { BasicOptions, BasicTool, ManagerTool } from "../basic";
 
 /**
@@ -25,23 +25,25 @@ export class FieldHookManager extends ManagerTool {
     super(base);
     const _thisHelper = this;
     for (const type of Object.keys(this.patchHelpers) as Array<PatchType>) {
-      this.patchHelpers[type].setData({
-        target: this.getGlobal("Zotero").Items,
+      const helper = this.patchHelpers[type];
+      helper.setData({
+        target: this.getGlobal("Zotero").Item.prototype as typeof Zotero.Item,
         funcSign: type,
         patcher: (original) =>
-          function (field: string, ...args: any[]) {
+          function (field: string | number, ...args: any[]) {
             // @ts-ignore
             const originalThis = this;
             const handler = _thisHelper.data[type][field];
             if (typeof handler === "function") {
               try {
                 // @ts-ignore
-                return handler(field, ...args);
+                return handler(field, args[0], args[1], originalThis, original);
               } catch (e) {
                 return field + String(e);
               }
             }
-            return original.apply(originalThis, arguments);
+            // @ts-ignore
+            return original.apply(originalThis, [field, ...args]);
           },
         enabled: true,
       });
@@ -134,7 +136,7 @@ export interface FieldHooksGlobal {
 }
 
 export declare function getFieldHookFunc(
-  field: string,
+  field: string | number,
   unformatted: boolean,
   includeBaseMapped: boolean,
   item: Zotero.Item,
@@ -142,7 +144,7 @@ export declare function getFieldHookFunc(
 ): string;
 
 export declare function setFieldHookFunc(
-  field: string,
+  field: string | number,
   value: string,
   loadIn: boolean,
   item: Zotero.Item,
@@ -150,7 +152,7 @@ export declare function setFieldHookFunc(
 ): boolean;
 
 export declare function isFieldOfBaseHookFunc(
-  field: string,
-  baseField: string,
+  field: string | number,
+  baseField: string | number,
   original: Function
 ): boolean;
