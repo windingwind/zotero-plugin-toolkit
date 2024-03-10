@@ -136,7 +136,7 @@ export interface FieldHooksGlobal {
 }
 
 export declare function getFieldHookFunc(
-  field: string | number,
+  field: string,
   unformatted: boolean,
   includeBaseMapped: boolean,
   item: Zotero.Item,
@@ -144,7 +144,7 @@ export declare function getFieldHookFunc(
 ): string;
 
 export declare function setFieldHookFunc(
-  field: string | number,
+  field: string,
   value: string,
   loadIn: boolean,
   item: Zotero.Item,
@@ -152,7 +152,7 @@ export declare function setFieldHookFunc(
 ): boolean;
 
 export declare function isFieldOfBaseHookFunc(
-  field: string | number,
+  field: string,
   baseField: string | number,
   original: Function
 ): boolean;
