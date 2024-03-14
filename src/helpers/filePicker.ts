@@ -62,9 +62,14 @@ export class FilePickerHelper<
   }
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
-    const backend = this.getGlobal("require")(
-      "zotero/modules/filePicker"
-    ).default;
+    let backend;
+    if (Zotero.platformMajorVersion >= 115) {
+      backend = ChromeUtils.importESModule(
+        "chrome://zotero/content/modules/filePicker.mjs"
+      ).FilePicker;
+    } else {
+      backend = this.getGlobal("require")("zotero/modules/filePicker").default;
+    }
     const fp = new backend();
     fp.init(
       this.window || this.getGlobal("window"),
