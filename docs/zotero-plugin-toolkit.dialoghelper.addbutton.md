@@ -17,12 +17,71 @@ addButton(label: string, id?: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  label | string | Button label |
-|  id | string | _(Optional)_ Button id. The corresponding id of the last button user clicks before window exit will be set to <code>dialogData._lastButtonId</code>. |
-|  options | { noClose?: boolean; callback?: (ev: Event) =&gt; any; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+label
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Button label
+
+
+</td></tr>
+<tr><td>
+
+id
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Button id. The corresponding id of the last button user clicks before window exit will be set to `dialogData._lastButtonId`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ noClose?: boolean; callback?: (ev: Event) =&gt; any; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

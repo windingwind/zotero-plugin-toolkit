@@ -19,12 +19,77 @@ register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerDeck: XUL
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tabLabel | string | Label of panel tab. |
-|  renderPanelHook | (panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: \_ZoteroTypes.ReaderInstance) =&gt; void | <p>Called when panel is ready. Add elements to the panel.</p><p>The panel might be <code>undefined</code> when opening a PDF without parent item.</p><p>The owner deck is the top container of right-side bar.</p><p>The readerInstance is the reader of current tabpanel.</p> |
-|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | _(Optional)_ Other optional parameters. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tabLabel
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Label of panel tab.
+
+
+</td></tr>
+<tr><td>
+
+renderPanelHook
+
+
+</td><td>
+
+(panel: XUL.TabPanel, ownerDeck: XUL.Deck, ownerWindow: Window, readerInstance: \_ZoteroTypes.ReaderInstance) =&gt; void
+
+
+</td><td>
+
+Called when panel is ready. Add elements to the panel.
+
+The panel might be `undefined` when opening a PDF without parent item.
+
+The owner deck is the top container of right-side bar.
+
+The readerInstance is the reader of current tabpanel.
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; }
+
+
+</td><td>
+
+_(Optional)_ Other optional parameters.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;string&gt;

@@ -16,11 +16,55 @@ unregister(key: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string | Column dataKey, should be same as the one used in <code>register</code> |
-|  options | { skipGetField?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Column dataKey, should be same as the one used in `register`
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ skipGetField?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;void&gt;

@@ -14,10 +14,39 @@ unregister(callback: KeyboardCallback): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  callback | KeyboardCallback | The callback function. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+callback
+
+
+</td><td>
+
+KeyboardCallback
+
+
+</td><td>
+
+The callback function.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

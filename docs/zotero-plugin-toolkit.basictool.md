@@ -14,34 +14,348 @@ export declare class BasicTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(data)](./zotero-plugin-toolkit.basictool._constructor_.md) |  | Constructs a new instance of the <code>BasicTool</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(data)](./zotero-plugin-toolkit.basictool._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `BasicTool` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [\_basicOptions](./zotero-plugin-toolkit.basictool._basicoptions.md) | <code>protected</code> | BasicOptions | configurations. |
-|  [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md) | <code>readonly</code> | BasicOptions |  |
-|  [patchSign](./zotero-plugin-toolkit.basictool.patchsign.md) | <p><code>protected</code></p><p><code>readonly</code></p> | string |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\_basicOptions](./zotero-plugin-toolkit.basictool._basicoptions.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+BasicOptions
+
+
+</td><td>
+
+configurations.
+
+
+</td></tr>
+<tr><td>
+
+[basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+BasicOptions
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[patchSign](./zotero-plugin-toolkit.basictool.patchsign.md)
+
+
+</td><td>
+
+`protected`
+
+`readonly`
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [\_ensureMainWindowListener()](./zotero-plugin-toolkit.basictool._ensuremainwindowlistener.md) | <code>protected</code> | Ensure the main window listener is registered. |
-|  [\_ensurePluginListener()](./zotero-plugin-toolkit.basictool._ensurepluginlistener.md) | <code>protected</code> | Ensure the plugin listener is registered. |
-|  [\_ensureRemoveListener()](./zotero-plugin-toolkit.basictool._ensureremovelistener.md) | <code>protected</code> | Remove all Zotero event listener callbacks when the last callback is removed. |
-|  [addListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.addlistenercallback.md) |  | Add a Zotero event listener callback |
-|  [createXULElement(doc, type)](./zotero-plugin-toolkit.basictool.createxulelement.md) |  | <p>Create an XUL element</p><p>For Zotero 6, use <code>createElementNS</code>;</p><p>For Zotero 7+, use <code>createXULElement</code>.</p> |
-|  [getDOMParser()](./zotero-plugin-toolkit.basictool.getdomparser.md) |  | <p>Get DOMParser.</p><p>For Zotero 6: mainWindow.DOMParser or nsIDOMParser</p><p>For Zotero 7: Firefox 102 support DOMParser natively</p> |
-|  [getGlobal(k)](./zotero-plugin-toolkit.basictool.getglobal_12.md) |  | Get global variables. |
-|  [getZotero()](./zotero-plugin-toolkit.basictool.getzotero.md) | <code>static</code> |  |
-|  [isXULElement(elem)](./zotero-plugin-toolkit.basictool.isxulelement.md) |  | If it's an XUL element |
-|  [isZotero7()](./zotero-plugin-toolkit.basictool.iszotero7.md) |  | Check if it's running on Zotero 7 (Firefox 102) |
-|  [log(data)](./zotero-plugin-toolkit.basictool.log.md) |  | Output to both Zotero.debug and console.log |
-|  [patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.basictool.patch.md) |  | Patch a function |
-|  [removeListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.removelistenercallback.md) |  | Remove a Zotero event listener callback |
-|  [updateOptions(source)](./zotero-plugin-toolkit.basictool.updateoptions.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\_ensureMainWindowListener()](./zotero-plugin-toolkit.basictool._ensuremainwindowlistener.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Ensure the main window listener is registered.
+
+
+</td></tr>
+<tr><td>
+
+[\_ensurePluginListener()](./zotero-plugin-toolkit.basictool._ensurepluginlistener.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Ensure the plugin listener is registered.
+
+
+</td></tr>
+<tr><td>
+
+[\_ensureRemoveListener()](./zotero-plugin-toolkit.basictool._ensureremovelistener.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Remove all Zotero event listener callbacks when the last callback is removed.
+
+
+</td></tr>
+<tr><td>
+
+[addListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.addlistenercallback.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Add a Zotero event listener callback
+
+
+</td></tr>
+<tr><td>
+
+[createXULElement(doc, type)](./zotero-plugin-toolkit.basictool.createxulelement.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create an XUL element
+
+For Zotero 6, use `createElementNS`<!-- -->;
+
+For Zotero 7+, use `createXULElement`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[getDOMParser()](./zotero-plugin-toolkit.basictool.getdomparser.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get DOMParser.
+
+For Zotero 6: mainWindow.DOMParser or nsIDOMParser
+
+For Zotero 7: Firefox 102 support DOMParser natively
+
+
+</td></tr>
+<tr><td>
+
+[getGlobal(k)](./zotero-plugin-toolkit.basictool.getglobal_12.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get global variables.
+
+
+</td></tr>
+<tr><td>
+
+[getZotero()](./zotero-plugin-toolkit.basictool.getzotero.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isXULElement(elem)](./zotero-plugin-toolkit.basictool.isxulelement.md)
+
+
+</td><td>
+
+
+</td><td>
+
+If it's an XUL element
+
+
+</td></tr>
+<tr><td>
+
+[isZotero7()](./zotero-plugin-toolkit.basictool.iszotero7.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Check if it's running on Zotero 7 (Firefox 102)
+
+
+</td></tr>
+<tr><td>
+
+[log(data)](./zotero-plugin-toolkit.basictool.log.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Output to both Zotero.debug and console.log
+
+
+</td></tr>
+<tr><td>
+
+[patch(object, funcSign, ownerSign, patcher)](./zotero-plugin-toolkit.basictool.patch.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Patch a function
+
+
+</td></tr>
+<tr><td>
+
+[removeListenerCallback(type, callback)](./zotero-plugin-toolkit.basictool.removelistenercallback.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Remove a Zotero event listener callback
+
+
+</td></tr>
+<tr><td>
+
+[updateOptions(source)](./zotero-plugin-toolkit.basictool.updateoptions.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

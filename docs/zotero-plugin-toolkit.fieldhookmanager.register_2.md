@@ -14,12 +14,67 @@ register(type: "isFieldOfBase", field: string, hook: typeof isFieldOfBaseHookFun
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "isFieldOfBase" |  |
-|  field | string |  |
-|  hook | typeof isFieldOfBaseHookFunc | ( field: string, baseField: string, original: Function) =<!-- -->&gt; void |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"isFieldOfBase"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+field
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hook
+
+
+</td><td>
+
+typeof isFieldOfBaseHookFunc
+
+
+</td><td>
+
+( field: string, baseField: string, original: Function) =<!-- -->&gt; void
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

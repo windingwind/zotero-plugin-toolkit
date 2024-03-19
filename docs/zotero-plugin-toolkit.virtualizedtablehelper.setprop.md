@@ -14,11 +14,55 @@ setProp<K extends keyof VirtualizedTableProps, V extends VirtualizedTableProps[K
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  propName | K | Property name |
-|  propValue | V | Property value |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+propName
+
+
+</td><td>
+
+K
+
+
+</td><td>
+
+Property name
+
+
+</td></tr>
+<tr><td>
+
+propValue
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+Property value
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)

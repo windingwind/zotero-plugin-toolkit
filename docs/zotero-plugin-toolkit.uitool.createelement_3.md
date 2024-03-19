@@ -14,12 +14,67 @@ createElement<SVG_TAG extends keyof SVGElementTagNameMap, T extends SVGElementTa
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document |  |
-|  tagName | SVG\_TAG |  |
-|  props | SVGElementProps | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+SVG\_TAG
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+props
+
+
+</td><td>
+
+SVGElementProps
+
+
+</td><td>
+
+_(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 T

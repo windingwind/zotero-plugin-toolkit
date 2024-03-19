@@ -19,11 +19,51 @@ register(type: "prefs", keyOptions: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "prefs" |  |
-|  keyOptions | { id: string; key: string; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"prefs"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+keyOptions
+
+
+</td><td>
+
+{ id: string; key: string; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

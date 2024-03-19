@@ -44,16 +44,102 @@ new ClipboardHelper().addText("plain", "text/unicode")
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./zotero-plugin-toolkit.clipboardhelper._constructor_.md) |  | Constructs a new instance of the <code>ClipboardHelper</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)()](./zotero-plugin-toolkit.clipboardhelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ClipboardHelper` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [addFile(path)](./zotero-plugin-toolkit.clipboardhelper.addfile.md) |  |  |
-|  [addImage(source)](./zotero-plugin-toolkit.clipboardhelper.addimage.md) |  |  |
-|  [addText(source, type)](./zotero-plugin-toolkit.clipboardhelper.addtext.md) |  |  |
-|  [copy()](./zotero-plugin-toolkit.clipboardhelper.copy.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[addFile(path)](./zotero-plugin-toolkit.clipboardhelper.addfile.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[addImage(source)](./zotero-plugin-toolkit.clipboardhelper.addimage.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[addText(source, type)](./zotero-plugin-toolkit.clipboardhelper.addtext.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[copy()](./zotero-plugin-toolkit.clipboardhelper.copy.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

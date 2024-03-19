@@ -18,12 +18,69 @@ register(type: "initialized", id: string, hook: readerInstanceHook): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "initialized" | hook type |
-|  id | string | hook id |
-|  hook | readerInstanceHook |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"initialized"
+
+
+</td><td>
+
+hook type
+
+
+</td></tr>
+<tr><td>
+
+id
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+hook id
+
+
+</td></tr>
+<tr><td>
+
+hook
+
+
+</td><td>
+
+readerInstanceHook
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

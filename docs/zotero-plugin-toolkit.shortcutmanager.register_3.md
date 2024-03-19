@@ -23,11 +23,51 @@ register(type: "custom", keyOptions: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "custom" |  |
-|  keyOptions | { id: string; key: string; callback: (keyOptions: CustomKey) =&gt; any; modifiers?: string; register: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; unregister: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"custom"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+keyOptions
+
+
+</td><td>
+
+{ id: string; key: string; callback: (keyOptions: CustomKey) =&gt; any; modifiers?: string; register: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; unregister: (keyOptions: CustomKey) =&gt; boolean \| Promise&lt;boolean&gt;; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;boolean&gt; \| boolean

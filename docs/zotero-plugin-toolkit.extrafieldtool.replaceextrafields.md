@@ -14,11 +14,51 @@ replaceExtraFields(item: Zotero.Item, fields: Map<string, string>): Promise<void
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  item | Zotero.Item |  |
-|  fields | Map&lt;string, string&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+item
+
+
+</td><td>
+
+Zotero.Item
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+fields
+
+
+</td><td>
+
+Map&lt;string, string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;void&gt;

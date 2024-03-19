@@ -14,12 +14,67 @@ createElement<XUL_TAG extends keyof XULElementTagNameMap, T extends XULElementTa
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document |  |
-|  tagName | XUL\_TAG |  |
-|  props | XULElementProps | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+XUL\_TAG
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+props
+
+
+</td><td>
+
+XULElementProps
+
+
+</td><td>
+
+_(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 T

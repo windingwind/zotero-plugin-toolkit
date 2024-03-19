@@ -15,10 +15,76 @@ export declare class ReaderTool extends BasicTool
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [getReader(waitTime)](./zotero-plugin-toolkit.readertool.getreader.md) |  | Get the selected tab reader. |
-|  [getSelectedAnnotationData(reader)](./zotero-plugin-toolkit.readertool.getselectedannotationdata.md) |  | Get the selected annotation data. |
-|  [getSelectedText(reader)](./zotero-plugin-toolkit.readertool.getselectedtext.md) |  | Get the text selection of reader. |
-|  [getWindowReader()](./zotero-plugin-toolkit.readertool.getwindowreader.md) |  | Get all window readers. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getReader(waitTime)](./zotero-plugin-toolkit.readertool.getreader.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the selected tab reader.
+
+
+</td></tr>
+<tr><td>
+
+[getSelectedAnnotationData(reader)](./zotero-plugin-toolkit.readertool.getselectedannotationdata.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the selected annotation data.
+
+
+</td></tr>
+<tr><td>
+
+[getSelectedText(reader)](./zotero-plugin-toolkit.readertool.getselectedtext.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the text selection of reader.
+
+
+</td></tr>
+<tr><td>
+
+[getWindowReader()](./zotero-plugin-toolkit.readertool.getwindowreader.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get all window readers.
+
+
+</td></tr>
+</tbody></table>

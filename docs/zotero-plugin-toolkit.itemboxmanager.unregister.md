@@ -19,11 +19,53 @@ unregister(field: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  field | string |  |
-|  options | { skipIsFieldOfBase?: boolean; skipGetField?: boolean; skipSetField?: boolean; skipRefresh?: boolean; } | _(Optional)_ Skip unregister of certain hooks. This is useful when the hook is not initialized by this instance |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+field
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ skipIsFieldOfBase?: boolean; skipGetField?: boolean; skipSetField?: boolean; skipRefresh?: boolean; }
+
+
+</td><td>
+
+_(Optional)_ Skip unregister of certain hooks. This is useful when the hook is not initialized by this instance
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

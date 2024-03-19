@@ -14,12 +14,67 @@ register(type: "setField", field: string, hook: typeof setFieldHookFunc): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "setField" |  |
-|  field | string |  |
-|  hook | typeof setFieldHookFunc | ( field: string, value: string, loadIn: boolean, item: Zotero.Item, original: Function) =<!-- -->&gt; void |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"setField"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+field
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hook
+
+
+</td><td>
+
+typeof setFieldHookFunc
+
+
+</td><td>
+
+( field: string, value: string, loadIn: boolean, item: Zotero.Item, original: Function) =<!-- -->&gt; void
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

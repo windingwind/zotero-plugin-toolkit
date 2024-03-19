@@ -15,10 +15,76 @@ export declare class ExtraFieldTool extends BasicTool
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [getExtraField(item, key)](./zotero-plugin-toolkit.extrafieldtool.getextrafield.md) |  | Get extra field value by key. If it does not exists, return undefined. |
-|  [getExtraFields(item, backend)](./zotero-plugin-toolkit.extrafieldtool.getextrafields.md) |  | Get all extra fields |
-|  [replaceExtraFields(item, fields)](./zotero-plugin-toolkit.extrafieldtool.replaceextrafields.md) |  | Replace extra field of an item. |
-|  [setExtraField(item, key, value)](./zotero-plugin-toolkit.extrafieldtool.setextrafield.md) |  | Set an key-value pair to the item's extra field |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getExtraField(item, key)](./zotero-plugin-toolkit.extrafieldtool.getextrafield.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get extra field value by key. If it does not exists, return undefined.
+
+
+</td></tr>
+<tr><td>
+
+[getExtraFields(item, backend)](./zotero-plugin-toolkit.extrafieldtool.getextrafields.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get all extra fields
+
+
+</td></tr>
+<tr><td>
+
+[replaceExtraFields(item, fields)](./zotero-plugin-toolkit.extrafieldtool.replaceextrafields.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Replace extra field of an item.
+
+
+</td></tr>
+<tr><td>
+
+[setExtraField(item, key, value)](./zotero-plugin-toolkit.extrafieldtool.setextrafield.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set an key-value pair to the item's extra field
+
+
+</td></tr>
+</tbody></table>

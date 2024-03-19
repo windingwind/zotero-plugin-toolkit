@@ -15,23 +15,173 @@ export declare class DialogHelper extends UITool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(row, column)](./zotero-plugin-toolkit.dialoghelper._constructor_.md) |  | Create a dialog helper with row \* column grids. |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(row, column)](./zotero-plugin-toolkit.dialoghelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create a dialog helper with row \* column grids.
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [dialogData](./zotero-plugin-toolkit.dialoghelper.dialogdata.md) |  | DialogData | Passed to dialog window for data-binding and lifecycle controls. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md) |
-|  [window](./zotero-plugin-toolkit.dialoghelper.window.md) |  | Window | Dialog window instance |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[dialogData](./zotero-plugin-toolkit.dialoghelper.dialogdata.md)
+
+
+</td><td>
+
+
+</td><td>
+
+DialogData
+
+
+</td><td>
+
+Passed to dialog window for data-binding and lifecycle controls. See [DialogHelper.setDialogData()](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md)
+
+
+</td></tr>
+<tr><td>
+
+[window](./zotero-plugin-toolkit.dialoghelper.window.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Window
+
+
+</td><td>
+
+Dialog window instance
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [addButton(label, id, options)](./zotero-plugin-toolkit.dialoghelper.addbutton.md) |  | Add a control button to the bottom of the dialog. |
-|  [addCell(row, column, elementProps, cellFlex)](./zotero-plugin-toolkit.dialoghelper.addcell.md) |  | Add a cell at (row, column). Index starts from 0. |
-|  [open(title, windowFeatures)](./zotero-plugin-toolkit.dialoghelper.open.md) |  | Open the dialog |
-|  [setDialogData(dialogData)](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md) |  | Dialog data. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[addButton(label, id, options)](./zotero-plugin-toolkit.dialoghelper.addbutton.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Add a control button to the bottom of the dialog.
+
+
+</td></tr>
+<tr><td>
+
+[addCell(row, column, elementProps, cellFlex)](./zotero-plugin-toolkit.dialoghelper.addcell.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Add a cell at (row, column). Index starts from 0.
+
+
+</td></tr>
+<tr><td>
+
+[open(title, windowFeatures)](./zotero-plugin-toolkit.dialoghelper.open.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Open the dialog
+
+
+</td></tr>
+<tr><td>
+
+[setDialogData(dialogData)](./zotero-plugin-toolkit.dialoghelper.setdialogdata.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Dialog data.
+
+
+</td></tr>
+</tbody></table>

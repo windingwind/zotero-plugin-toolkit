@@ -15,16 +15,108 @@ export declare class ItemBoxManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.itemboxmanager._constructor_.md) |  | Constructs a new instance of the <code>ItemBoxManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.itemboxmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ItemBoxManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [refresh()](./zotero-plugin-toolkit.itemboxmanager.refresh.md) |  | Refresh all item boxes. |
-|  [register(field, displayName, getFieldHook, options)](./zotero-plugin-toolkit.itemboxmanager.register.md) |  | Register a custom row |
-|  [unregister(field, options)](./zotero-plugin-toolkit.itemboxmanager.unregister.md) |  | Unregister a row of specific field. |
-|  [unregisterAll()](./zotero-plugin-toolkit.itemboxmanager.unregisterall.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[refresh()](./zotero-plugin-toolkit.itemboxmanager.refresh.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Refresh all item boxes.
+
+
+</td></tr>
+<tr><td>
+
+[register(field, displayName, getFieldHook, options)](./zotero-plugin-toolkit.itemboxmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a custom row
+
+
+</td></tr>
+<tr><td>
+
+[unregister(field, options)](./zotero-plugin-toolkit.itemboxmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister a row of specific field.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.itemboxmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

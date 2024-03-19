@@ -15,28 +15,254 @@ export declare class KeyModifier implements KeyModifierStatus
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(raw, options)](./zotero-plugin-toolkit.keymodifier._constructor_.md) |  | Constructs a new instance of the <code>KeyModifier</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(raw, options)](./zotero-plugin-toolkit.keymodifier._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `KeyModifier` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [accel](./zotero-plugin-toolkit.keymodifier.accel.md) |  | boolean |  |
-|  [alt](./zotero-plugin-toolkit.keymodifier.alt.md) |  | boolean |  |
-|  [control](./zotero-plugin-toolkit.keymodifier.control.md) |  | boolean |  |
-|  [key](./zotero-plugin-toolkit.keymodifier.key.md) |  | string |  |
-|  [meta](./zotero-plugin-toolkit.keymodifier.meta.md) |  | boolean |  |
-|  [shift](./zotero-plugin-toolkit.keymodifier.shift.md) |  | boolean |  |
-|  [useAccel](./zotero-plugin-toolkit.keymodifier.useaccel.md) |  | boolean |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[accel](./zotero-plugin-toolkit.keymodifier.accel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[alt](./zotero-plugin-toolkit.keymodifier.alt.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[control](./zotero-plugin-toolkit.keymodifier.control.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[key](./zotero-plugin-toolkit.keymodifier.key.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[meta](./zotero-plugin-toolkit.keymodifier.meta.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[shift](./zotero-plugin-toolkit.keymodifier.shift.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[useAccel](./zotero-plugin-toolkit.keymodifier.useaccel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [equals(newMod)](./zotero-plugin-toolkit.keymodifier.equals.md) |  | Check if the current KeyModifier equals to another KeyModifier. |
-|  [getLocalized()](./zotero-plugin-toolkit.keymodifier.getlocalized.md) |  | Get the localized string representation of the KeyModifier. |
-|  [getRaw()](./zotero-plugin-toolkit.keymodifier.getraw.md) |  | Get the raw string representation of the KeyModifier. |
-|  [merge(newMod, options)](./zotero-plugin-toolkit.keymodifier.merge.md) |  | Merge another KeyModifier into this one. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[equals(newMod)](./zotero-plugin-toolkit.keymodifier.equals.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Check if the current KeyModifier equals to another KeyModifier.
+
+
+</td></tr>
+<tr><td>
+
+[getLocalized()](./zotero-plugin-toolkit.keymodifier.getlocalized.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the localized string representation of the KeyModifier.
+
+
+</td></tr>
+<tr><td>
+
+[getRaw()](./zotero-plugin-toolkit.keymodifier.getraw.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the raw string representation of the KeyModifier.
+
+
+</td></tr>
+<tr><td>
+
+[merge(newMod, options)](./zotero-plugin-toolkit.keymodifier.merge.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Merge another KeyModifier into this one.
+
+
+</td></tr>
+</tbody></table>

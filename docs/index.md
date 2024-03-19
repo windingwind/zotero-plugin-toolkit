@@ -6,7 +6,24 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [zotero-plugin-toolkit](./zotero-plugin-toolkit.md) |  |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[zotero-plugin-toolkit](./zotero-plugin-toolkit.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -15,15 +15,96 @@ export declare class LibraryTabPanelManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.librarytabpanelmanager._constructor_.md) |  | Constructs a new instance of the <code>LibraryTabPanelManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.librarytabpanelmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `LibraryTabPanelManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.librarytabpanelmanager.register.md) |  | Register a tabpanel in library. |
-|  [unregister(tabId)](./zotero-plugin-toolkit.librarytabpanelmanager.unregister.md) |  | Unregister the library tabpanel. |
-|  [unregisterAll()](./zotero-plugin-toolkit.librarytabpanelmanager.unregisterall.md) |  | Unregister all library tabpanel. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.librarytabpanelmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a tabpanel in library.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(tabId)](./zotero-plugin-toolkit.librarytabpanelmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister the library tabpanel.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.librarytabpanelmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all library tabpanel.
+
+
+</td></tr>
+</tbody></table>

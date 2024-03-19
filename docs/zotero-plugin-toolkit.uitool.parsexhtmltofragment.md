@@ -16,12 +16,71 @@ parseXHTMLToFragment(str: string, entities?: string[], defaultXUL?: boolean): Do
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  str | string | xhtml raw text |
-|  entities | string\[\] | _(Optional)_ dtd file list ("chrome://xxx.dtd") |
-|  defaultXUL | boolean | _(Optional)_ true for default XUL namespace |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+str
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+xhtml raw text
+
+
+</td></tr>
+<tr><td>
+
+entities
+
+
+</td><td>
+
+string\[\]
+
+
+</td><td>
+
+_(Optional)_ dtd file list ("chrome://xxx.dtd")
+
+
+</td></tr>
+<tr><td>
+
+defaultXUL
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ true for default XUL namespace
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 DocumentFragment

@@ -16,13 +16,87 @@ createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul"
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document | target document, e.g. Zotero main window.document |
-|  tagName | string | element tag name, e.g. <code>hbox</code>, <code>div</code> |
-|  namespace | "html" \| "svg" \| "xul" | _(Optional)_ default "html" |
-|  enableElementRecord | boolean | _(Optional)_ If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+target document, e.g. Zotero main window.document
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+element tag name, e.g. `hbox`<!-- -->, `div`
+
+
+</td></tr>
+<tr><td>
+
+namespace
+
+
+</td><td>
+
+"html" \| "svg" \| "xul"
+
+
+</td><td>
+
+_(Optional)_ default "html"
+
+
+</td></tr>
+<tr><td>
+
+enableElementRecord
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ If current element will be recorded and maintained by toolkit. If not set, use this.enableElementRecordGlobal
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 HTMLElement \| XUL.Element \| SVGElement \| DocumentFragment

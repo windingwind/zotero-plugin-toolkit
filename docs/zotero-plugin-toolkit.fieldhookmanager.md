@@ -15,17 +15,120 @@ export declare class FieldHookManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.fieldhookmanager._constructor_.md) |  | Constructs a new instance of the <code>FieldHookManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.fieldhookmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `FieldHookManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register.md) |  | Register <code>Zotero.Item.getField</code> hook. |
-|  [register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register_1.md) |  | Register <code>Zotero.Item.setField</code> hook. |
-|  [register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register_2.md) |  | Register <code>Zotero.ItemFields.isFieldOfBase</code> hook. Used in itemBox. |
-|  [unregister(type, field)](./zotero-plugin-toolkit.fieldhookmanager.unregister.md) |  |  |
-|  [unregisterAll()](./zotero-plugin-toolkit.fieldhookmanager.unregisterall.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register `Zotero.Item.getField` hook.
+
+
+</td></tr>
+<tr><td>
+
+[register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register `Zotero.Item.setField` hook.
+
+
+</td></tr>
+<tr><td>
+
+[register(type, field, hook)](./zotero-plugin-toolkit.fieldhookmanager.register_2.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register `Zotero.ItemFields.isFieldOfBase` hook. Used in itemBox.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(type, field)](./zotero-plugin-toolkit.fieldhookmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.fieldhookmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

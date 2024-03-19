@@ -14,10 +14,39 @@ register(options: PrefPaneOptions): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) | See [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+[PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md)
+
+
+</td><td>
+
+See [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md)
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

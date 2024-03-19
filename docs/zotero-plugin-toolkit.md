@@ -6,36 +6,301 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [BasicTool](./zotero-plugin-toolkit.basictool.md) | Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers |
-|  [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) | Copy helper for text/richtext/image. |
-|  [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) | Dialog window helper. A superset of XUL dialog. |
-|  [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) | Get/set extra field APIs. |
-|  [FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md) | Item field hooks manager. |
-|  [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) | File picker helper. |
-|  [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) | Register customized new row to the library itemBox (right-side info tab). |
-|  [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) | Register customized new columns to the library itemTree. |
-|  [KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md) | Register a global keyboard event listener. |
-|  [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) | Class to represent key with modifiers |
-|  [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) | Helper class for storing large amounts of data in Zotero preferences. |
-|  [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) | Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar. |
-|  [MenuManager](./zotero-plugin-toolkit.menumanager.md) | Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus. |
-|  [PatchHelper](./zotero-plugin-toolkit.patchhelper.md) |  |
-|  [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) | Register preference pane from Zotero 7's <code>xhtml</code>, for Zotero 6 &amp; 7. |
-|  [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) | ProgressWindow helper. |
-|  [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) | Reader instance hooks. |
-|  [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) | Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar. |
-|  [ReaderTool](./zotero-plugin-toolkit.readertool.md) | Zotero ReaderInstance APIs. |
-|  [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) | Register shortcut keys. |
-|  [UITool](./zotero-plugin-toolkit.uitool.md) | UI APIs. Create elements and manage them. |
-|  [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) | VirtualizedTable helper. |
-|  [ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md) | ⭐Contains all tools in this lib. Start from here if you are new to this lib. |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[BasicTool](./zotero-plugin-toolkit.basictool.md)
+
+
+</td><td>
+
+Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zotero.org/support/dev/zotero\_7\_for\_developers
+
+
+</td></tr>
+<tr><td>
+
+[ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md)
+
+
+</td><td>
+
+Copy helper for text/richtext/image.
+
+
+</td></tr>
+<tr><td>
+
+[DialogHelper](./zotero-plugin-toolkit.dialoghelper.md)
+
+
+</td><td>
+
+Dialog window helper. A superset of XUL dialog.
+
+
+</td></tr>
+<tr><td>
+
+[ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md)
+
+
+</td><td>
+
+Get/set extra field APIs.
+
+
+</td></tr>
+<tr><td>
+
+[FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md)
+
+
+</td><td>
+
+Item field hooks manager.
+
+
+</td></tr>
+<tr><td>
+
+[FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md)
+
+
+</td><td>
+
+File picker helper.
+
+
+</td></tr>
+<tr><td>
+
+[ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md)
+
+
+</td><td>
+
+Register customized new row to the library itemBox (right-side info tab).
+
+
+</td></tr>
+<tr><td>
+
+[ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md)
+
+
+</td><td>
+
+Register customized new columns to the library itemTree.
+
+
+</td></tr>
+<tr><td>
+
+[KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md)
+
+
+</td><td>
+
+Register a global keyboard event listener.
+
+
+</td></tr>
+<tr><td>
+
+[KeyModifier](./zotero-plugin-toolkit.keymodifier.md)
+
+
+</td><td>
+
+Class to represent key with modifiers
+
+
+</td></tr>
+<tr><td>
+
+[LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md)
+
+
+</td><td>
+
+Helper class for storing large amounts of data in Zotero preferences.
+
+
+</td></tr>
+<tr><td>
+
+[LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md)
+
+
+</td><td>
+
+Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar.
+
+
+</td></tr>
+<tr><td>
+
+[MenuManager](./zotero-plugin-toolkit.menumanager.md)
+
+
+</td><td>
+
+Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->&gt;<!-- -->, or &lt;<!-- -->menuseperator<!-- -->&gt; to Zotero right-click/window menus.
+
+
+</td></tr>
+<tr><td>
+
+[PatchHelper](./zotero-plugin-toolkit.patchhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md)
+
+
+</td><td>
+
+Register preference pane from Zotero 7's `xhtml`<!-- -->, for Zotero 6 &amp; 7.
+
+
+</td></tr>
+<tr><td>
+
+[ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md)
+
+
+</td><td>
+
+ProgressWindow helper.
+
+
+</td></tr>
+<tr><td>
+
+[ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md)
+
+
+</td><td>
+
+Reader instance hooks.
+
+
+</td></tr>
+<tr><td>
+
+[ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md)
+
+
+</td><td>
+
+Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar.
+
+
+</td></tr>
+<tr><td>
+
+[ReaderTool](./zotero-plugin-toolkit.readertool.md)
+
+
+</td><td>
+
+Zotero ReaderInstance APIs.
+
+
+</td></tr>
+<tr><td>
+
+[ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md)
+
+
+</td><td>
+
+Register shortcut keys.
+
+
+</td></tr>
+<tr><td>
+
+[UITool](./zotero-plugin-toolkit.uitool.md)
+
+
+</td><td>
+
+UI APIs. Create elements and manage them.
+
+
+</td></tr>
+<tr><td>
+
+[VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)
+
+
+</td><td>
+
+VirtualizedTable helper.
+
+
+</td></tr>
+<tr><td>
+
+[ZoteroToolkit](./zotero-plugin-toolkit.zoterotoolkit.md)
+
+
+</td><td>
+
+⭐Contains all tools in this lib. Start from here if you are new to this lib.
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [ElementProps](./zotero-plugin-toolkit.elementprops.md) | <code>props</code> of <code>UITool.createElement</code>. See [UITool](./zotero-plugin-toolkit.uitool.md) |
-|  [PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td><td>
+
+`props` of `UITool.createElement`<!-- -->. See [UITool](./zotero-plugin-toolkit.uitool.md)
+
+
+</td></tr>
+<tr><td>
+
+[PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

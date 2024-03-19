@@ -14,10 +14,39 @@ setKeys(keys: string[]): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  keys | string\[\] | The keys of the data. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+keys
+
+
+</td><td>
+
+string\[\]
+
+
+</td><td>
+
+The keys of the data.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

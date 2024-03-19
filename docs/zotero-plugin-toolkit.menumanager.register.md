@@ -14,13 +14,83 @@ register(menuPopup: XUL.MenuPopup | keyof typeof MenuSelector, options: Menuitem
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  menuPopup | XUL.MenuPopup \| keyof typeof MenuSelector |  |
-|  options | MenuitemOptions |  |
-|  insertPosition | "before" \| "after" | _(Optional)_ |
-|  anchorElement | XUL.Element | _(Optional)_ The menuitem will be put before/after <code>anchorElement</code>. If not set, put at start/end of the menupopup. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+menuPopup
+
+
+</td><td>
+
+XUL.MenuPopup \| keyof typeof MenuSelector
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+MenuitemOptions
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+insertPosition
+
+
+</td><td>
+
+"before" \| "after"
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+anchorElement
+
+
+</td><td>
+
+XUL.Element
+
+
+</td><td>
+
+_(Optional)_ The menuitem will be put before/after `anchorElement`<!-- -->. If not set, put at start/end of the menupopup.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 false \| undefined

@@ -16,8 +16,52 @@ constructor(raw?: string | KeyboardEvent | KeyModifier, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  raw | string \| KeyboardEvent \| [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) | _(Optional)_ |
-|  options | { useAccel?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+raw
+
+
+</td><td>
+
+string \| KeyboardEvent \| [KeyModifier](./zotero-plugin-toolkit.keymodifier.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ useAccel?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

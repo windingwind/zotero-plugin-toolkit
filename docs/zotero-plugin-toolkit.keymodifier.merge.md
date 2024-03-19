@@ -16,11 +16,55 @@ merge(newMod: KeyModifier, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  newMod | [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) | the new KeyModifier |
-|  options | { allowOverwrite?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+newMod
+
+
+</td><td>
+
+[KeyModifier](./zotero-plugin-toolkit.keymodifier.md)
+
+
+</td><td>
+
+the new KeyModifier
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ allowOverwrite?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

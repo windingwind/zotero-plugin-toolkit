@@ -20,21 +20,188 @@ export declare class ShortcutManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.shortcutmanager._constructor_.md) |  | Constructs a new instance of the <code>ShortcutManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.shortcutmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ShortcutManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [checkAllKeyConflicting(options)](./zotero-plugin-toolkit.shortcutmanager.checkallkeyconflicting.md) |  | Find all key conflicting. |
-|  [checkKeyConflicting(inputKeyOptions, options)](./zotero-plugin-toolkit.shortcutmanager.checkkeyconflicting.md) |  | Check key conflicting of <code>inputKeyOptions</code>. |
-|  [getAll()](./zotero-plugin-toolkit.shortcutmanager.getall.md) |  | Get all shortcuts(element, event, prefs, builtin) |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register.md) |  | <p>Register a shortcut key with window.addEventListener("keypress").</p><p>The callback will not be affected by conflicting.</p> |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_1.md) |  | <p>Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.</p><p>The command might not be triggered if there are conflicting.</p> |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_2.md) |  | <p>Register a Zotero key in preferences.</p><p>Requires restarting Zotero to take effects.</p> |
-|  [register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_3.md) |  | <p>Register a custom key.</p><p>This is possibly not what you want to use. An API for future extensions.</p> |
-|  [unregister(keyOptions)](./zotero-plugin-toolkit.shortcutmanager.unregister.md) |  | Unregister a key. |
-|  [unregisterAll()](./zotero-plugin-toolkit.shortcutmanager.unregisterall.md) |  | Unregister all keys created by this instance. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[checkAllKeyConflicting(options)](./zotero-plugin-toolkit.shortcutmanager.checkallkeyconflicting.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Find all key conflicting.
+
+
+</td></tr>
+<tr><td>
+
+[checkKeyConflicting(inputKeyOptions, options)](./zotero-plugin-toolkit.shortcutmanager.checkkeyconflicting.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Check key conflicting of `inputKeyOptions`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[getAll()](./zotero-plugin-toolkit.shortcutmanager.getall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get all shortcuts(element, event, prefs, builtin)
+
+
+</td></tr>
+<tr><td>
+
+[register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a shortcut key with window.addEventListener("keypress").
+
+The callback will not be affected by conflicting.
+
+
+</td></tr>
+<tr><td>
+
+[register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a key using XUL element &lt;<!-- -->key<!-- -->&gt;<!-- -->.
+
+The command might not be triggered if there are conflicting.
+
+
+</td></tr>
+<tr><td>
+
+[register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_2.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a Zotero key in preferences.
+
+Requires restarting Zotero to take effects.
+
+
+</td></tr>
+<tr><td>
+
+[register(type, keyOptions)](./zotero-plugin-toolkit.shortcutmanager.register_3.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a custom key.
+
+This is possibly not what you want to use. An API for future extensions.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(keyOptions)](./zotero-plugin-toolkit.shortcutmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister a key.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.shortcutmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all keys created by this instance.
+
+
+</td></tr>
+</tbody></table>

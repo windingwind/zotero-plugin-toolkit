@@ -14,11 +14,55 @@ insertElementBefore(properties: TagElementProps, referenceNode: Element): HTMLEl
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
-|  referenceNode | Element | The node before which newNode is inserted. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+properties
+
+
+</td><td>
+
+TagElementProps
+
+
+</td><td>
+
+See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+<tr><td>
+
+referenceNode
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+The node before which newNode is inserted.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 HTMLElement \| SVGElement \| undefined

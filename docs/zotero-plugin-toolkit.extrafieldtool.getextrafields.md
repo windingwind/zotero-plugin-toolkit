@@ -14,11 +14,53 @@ getExtraFields(item: Zotero.Item, backend?: "default" | "custom"): Map<string, s
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  item | Zotero.Item |  |
-|  backend | "default" \| "custom" | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+item
+
+
+</td><td>
+
+Zotero.Item
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+backend
+
+
+</td><td>
+
+"default" \| "custom"
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Map&lt;string, string&gt;

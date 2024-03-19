@@ -14,10 +14,39 @@ equals(newMod: KeyModifier | string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  newMod | [KeyModifier](./zotero-plugin-toolkit.keymodifier.md) \| string | the new KeyModifier |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+newMod
+
+
+</td><td>
+
+[KeyModifier](./zotero-plugin-toolkit.keymodifier.md) \| string
+
+
+</td><td>
+
+the new KeyModifier
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

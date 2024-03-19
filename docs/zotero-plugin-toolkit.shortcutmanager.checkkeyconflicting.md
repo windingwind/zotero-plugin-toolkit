@@ -17,11 +17,53 @@ checkKeyConflicting(inputKeyOptions: Key, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  inputKeyOptions | Key |  |
-|  options | { customKeys?: CustomKey\[\]; includeEmpty?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+inputKeyOptions
+
+
+</td><td>
+
+Key
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ customKeys?: CustomKey\[\]; includeEmpty?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Key\[\]

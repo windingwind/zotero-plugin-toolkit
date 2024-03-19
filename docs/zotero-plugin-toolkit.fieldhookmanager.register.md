@@ -14,12 +14,67 @@ register(type: "getField", field: string, hook: typeof getFieldHookFunc): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "getField" |  |
-|  field | string |  |
-|  hook | typeof getFieldHookFunc | ( field: string, unformatted: boolean, includeBaseMapped: boolean, item: Zotero.Item, original: Function) =<!-- -->&gt; string |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"getField"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+field
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hook
+
+
+</td><td>
+
+typeof getFieldHookFunc
+
+
+</td><td>
+
+( field: string, unformatted: boolean, includeBaseMapped: boolean, item: Zotero.Item, original: Function) =<!-- -->&gt; string
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

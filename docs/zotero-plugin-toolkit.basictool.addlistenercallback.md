@@ -14,11 +14,55 @@ addListenerCallback<T extends keyof ListenerCallbackMap>(type: T, callback: List
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | T | Event type |
-|  callback | ListenerCallbackMap\[T\] | Event callback |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+Event type
+
+
+</td></tr>
+<tr><td>
+
+callback
+
+
+</td><td>
+
+ListenerCallbackMap\[T\]
+
+
+</td><td>
+
+Event callback
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

@@ -19,39 +19,450 @@ To minimize your plugin, import the modules you need manually.
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./zotero-plugin-toolkit.zoterotoolkit._constructor_.md) |  | Constructs a new instance of the <code>ZoteroToolkit</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)()](./zotero-plugin-toolkit.zoterotoolkit._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ZoteroToolkit` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [Clipboard](./zotero-plugin-toolkit.zoterotoolkit.clipboard.md) |  | typeof [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md) |  |
-|  [Dialog](./zotero-plugin-toolkit.zoterotoolkit.dialog.md) |  | typeof [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md) |  |
-|  [ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md) |  | [ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md) |  |
-|  [FieldHooks](./zotero-plugin-toolkit.zoterotoolkit.fieldhooks.md) |  | [FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md) |  |
-|  [FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md) |  | typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md) |  |
-|  [ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md) |  | [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md) |  |
-|  [ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md) |  | [ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md) |  |
-|  [Keyboard](./zotero-plugin-toolkit.zoterotoolkit.keyboard.md) |  | [KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md) |  |
-|  [LargePrefObject](./zotero-plugin-toolkit.zoterotoolkit.largeprefobject.md) |  | typeof [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md) |  |
-|  [LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md) |  | [LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md) |  |
-|  [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md) |  | [MenuManager](./zotero-plugin-toolkit.menumanager.md) |  |
-|  [Patch](./zotero-plugin-toolkit.zoterotoolkit.patch.md) |  | typeof [PatchHelper](./zotero-plugin-toolkit.patchhelper.md) |  |
-|  [PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md) |  | [PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md) |  |
-|  [ProgressWindow](./zotero-plugin-toolkit.zoterotoolkit.progresswindow.md) |  | typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) |  |
-|  [Prompt](./zotero-plugin-toolkit.zoterotoolkit.prompt.md) |  | PromptManager |  |
-|  [Reader](./zotero-plugin-toolkit.zoterotoolkit.reader.md) |  | [ReaderTool](./zotero-plugin-toolkit.readertool.md) |  |
-|  [ReaderInstance](./zotero-plugin-toolkit.zoterotoolkit.readerinstance.md) |  | [ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md) |  |
-|  [ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md) |  | [ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md) |  |
-|  [Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md) |  | [ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md) |  |
-|  [UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md) |  | [UITool](./zotero-plugin-toolkit.uitool.md) |  |
-|  [VirtualizedTable](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtable.md) |  | typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md) |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Clipboard](./zotero-plugin-toolkit.zoterotoolkit.clipboard.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [ClipboardHelper](./zotero-plugin-toolkit.clipboardhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Dialog](./zotero-plugin-toolkit.zoterotoolkit.dialog.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [DialogHelper](./zotero-plugin-toolkit.dialoghelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ExtraField](./zotero-plugin-toolkit.zoterotoolkit.extrafield.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ExtraFieldTool](./zotero-plugin-toolkit.extrafieldtool.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[FieldHooks](./zotero-plugin-toolkit.zoterotoolkit.fieldhooks.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[FieldHookManager](./zotero-plugin-toolkit.fieldhookmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[FilePicker](./zotero-plugin-toolkit.zoterotoolkit.filepicker.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Keyboard](./zotero-plugin-toolkit.zoterotoolkit.keyboard.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[LargePrefObject](./zotero-plugin-toolkit.zoterotoolkit.largeprefobject.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[MenuManager](./zotero-plugin-toolkit.menumanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Patch](./zotero-plugin-toolkit.zoterotoolkit.patch.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [PatchHelper](./zotero-plugin-toolkit.patchhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ProgressWindow](./zotero-plugin-toolkit.zoterotoolkit.progresswindow.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Prompt](./zotero-plugin-toolkit.zoterotoolkit.prompt.md)
+
+
+</td><td>
+
+
+</td><td>
+
+PromptManager
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Reader](./zotero-plugin-toolkit.zoterotoolkit.reader.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ReaderTool](./zotero-plugin-toolkit.readertool.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ReaderInstance](./zotero-plugin-toolkit.zoterotoolkit.readerinstance.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[UI](./zotero-plugin-toolkit.zoterotoolkit.ui.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[UITool](./zotero-plugin-toolkit.uitool.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[VirtualizedTable](./zotero-plugin-toolkit.zoterotoolkit.virtualizedtable.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [unregisterAll()](./zotero-plugin-toolkit.zoterotoolkit.unregisterall.md) |  | Unregister everything created by managers. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.zoterotoolkit.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister everything created by managers.
+
+
+</td></tr>
+</tbody></table>

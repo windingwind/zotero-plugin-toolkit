@@ -16,11 +16,55 @@ replaceElement(properties: ElementProps & {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  properties | [ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; } | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
-|  oldNode | Element | The child to be replaced. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+properties
+
+
+</td><td>
+
+[ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; }
+
+
+</td><td>
+
+See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+<tr><td>
+
+oldNode
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+The child to be replaced.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Element \| undefined

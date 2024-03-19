@@ -23,21 +23,180 @@ You can either use the class as a normal object with `asObject()`<!-- -->, or us
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(keyPref, valuePrefPrefix, hooks)](./zotero-plugin-toolkit.largeprefhelper._constructor_.md) |  | Constructs a new instance of the <code>LargePrefHelper</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(keyPref, valuePrefPrefix, hooks)](./zotero-plugin-toolkit.largeprefhelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `LargePrefHelper` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [asMapLike()](./zotero-plugin-toolkit.largeprefhelper.asmaplike.md) |  | Get the Map that stores the data. |
-|  [asObject()](./zotero-plugin-toolkit.largeprefhelper.asobject.md) |  | Get the object that stores the data. |
-|  [deleteKey(key)](./zotero-plugin-toolkit.largeprefhelper.deletekey.md) |  | Delete a key. |
-|  [getKeys()](./zotero-plugin-toolkit.largeprefhelper.getkeys.md) |  | Get the keys of the data. |
-|  [getValue(key)](./zotero-plugin-toolkit.largeprefhelper.getvalue.md) |  | Get the value of a key. |
-|  [hasKey(key)](./zotero-plugin-toolkit.largeprefhelper.haskey.md) |  | Check if a key exists. |
-|  [setKey(key)](./zotero-plugin-toolkit.largeprefhelper.setkey.md) |  | Add a key. |
-|  [setKeys(keys)](./zotero-plugin-toolkit.largeprefhelper.setkeys.md) |  | Set the keys of the data. |
-|  [setValue(key, value)](./zotero-plugin-toolkit.largeprefhelper.setvalue.md) |  | Set the value of a key. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[asMapLike()](./zotero-plugin-toolkit.largeprefhelper.asmaplike.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the Map that stores the data.
+
+
+</td></tr>
+<tr><td>
+
+[asObject()](./zotero-plugin-toolkit.largeprefhelper.asobject.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the object that stores the data.
+
+
+</td></tr>
+<tr><td>
+
+[deleteKey(key)](./zotero-plugin-toolkit.largeprefhelper.deletekey.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Delete a key.
+
+
+</td></tr>
+<tr><td>
+
+[getKeys()](./zotero-plugin-toolkit.largeprefhelper.getkeys.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the keys of the data.
+
+
+</td></tr>
+<tr><td>
+
+[getValue(key)](./zotero-plugin-toolkit.largeprefhelper.getvalue.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Get the value of a key.
+
+
+</td></tr>
+<tr><td>
+
+[hasKey(key)](./zotero-plugin-toolkit.largeprefhelper.haskey.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Check if a key exists.
+
+
+</td></tr>
+<tr><td>
+
+[setKey(key)](./zotero-plugin-toolkit.largeprefhelper.setkey.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Add a key.
+
+
+</td></tr>
+<tr><td>
+
+[setKeys(keys)](./zotero-plugin-toolkit.largeprefhelper.setkeys.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set the keys of the data.
+
+
+</td></tr>
+<tr><td>
+
+[setValue(key, value)](./zotero-plugin-toolkit.largeprefhelper.setvalue.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set the value of a key.
+
+
+</td></tr>
+</tbody></table>

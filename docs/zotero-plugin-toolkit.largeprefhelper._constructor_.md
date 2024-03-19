@@ -14,9 +14,68 @@ constructor(keyPref: string, valuePrefPrefix: string, hooks?: Partial<typeof def
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  keyPref | string | The preference name for storing the keys of the data. |
-|  valuePrefPrefix | string | The preference name prefix for storing the values of the data. |
-|  hooks | Partial&lt;typeof defaultHooks&gt; \| "default" \| "parser" | _(Optional)_ Hooks for parsing the values of the data. - <code>afterGetValue</code>: A function that takes the value of the data as input and returns the parsed value. - <code>beforeSetValue</code>: A function that takes the key and value of the data as input and returns the parsed key and value. If <code>hooks</code> is <code>&quot;default&quot;</code>, no parsing will be done. If <code>hooks</code> is <code>&quot;parser&quot;</code>, the values will be parsed as JSON. If <code>hooks</code> is an object, the values will be parsed by the hooks. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+keyPref
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The preference name for storing the keys of the data.
+
+
+</td></tr>
+<tr><td>
+
+valuePrefPrefix
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The preference name prefix for storing the values of the data.
+
+
+</td></tr>
+<tr><td>
+
+hooks
+
+
+</td><td>
+
+Partial&lt;typeof defaultHooks&gt; \| "default" \| "parser"
+
+
+</td><td>
+
+_(Optional)_ Hooks for parsing the values of the data. - `afterGetValue`<!-- -->: A function that takes the value of the data as input and returns the parsed value. - `beforeSetValue`<!-- -->: A function that takes the key and value of the data as input and returns the parsed key and value. If `hooks` is `"default"`<!-- -->, no parsing will be done. If `hooks` is `"parser"`<!-- -->, the values will be parsed as JSON. If `hooks` is an object, the values will be parsed by the hooks.
+
+
+</td></tr>
+</tbody></table>

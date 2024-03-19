@@ -15,31 +15,294 @@ export declare class UITool extends BasicTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.uitool._constructor_.md) |  | Constructs a new instance of the <code>UITool</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.uitool._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `UITool` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [\_basicOptions](./zotero-plugin-toolkit.uitool._basicoptions.md) | <code>protected</code> | UIOptions | UITool options |
-|  [basicOptions](./zotero-plugin-toolkit.uitool.basicoptions.md) | <code>readonly</code> | UIOptions |  |
-|  [elementCache](./zotero-plugin-toolkit.uitool.elementcache.md) | <code>protected</code> | WeakRef&lt;Element&gt;\[\] | Store elements created with this instance |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\_basicOptions](./zotero-plugin-toolkit.uitool._basicoptions.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+UIOptions
+
+
+</td><td>
+
+UITool options
+
+
+</td></tr>
+<tr><td>
+
+[basicOptions](./zotero-plugin-toolkit.uitool.basicoptions.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+UIOptions
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[elementCache](./zotero-plugin-toolkit.uitool.elementcache.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+WeakRef&lt;Element&gt;\[\]
+
+
+</td><td>
+
+Store elements created with this instance
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [appendElement(properties, container)](./zotero-plugin-toolkit.uitool.appendelement.md) |  | Append element(s) to a node. |
-|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement.md) |  | Create <code>DocumentFragment</code>. |
-|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_1.md) |  | Create <code>HTMLElement</code>. |
-|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_2.md) |  | Create <code>XUL.Element</code>. |
-|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_3.md) |  | Create <code>SVGElement</code> |
-|  [createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_4.md) |  | Create Element |
-|  [createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.uitool.createelement_5.md) |  |  |
-|  [insertElementBefore(properties, referenceNode)](./zotero-plugin-toolkit.uitool.insertelementbefore.md) |  | Inserts a node before a reference node as a child of its parent node. |
-|  [parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.uitool.parsexhtmltofragment.md) |  | <p>Parse XHTML to XUL fragment. For Zotero 6.</p><p>To load preferences from a Zotero 7's <code>.xhtml</code>, use this method to parse it.</p> |
-|  [replaceElement(properties, oldNode)](./zotero-plugin-toolkit.uitool.replaceelement.md) |  | Replace oldNode with a new one. |
-|  [unregisterAll()](./zotero-plugin-toolkit.uitool.unregisterall.md) |  | Remove all elements created by <code>createElement</code>. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[appendElement(properties, container)](./zotero-plugin-toolkit.uitool.appendelement.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Append element(s) to a node.
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create `DocumentFragment`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create `HTMLElement`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_2.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create `XUL.Element`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_3.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create `SVGElement`
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, props)](./zotero-plugin-toolkit.uitool.createelement_4.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create Element
+
+
+</td></tr>
+<tr><td>
+
+[createElement(doc, tagName, namespace, enableElementRecord)](./zotero-plugin-toolkit.uitool.createelement_5.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[insertElementBefore(properties, referenceNode)](./zotero-plugin-toolkit.uitool.insertelementbefore.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Inserts a node before a reference node as a child of its parent node.
+
+
+</td></tr>
+<tr><td>
+
+[parseXHTMLToFragment(str, entities, defaultXUL)](./zotero-plugin-toolkit.uitool.parsexhtmltofragment.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Parse XHTML to XUL fragment. For Zotero 6.
+
+To load preferences from a Zotero 7's `.xhtml`<!-- -->, use this method to parse it.
+
+
+</td></tr>
+<tr><td>
+
+[replaceElement(properties, oldNode)](./zotero-plugin-toolkit.uitool.replaceelement.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Replace oldNode with a new one.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.uitool.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Remove all elements created by `createElement`<!-- -->.
+
+
+</td></tr>
+</tbody></table>

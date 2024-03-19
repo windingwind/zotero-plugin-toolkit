@@ -959,7 +959,9 @@ const BUILTIN_KEYS = [
       const Zotero = BasicTool.getZotero();
       const ZoteroPane = Zotero.getActiveZoteroPane();
       ZoteroPane.handleKeyUp({
-        originalTarget: { id: ZoteroPane.itemsView.id },
+        originalTarget: {
+          id: ZoteroPane.itemsView ? ZoteroPane.itemsView.id : "",
+        },
         keyCode: Zotero.isWin ? 17 : 18,
       });
     },

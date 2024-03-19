@@ -13,15 +13,90 @@ export declare class PatchHelper extends BasicTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./zotero-plugin-toolkit.patchhelper._constructor_.md) |  | Constructs a new instance of the <code>PatchHelper</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)()](./zotero-plugin-toolkit.patchhelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `PatchHelper` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [disable()](./zotero-plugin-toolkit.patchhelper.disable.md) |  |  |
-|  [enable()](./zotero-plugin-toolkit.patchhelper.enable.md) |  |  |
-|  [setData(options)](./zotero-plugin-toolkit.patchhelper.setdata.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[disable()](./zotero-plugin-toolkit.patchhelper.disable.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[enable()](./zotero-plugin-toolkit.patchhelper.enable.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[setData(options)](./zotero-plugin-toolkit.patchhelper.setdata.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,13 +14,83 @@ addCell(row: number, column: number, elementProps: TagElementProps, cellFlex?: b
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  row | number |  |
-|  column | number |  |
-|  elementProps | TagElementProps | Cell element props. See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
-|  cellFlex | boolean | _(Optional)_ If the cell is flex. Default true. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+row
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+column
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+elementProps
+
+
+</td><td>
+
+TagElementProps
+
+
+</td><td>
+
+Cell element props. See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+<tr><td>
+
+cellFlex
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ If the cell is flex. Default true.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

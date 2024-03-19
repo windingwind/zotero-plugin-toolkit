@@ -22,11 +22,51 @@ register(type: "event", keyOptions: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "event" |  |
-|  keyOptions | { id: string; key: string; callback: (keyOptions: EventKey) =&gt; any; modifiers?: string; disabled?: boolean; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"event"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+keyOptions
+
+
+</td><td>
+
+{ id: string; key: string; callback: (keyOptions: EventKey) =&gt; any; modifiers?: string; disabled?: boolean; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

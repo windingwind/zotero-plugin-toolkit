@@ -24,11 +24,55 @@ open(title: string, windowFeatures?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  title | string | Window title |
-|  windowFeatures | { width?: number; height?: number; left?: number; top?: number; centerscreen?: boolean; resizable?: boolean; fitContent?: boolean; noDialogMode?: boolean; alwaysRaised?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+title
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Window title
+
+
+</td></tr>
+<tr><td>
+
+windowFeatures
+
+
+</td><td>
+
+{ width?: number; height?: number; left?: number; top?: number; centerscreen?: boolean; resizable?: boolean; fitContent?: boolean; noDialogMode?: boolean; alwaysRaised?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

@@ -19,8 +19,52 @@ constructor(header: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  header | string | window header |
-|  options | { window?: Window; closeOnClick?: boolean; closeTime?: number; closeOtherProgressWindows?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+header
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+window header
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ window?: Window; closeOnClick?: boolean; closeTime?: number; closeOtherProgressWindows?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

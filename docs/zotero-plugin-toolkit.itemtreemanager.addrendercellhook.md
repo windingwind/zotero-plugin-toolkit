@@ -21,11 +21,55 @@ addRenderCellHook(dataKey: string, renderCellHook: (index: number, data: string,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  dataKey | string | Cell <code>dataKey</code>, e.g. 'title' |
-|  renderCellHook | (index: number, data: string, column: ColumnOptions &amp; { className?: string; }, original: Function) =&gt; HTMLElement | patch hook |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+dataKey
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Cell `dataKey`<!-- -->, e.g. 'title'
+
+
+</td></tr>
+<tr><td>
+
+renderCellHook
+
+
+</td><td>
+
+(index: number, data: string, column: ColumnOptions &amp; { className?: string; }, original: Function) =&gt; HTMLElement
+
+
+</td><td>
+
+patch hook
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;void&gt;

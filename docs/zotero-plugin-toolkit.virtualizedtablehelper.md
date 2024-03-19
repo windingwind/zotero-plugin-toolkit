@@ -15,26 +15,217 @@ export declare class VirtualizedTableHelper extends BasicTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(win)](./zotero-plugin-toolkit.virtualizedtablehelper._constructor_.md) |  | Constructs a new instance of the <code>VirtualizedTableHelper</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(win)](./zotero-plugin-toolkit.virtualizedtablehelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `VirtualizedTableHelper` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [containerId](./zotero-plugin-toolkit.virtualizedtablehelper.containerid.md) |  | string |  |
-|  [localeStrings](./zotero-plugin-toolkit.virtualizedtablehelper.localestrings.md) |  | { \[name: string\]: string; } |  |
-|  [props](./zotero-plugin-toolkit.virtualizedtablehelper.props.md) |  | VirtualizedTableProps |  |
-|  [treeInstance](./zotero-plugin-toolkit.virtualizedtablehelper.treeinstance.md) |  | VirtualizedTable |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[containerId](./zotero-plugin-toolkit.virtualizedtablehelper.containerid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[localeStrings](./zotero-plugin-toolkit.virtualizedtablehelper.localestrings.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ \[name: string\]: string; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[props](./zotero-plugin-toolkit.virtualizedtablehelper.props.md)
+
+
+</td><td>
+
+
+</td><td>
+
+VirtualizedTableProps
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[treeInstance](./zotero-plugin-toolkit.virtualizedtablehelper.treeinstance.md)
+
+
+</td><td>
+
+
+</td><td>
+
+VirtualizedTable
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [render(selectId, onfulfilled, onrejected)](./zotero-plugin-toolkit.virtualizedtablehelper.render.md) |  | Render the table. |
-|  [setContainerId(id)](./zotero-plugin-toolkit.virtualizedtablehelper.setcontainerid.md) |  | Set container element id that the table will be rendered on. |
-|  [setLocale(localeStrings)](./zotero-plugin-toolkit.virtualizedtablehelper.setlocale.md) |  | Set locale strings, which replaces the table header's label if matches. Default it's <code>Zotero.Intl.strings</code> |
-|  [setProp(propName, propValue)](./zotero-plugin-toolkit.virtualizedtablehelper.setprop.md) |  | Set properties by name. |
-|  [setProp(data)](./zotero-plugin-toolkit.virtualizedtablehelper.setprop_1.md) |  | Set properties object. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[render(selectId, onfulfilled, onrejected)](./zotero-plugin-toolkit.virtualizedtablehelper.render.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Render the table.
+
+
+</td></tr>
+<tr><td>
+
+[setContainerId(id)](./zotero-plugin-toolkit.virtualizedtablehelper.setcontainerid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set container element id that the table will be rendered on.
+
+
+</td></tr>
+<tr><td>
+
+[setLocale(localeStrings)](./zotero-plugin-toolkit.virtualizedtablehelper.setlocale.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set locale strings, which replaces the table header's label if matches. Default it's `Zotero.Intl.strings`
+
+
+</td></tr>
+<tr><td>
+
+[setProp(propName, propValue)](./zotero-plugin-toolkit.virtualizedtablehelper.setprop.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set properties by name.
+
+
+</td></tr>
+<tr><td>
+
+[setProp(data)](./zotero-plugin-toolkit.virtualizedtablehelper.setprop_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set properties object.
+
+
+</td></tr>
+</tbody></table>

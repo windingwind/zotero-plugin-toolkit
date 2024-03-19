@@ -15,16 +15,108 @@ export declare class ReaderTabPanelManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.readertabpanelmanager._constructor_.md) |  | Constructs a new instance of the <code>ReaderTabPanelManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.readertabpanelmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ReaderTabPanelManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [changeTabPanel(tabId, options)](./zotero-plugin-toolkit.readertabpanelmanager.changetabpanel.md) |  |  |
-|  [register(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.readertabpanelmanager.register.md) |  | Register a tabpanel for every reader. |
-|  [unregister(tabId)](./zotero-plugin-toolkit.readertabpanelmanager.unregister.md) |  | Unregister the reader tabpanel. |
-|  [unregisterAll()](./zotero-plugin-toolkit.readertabpanelmanager.unregisterall.md) |  | Unregister all library tabpanel. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[changeTabPanel(tabId, options)](./zotero-plugin-toolkit.readertabpanelmanager.changetabpanel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[register(tabLabel, renderPanelHook, options)](./zotero-plugin-toolkit.readertabpanelmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a tabpanel for every reader.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(tabId)](./zotero-plugin-toolkit.readertabpanelmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister the reader tabpanel.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.readertabpanelmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all library tabpanel.
+
+
+</td></tr>
+</tbody></table>

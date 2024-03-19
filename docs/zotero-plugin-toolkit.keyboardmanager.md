@@ -15,15 +15,96 @@ export declare class KeyboardManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.keyboardmanager._constructor_.md) |  | Constructs a new instance of the <code>KeyboardManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.keyboardmanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `KeyboardManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(callback)](./zotero-plugin-toolkit.keyboardmanager.register.md) |  | Register a keyboard event listener. |
-|  [unregister(callback)](./zotero-plugin-toolkit.keyboardmanager.unregister.md) |  | Unregister a keyboard event listener. |
-|  [unregisterAll()](./zotero-plugin-toolkit.keyboardmanager.unregisterall.md) |  | Unregister all keyboard event listeners. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(callback)](./zotero-plugin-toolkit.keyboardmanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a keyboard event listener.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(callback)](./zotero-plugin-toolkit.keyboardmanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister a keyboard event listener.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.keyboardmanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all keyboard event listeners.
+
+
+</td></tr>
+</tbody></table>

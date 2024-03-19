@@ -14,10 +14,39 @@ getSelectedAnnotationData(reader: _ZoteroTypes.ReaderInstance): AnnotationData |
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  reader | \_ZoteroTypes.ReaderInstance | Target reader |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+reader
+
+
+</td><td>
+
+\_ZoteroTypes.ReaderInstance
+
+
+</td><td>
+
+Target reader
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 AnnotationData \| undefined

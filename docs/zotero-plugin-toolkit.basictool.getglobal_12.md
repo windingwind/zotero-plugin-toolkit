@@ -14,10 +14,39 @@ getGlobal(k: string): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  k | string | Global variable name, <code>Zotero</code>, <code>ZoteroPane</code>, <code>window</code>, <code>document</code>, etc. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+k
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Global variable name, `Zotero`<!-- -->, `ZoteroPane`<!-- -->, `window`<!-- -->, `document`<!-- -->, etc.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any

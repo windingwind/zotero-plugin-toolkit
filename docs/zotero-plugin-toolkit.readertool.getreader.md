@@ -14,10 +14,39 @@ getReader(waitTime?: number): Promise<_ZoteroTypes.ReaderInstance | undefined>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  waitTime | number | _(Optional)_ Wait for n MS until the reader is ready |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+waitTime
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ Wait for n MS until the reader is ready
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;\_ZoteroTypes.ReaderInstance \| undefined&gt;

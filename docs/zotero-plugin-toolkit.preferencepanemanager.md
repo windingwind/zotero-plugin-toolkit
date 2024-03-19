@@ -20,15 +20,96 @@ export declare class PreferencePaneManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.preferencepanemanager._constructor_.md) |  | Constructs a new instance of the <code>PreferencePaneManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.preferencepanemanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `PreferencePaneManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(options)](./zotero-plugin-toolkit.preferencepanemanager.register.md) |  | Register a preference pane from an xhtml, for Zotero 6 &amp; 7. |
-|  [unregister(id)](./zotero-plugin-toolkit.preferencepanemanager.unregister.md) |  |  |
-|  [unregisterAll()](./zotero-plugin-toolkit.preferencepanemanager.unregisterall.md) |  | <p>Unregister all preference panes added with this instance</p><p>Called on exiting</p> |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(options)](./zotero-plugin-toolkit.preferencepanemanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a preference pane from an xhtml, for Zotero 6 &amp; 7.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(id)](./zotero-plugin-toolkit.preferencepanemanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.preferencepanemanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all preference panes added with this instance
+
+Called on exiting
+
+
+</td></tr>
+</tbody></table>

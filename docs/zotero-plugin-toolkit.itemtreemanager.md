@@ -20,18 +20,140 @@ export declare class ItemTreeManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.itemtreemanager._constructor_.md) |  | <p>Initialize Zotero.\_ItemTreeExtraColumnsGlobal if it doesn't exist.</p><p>New columns and hooks are stored there.</p><p>Then patch <code>require(&quot;zotero/itemTree&quot;).getColumns</code> and <code>Zotero.Item.getField</code></p> |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.itemtreemanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Initialize Zotero.\_ItemTreeExtraColumnsGlobal if it doesn't exist.
+
+New columns and hooks are stored there.
+
+Then patch `require("zotero/itemTree").getColumns` and `Zotero.Item.getField`
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [addRenderCellHook(dataKey, renderCellHook)](./zotero-plugin-toolkit.itemtreemanager.addrendercellhook.md) |  | Add a patch hook for <code>_renderCell</code>, which is called when cell is rendered. |
-|  [refresh()](./zotero-plugin-toolkit.itemtreemanager.refresh.md) |  | Refresh itemView. You don't need to call it manually. |
-|  [register(key, label, getFieldHook, options)](./zotero-plugin-toolkit.itemtreemanager.register.md) |  | Register a new column. Don't forget to call <code>unregister</code> on plugin exit. |
-|  [removeRenderCellHook(dataKey)](./zotero-plugin-toolkit.itemtreemanager.removerendercellhook.md) |  | Remove a patch hook by <code>dataKey</code>. |
-|  [unregister(key, options)](./zotero-plugin-toolkit.itemtreemanager.unregister.md) |  | Unregister an extra column. Call it on plugin exit. |
-|  [unregisterAll()](./zotero-plugin-toolkit.itemtreemanager.unregisterall.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[addRenderCellHook(dataKey, renderCellHook)](./zotero-plugin-toolkit.itemtreemanager.addrendercellhook.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Add a patch hook for `_renderCell`<!-- -->, which is called when cell is rendered.
+
+
+</td></tr>
+<tr><td>
+
+[refresh()](./zotero-plugin-toolkit.itemtreemanager.refresh.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Refresh itemView. You don't need to call it manually.
+
+
+</td></tr>
+<tr><td>
+
+[register(key, label, getFieldHook, options)](./zotero-plugin-toolkit.itemtreemanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a new column. Don't forget to call `unregister` on plugin exit.
+
+
+</td></tr>
+<tr><td>
+
+[removeRenderCellHook(dataKey)](./zotero-plugin-toolkit.itemtreemanager.removerendercellhook.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Remove a patch hook by `dataKey`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[unregister(key, options)](./zotero-plugin-toolkit.itemtreemanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister an extra column. Call it on plugin exit.
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.itemtreemanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

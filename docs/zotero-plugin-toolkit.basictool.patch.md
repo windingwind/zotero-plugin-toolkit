@@ -19,13 +19,87 @@ patch<T, K extends FunctionNamesOf<T>>(object: T, funcSign: K, ownerSign: string
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  object | T | The owner of the function |
-|  funcSign | K | The signature of the function(function name) |
-|  ownerSign | string | The signature of patch owner to avoid patching again |
-|  patcher | (fn: T\[K\]) =&gt; T\[K\] | The new wrapper of the patched function |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+object
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+The owner of the function
+
+
+</td></tr>
+<tr><td>
+
+funcSign
+
+
+</td><td>
+
+K
+
+
+</td><td>
+
+The signature of the function(function name)
+
+
+</td></tr>
+<tr><td>
+
+ownerSign
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The signature of patch owner to avoid patching again
+
+
+</td></tr>
+<tr><td>
+
+patcher
+
+
+</td><td>
+
+(fn: T\[K\]) =&gt; T\[K\]
+
+
+</td><td>
+
+The new wrapper of the patched function
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

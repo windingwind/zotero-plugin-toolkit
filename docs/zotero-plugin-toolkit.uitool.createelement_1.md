@@ -14,12 +14,67 @@ createElement<HTML_TAG extends keyof HTMLElementTagNameMap, T extends HTMLElemen
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document |  |
-|  tagName | HTML\_TAG |  |
-|  props | HTMLElementProps | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+HTML\_TAG
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+props
+
+
+</td><td>
+
+HTMLElementProps
+
+
+</td><td>
+
+_(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 T

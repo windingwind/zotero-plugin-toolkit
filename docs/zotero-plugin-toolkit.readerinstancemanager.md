@@ -19,15 +19,96 @@ export declare class ReaderInstanceManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.readerinstancemanager._constructor_.md) |  | Constructs a new instance of the <code>ReaderInstanceManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.readerinstancemanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ReaderInstanceManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(type, id, hook)](./zotero-plugin-toolkit.readerinstancemanager.register.md) |  | Register a reader instance hook |
-|  [unregister(id)](./zotero-plugin-toolkit.readerinstancemanager.unregister.md) |  | Unregister hook by id |
-|  [unregisterAll()](./zotero-plugin-toolkit.readerinstancemanager.unregisterall.md) |  | Unregister all hooks |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(type, id, hook)](./zotero-plugin-toolkit.readerinstancemanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Register a reader instance hook
+
+
+</td></tr>
+<tr><td>
+
+[unregister(id)](./zotero-plugin-toolkit.readerinstancemanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister hook by id
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.readerinstancemanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Unregister all hooks
+
+
+</td></tr>
+</tbody></table>

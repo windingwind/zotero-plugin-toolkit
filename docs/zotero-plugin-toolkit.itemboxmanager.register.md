@@ -20,13 +20,87 @@ register(field: string, displayName: string, getFieldHook: typeof getFieldHookFu
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  field | string | Field name. Used in <code>getField</code> and <code>setField</code>. |
-|  displayName | string | The row header display text. |
-|  getFieldHook | typeof getFieldHookFunc \| undefined | Called when loading row content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined. |
-|  options | { editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; multiline?: boolean; collapsible?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+field
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Field name. Used in `getField` and `setField`<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+displayName
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The row header display text.
+
+
+</td></tr>
+<tr><td>
+
+getFieldHook
+
+
+</td><td>
+
+typeof getFieldHookFunc \| undefined
+
+
+</td><td>
+
+Called when loading row content. If you registered the getField hook somewhere else (in ItemBox or FieldHooks), leave it undefined.
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ editable?: boolean; setFieldHook?: typeof setFieldHookFunc; index?: number; multiline?: boolean; collapsible?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;void&gt;

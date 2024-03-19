@@ -14,10 +14,39 @@ unregister(tabId: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tabId | string | tab id |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tabId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+tab id
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

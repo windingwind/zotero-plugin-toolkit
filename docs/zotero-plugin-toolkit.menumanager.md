@@ -15,15 +15,92 @@ export declare class MenuManager extends ManagerTool
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(base)](./zotero-plugin-toolkit.menumanager._constructor_.md) |  | Constructs a new instance of the <code>MenuManager</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(base)](./zotero-plugin-toolkit.menumanager._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `MenuManager` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [register(menuPopup, options, insertPosition, anchorElement)](./zotero-plugin-toolkit.menumanager.register.md) |  | Insert an menu item/menu(with popup)/menuseprator into a menupopup |
-|  [unregister(menuId)](./zotero-plugin-toolkit.menumanager.unregister.md) |  |  |
-|  [unregisterAll()](./zotero-plugin-toolkit.menumanager.unregisterall.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[register(menuPopup, options, insertPosition, anchorElement)](./zotero-plugin-toolkit.menumanager.register.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Insert an menu item/menu(with popup)/menuseprator into a menupopup
+
+
+</td></tr>
+<tr><td>
+
+[unregister(menuId)](./zotero-plugin-toolkit.menumanager.unregister.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unregisterAll()](./zotero-plugin-toolkit.menumanager.unregisterall.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

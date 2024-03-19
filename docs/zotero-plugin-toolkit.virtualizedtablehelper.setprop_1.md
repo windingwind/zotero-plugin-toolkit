@@ -14,10 +14,39 @@ setProp(data: Partial<VirtualizedTableProps>): VirtualizedTableHelper;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  data | Partial&lt;VirtualizedTableProps&gt; | property object. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+data
+
+
+</td><td>
+
+Partial&lt;VirtualizedTableProps&gt;
+
+
+</td><td>
+
+property object.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)

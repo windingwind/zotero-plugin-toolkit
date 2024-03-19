@@ -14,12 +14,67 @@ createElement(doc: Document, tagName: "fragment", props?: FragmentElementProps):
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document |  |
-|  tagName | "fragment" |  |
-|  props | FragmentElementProps | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+"fragment"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+props
+
+
+</td><td>
+
+FragmentElementProps
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 DocumentFragment

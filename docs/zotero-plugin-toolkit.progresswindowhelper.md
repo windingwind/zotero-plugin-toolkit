@@ -48,21 +48,140 @@ compat.getGlobal("setTimeout")(()=>{
 
 ## Constructors
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(header, options)](./zotero-plugin-toolkit.progresswindowhelper._constructor_.md) |  | Constructs a new instance of the <code>ProgressWindowHelper</code> class |
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(header, options)](./zotero-plugin-toolkit.progresswindowhelper._constructor_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Constructs a new instance of the `ProgressWindowHelper` class
+
+
+</td></tr>
+</tbody></table>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [show](./zotero-plugin-toolkit.progresswindowhelper.show.md) |  | typeof \_popupWindowShow |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[show](./zotero-plugin-toolkit.progresswindowhelper.show.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof \_popupWindowShow
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [changeLine(options)](./zotero-plugin-toolkit.progresswindowhelper.changeline.md) |  | Change the line content |
-|  [createLine(options)](./zotero-plugin-toolkit.progresswindowhelper.createline.md) |  | Create a new line |
-|  [setIconURI(key, uri)](./zotero-plugin-toolkit.progresswindowhelper.seticonuri.md) | <code>static</code> | Set custom icon uri for progress window |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[changeLine(options)](./zotero-plugin-toolkit.progresswindowhelper.changeline.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Change the line content
+
+
+</td></tr>
+<tr><td>
+
+[createLine(options)](./zotero-plugin-toolkit.progresswindowhelper.createline.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Create a new line
+
+
+</td></tr>
+<tr><td>
+
+[setIconURI(key, uri)](./zotero-plugin-toolkit.progresswindowhelper.seticonuri.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+Set custom icon uri for progress window
+
+
+</td></tr>
+</tbody></table>

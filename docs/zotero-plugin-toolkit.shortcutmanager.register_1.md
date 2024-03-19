@@ -35,11 +35,51 @@ register(type: "element", keyOptions: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | "element" |  |
-|  keyOptions | { id: string; key: string; modifiers?: keyof KeyModifierStatus; disabled?: boolean; xulData: { document?: Document; command?: string; oncommand?: string; \_commandOptions?: { id: string; document: Document; oncommand?: string; disabled?: boolean; label?: string; \_parentId: string; }; \_parentId: string; }; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+"element"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+keyOptions
+
+
+</td><td>
+
+{ id: string; key: string; modifiers?: keyof KeyModifierStatus; disabled?: boolean; xulData: { document?: Document; command?: string; oncommand?: string; \_commandOptions?: { id: string; document: Document; oncommand?: string; disabled?: boolean; label?: string; \_parentId: string; }; \_parentId: string; }; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

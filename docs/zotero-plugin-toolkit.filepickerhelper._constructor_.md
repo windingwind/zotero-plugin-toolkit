@@ -14,12 +14,112 @@ constructor(title: string, mode: MODE, filters?: [string, string][], suggestion?
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  title | string |  |
-|  mode | MODE |  |
-|  filters | \[string, string\]\[\] | _(Optional)_ |
-|  suggestion | string | _(Optional)_ |
-|  window | Window | _(Optional)_ |
-|  filterMask | "all" \| "html" \| "text" \| "images" \| "xml" \| "apps" \| "urls" \| "audio" \| "video" | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+title
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mode
+
+
+</td><td>
+
+MODE
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+filters
+
+
+</td><td>
+
+\[string, string\]\[\]
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+suggestion
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+window
+
+
+</td><td>
+
+Window
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+filterMask
+
+
+</td><td>
+
+"all" \| "html" \| "text" \| "images" \| "xml" \| "apps" \| "urls" \| "audio" \| "video"
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

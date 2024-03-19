@@ -19,12 +19,71 @@ register(tabLabel: string, renderPanelHook: (panel: XUL.TabPanel, ownerWindow: W
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tabLabel | string | Label of panel tab. |
-|  renderPanelHook | (panel: XUL.TabPanel, ownerWindow: Window) =&gt; void | Called when panel is ready. Add elements to the panel. |
-|  options | { tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; } | _(Optional)_ Other optional parameters. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tabLabel
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Label of panel tab.
+
+
+</td></tr>
+<tr><td>
+
+renderPanelHook
+
+
+</td><td>
+
+(panel: XUL.TabPanel, ownerWindow: Window) =&gt; void
+
+
+</td><td>
+
+Called when panel is ready. Add elements to the panel.
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ tabId?: string; panelId?: string; targetIndex?: number; selectPanel?: boolean; }
+
+
+</td><td>
+
+_(Optional)_ Other optional parameters.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 string

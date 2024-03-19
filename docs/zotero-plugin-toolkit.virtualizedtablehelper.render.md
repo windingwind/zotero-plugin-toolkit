@@ -14,12 +14,71 @@ render(selectId?: number, onfulfilled?: (value: unknown) => unknown, onrejected?
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selectId | number | _(Optional)_ Which row to select after rendering |
-|  onfulfilled | (value: unknown) =&gt; unknown | _(Optional)_ callback after successfully rendered |
-|  onrejected | (reason: any) =&gt; PromiseLike&lt;never&gt; | _(Optional)_ callback after rendering with error |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selectId
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ Which row to select after rendering
+
+
+</td></tr>
+<tr><td>
+
+onfulfilled
+
+
+</td><td>
+
+(value: unknown) =&gt; unknown
+
+
+</td><td>
+
+_(Optional)_ callback after successfully rendered
+
+
+</td></tr>
+<tr><td>
+
+onrejected
+
+
+</td><td>
+
+(reason: any) =&gt; PromiseLike&lt;never&gt;
+
+
+</td><td>
+
+_(Optional)_ callback after rendering with error
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

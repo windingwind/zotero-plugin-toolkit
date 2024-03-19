@@ -14,7 +14,34 @@ constructor(win: Window);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  win | Window |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+win
+
+
+</td><td>
+
+Window
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

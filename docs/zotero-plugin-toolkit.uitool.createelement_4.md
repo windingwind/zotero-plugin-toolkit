@@ -14,12 +14,67 @@ createElement(doc: Document, tagName: string, props?: ElementProps): HTMLElement
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  doc | Document |  |
-|  tagName | string |  |
-|  props | [ElementProps](./zotero-plugin-toolkit.elementprops.md) | _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+doc
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tagName
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+props
+
+
+</td><td>
+
+[ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td><td>
+
+_(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 HTMLElement \| XUL.Element \| SVGElement

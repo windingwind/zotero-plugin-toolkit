@@ -14,11 +14,55 @@ appendElement(properties: TagElementProps, container: Element): HTMLElement | SV
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  properties | TagElementProps | See [ElementProps](./zotero-plugin-toolkit.elementprops.md) |
-|  container | Element | The parent node to append to. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+properties
+
+
+</td><td>
+
+TagElementProps
+
+
+</td><td>
+
+See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
+
+
+</td></tr>
+<tr><td>
+
+container
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+The parent node to append to.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 HTMLElement \| SVGElement \| XUL.Element
