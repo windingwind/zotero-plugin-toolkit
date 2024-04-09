@@ -278,6 +278,18 @@ Get global variables.
 </td></tr>
 <tr><td>
 
+[isFX115()](./zotero-plugin-toolkit.basictool.isfx115.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [isXULElement(elem)](./zotero-plugin-toolkit.basictool.isxulelement.md)
 
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-addText(source: string, type?: "text/html" | "text/unicode"): this;
+addText(source: string, type?: "text/html" | "text/plain" | "text/unicode"): this;
 ```
 
 ## Parameters
@@ -49,7 +49,7 @@ type
 
 </td><td>
 
-"text/html" \| "text/unicode"
+"text/html" \| "text/plain" \| "text/unicode"
 
 
 </td><td>
