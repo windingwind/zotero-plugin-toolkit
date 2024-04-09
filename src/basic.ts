@@ -154,6 +154,10 @@ export class BasicTool {
     return Zotero.platformMajorVersion >= 102;
   }
 
+  isFX115(): boolean {
+    return Zotero.platformMajorVersion >= 115;
+  }
+
   /**
    * Get DOMParser.
    *

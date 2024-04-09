@@ -42,12 +42,14 @@ export class ClipboardHelper extends BasicTool {
 
   public addText(
     source: string,
-    type: "text/html" | "text/unicode" = "text/unicode"
+    type: "text/html" | "text/plain" | "text/unicode" = "text/plain"
   ) {
     const str = Components.classes[
       "@mozilla.org/supports-string;1"
     ].createInstance(Components.interfaces.nsISupportsString);
     str.data = source;
+    // Compatible to text/unicode in fx115
+    if (this.isFX115() && type === "text/unicode") type = "text/plain";
     this.transferable.addDataFlavor(type);
     this.transferable.setTransferData(type, str, source.length * 2);
     return this;
