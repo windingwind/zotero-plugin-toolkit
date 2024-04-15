@@ -63,7 +63,7 @@ export class FilePickerHelper<
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
     let backend;
-    if (Zotero.platformMajorVersion >= 115) {
+    if (this.isFX115()) {
       backend = ChromeUtils.importESModule(
         "chrome://zotero/content/modules/filePicker.mjs"
       ).FilePicker;
