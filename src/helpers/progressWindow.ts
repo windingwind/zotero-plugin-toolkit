@@ -83,6 +83,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
       line.setProgress(options.progress);
     }
     this.lines.push(line);
+    this.updateIcons();
     return this;
   }
 
@@ -107,10 +108,14 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
         ? options.idx
         : 0;
     const icon = this.getIcon(options.type, options.icon);
+    if (icon) {
+      // @ts-ignore
+      this.lines[idx].setItemTypeAndIcon(icon);
+    }
     options.text && this.lines[idx].setText(options.text);
-    icon && this.lines[idx].setIcon(icon);
     typeof options.progress === "number" &&
       this.lines[idx].setProgress(options.progress);
+    this.updateIcons();
     return this;
   }
 
@@ -120,6 +125,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
     if (this.closeTime && this.closeTime > 0) {
       this.startCloseTimer(this.closeTime);
     }
+    setTimeout(this.updateIcons.bind(this), 50);
     return this;
   }
 
@@ -134,6 +140,24 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
 
   private getIcon(type: string | undefined, defaultIcon?: string | undefined) {
     return type && type in icons ? icons[type] : defaultIcon;
+  }
+
+  private updateIcons() {
+    try {
+      this.lines.forEach((line) => {
+        const box = (line as any)._image as XUL.Box;
+        const icon = box.dataset.itemType;
+        if (
+          icon &&
+          icon.startsWith("chrome://") &&
+          !box.style.backgroundImage.includes("progress_arcs")
+        ) {
+          box.style.backgroundImage = `url(${box.dataset.itemType})`;
+        }
+      });
+    } catch (e) {
+      // Ignore
+    }
   }
 }
 
