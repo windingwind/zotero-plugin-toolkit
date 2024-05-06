@@ -121,7 +121,8 @@ export class BasicTool {
     const _Zotero: _ZoteroTypes.Zotero =
       typeof Zotero !== "undefined"
         ? Zotero
-        : Components.classes["@zotero.org/Zotero;1"].getService(
+        : // @ts-ignore
+          Components.classes["@zotero.org/Zotero;1"].getService(
             Components.interfaces.nsISupports
           ).wrappedJSObject;
     try {
@@ -172,8 +173,10 @@ export class BasicTool {
     try {
       return new (this.getGlobal("DOMParser"))();
     } catch (e) {
+      // @ts-ignore
       return Components.classes[
         "@mozilla.org/xmlextras/domparser;1"
+        // @ts-ignore
       ].createInstance(Components.interfaces.nsIDOMParser);
     }
   }
@@ -343,10 +346,10 @@ export class BasicTool {
     if (this._basicOptions.listeners._mainWindow) {
       return;
     }
-    const mainWindowListener = {
-      onOpenWindow: (xulWindow: XUL.XULWindow) => {
+    const mainWindowListener: nsIWindowMediatorListener = {
+      onOpenWindow: (xulWindow) => {
         // @ts-ignore
-        const domWindow = xulWindow.docShell.domWindow;
+        const domWindow = xulWindow.docShell.domWindow as Window;
         const onload = async () => {
           domWindow.removeEventListener("load", onload, false);
           if (
@@ -366,9 +369,9 @@ export class BasicTool {
         };
         domWindow.addEventListener("load", () => onload(), false);
       },
-      onCloseWindow: async (xulWindow: XUL.XULWindow) => {
+      onCloseWindow: async (xulWindow) => {
         // @ts-ignore
-        const domWindow = xulWindow.docShell.domWindow;
+        const domWindow = xulWindow.docShell.domWindow as Window;
         if (
           domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml"
         ) {
@@ -430,7 +433,8 @@ export class BasicTool {
   static getZotero(): _ZoteroTypes.Zotero {
     return typeof Zotero !== "undefined"
       ? Zotero
-      : Components.classes["@zotero.org/Zotero;1"].getService(
+      : // @ts-ignore
+        Components.classes["@zotero.org/Zotero;1"].getService(
           Components.interfaces.nsISupports
         ).wrappedJSObject;
   }

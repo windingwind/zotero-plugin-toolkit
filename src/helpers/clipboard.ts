@@ -31,9 +31,11 @@ export class ClipboardHelper extends BasicTool {
 
   constructor() {
     super();
+    // @ts-ignore
     this.transferable = Components.classes[
       "@mozilla.org/widget/transferable;1"
     ].createInstance(Components.interfaces.nsITransferable);
+    // @ts-ignore
     this.clipboardService = Components.classes[
       "@mozilla.org/widget/clipboard;1"
     ].getService(Components.interfaces.nsIClipboard);
@@ -44,6 +46,7 @@ export class ClipboardHelper extends BasicTool {
     source: string,
     type: "text/html" | "text/plain" | "text/unicode" = "text/plain"
   ) {
+    // @ts-ignore
     const str = Components.classes[
       "@mozilla.org/supports-string;1"
     ].createInstance(Components.interfaces.nsISupportsString);
@@ -67,6 +70,7 @@ export class ClipboardHelper extends BasicTool {
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
+    // @ts-ignore
     let imgTools = Components.classes["@mozilla.org/image/tools;1"].getService(
       Components.interfaces.imgITools
     );
@@ -77,6 +81,7 @@ export class ClipboardHelper extends BasicTool {
       mimeType = "application/x-moz-nativeimage";
     } else {
       mimeType = `image/png`;
+      // @ts-ignore
       img = Components.classes[
         "@mozilla.org/supports-interface-pointer;1"
       ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
@@ -91,6 +96,7 @@ export class ClipboardHelper extends BasicTool {
   }
 
   public addFile(path: string) {
+    // @ts-ignore
     const file = Components.classes["@mozilla.org/file/local;1"].createInstance(
       Components.interfaces.nsIFile
     );

@@ -277,6 +277,7 @@ export class PreferencePaneManager extends ManagerTool {
           false
         );
       },
+      onCloseWindow: () => {},
     };
     Services.wm.addListener(windowListener);
   }

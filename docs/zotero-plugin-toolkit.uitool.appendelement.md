@@ -9,7 +9,7 @@ Append element(s) to a node.
 **Signature:**
 
 ```typescript
-appendElement(properties: TagElementProps, container: Element): HTMLElement | SVGElement | XUL.Element;
+appendElement(properties: TagElementProps, container: Element): Node;
 ```
 
 ## Parameters
@@ -65,7 +65,7 @@ The parent node to append to.
 </tbody></table>
 **Returns:**
 
-HTMLElement \| SVGElement \| XUL.Element
+Node
 
 A Node that is the appended child (aChild), except when aChild is a DocumentFragment, in which case the empty DocumentFragment is returned.
 

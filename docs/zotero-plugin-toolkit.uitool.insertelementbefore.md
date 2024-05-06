@@ -9,7 +9,7 @@ Inserts a node before a reference node as a child of its parent node.
 **Signature:**
 
 ```typescript
-insertElementBefore(properties: TagElementProps, referenceNode: Element): HTMLElement | SVGElement | undefined;
+insertElementBefore(properties: TagElementProps, referenceNode: Element): Node | undefined;
 ```
 
 ## Parameters
@@ -65,6 +65,6 @@ The node before which newNode is inserted.
 </tbody></table>
 **Returns:**
 
-HTMLElement \| SVGElement \| undefined
+Node \| undefined
 
 

@@ -132,6 +132,7 @@ export class DebugBridge {
         this.doAction(uri);
       },
     };
+    // @ts-ignore
     Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
       "zotero://ztoolkit-debug"
     ] = debugBridgeExtension;

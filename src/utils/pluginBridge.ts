@@ -29,6 +29,7 @@ export class PluginBridge {
   }
 
   private initializePluginBridge() {
+    // @ts-ignore
     const { AddonManager } = ChromeUtils.import(
       "resource://gre/modules/AddonManager.jsm"
     );
@@ -78,6 +79,7 @@ export class PluginBridge {
         this.doAction(uri);
       },
     };
+    // @ts-ignore
     Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
       "zotero://plugin"
     ] = pluginBridgeExtension;
