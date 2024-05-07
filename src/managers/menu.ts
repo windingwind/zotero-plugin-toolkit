@@ -91,7 +91,7 @@ export class MenuManager extends ManagerTool {
       return false;
     }
     const doc: Document = popup.ownerDocument;
-    const generateElementOptions = (menuitemOption: MenuitemOptions) => {
+    const genMenuElement = (menuitemOption: MenuitemOptions) => {
       const elementOption: TagElementProps = {
         tag: menuitemOption.tag,
         id: menuitemOption.id,
@@ -120,31 +120,40 @@ export class MenuManager extends ManagerTool {
           "list-style-image" as any
         ] = `url(${menuitemOption.icon})`;
       }
-      if (menuitemOption.tag === "menu") {
-        elementOption.children!.push({
-          tag: "menupopup",
-          id: menuitemOption.popupId,
-          attributes: { onpopupshowing: menuitemOption.onpopupshowing || "" },
-          children: (
-            menuitemOption.children ||
-            menuitemOption.subElementOptions ||
-            []
-          ).map(generateElementOptions),
-        });
-      }
       if (menuitemOption.commandListener) {
         elementOption.listeners?.push({
           type: "command",
           listener: menuitemOption.commandListener!,
         });
       }
-      return elementOption;
+      const menuItem = this.ui.createElement(
+        doc,
+        menuitemOption.tag,
+        elementOption
+      ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
+      if (menuitemOption.getVisibility) {
+        popup.addEventListener("popupshowing", (ev: Event) => {
+          const showing = menuitemOption.getVisibility!(menuItem, ev);
+          if (showing) {
+            menuItem.removeAttribute("hidden");
+          } else {
+            menuItem.setAttribute("hidden", "true");
+          }
+        });
+      }
+      if (menuitemOption.tag === "menu") {
+        const subPopup = this.ui.createElement(doc, "menupopup", {
+          id: menuitemOption.popupId,
+          attributes: { onpopupshowing: menuitemOption.onpopupshowing || "" },
+        });
+        menuitemOption.children?.forEach((childOption) => {
+          subPopup.append(genMenuElement(childOption));
+        });
+        menuItem.append(subPopup);
+      }
+      return menuItem;
     };
-    const props = generateElementOptions(options);
-    const menuItem = this.ui.createElement(doc, options.tag, props) as
-      | XUL.MenuItem
-      | XUL.Menu
-      | XUL.MenuSeparator;
+    const topMenuItem = genMenuElement(options);
     if (!anchorElement) {
       anchorElement = (
         insertPosition === "after"
@@ -152,17 +161,7 @@ export class MenuManager extends ManagerTool {
           : popup.firstElementChild
       ) as XUL.Element;
     }
-    anchorElement[insertPosition](menuItem);
-    if (options.getVisibility) {
-      popup.addEventListener("popupshowing", (ev: Event) => {
-        const showing = options.getVisibility!(menuItem, ev);
-        if (showing) {
-          menuItem.removeAttribute("hidden");
-        } else {
-          menuItem.setAttribute("hidden", "true");
-        }
-      });
-    }
+    anchorElement[insertPosition](topMenuItem);
   }
 
   unregister(menuId: string) {
