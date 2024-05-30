@@ -297,12 +297,26 @@ function openDialog(
       });
       // Add style according to Zotero prefs
       // For custom select(menulist) and a link
-      win.document.head.appendChild(
-        dialogHelper.createElement(win.document, "style", {
-          properties: {
-            innerHTML: style,
-          },
-        })
+      dialogHelper.appendElement(
+        {
+          tag: "fragment",
+          children: [
+            {
+              tag: "style",
+              properties: {
+                innerHTML: style,
+              },
+            },
+            {
+              tag: "link",
+              properties: {
+                rel: "stylesheet",
+                href: "chrome://zotero-platform/content/zotero.css",
+              },
+            },
+          ],
+        },
+        win.document.head
       );
       replaceElement(elementProps, dialogHelper);
       // Create element
@@ -499,25 +513,6 @@ function replaceElement(
 }
 
 const style = `
-html,
-body {
-  font-size: calc(12px * 1);
-  font-family: initial;
-}
-@media (prefers-color-scheme: light) {
-  html,
-  body {
-    background-color: #ffffff;
-    color: #000000;
-  }
-}
-@media (prefers-color-scheme: dark) {
-  html,
-  body {
-    background-color: #1e1e1e;
-    color: #ffffff;
-  }
-}
 .zotero-text-link {
   -moz-user-focus: normal;
   color: -moz-nativehyperlinktext;
@@ -532,7 +527,7 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9fb;
+  background-color: var(--material-toolbar);
   min-width: 160px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
@@ -544,7 +539,7 @@ body {
   padding: 5px 10px 5px 10px;
 }
 .dropdown-item:hover {
-  background-color: #efeff3;
+  background-color: var(--fill-quinary);
 }
 `;
 
