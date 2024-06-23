@@ -20,6 +20,7 @@ import { ItemBoxManager } from "./managers/itemBox";
 import { LargePrefHelper } from "./helpers/largePref";
 import { KeyboardManager } from "./managers/keyboard";
 import { PatchHelper } from "./helpers/patch";
+import { GuideHelper } from "./helpers/guide";
 
 /**
  * ⭐Contains all tools in this lib. Start from here if you are new to this lib.
@@ -48,6 +49,7 @@ class ZoteroToolkit extends BasicTool {
   VirtualizedTable = makeHelperTool(VirtualizedTableHelper, this);
   Dialog = makeHelperTool(DialogHelper, this);
   LargePrefObject = makeHelperTool(LargePrefHelper, this);
+  Guide = makeHelperTool(GuideHelper, this);
 
   constructor() {
     super();

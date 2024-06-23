@@ -27,6 +27,7 @@ import { VirtualizedTableHelper } from "./helpers/virtualizedTable";
 import { DialogHelper } from "./helpers/dialog";
 import { LargePrefHelper } from "./helpers/largePref";
 import { PatchHelper } from "./helpers/patch";
+import { GuideHelper } from "./helpers/guide";
 
 export {
   BasicTool,
@@ -54,4 +55,5 @@ export {
   VirtualizedTableHelper,
   DialogHelper,
   LargePrefHelper,
+  GuideHelper,
 };

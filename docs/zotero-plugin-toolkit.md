@@ -85,6 +85,17 @@ File picker helper.
 </td></tr>
 <tr><td>
 
+[GuideHelper](./zotero-plugin-toolkit.guidehelper.md)
+
+
+</td><td>
+
+**_(ALPHA)_** Helper for creating a guide. Designed for creating a step-by-step guide for users.
+
+
+</td></tr>
+<tr><td>
+
 [ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md)
 
 

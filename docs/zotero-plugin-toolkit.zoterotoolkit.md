@@ -161,6 +161,23 @@ typeof [FilePickerHelper](./zotero-plugin-toolkit.filepickerhelper.md)
 </td></tr>
 <tr><td>
 
+[Guide](./zotero-plugin-toolkit.zoterotoolkit.guide.md)
+
+
+</td><td>
+
+
+</td><td>
+
+typeof [GuideHelper](./zotero-plugin-toolkit.guidehelper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md)
 
 
