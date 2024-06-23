@@ -27,19 +27,34 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
 - Managers
 
-  - [ItemTree](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
-
-  - [ItemBox](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
-
-  - [PreferencePane](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
-
-  - [LibraryTabPanel](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
-
-  - [ReaderTabPanel](docs/zotero-plugin-toolkit.readertabpanelmanager.md): Register extra tab panel in the reader right-sidebars.
-
   - [Menu](docs/zotero-plugin-toolkit.menumanager.md): Register menu/menu popup.
 
-  - [Shortcut](docs/zotero-plugin-toolkit.shortcutmanager.md): Register shortcut keys.
+  - [Keyboard](docs/zotero-plugin-toolkit.keyboardmanager.md): Register keyboard shortcuts.
+
+  - [Shortcut(Deprecated, use `Keyboard`)](docs/zotero-plugin-toolkit.shortcutmanager.md): Register shortcut keys.
+
+  - [FieldHook](docs/zotero-plugin-toolkit.fieldhookmanager.md): Register custom fields.
+
+  - [Prompt](docs/zotero-plugin-toolkit.promptmanager.md): Register prompt panel command.
+
+  <details>
+  <summary>Deprecated Managers</summary>
+
+  - [Patch(Replaced by PatchHelper)](docs/zotero-plugin-toolkit.patchmanager.md): Patch Zotero's built-in functions.
+
+  - [ReaderInstance(Replaced by official API)](docs/zotero-plugin-toolkit.readerinstancemanager.md): Register reader instance hooks.
+
+  - [ItemTree(Replaced by official API)](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
+
+  - [ItemBox(Replaced by official API)](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
+
+  - [PreferencePane(Replaced by official API)](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+
+  - [LibraryTabPanel(Deprecated)](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
+
+  - [ReaderTabPanel(Deprecated)](docs/zotero-plugin-toolkit.readertabpanelmanager.md): Register extra tab panel in the reader right-sidebars.
+
+  </details>
 
 - Helpers
 
@@ -52,6 +67,12 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
   - [VirtualizedTable](docs/zotero-plugin-toolkit.virtualizedtablehelper.md): Create a VirtualizedTable (an advanced table view element, which is used by the Zotero item tree, collections tree, item picker, etc.)
 
   - [Dialog](docs/zotero-plugin-toolkit.dialoghelper.md): Create a dialog window(a superset of XUL dialog). With data-binding, auto-layout, and control buttons.
+
+  - [Guide](docs/zotero-plugin-toolkit.guidehelper.md): Create a step-by-step guide.
+
+  - [LargePref](docs/zotero-plugin-toolkit.largeprefhelper.md): Store/read large data in `prefs.js`.
+
+  - [Patch](docs/zotero-plugin-toolkit.patchhelper.md): Patch Zotero's built-in functions. A replacement of `PatchManager`.
 
 - Utils
 
@@ -74,6 +95,8 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
     > - url: the url of plugin `xpi` to install.
     > - minVersion: the required minimal version of Zotero if provided.
     > - maxVersion: the required maximal version of Zotero if provided.
+
+  - [Wait](src/utils/wait.ts): Wait for a condition to be true.
 
 ## Usage
 
