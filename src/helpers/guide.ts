@@ -37,8 +37,9 @@ export class GuideHelper extends BasicTool {
     const promise = new Promise((resolve) => {
       guide._panel.addEventListener("guide-finished", () => resolve(guide));
     });
+    await promise;
     Zotero.Prefs.set("ui.popup.disable_autohide", autoHidePopup, true);
-    return promise as Promise<Guide>;
+    return guide;
   }
 
   async highlight(doc: Document, step: GuideStep) {
@@ -50,7 +51,8 @@ export class GuideHelper extends BasicTool {
     const promise = new Promise((resolve) => {
       guide._panel.addEventListener("guide-finished", () => resolve(guide));
     });
-    return promise as Promise<Guide>;
+    await promise;
+    return guide;
   }
 }
 
