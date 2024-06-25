@@ -28,11 +28,16 @@ export class GuideHelper extends BasicTool {
     }
 
     const guide = new Guide(doc.ownerGlobal);
+    const autoHidePopup = Zotero.Prefs.get(
+      "ui.popup.disable_autohide",
+      true
+    ) as boolean;
+    Zotero.Prefs.set("ui.popup.disable_autohide", true, true);
     await guide.show(this._steps);
     const promise = new Promise((resolve) => {
       guide._panel.addEventListener("guide-finished", () => resolve(guide));
     });
-
+    Zotero.Prefs.set("ui.popup.disable_autohide", autoHidePopup, true);
     return promise as Promise<Guide>;
   }
 
