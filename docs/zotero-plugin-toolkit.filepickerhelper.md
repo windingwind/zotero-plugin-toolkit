@@ -44,7 +44,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[(constructor)(title, mode, filters, suggestion, window, filterMask)](./zotero-plugin-toolkit.filepickerhelper._constructor_.md)
+[(constructor)(title, mode, filters, suggestion, window, filterMask, directory)](./zotero-plugin-toolkit.filepickerhelper._constructor_.md)
 
 
 </td><td>
