@@ -8,6 +8,7 @@ import { BasicTool } from "../basic";
  * @param suggestion default file/folder
  * @param window the parent window. By default it is the main window
  * @param filterMask built-in filters
+ * @param directory directory in which to open the file picker
  * @example
  * ```ts
  * await new FilePickerHelper(
@@ -24,6 +25,7 @@ export class FilePickerHelper<
   private mode: MODE;
   private filters?: [string, string][];
   private suggestion?: string;
+  private directory?: string;
   private window?: Window | undefined;
   private filterMask?:
     | "all"
@@ -50,13 +52,15 @@ export class FilePickerHelper<
       | "apps"
       | "urls"
       | "audio"
-      | "video"
+      | "video",
+    directory?: string
   ) {
     super();
     this.title = title;
     this.mode = mode;
     this.filters = filters;
     this.suggestion = suggestion;
+    this.directory = directory;
     this.window = window;
     this.filterMask = filterMask;
   }
@@ -81,6 +85,7 @@ export class FilePickerHelper<
     }
     if (this.filterMask) fp.appendFilters(this.getFilterMask(fp));
     if (this.suggestion) fp.defaultString = this.suggestion;
+    if (this.directory) fp.displayDirectory = this.directory;
     const userChoice = await fp.show();
     switch (userChoice) {
       case fp.returnOK:
