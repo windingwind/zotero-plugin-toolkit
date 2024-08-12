@@ -96,28 +96,6 @@ File picker helper.
 </td></tr>
 <tr><td>
 
-[ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md)
-
-
-</td><td>
-
-Register customized new row to the library itemBox (right-side info tab).
-
-
-</td></tr>
-<tr><td>
-
-[ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md)
-
-
-</td><td>
-
-Register customized new columns to the library itemTree.
-
-
-</td></tr>
-<tr><td>
-
 [KeyboardManager](./zotero-plugin-toolkit.keyboardmanager.md)
 
 
@@ -151,17 +129,6 @@ Helper class for storing large amounts of data in Zotero preferences.
 </td></tr>
 <tr><td>
 
-[LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md)
-
-
-</td><td>
-
-Register a new &lt;<!-- -->tabpanel<!-- -->&gt; in library right-side bar.
-
-
-</td></tr>
-<tr><td>
-
 [MenuManager](./zotero-plugin-toolkit.menumanager.md)
 
 
@@ -182,17 +149,6 @@ Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->
 </td></tr>
 <tr><td>
 
-[PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md)
-
-
-</td><td>
-
-Register preference pane from Zotero 7's `xhtml`<!-- -->, for Zotero 6 &amp; 7.
-
-
-</td></tr>
-<tr><td>
-
 [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md)
 
 
@@ -204,45 +160,12 @@ ProgressWindow helper.
 </td></tr>
 <tr><td>
 
-[ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md)
-
-
-</td><td>
-
-Reader instance hooks.
-
-
-</td></tr>
-<tr><td>
-
-[ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md)
-
-
-</td><td>
-
-Register new &lt;<!-- -->tabpanel<!-- -->&gt; in reader right-side bar.
-
-
-</td></tr>
-<tr><td>
-
 [ReaderTool](./zotero-plugin-toolkit.readertool.md)
 
 
 </td><td>
 
 Zotero ReaderInstance APIs.
-
-
-</td></tr>
-<tr><td>
-
-[ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md)
-
-
-</td><td>
-
-Register shortcut keys.
 
 
 </td></tr>
@@ -302,15 +225,6 @@ Description
 </td><td>
 
 `props` of `UITool.createElement`<!-- -->. See [UITool](./zotero-plugin-toolkit.uitool.md)
-
-
-</td></tr>
-<tr><td>
-
-[PrefPaneOptions](./zotero-plugin-toolkit.prefpaneoptions.md)
-
-
-</td><td>
 
 
 </td></tr>

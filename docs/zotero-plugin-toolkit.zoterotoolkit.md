@@ -178,40 +178,6 @@ typeof [GuideHelper](./zotero-plugin-toolkit.guidehelper.md)
 </td></tr>
 <tr><td>
 
-[ItemBox](./zotero-plugin-toolkit.zoterotoolkit.itembox.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[ItemBoxManager](./zotero-plugin-toolkit.itemboxmanager.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[ItemTree](./zotero-plugin-toolkit.zoterotoolkit.itemtree.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[ItemTreeManager](./zotero-plugin-toolkit.itemtreemanager.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
 [Keyboard](./zotero-plugin-toolkit.zoterotoolkit.keyboard.md)
 
 
@@ -246,23 +212,6 @@ typeof [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md)
 </td></tr>
 <tr><td>
 
-[LibraryTabPanel](./zotero-plugin-toolkit.zoterotoolkit.librarytabpanel.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[LibraryTabPanelManager](./zotero-plugin-toolkit.librarytabpanelmanager.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
 [Menu](./zotero-plugin-toolkit.zoterotoolkit.menu.md)
 
 
@@ -289,23 +238,6 @@ typeof [LargePrefHelper](./zotero-plugin-toolkit.largeprefhelper.md)
 </td><td>
 
 typeof [PatchHelper](./zotero-plugin-toolkit.patchhelper.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[PreferencePane](./zotero-plugin-toolkit.zoterotoolkit.preferencepane.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[PreferencePaneManager](./zotero-plugin-toolkit.preferencepanemanager.md)
 
 
 </td><td>
@@ -357,57 +289,6 @@ PromptManager
 </td><td>
 
 [ReaderTool](./zotero-plugin-toolkit.readertool.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[ReaderInstance](./zotero-plugin-toolkit.zoterotoolkit.readerinstance.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[ReaderInstanceManager](./zotero-plugin-toolkit.readerinstancemanager.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[ReaderTabPanel](./zotero-plugin-toolkit.zoterotoolkit.readertabpanel.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[ReaderTabPanelManager](./zotero-plugin-toolkit.readertabpanelmanager.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[Shortcut](./zotero-plugin-toolkit.zoterotoolkit.shortcut.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[ShortcutManager](./zotero-plugin-toolkit.shortcutmanager.md)
 
 
 </td><td>

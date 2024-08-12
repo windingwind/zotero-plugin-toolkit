@@ -13,7 +13,7 @@ export class BasicTool {
   /**
    * @deprecated Use `patcherManager` instead.
    */
-  protected readonly patchSign: string = "zotero-plugin-toolkit@2.0.0";
+  protected readonly patchSign: string = "zotero-plugin-toolkit@3.0.0";
 
   public get basicOptions(): BasicOptions {
     return this._basicOptions;
