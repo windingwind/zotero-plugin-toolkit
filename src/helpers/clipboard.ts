@@ -52,7 +52,7 @@ export class ClipboardHelper extends BasicTool {
     ].createInstance(Components.interfaces.nsISupportsString);
     str.data = source;
     // Compatible to text/unicode in fx115
-    if (this.isFX115() && type === "text/unicode") type = "text/plain";
+    if (type === "text/unicode") type = "text/plain";
     this.transferable.addDataFlavor(type);
     this.transferable.setTransferData(type, str, source.length * 2);
     return this;

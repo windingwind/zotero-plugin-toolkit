@@ -14,7 +14,6 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [getGlobal](docs/zotero-plugin-toolkit.basictool-getglobal_12.md): Get global variables for bootstrapped plugin sandbox. `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`. With type hint.
   - [log](docs/zotero-plugin-toolkit.basictool.log.md): Output to both `Zotero.debug` and `console.log`. Can be customized depending on dev/prod environment.
-  - [isZotero7](docs/zotero-plugin-toolkit.basictool.iszotero7.md)/[`isXULElement`](./docs/zotero-plugin-toolkit.zoterocompat.isxulelement.md)
   - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
 
 - Tools
@@ -31,30 +30,9 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [Keyboard](docs/zotero-plugin-toolkit.keyboardmanager.md): Register keyboard shortcuts.
 
-  - [Shortcut(Deprecated, use `Keyboard`)](docs/zotero-plugin-toolkit.shortcutmanager.md): Register shortcut keys.
-
   - [FieldHook](docs/zotero-plugin-toolkit.fieldhookmanager.md): Register custom fields.
 
   - [Prompt](docs/zotero-plugin-toolkit.promptmanager.md): Register prompt panel command.
-
-  <details>
-  <summary>Deprecated Managers</summary>
-
-  - [Patch(Replaced by PatchHelper)](docs/zotero-plugin-toolkit.patchmanager.md): Patch Zotero's built-in functions.
-
-  - [ReaderInstance(Replaced by official API)](docs/zotero-plugin-toolkit.readerinstancemanager.md): Register reader instance hooks.
-
-  - [ItemTree(Replaced by official API)](docs/zotero-plugin-toolkit.itemtreemanager.md): Register extra columns/custom cell.
-
-  - [ItemBox(Replaced by official API)](docs/zotero-plugin-toolkit.itemboxmanager.md): Register extra rows in the right-side info panel.
-
-  - [PreferencePane(Replaced by official API)](docs/zotero-plugin-toolkit.preferencepanemanager.md): Register preference pane for Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
-
-  - [LibraryTabPanel(Deprecated)](docs/zotero-plugin-toolkit.librarytabpanelmanager.md): Register extra tab panel in the library right-sidebar.
-
-  - [ReaderTabPanel(Deprecated)](docs/zotero-plugin-toolkit.readertabpanelmanager.md): Register extra tab panel in the reader right-sidebars.
-
-  </details>
 
 - Helpers
 
@@ -171,10 +149,3 @@ The playground uses the latest build. No need to npm install again if you rebuil
 Use this code under MIT License. No warranties are provided. Keep the laws of your locality in mind!
 
 If you want to change the license, please contact me at wyzlshx@foxmail.com
-
-## My Zotero Plugins
-
-- [zotero-better-notes](https://github.com/windingwind/zotero-better-notes): Everything about note management. All in Zotero.
-- [zotero-pdf-preview](https://github.com/windingwind/zotero-pdf-preview): PDF Preview for Zotero.
-- [zotero-pdf-translate](https://github.com/windingwind/zotero-pdf-translate): PDF Translation for Zotero 6.
-- [zotero-tag](https://github.com/windingwind/zotero-tag): Automatically tag items/Batch tagging

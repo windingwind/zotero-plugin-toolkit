@@ -412,7 +412,7 @@ function replaceElement(
   uiTool: UITool
 ) {
   let checkChildren = true;
-  if (elementProps.tag === "select" && uiTool.isZotero7()) {
+  if (elementProps.tag === "select") {
     checkChildren = false;
     const customSelectProps = {
       tag: "div",

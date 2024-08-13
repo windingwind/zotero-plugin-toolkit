@@ -232,24 +232,6 @@ For Zotero 7+, use `createXULElement`<!-- -->.
 </td></tr>
 <tr><td>
 
-[getDOMParser()](./zotero-plugin-toolkit.basictool.getdomparser.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Get DOMParser.
-
-For Zotero 6: mainWindow.DOMParser or nsIDOMParser
-
-For Zotero 7: Firefox 102 support DOMParser natively
-
-
-</td></tr>
-<tr><td>
-
 [getGlobal(k)](./zotero-plugin-toolkit.basictool.getglobal_12.md)
 
 
@@ -278,18 +260,6 @@ Get global variables.
 </td></tr>
 <tr><td>
 
-[isFX115()](./zotero-plugin-toolkit.basictool.isfx115.md)
-
-
-</td><td>
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
 [isXULElement(elem)](./zotero-plugin-toolkit.basictool.isxulelement.md)
 
 
@@ -299,20 +269,6 @@ Get global variables.
 </td><td>
 
 If it's an XUL element
-
-
-</td></tr>
-<tr><td>
-
-[isZotero7()](./zotero-plugin-toolkit.basictool.iszotero7.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Check if it's running on Zotero 7 (Firefox 102)
 
 
 </td></tr>

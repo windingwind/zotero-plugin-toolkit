@@ -380,10 +380,7 @@ export class UITool extends BasicTool {
   ): DocumentFragment {
     // Adapted from MozXULElement.parseXULToFragment
 
-    /* eslint-disable indent */
-    let parser = this.getDOMParser();
-    // parser.forceEnableXULXBL();
-    /* cspell:words xulns htmlns */
+    let parser = new DOMParser();
     const xulns =
       "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
     const htmlns = "http://www.w3.org/1999/xhtml";

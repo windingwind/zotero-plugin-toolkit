@@ -149,39 +149,6 @@ export class BasicTool {
   }
 
   /**
-   * Check if it's running on Zotero 7 (Firefox 102)
-   */
-  isZotero7(): boolean {
-    return Zotero.platformMajorVersion >= 102;
-  }
-
-  isFX115(): boolean {
-    return Zotero.platformMajorVersion >= 115;
-  }
-
-  /**
-   * Get DOMParser.
-   *
-   * For Zotero 6: mainWindow.DOMParser or nsIDOMParser
-   *
-   * For Zotero 7: Firefox 102 support DOMParser natively
-   */
-  getDOMParser(): DOMParser {
-    if (this.isZotero7()) {
-      return new (this.getGlobal("DOMParser"))();
-    }
-    try {
-      return new (this.getGlobal("DOMParser"))();
-    } catch (e) {
-      // @ts-ignore
-      return Components.classes[
-        "@mozilla.org/xmlextras/domparser;1"
-        // @ts-ignore
-      ].createInstance(Components.interfaces.nsIDOMParser);
-    }
-  }
-
-  /**
    * If it's an XUL element
    * @param elem
    */
@@ -209,15 +176,8 @@ export class BasicTool {
    * ```
    */
   createXULElement(doc: Document, type: string): XUL.Element {
-    if (this.isZotero7()) {
-      // @ts-ignore
-      return doc.createXULElement(type);
-    } else {
-      return doc.createElementNS(
-        "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
-        type
-      ) as XUL.Element;
-    }
+    // @ts-ignore
+    return doc.createXULElement(type);
   }
 
   /**
