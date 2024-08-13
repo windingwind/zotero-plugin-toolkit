@@ -2,11 +2,7 @@ import { BasicTool } from "../basic";
 import { DebugBridge } from "../utils/debugBridge";
 import { PluginBridge } from "../utils/pluginBridge";
 import { FieldHooksGlobal } from "./fieldHook";
-import { ItemBoxGlobal } from "./itemBox";
-import { ItemTreeGlobal } from "./itemTree";
 import { PromptGlobal } from "./prompt";
-import { ReaderInstanceGlobal } from "./readerInstance";
-import { ShortcutsGlobal } from "./shortcut";
 
 /**
  * The Singleton class of global parameters used by managers.
@@ -16,11 +12,7 @@ export class ToolkitGlobal {
   public debugBridge?: DebugBridge;
   public pluginBridge?: PluginBridge;
   public fieldHooks?: FieldHooksGlobal;
-  public itemTree?: ItemTreeGlobal;
-  public itemBox?: ItemBoxGlobal;
-  public shortcut?: ShortcutsGlobal;
   public prompt?: PromptGlobal;
-  public readerInstance?: ReaderInstanceGlobal;
 
   public currentWindow?: Window;
 
@@ -68,26 +60,9 @@ function initializeModules(instance: ToolkitGlobal) {
     setFieldHooks: {},
     isFieldOfBaseHooks: {},
   });
-  setModule(instance, "itemTree", {
-    _ready: false,
-    columns: [],
-    renderCellHooks: {},
-  });
-  setModule(instance, "itemBox", {
-    _ready: false,
-    fieldOptions: {},
-  });
-  setModule(instance, "shortcut", {
-    _ready: false,
-    eventKeys: [],
-  });
   setModule(instance, "prompt", {
     _ready: false,
     instance: undefined,
-  });
-  setModule(instance, "readerInstance", {
-    _ready: false,
-    initializedHooks: {},
   });
   DebugBridge.setModule(instance);
   PluginBridge.setModule(instance);
@@ -113,11 +88,7 @@ function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(
 
 function checkWindowDependentModules(instance: ToolkitGlobal) {
   instance.currentWindow = BasicTool.getZotero().getMainWindow();
-  instance.itemTree = undefined;
-  instance.itemBox = undefined;
-  instance.shortcut = undefined;
   instance.prompt = undefined;
-  instance.readerInstance = undefined;
 }
 
 export interface GlobalInstance {

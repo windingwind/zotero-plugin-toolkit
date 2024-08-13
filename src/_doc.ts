@@ -8,18 +8,8 @@ import { UITool, ElementProps } from "./tools/ui";
 import { ReaderTool } from "./tools/reader";
 import { ExtraFieldTool } from "./tools/extraField";
 import { FieldHookManager } from "./managers/fieldHook";
-import { ItemTreeManager } from "./managers/itemTree";
-import { ItemBoxManager } from "./managers/itemBox";
 import { KeyboardManager, KeyModifier } from "./managers/keyboard";
-import { LibraryTabPanelManager } from "./managers/libraryTabPanel";
-import { ReaderTabPanelManager } from "./managers/readerTabPanel";
-import { ReaderInstanceManager } from "./managers/readerInstance";
 import { MenuManager } from "./managers/menu";
-import {
-  PreferencePaneManager,
-  PrefPaneOptions,
-} from "./managers/preferencePane";
-import { ShortcutManager } from "./managers/shortcut";
 import { ClipboardHelper } from "./helpers/clipboard";
 import { FilePickerHelper } from "./helpers/filePicker";
 import { ProgressWindowHelper } from "./helpers/progressWindow";
@@ -37,18 +27,10 @@ export {
   ReaderTool,
   ExtraFieldTool,
   FieldHookManager,
-  ItemTreeManager,
-  ItemBoxManager,
   KeyboardManager,
   KeyModifier,
-  LibraryTabPanelManager,
-  ReaderTabPanelManager,
-  ReaderInstanceManager,
   MenuManager,
-  PreferencePaneManager,
   PatchHelper,
-  PrefPaneOptions,
-  ShortcutManager,
   ClipboardHelper,
   FilePickerHelper,
   ProgressWindowHelper,
