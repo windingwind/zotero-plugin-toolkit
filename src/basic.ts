@@ -242,9 +242,13 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        console.groupCollapsed(...data);
-        console.trace();
-        console.groupEnd();
+        if (!console) {
+          Services.console.logStringMessage(data.join("\n"));
+        } else {
+          console.groupCollapsed(...data);
+          console.trace();
+          console.groupEnd();
+        }
       }
       if (!options.disableZLog) {
         Zotero.debug(
@@ -261,7 +265,6 @@ export class BasicTool {
         );
       }
     } catch (e: unknown) {
-      console.error(e);
       Zotero.logError(e as Error);
     }
   }
