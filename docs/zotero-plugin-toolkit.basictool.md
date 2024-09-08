@@ -92,6 +92,25 @@ configurations.
 </td></tr>
 <tr><td>
 
+[\_console](./zotero-plugin-toolkit.basictool._console.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Console
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md)
 
 
