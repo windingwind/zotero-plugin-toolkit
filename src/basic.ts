@@ -10,6 +10,8 @@ export class BasicTool {
    */
   protected _basicOptions: BasicOptions;
 
+  protected _console: Console;
+
   /**
    * @deprecated Use `patcherManager` instead.
    */
@@ -45,6 +47,12 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
+    let { ConsoleAPI } = Components.utils.import(
+      "resource://gre/modules/Console.jsm"
+    );
+    this._console = new ConsoleAPI({
+      consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
+    });
     this.updateOptions(data);
     return;
   }
@@ -189,7 +197,6 @@ export class BasicTool {
       return;
     }
     const Zotero = this.getGlobal("Zotero");
-    const console = this.getGlobal("console");
     // If logOption is not provides, use the global one.
     let options: typeof this._basicOptions.log;
     if (data[data.length - 1]?._type === "toolkitlog") {
@@ -202,13 +209,9 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        if (!console) {
-          Services.console.logStringMessage(data.join("\n"));
-        } else {
-          console.groupCollapsed(...data);
-          console.trace();
-          console.groupEnd();
-        }
+        this._console.groupCollapsed(...data);
+        this._console.trace();
+        this._console.groupEnd();
       }
       if (!options.disableZLog) {
         Zotero.debug(
