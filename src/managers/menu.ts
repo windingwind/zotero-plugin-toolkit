@@ -132,7 +132,7 @@ export class MenuManager extends ManagerTool {
         elementOption
       ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
       if (menuitemOption.getVisibility) {
-        popup.addEventListener("popupshowing", (ev: Event) => {
+        popup?.addEventListener("popupshowing", (ev: Event) => {
           const showing = menuitemOption.getVisibility!(menuItem, ev);
           if (showing) {
             menuItem.removeAttribute("hidden");

@@ -209,9 +209,17 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        this._console.groupCollapsed(...data);
-        this._console.trace();
-        this._console.groupEnd();
+        let console = Zotero.getMainWindow()?.console;
+        if (!console) {
+          console = this._console;
+        }
+        if (console.groupCollapsed) {
+          console.groupCollapsed(...data);
+        } else {
+          console.group(...data);
+        }
+        console.trace();
+        console.groupEnd();
       }
       if (!options.disableZLog) {
         Zotero.debug(
