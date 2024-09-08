@@ -99,7 +99,7 @@ export class MenuManager extends ManagerTool {
         attributes: {
           label: menuitemOption.label || "",
           hidden: Boolean(menuitemOption.hidden),
-          disaled: Boolean(menuitemOption.disabled),
+          disabled: Boolean(menuitemOption.disabled),
           class: menuitemOption.class || "",
           oncommand: menuitemOption.oncommand || "",
         },
