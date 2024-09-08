@@ -99,7 +99,7 @@ export class MenuManager extends ManagerTool {
         attributes: {
           label: menuitemOption.label || "",
           hidden: Boolean(menuitemOption.hidden),
-          disaled: Boolean(menuitemOption.disabled),
+          disabled: Boolean(menuitemOption.disabled),
           class: menuitemOption.class || "",
           oncommand: menuitemOption.oncommand || "",
         },
@@ -184,8 +184,38 @@ enum MenuSelector {
   item = "#zotero-itemmenu",
 }
 
-export interface MenuitemOptions {
-  tag: "menuitem" | "menu" | "menuseparator";
+type MenuitemTagDependentOptions = {
+  tag: "menuitem";
+  /* return true to show and false to hide current element */
+  getVisibility?: (
+    elem: XUL.MenuItem,
+    ev: Event
+  ) => boolean;
+} | {
+  tag: "menu";
+  /* return true to show and false to hide current element */
+  getVisibility?: (
+    elem: XUL.Menu,
+    ev: Event
+  ) => boolean;
+  /* Attributes below are used when type === "menu" */
+  popupId?: string;
+  onpopupshowing?: string;
+  children?: Array<MenuitemOptions>;
+  /**
+   * @deprecated Use `children`.
+   */
+  subElementOptions?: Array<MenuitemOptions>;
+} | {
+  tag: "menuseparator";
+  /* return true to show and false to hide current element */
+  getVisibility?: (
+    elem: XUL.MenuSeparator,
+    ev: Event
+  ) => boolean;
+}
+
+type MenuitemCommonOptions = {
   id?: string;
   label?: string;
   /* data url (chrome://xxx.png) or base64 url (data:image/png;base64,xxx) */
@@ -199,17 +229,6 @@ export interface MenuitemOptions {
   commandListener?:
     | EventListenerOrEventListenerObject
     | ((event: Event) => any);
-  /* return true to show and false to hide current element */
-  getVisibility?: (
-    elem: XUL.MenuItem | XUL.Menu | XUL.MenuSeparator,
-    ev: Event
-  ) => boolean;
-  /* Attributes below are used when type === "menu" */
-  popupId?: string;
-  onpopupshowing?: string;
-  children?: Array<MenuitemOptions>;
-  /**
-   * @deprecated Use `children`.
-   */
-  subElementOptions?: Array<MenuitemOptions>;
 }
+
+export type MenuitemOptions = MenuitemTagDependentOptions & MenuitemCommonOptions;
