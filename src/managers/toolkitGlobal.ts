@@ -1,7 +1,6 @@
 import { BasicTool } from "../basic";
 import { DebugBridge } from "../utils/debugBridge";
 import { PluginBridge } from "../utils/pluginBridge";
-import { FieldHooksGlobal } from "./fieldHook";
 import { PromptGlobal } from "./prompt";
 
 /**
@@ -11,7 +10,6 @@ import { PromptGlobal } from "./prompt";
 export class ToolkitGlobal {
   public debugBridge?: DebugBridge;
   public pluginBridge?: PluginBridge;
-  public fieldHooks?: FieldHooksGlobal;
   public prompt?: PromptGlobal;
 
   public currentWindow?: Window;
@@ -54,12 +52,6 @@ export class ToolkitGlobal {
  * @param instance ToolkitGlobal instance
  */
 function initializeModules(instance: ToolkitGlobal) {
-  setModule(instance, "fieldHooks", {
-    _ready: false,
-    getFieldHooks: {},
-    setFieldHooks: {},
-    isFieldOfBaseHooks: {},
-  });
   setModule(instance, "prompt", {
     _ready: false,
     instance: undefined,

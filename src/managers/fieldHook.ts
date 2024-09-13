@@ -122,18 +122,6 @@ interface FieldData {
   };
 }
 
-export interface FieldHooksGlobal {
-  _ready: boolean;
-  getFieldHooks: {
-    [key: string]: typeof getFieldHookFunc;
-  };
-  setFieldHooks: {
-    [key: string]: typeof setFieldHookFunc;
-  };
-  isFieldOfBaseHooks: {
-    [key: string]: typeof isFieldOfBaseHookFunc;
-  };
-}
 
 export declare function getFieldHookFunc(
   field: string,
