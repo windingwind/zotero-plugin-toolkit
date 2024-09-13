@@ -133,7 +133,7 @@ export class MenuManager extends ManagerTool {
       ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
       if (menuitemOption.getVisibility) {
         popup?.addEventListener("popupshowing", (ev: Event) => {
-          const showing = menuitemOption.getVisibility!(menuItem, ev);
+          const showing = menuitemOption.getVisibility!(menuItem as any, ev);
           if (showing) {
             menuItem.removeAttribute("hidden");
           } else {
@@ -184,36 +184,30 @@ enum MenuSelector {
   item = "#zotero-itemmenu",
 }
 
-type MenuitemTagDependentOptions = {
-  tag: "menuitem";
-  /* return true to show and false to hide current element */
-  getVisibility?: (
-    elem: XUL.MenuItem,
-    ev: Event
-  ) => boolean;
-} | {
-  tag: "menu";
-  /* return true to show and false to hide current element */
-  getVisibility?: (
-    elem: XUL.Menu,
-    ev: Event
-  ) => boolean;
-  /* Attributes below are used when type === "menu" */
-  popupId?: string;
-  onpopupshowing?: string;
-  children?: Array<MenuitemOptions>;
-  /**
-   * @deprecated Use `children`.
-   */
-  subElementOptions?: Array<MenuitemOptions>;
-} | {
-  tag: "menuseparator";
-  /* return true to show and false to hide current element */
-  getVisibility?: (
-    elem: XUL.MenuSeparator,
-    ev: Event
-  ) => boolean;
-}
+type MenuitemTagDependentOptions =
+  | {
+      tag: "menuitem";
+      /* return true to show and false to hide current element */
+      getVisibility?: (elem: XUL.MenuItem, ev: Event) => boolean;
+    }
+  | {
+      tag: "menu";
+      /* return true to show and false to hide current element */
+      getVisibility?: (elem: XUL.Menu, ev: Event) => boolean;
+      /* Attributes below are used when type === "menu" */
+      popupId?: string;
+      onpopupshowing?: string;
+      children?: Array<MenuitemOptions>;
+      /**
+       * @deprecated Use `children`.
+       */
+      subElementOptions?: Array<MenuitemOptions>;
+    }
+  | {
+      tag: "menuseparator";
+      /* return true to show and false to hide current element */
+      getVisibility?: (elem: XUL.MenuSeparator, ev: Event) => boolean;
+    };
 
 type MenuitemCommonOptions = {
   id?: string;
@@ -229,6 +223,7 @@ type MenuitemCommonOptions = {
   commandListener?:
     | EventListenerOrEventListenerObject
     | ((event: Event) => any);
-}
+};
 
-export type MenuitemOptions = MenuitemTagDependentOptions & MenuitemCommonOptions;
+export type MenuitemOptions = MenuitemTagDependentOptions &
+  MenuitemCommonOptions;
