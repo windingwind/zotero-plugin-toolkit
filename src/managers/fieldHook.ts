@@ -122,7 +122,6 @@ interface FieldData {
   };
 }
 
-
 export declare function getFieldHookFunc(
   field: string,
   unformatted: boolean,
