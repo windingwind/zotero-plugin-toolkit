@@ -2,7 +2,9 @@ import { BasicTool } from "../basic";
 
 const basicTool = new BasicTool();
 
-export function waitUntil(
+export { waitUntil, waitUtilAsync, waitForReader };
+
+function waitUntil(
   condition: () => boolean,
   callback: () => void,
   interval = 100,
@@ -19,7 +21,7 @@ export function waitUntil(
   }, interval);
 }
 
-export function waitUtilAsync(
+function waitUtilAsync(
   condition: () => boolean,
   interval = 100,
   timeout = 10000
@@ -36,4 +38,12 @@ export function waitUtilAsync(
       }
     }, interval);
   });
+}
+
+async function waitForReader(reader: _ZoteroTypes.ReaderInstance) {
+  await reader._initPromise;
+  await reader._lastView.initializedPromise;
+  if (reader.type == "pdf")
+    await (reader as _ZoteroTypes.ReaderInstance<"pdf">)._lastView
+      ._iframeWindow!.PDFViewerApplication.initializedPromise;
 }

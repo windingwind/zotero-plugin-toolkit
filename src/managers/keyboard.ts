@@ -1,6 +1,6 @@
 import { BasicOptions, BasicTool } from "../basic";
 import { ManagerTool } from "../basic";
-import { waitUntil, waitUtilAsync } from "../utils/wait";
+import { waitForReader, waitUntil } from "../utils/wait";
 
 /**
  * Register a global keyboard event listener.
@@ -75,7 +75,7 @@ export class KeyboardManager extends ManagerTool {
     const reader = event.reader;
     let initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
 
-    await waitUtilAsync(() => !!reader._iframeWindow);
+    await waitForReader(reader);
     if (!reader._iframeWindow) {
       return;
     }
