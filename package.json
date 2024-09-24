@@ -1,6 +1,6 @@
 {
   "name": "zotero-plugin-toolkit",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Toolkit for Zotero plugins",
   "type": "module",
   "exports": {
