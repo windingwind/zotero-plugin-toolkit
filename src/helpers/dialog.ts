@@ -1,4 +1,4 @@
-import { ElementProps, TagElementProps, UITool } from "../tools/ui";
+import { ElementProps, TagElementProps, UITool } from "../tools/ui.js";
 
 /**
  * Dialog window helper. A superset of XUL dialog.

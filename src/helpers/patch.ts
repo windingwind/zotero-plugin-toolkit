@@ -1,4 +1,4 @@
-import { BasicTool } from "../basic";
+import { BasicTool } from "../basic.js";
 
 export class PatchHelper extends BasicTool {
   private options?: PatchOptions<any, any>;

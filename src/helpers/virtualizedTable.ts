@@ -1,7 +1,7 @@
-import React = require("react");
-import ReactDOM = require("react-dom");
+import React from "react";
+import ReactDOM from "react-dom";
 import { IntlProvider } from "react-intl";
-import { BasicTool } from "../basic";
+import { BasicTool } from "../basic.js";
 
 /**
  * VirtualizedTable helper.

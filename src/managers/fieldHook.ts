@@ -1,5 +1,5 @@
-import { PatchHelper } from "../helpers/patch";
-import { BasicOptions, BasicTool, ManagerTool } from "../basic";
+import { PatchHelper } from "../helpers/patch.js";
+import { BasicOptions, BasicTool, ManagerTool } from "../basic.js";
 
 /**
  * Item field hooks manager.
