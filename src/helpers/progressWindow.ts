@@ -35,7 +35,7 @@ export class ProgressWindowHelper extends Zotero.ProgressWindow {
   private closeTime: number | undefined;
   private originalShow: typeof Zotero.ProgressWindow.prototype.show;
   // @ts-ignore
-  public show!: typeof _popupWindowShow;
+  public declare show: typeof _popupWindowShow;
 
   /**
    *
