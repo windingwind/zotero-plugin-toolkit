@@ -1,5 +1,5 @@
-import { BasicTool } from "../basic";
-import ToolkitGlobal from "../managers/toolkitGlobal";
+import { BasicTool } from "../basic.js";
+import ToolkitGlobal from "../managers/toolkitGlobal.js";
 
 /**
  * Plugin bridge. Install plugin from zotero://plugin

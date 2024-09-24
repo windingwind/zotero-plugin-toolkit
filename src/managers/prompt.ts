@@ -1,7 +1,7 @@
-import { BasicTool, BasicOptions } from "../basic";
-import { ManagerTool } from "../basic";
-import { UITool } from "../tools/ui";
-import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal";
+import { BasicTool, BasicOptions } from "../basic.js";
+import { ManagerTool } from "../basic.js";
+import { UITool } from "../tools/ui.js";
+import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal.js";
 
 /**
  * Prompt for setting up or executing some commands quickly.

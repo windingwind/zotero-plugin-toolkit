@@ -1,4 +1,4 @@
-import { BasicTool } from "../basic";
+import { BasicTool } from "../basic.js";
 
 /**
  * File picker helper.

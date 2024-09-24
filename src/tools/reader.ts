@@ -1,5 +1,5 @@
-import { BasicTool } from "../basic";
-import { waitUtilAsync } from "../utils/wait";
+import { BasicTool } from "../basic.js";
+import { waitUtilAsync } from "../utils/wait.js";
 
 /**
  * Zotero ReaderInstance APIs.

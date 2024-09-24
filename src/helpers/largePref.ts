@@ -1,4 +1,4 @@
-import { BasicTool } from "../basic";
+import { BasicTool } from "../basic.js";
 
 /**
  * Helper class for storing large amounts of data in Zotero preferences.

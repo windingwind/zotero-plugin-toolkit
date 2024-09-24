@@ -1,6 +1,6 @@
-import { BasicOptions, BasicTool } from "../basic";
-import { ElementProps, TagElementProps, UITool } from "../tools/ui";
-import { ManagerTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic.js";
+import { ElementProps, TagElementProps, UITool } from "../tools/ui.js";
+import { ManagerTool } from "../basic.js";
 
 /**
  * Register \<menuitem\>, \<menupopup\>, or \<menuseperator\> to Zotero right-click/window menus.

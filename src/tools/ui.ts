@@ -1,4 +1,4 @@
-import { BasicOptions, BasicTool } from "../basic";
+import { BasicOptions, BasicTool } from "../basic.js";
 
 /**
  * UI APIs. Create elements and manage them.
@@ -7,7 +7,7 @@ export class UITool extends BasicTool {
   /**
    * UITool options
    */
-  protected _basicOptions!: UIOptions;
+  protected declare _basicOptions: UIOptions;
 
   public get basicOptions(): UIOptions {
     return this._basicOptions;

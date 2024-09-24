@@ -2,8 +2,14 @@
   "name": "zotero-plugin-toolkit",
   "version": "3.0.4",
   "description": "Toolkit for Zotero plugins",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "prettier --write src && tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
     "release": "release-it",
@@ -40,7 +46,8 @@
     "prettier": "2.8.8",
     "react-intl": "^6.6.8",
     "release-it": "^15.11.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "unbuild": "^2.0.0"
   },
   "publishConfig": {
     "access": "public",
@@ -58,5 +65,8 @@
   "prettier": {},
   "lint-staged": {
     "*.{ts,js,css}": "prettier --write src"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

@@ -1,6 +1,6 @@
-import { BasicOptions, BasicTool } from "../basic";
-import { ManagerTool } from "../basic";
-import { waitForReader, waitUntil } from "../utils/wait";
+import { BasicOptions, BasicTool } from "../basic.js";
+import { ManagerTool } from "../basic.js";
+import { waitForReader, waitUntil } from "../utils/wait.js";
 
 /**
  * Register a global keyboard event listener.

@@ -1,4 +1,4 @@
-import ToolkitGlobal from "./managers/toolkitGlobal";
+import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
