@@ -83,11 +83,11 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 2. Import the toolkit class
 
 ````ts
-import ZoteroToolkit from "zotero-plugin-toolkit";
+import { ZoteroToolkit } from "zotero-plugin-toolkit";
 /* Alternatively, import class you need to minify the plugin size
  * ```ts
- * import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
- * import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
+ * import { BasicTool } from "zotero-plugin-toolkit";
+ * import { UITool } from "zotero-plugin-toolkit";
  */
 const ztoolkit = new ZoteroToolkit();
 ````
