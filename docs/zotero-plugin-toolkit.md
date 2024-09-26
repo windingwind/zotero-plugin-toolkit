@@ -229,3 +229,27 @@ Description
 
 </td></tr>
 </tbody></table>
+
+## Namespaces
+
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[wait](./zotero-plugin-toolkit.wait.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

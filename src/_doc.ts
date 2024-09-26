@@ -22,4 +22,5 @@ export {
   KeyModifier,
   PatchHelper,
   GuideHelper,
+  wait,
 } from "./index.js";

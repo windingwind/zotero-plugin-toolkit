@@ -15,3 +15,4 @@ export * from "./managers/keyboard.js";
 export * from "./helpers/patch.js";
 export * from "./helpers/guide.js";
 export * from "./ztoolkit.js";
+export * as wait from "./utils/wait.js";
