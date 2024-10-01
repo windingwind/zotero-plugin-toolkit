@@ -126,13 +126,7 @@ export class BasicTool {
    */
   getGlobal(k: string): any;
   getGlobal(k: string) {
-    const _Zotero: _ZoteroTypes.Zotero =
-      typeof Zotero !== "undefined"
-        ? Zotero
-        : // @ts-ignore
-          Components.classes["@zotero.org/Zotero;1"].getService(
-            Components.interfaces.nsISupports
-          ).wrappedJSObject;
+    const _Zotero = BasicTool.getZotero();
     try {
       const window = _Zotero.getMainWindow();
       switch (k) {
@@ -405,12 +399,13 @@ export class BasicTool {
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
-    return typeof Zotero !== "undefined"
-      ? Zotero
-      : // @ts-ignore
-        Components.classes["@zotero.org/Zotero;1"].getService(
-          Components.interfaces.nsISupports
-        ).wrappedJSObject;
+    if (typeof Zotero !== "undefined") {
+      return Zotero;
+    }
+    const { _Zotero } = ChromeUtils.importESModule(
+      "chrome://zotero/content/zotero.mjs"
+    );
+    return _Zotero;
   }
 }
 
