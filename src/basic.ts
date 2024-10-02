@@ -402,7 +402,7 @@ export class BasicTool {
     if (typeof Zotero !== "undefined") {
       return Zotero;
     }
-    const { _Zotero } = ChromeUtils.importESModule(
+    const { Zotero: _Zotero } = ChromeUtils.importESModule(
       "chrome://zotero/content/zotero.mjs"
     );
     return _Zotero;
