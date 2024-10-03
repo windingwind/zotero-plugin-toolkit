@@ -780,7 +780,7 @@ export class Prompt {
 }
 
 export class PromptManager extends ManagerTool {
-  private prompt: Prompt;
+  public prompt: Prompt;
   /**
    * Save the commands registered from this manager
    */
