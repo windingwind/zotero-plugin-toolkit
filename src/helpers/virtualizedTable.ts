@@ -1,7 +1,7 @@
 import type React from "react";
 import type ReactDOM from "react-dom";
-import type { IntlProvider } from "react-intl";
 import type { createRoot } from "react-dom/client";
+import type { IntlProvider } from "react-intl";
 import { BasicTool } from "../basic.js";
 
 /**
@@ -179,14 +179,14 @@ export class VirtualizedTableHelper extends BasicTool {
         if (vtableProps.getRowData && !vtableProps.renderItem) {
           Object.assign(vtableProps, {
             renderItem: this.VirtualizedTable.makeRowRenderer(
-              vtableProps.getRowData
+              vtableProps.getRowData,
             ),
           });
         }
         const elem = this.React.createElement(
           this.IntlProvider,
           { locale: Zotero.locale, messages: Zotero.Intl.strings },
-          this.React.createElement(this.VirtualizedTable, vtableProps)
+          this.React.createElement(this.VirtualizedTable, vtableProps),
         );
         const container = this.window.document.getElementById(this.containerId);
         this.ReactDOM.createRoot(container!).render(elem);
