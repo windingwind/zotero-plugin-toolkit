@@ -106,7 +106,7 @@ export class DebugBridge {
           if (params.run) {
             try {
               const AsyncFunction = Object.getPrototypeOf(
-                async function () {},
+                async () => {},
               ).constructor;
               const f = new AsyncFunction("Zotero,window", params.run);
               await f(Zotero, window);
@@ -128,11 +128,11 @@ export class DebugBridge {
           }
         }
       },
-      newChannel: function (uri: any) {
+      newChannel(uri: any) {
         this.doAction(uri);
       },
     };
-    // @ts-ignore
+    // @ts-expect-error wrappedJSObject
     Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
       "zotero://ztoolkit-debug"
     ] = debugBridgeExtension;

@@ -52,7 +52,7 @@ export class ExtraFieldTool extends BasicTool {
     item: Zotero.Item,
     fields: Map<string, string>,
   ): Promise<void> {
-    let kvs: string[] = [];
+    const kvs: string[] = [];
     if (fields.has("__nonStandard__")) {
       kvs.push(fields.get("__nonStandard__") as string);
       fields.delete("__nonStandard__");

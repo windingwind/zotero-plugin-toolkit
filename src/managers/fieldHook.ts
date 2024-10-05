@@ -1,5 +1,9 @@
+/* eslint-disable eslint-comments/no-unlimited-disable */
+/* eslint-disable */
+
+import type { BasicOptions, BasicTool } from "../basic.js";
+import { ManagerTool } from "../basic.js";
 import { PatchHelper } from "../helpers/patch.js";
-import { BasicOptions, BasicTool, ManagerTool } from "../basic.js";
 
 /**
  * Item field hooks manager.

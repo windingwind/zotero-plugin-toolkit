@@ -66,10 +66,10 @@ export class FilePickerHelper<
   }
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
-    let backend = ChromeUtils.importESModule(
+    const Backend = ChromeUtils.importESModule(
       "chrome://zotero/content/modules/filePicker.mjs",
     ).FilePicker;
-    const fp = new backend();
+    const fp = new Backend();
     fp.init(
       this.window || this.getGlobal("window"),
       this.title,

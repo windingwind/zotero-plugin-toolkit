@@ -41,10 +41,13 @@ export class LargePrefHelper extends BasicTool {
     this.keyPref = keyPref;
     this.valuePrefPrefix = valuePrefPrefix;
     if (hooks === "default") {
+      // eslint-disable-next-line ts/no-use-before-define
       this.hooks = defaultHooks;
     } else if (hooks === "parser") {
+      // eslint-disable-next-line ts/no-use-before-define
       this.hooks = parserHooks;
     } else {
+      // eslint-disable-next-line ts/no-use-before-define
       this.hooks = { ...defaultHooks, ...hooks };
     }
     this.innerObj = {};
@@ -142,7 +145,7 @@ export class LargePrefHelper extends BasicTool {
     if (typeof value === "undefined") {
       return;
     }
-    let { value: newValue } = this.hooks.afterGetValue({ value });
+    const { value: newValue } = this.hooks.afterGetValue({ value });
     this.innerObj[key] = newValue;
     return newValue;
   }
@@ -153,7 +156,7 @@ export class LargePrefHelper extends BasicTool {
    * @param value The value of the key.
    */
   public setValue(key: string, value: any) {
-    let { key: newKey, value: newValue } = this.hooks.beforeSetValue({
+    const { key: newKey, value: newValue } = this.hooks.beforeSetValue({
       key,
       value,
     });
@@ -259,7 +262,7 @@ const parserHooks = {
   afterGetValue: ({ value }: { value: string }) => {
     try {
       value = JSON.parse(value);
-    } catch (e) {
+    } catch {
       return { value };
     }
     return { value };

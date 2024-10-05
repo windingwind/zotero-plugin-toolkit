@@ -1,4 +1,5 @@
-import { ElementProps, TagElementProps, UITool } from "../tools/ui.js";
+import type { ElementProps, TagElementProps } from "../tools/ui.js";
+import { UITool } from "../tools/ui.js";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
@@ -21,7 +22,7 @@ export class DialogHelper extends UITool {
   constructor(row: number, column: number) {
     super();
     if (row <= 0 || column <= 0) {
-      throw Error(`row and column must be positive integers.`);
+      throw new Error(`row and column must be positive integers.`);
     }
     this.elementProps = {
       tag: "vbox",
@@ -71,7 +72,7 @@ export class DialogHelper extends UITool {
       row >= this.elementProps.children!.length ||
       column >= this.elementProps.children![row].children!.length
     ) {
-      throw Error(
+      throw new Error(
         `Cell index (${row}, ${column}) is invalid, maximum (${
           this.elementProps.children!.length
         }, ${this.elementProps.children![0].children!.length})`,
@@ -90,8 +91,9 @@ export class DialogHelper extends UITool {
    * @param label Button label
    * @param id Button id.
    * The corresponding id of the last button user clicks before window exit will be set to `dialogData._lastButtonId`.
-   * @param options.noClose Don't close window when clicking this button.
-   * @param options.callback Callback of button click event.
+   * @param options Options
+   * @param [options.noClose] Don't close window when clicking this button.
+   * @param [options.callback] Callback of button click event.
    */
   addButton(
     label: string,
@@ -169,6 +171,7 @@ export class DialogHelper extends UITool {
   /**
    * Open the dialog
    * @param title Window title
+   * @param windowFeatures
    * @param windowFeatures.width Ignored if fitContent is `true`.
    * @param windowFeatures.height Ignored if fitContent is `true`.
    * @param windowFeatures.left
@@ -304,6 +307,7 @@ function openDialog(
             {
               tag: "style",
               properties: {
+                // eslint-disable-next-line ts/no-use-before-define
                 innerHTML: style,
               },
             },
@@ -360,7 +364,7 @@ function openDialog(
   // Wait for window loading to resolve the lock promise
   win.addEventListener(
     "DOMContentLoaded",
-    function onWindowLoad(ev: Event) {
+    function onWindowLoad(_ev: Event) {
       (win as any).arguments[0]?.loadLock?.resolve();
       win.removeEventListener("DOMContentLoaded", onWindowLoad, false);
     },
@@ -368,7 +372,7 @@ function openDialog(
   );
 
   // Wait for window unload. Use beforeunload to access elements.
-  win.addEventListener("beforeunload", function onWindowBeforeUnload(ev) {
+  win.addEventListener("beforeunload", function onWindowBeforeUnload(_ev) {
     // Update data-binding
     Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
       (elem: Element) => {
@@ -394,7 +398,7 @@ function openDialog(
   });
 
   // Wait for window unload to resolve the lock promise
-  win.addEventListener("unload", function onWindowUnload(ev) {
+  win.addEventListener("unload", function onWindowUnload(_ev) {
     if ((this.window as any).arguments[0]?.loadLock.promise.isPending()) {
       return;
     }
@@ -464,7 +468,7 @@ function replaceElement(
             },
             properties: {
               innerHTML:
-                option.properties?.innerHTML || option.properties?.innerText,
+                option.properties?.innerHTML || option.properties?.textContent,
             },
             classList: ["dropdown-item"],
             listeners: [
@@ -546,9 +550,9 @@ const style = `
 interface DialogData {
   [key: string | number | symbol]: any;
   loadLock?: _ZoteroTypes.PromiseObject;
-  loadCallback?: Function;
+  loadCallback?: () => void;
   unloadLock?: _ZoteroTypes.PromiseObject;
-  unloadCallback?: Function;
-  beforeUnloadCallback?: Function;
+  unloadCallback?: () => void;
+  beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
 }

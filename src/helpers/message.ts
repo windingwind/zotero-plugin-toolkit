@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 function randomJobID() {
   return `${Math.random().toString(36).substring(2, 15)}-${Date.now()}`;
 }
@@ -11,7 +12,7 @@ function getProperty(obj: any, path: string) {
   for (const part of parts) {
     value = value[part];
     if (typeof value === "undefined") {
-      throw new Error(`Property ${path} not found`);
+      throw new TypeError(`Property ${path} not found`);
     }
   }
   return value;
@@ -35,23 +36,24 @@ type MessageReturnType<T extends MessageHandlers> = {
   [K in keyof T]: T[K] extends (params: any) => infer R ? R : never;
 };
 
-type MessageHandlers = {
+interface MessageHandlers {
   [key: string]: (data?: any) => Promise<any>;
-};
+}
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 type GenerateMessageHandlerInterface<T extends MessageHandlers> = {
   [K in keyof T]: T[K];
 };
 
-type MessageServerConfig = {
+interface MessageServerConfig {
   name: string;
   handlers: MessageHandlers;
   target?: Window | Worker;
   dev?: boolean;
   canBeDestroyed?: boolean;
-};
+}
 
-type BuiltInMessageHandlers = {
+interface BuiltInMessageHandlers {
   _start: () => Promise<void>;
   _stop: () => Promise<void>;
   _destroy: () => Promise<void>;
@@ -59,7 +61,7 @@ type BuiltInMessageHandlers = {
   _call: (data: { func: string; args: any[] }) => Promise<any>;
   _get: (data: { key: string }) => Promise<any>;
   _set: (data: { key: string; value: any }) => Promise<void>;
-};
+}
 
 /**
  * MessageServerHelper
@@ -122,7 +124,6 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
         const last = parts.pop()!;
         const obj = getProperty(self, parts.join("."));
         obj[last] = value;
-        return;
       },
     };
 
@@ -136,13 +137,13 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
 
     // Infer environment
     if (typeof window !== "undefined") {
-      if (typeof window["browsingContext"] !== "undefined") {
+      if (typeof window.browsingContext !== "undefined") {
         this.env = "browser";
       } else {
         this.env = "content";
       }
     } else {
-      // @ts-ignore - ctypes is not defined
+      // @ts-expect-error - ctypes is not defined
       if (typeof ctypes !== "undefined") {
         this.env = "chromeworker";
       } else {
@@ -285,6 +286,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
           return;
         }
         resolved = true;
+        // eslint-disable-next-line ts/no-use-before-define
         clearTimeout(timer);
         target.removeEventListener("message", handler);
         if (typeof _handlerData === "object") {
@@ -308,17 +310,17 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
   }
 
   async call(func: string, args: any[]) {
-    // @ts-ignore - This is a dynamic call
+    // @ts-expect-error - This is a dynamic call
     return await this.exec("_call", { func, args });
   }
 
   async get(key: string) {
-    // @ts-ignore - This is a dynamic call
+    // @ts-expect-error - This is a dynamic call
     return await this.exec("_get", { key });
   }
 
   async set(key: string, value: any) {
-    // @ts-ignore - This is a dynamic call
+    // @ts-expect-error - This is a dynamic call
     return await this.exec("_set", { key, value });
   }
 
@@ -362,7 +364,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
     if (!this.target) {
       return false;
     }
-    if (typeof (this.target as Window)["closed"] !== "undefined") {
+    if (typeof (this.target as Window).closed !== "undefined") {
       // Window
       return !(this.target as Window).closed;
     } else {

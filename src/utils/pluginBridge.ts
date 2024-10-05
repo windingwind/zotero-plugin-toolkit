@@ -1,5 +1,5 @@
+import type ToolkitGlobal from "../managers/toolkitGlobal.js";
 import { BasicTool } from "../basic.js";
-import ToolkitGlobal from "../managers/toolkitGlobal.js";
 
 /**
  * Plugin bridge. Install plugin from zotero://plugin
@@ -29,7 +29,7 @@ export class PluginBridge {
   }
 
   private initializePluginBridge() {
-    // @ts-ignore
+    // @ts-expect-error has import
     const { AddonManager } = ChromeUtils.import(
       "resource://gre/modules/AddonManager.jsm",
     );
@@ -75,11 +75,11 @@ export class PluginBridge {
           hint(e.message, false);
         }
       },
-      newChannel: function (uri: any) {
+      newChannel(uri: any) {
         this.doAction(uri);
       },
     };
-    // @ts-ignore
+    // @ts-expect-error wrappedJSObject
     Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
       "zotero://plugin"
     ] = pluginBridgeExtension;
@@ -89,14 +89,14 @@ export class PluginBridge {
 function hint(content: string, success: boolean) {
   const progressWindow = new Zotero.ProgressWindow({ closeOnClick: true });
   progressWindow.changeHeadline("Plugin Toolkit");
-  // @ts-ignore
+  // @ts-expect-error custom
   progressWindow.progress = new progressWindow.ItemProgress(
     success
       ? "chrome://zotero/skin/tick.png"
       : "chrome://zotero/skin/cross.png",
     content,
   );
-  // @ts-ignore
+  // @ts-expect-error custom
   progressWindow.progress.setProgress(100);
   progressWindow.show();
   progressWindow.startCloseTimer(5000);

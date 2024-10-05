@@ -23,7 +23,7 @@ export class BasicTool {
 
   /**
    *
-   * @param basicTool Pass an BasicTool instance to copy its options.
+   * @param data Pass an BasicTool instance to copy its options.
    */
   constructor(data?: BasicTool | BasicOptions) {
     this._basicOptions = {
@@ -48,8 +48,8 @@ export class BasicTool {
       },
     };
     if (typeof ChromeUtils !== "undefined") {
-      // @ts-ignore import method is not recognized
-      let { ConsoleAPI } = ChromeUtils.import(
+      // @ts-expect-error import method is not recognized
+      const { ConsoleAPI } = ChromeUtils.import(
         "resource://gre/modules/Console.jsm",
       );
       this._console = new ConsoleAPI({
@@ -57,7 +57,6 @@ export class BasicTool {
       });
     }
     this.updateOptions(data);
-    return;
   }
 
   /**
@@ -181,7 +180,7 @@ export class BasicTool {
    * ```
    */
   createXULElement(doc: Document, type: string): XUL.Element {
-    // @ts-ignore
+    // @ts-expect-error doc.createXULElement returns XUL.Element
     return doc.createXULElement(type);
   }
 
@@ -227,7 +226,7 @@ export class BasicTool {
             .map((d: any) => {
               try {
                 return typeof d === "object" ? JSON.stringify(d) : String(d);
-              } catch (e) {
+              } catch {
                 Zotero.debug(d);
                 return "";
               }
@@ -322,7 +321,6 @@ export class BasicTool {
     }
     const mainWindowListener: nsIWindowMediatorListener = {
       onOpenWindow: (xulWindow) => {
-        // @ts-ignore
         const domWindow = xulWindow.docShell.domWindow as Window;
         const onload = async () => {
           domWindow.removeEventListener("load", onload, false);
@@ -344,7 +342,6 @@ export class BasicTool {
         domWindow.addEventListener("load", () => onload(), false);
       },
       onCloseWindow: async (xulWindow) => {
-        // @ts-ignore
         const domWindow = xulWindow.docShell.domWindow as Window;
         if (
           domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml"
@@ -447,7 +444,7 @@ export abstract class ManagerTool extends BasicTool {
   abstract unregisterAll(): any;
 
   protected _ensureAutoUnregisterAll() {
-    this.addListenerCallback("onPluginUnload", (params, reason) => {
+    this.addListenerCallback("onPluginUnload", (params, _reason) => {
       if (params.id !== this.basicOptions.api.pluginID) {
         return;
       }
@@ -471,13 +468,11 @@ export function makeHelperTool<T extends typeof HelperTool>(
   cls: T,
   options: BasicTool | BasicOptions,
 ): T;
-export function makeHelperTool<T extends any>(
-  cls: T,
-  options: BasicTool | BasicOptions,
-): T;
+export function makeHelperTool<T>(cls: T, options: BasicTool | BasicOptions): T;
 export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
   return new Proxy(cls, {
     construct(target, args) {
+      // eslint-disable-next-line new-cap
       const _origin = new cls(...args);
       if (_origin instanceof BasicTool) {
         _origin.updateOptions(options);
@@ -495,6 +490,7 @@ declare interface ListenerCallbackMap {
   ) => void;
 }
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 declare class HelperTool {
   constructor(...args: any);
   updateOptions: BasicTool["updateOptions"];

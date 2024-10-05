@@ -1,4 +1,5 @@
-import { BasicOptions, BasicTool } from "../basic.js";
+import type { BasicOptions } from "../basic.js";
+import { BasicTool } from "../basic.js";
 
 /**
  * UI APIs. Create elements and manage them.
@@ -215,8 +216,11 @@ export class UITool extends BasicTool {
       if (!realElem || !props.skipIfExists) {
         let namespace = props.namespace as "html" | "xul" | "svg";
         if (!namespace) {
+          // eslint-disable-next-line ts/no-use-before-define
           const mightHTML = HTMLElementTagNames.includes(tagName);
+          // eslint-disable-next-line ts/no-use-before-define
           const mightXUL = XULElementTagNames.includes(tagName);
+          // eslint-disable-next-line ts/no-use-before-define
           const mightSVG = SVGElementTagNames.includes(tagName);
           if (Number(mightHTML) + Number(mightXUL) + Number(mightSVG) > 1) {
             this.log(
@@ -325,7 +329,7 @@ export class UITool extends BasicTool {
    * Inserts a node before a reference node as a child of its parent node.
    * @param properties See {@link ElementProps}
    * @param referenceNode The node before which newNode is inserted.
-   * @returns
+   * @returns Node
    */
   insertElementBefore(properties: TagElementProps, referenceNode: Element) {
     if (referenceNode.parentNode)
@@ -339,9 +343,9 @@ export class UITool extends BasicTool {
       );
     else
       this.log(
-        referenceNode.tagName +
-          " has no parent, cannot insert " +
-          properties.tag,
+        `${referenceNode.tagName} has no parent, cannot insert ${
+          properties.tag
+        }`,
       );
   }
 
@@ -359,9 +363,9 @@ export class UITool extends BasicTool {
       );
     else
       this.log(
-        oldNode.tagName +
-          " has no parent, cannot replace it with " +
-          properties.tag,
+        `${oldNode.tagName} has no parent, cannot replace it with ${
+          properties.tag
+        }`,
       );
   }
 
@@ -380,17 +384,16 @@ export class UITool extends BasicTool {
   ): DocumentFragment {
     // Adapted from MozXULElement.parseXULToFragment
 
-    let parser = new DOMParser();
+    const parser = new DOMParser();
     const xulns =
       "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
     const htmlns = "http://www.w3.org/1999/xhtml";
     const wrappedStr = `${
       entities.length
         ? `<!DOCTYPE bindings [ ${entities.reduce((preamble, url, index) => {
-            return (
-              preamble +
-              `<!ENTITY % _dtd-${index} SYSTEM "${url}"> %_dtd-${index}; `
-            );
+            return `${
+              preamble
+            }<!ENTITY % _dtd-${index} SYSTEM "${url}"> %_dtd-${index}; `;
           }, "")}]>`
         : ""
     }
@@ -399,8 +402,8 @@ export class UITool extends BasicTool {
       ${str}
       </html:div>`;
     this.log(wrappedStr, parser);
-    let doc = parser.parseFromString(wrappedStr, "text/xml");
-    /* eslint-enable indent */
+    const doc = parser.parseFromString(wrappedStr, "text/xml");
+
     this.log(doc);
 
     if (doc.documentElement.localName === "parsererror") {
@@ -409,7 +412,7 @@ export class UITool extends BasicTool {
 
     // We use a range here so that we don't access the inner DOM elements from
     // JavaScript before they are imported and inserted into a document.
-    let range = doc.createRange();
+    const range = doc.createRange();
     range.selectNodeContents(doc.querySelector("div")!);
     return range.extractContents();
   }
@@ -472,7 +475,7 @@ export interface ElementProps {
   attributes?: { [key: string]: string | boolean | number | null | undefined };
   /**
    * Event listeners
-   *  */
+   */
   listeners?: Array<{
     type: string;
     listener:

@@ -1,7 +1,7 @@
+import type { PromptGlobal } from "./prompt.js";
 import { BasicTool } from "../basic.js";
 import { DebugBridge } from "../utils/debugBridge.js";
 import { PluginBridge } from "../utils/pluginBridge.js";
-import { PromptGlobal } from "./prompt.js";
 
 /**
  * The Singleton class of global parameters used by managers.

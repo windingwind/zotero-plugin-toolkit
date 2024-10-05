@@ -50,7 +50,7 @@ export class GuideHelper extends BasicTool {
   }
 }
 
-type GuideStep = {
+interface GuideStep {
   element?: string | Element | (() => Element);
   title?: string;
   description?: string;
@@ -80,7 +80,7 @@ type GuideStep = {
   onPrevClick?: GuideHook;
   onCloseClick?: GuideHook;
   onMask?: (props: { mask: (elem: Element) => void }) => void;
-};
+}
 
 type GuideHook = ({
   config,
@@ -90,11 +90,11 @@ type GuideHook = ({
   state: GuideState;
 }) => any;
 
-type GuideState = {
+interface GuideState {
   step: number;
   steps: GuideStep[];
   controller: Guide;
-};
+}
 
 class Guide {
   _window!: Window;
@@ -236,7 +236,7 @@ class Guide {
 
     const doc = win.document;
 
-    let content = this.content;
+    const content = this.content;
     if (content) {
       doc.documentElement.append(doc.importNode(content, true));
     }
@@ -277,7 +277,7 @@ class Guide {
       this._steps = steps;
       this._currentIndex = 0;
     }
-    let index = this._currentIndex;
+    const index = this._currentIndex;
     this._noClose = false;
     this._closed = false;
     this._autoNext = true;
@@ -296,8 +296,8 @@ class Guide {
     } else {
       this._createMask(elem);
     }
-    let x,
-      y = 0;
+    let x;
+    let y = 0;
     let position = step.position || "after_start";
     if (position === "center") {
       position = "overlap";

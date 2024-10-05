@@ -1,6 +1,7 @@
-import { BasicOptions, BasicTool } from "../basic.js";
-import { ElementProps, TagElementProps, UITool } from "../tools/ui.js";
+import type { BasicOptions, BasicTool } from "../basic.js";
+import type { TagElementProps } from "../tools/ui.js";
 import { ManagerTool } from "../basic.js";
+import { UITool } from "../tools/ui.js";
 
 /**
  * Register \<menuitem\>, \<menupopup\>, or \<menuseperator\> to Zotero right-click/window menus.
@@ -83,6 +84,7 @@ export class MenuManager extends ManagerTool {
   ) {
     let popup: XUL.MenuPopup | null;
     if (typeof menuPopup === "string") {
+      // eslint-disable-next-line ts/no-use-before-define
       popup = this.getGlobal("document").querySelector(MenuSelector[menuPopup]);
     } else {
       popup = menuPopup;
@@ -111,9 +113,9 @@ export class MenuManager extends ManagerTool {
       if (menuitemOption.icon) {
         if (!this.getGlobal("Zotero").isMac) {
           if (menuitemOption.tag === "menu") {
-            elementOption.attributes!["class"] += " menu-iconic";
+            elementOption.attributes!.class += " menu-iconic";
           } else {
-            elementOption.attributes!["class"] += " menuitem-iconic";
+            elementOption.attributes!.class += " menuitem-iconic";
           }
         }
         elementOption.styles!["list-style-image" as any] =
@@ -208,7 +210,7 @@ type MenuitemTagDependentOptions =
       getVisibility?: (elem: XUL.MenuSeparator, ev: Event) => boolean;
     };
 
-type MenuitemCommonOptions = {
+interface MenuitemCommonOptions {
   id?: string;
   label?: string;
   /* data url (chrome://xxx.png) or base64 url (data:image/png;base64,xxx) */
@@ -222,7 +224,7 @@ type MenuitemCommonOptions = {
   commandListener?:
     | EventListenerOrEventListenerObject
     | ((event: Event) => any);
-};
+}
 
 export type MenuitemOptions = MenuitemTagDependentOptions &
   MenuitemCommonOptions;

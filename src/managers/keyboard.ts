@@ -1,4 +1,4 @@
-import { BasicOptions, BasicTool } from "../basic.js";
+import type { BasicOptions, BasicTool } from "../basic.js";
 import { ManagerTool } from "../basic.js";
 import { waitForReader, waitUntil } from "../utils/wait.js";
 
@@ -73,13 +73,12 @@ export class KeyboardManager extends ManagerTool {
     reader: _ZoteroTypes.ReaderInstance;
   }) {
     const reader = event.reader;
-    let initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
+    const initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
 
     await waitForReader(reader);
     if (!reader._iframeWindow) {
       return;
     }
-    // @ts-ignore extra property
     if (reader._iframeWindow[initializedKey]) {
       return;
     }
@@ -93,7 +92,6 @@ export class KeyboardManager extends ManagerTool {
           (reader._internalReader._primaryView as any)?._iframeWindow,
         ),
     );
-    // @ts-ignore extra property
     reader._iframeWindow[initializedKey] = true;
   }
 
@@ -180,7 +178,7 @@ export class KeyModifier implements KeyModifierStatus {
   ) {
     this.useAccel = options?.useAccel || false;
     if (typeof raw === "undefined") {
-      return;
+      // ignore
     } else if (typeof raw === "string") {
       raw = raw || "";
       raw = this.unLocalized(raw);
@@ -191,7 +189,7 @@ export class KeyModifier implements KeyModifierStatus {
       this.alt = raw.includes("alt");
       // Remove all modifiers, space, comma, and dash
       this.key = raw
-        .replace(/(accel|shift|control|meta|alt| |,|-)/g, "")
+        .replace(/(accel|shift|control|meta|alt|[ ,\-])/g, "")
         .toLocaleLowerCase();
     } else if (raw instanceof KeyModifier) {
       this.merge(raw, { allowOverwrite: true });
@@ -217,7 +215,8 @@ export class KeyModifier implements KeyModifierStatus {
    * Merge another KeyModifier into this one.
    * @param newMod the new KeyModifier
    * @param options
-   * @returns
+   * @param options.allowOverwrite
+   * @returns KeyModifier
    */
   merge(newMod: KeyModifier, options?: { allowOverwrite?: boolean }) {
     const allowOverwrite = options?.allowOverwrite || false;
