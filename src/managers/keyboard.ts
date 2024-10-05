@@ -1,4 +1,4 @@
-import { BasicOptions, BasicTool } from "../basic.js";
+import type { BasicOptions, BasicTool } from "../basic.js";
 import { ManagerTool } from "../basic.js";
 import { waitForReader, waitUntil } from "../utils/wait.js";
 
@@ -47,7 +47,7 @@ export class KeyboardManager extends ManagerTool {
     this.removeListenerCallback("onMainWindowLoad", this.initKeyboardListener);
     this.removeListenerCallback(
       "onMainWindowUnload",
-      this.unInitKeyboardListener
+      this.unInitKeyboardListener,
     );
     for (const win of Zotero.getMainWindows()) {
       this.unInitKeyboardListener(win);
@@ -61,11 +61,11 @@ export class KeyboardManager extends ManagerTool {
     Zotero.Reader.registerEventListener(
       "renderToolbar",
       (event) => this.addReaderKeyboardCallback(event),
-      this._basicOptions.api.pluginID
+      this._basicOptions.api.pluginID,
     );
 
     Zotero.Reader._readers.forEach((reader) =>
-      this.addReaderKeyboardCallback({ reader })
+      this.addReaderKeyboardCallback({ reader }),
     );
   }
 
@@ -73,13 +73,12 @@ export class KeyboardManager extends ManagerTool {
     reader: _ZoteroTypes.ReaderInstance;
   }) {
     const reader = event.reader;
-    let initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
+    const initializedKey = `_ztoolkitKeyboard${this.id}Initialized`;
 
     await waitForReader(reader);
     if (!reader._iframeWindow) {
       return;
     }
-    // @ts-ignore extra property
     if (reader._iframeWindow[initializedKey]) {
       return;
     }
@@ -90,10 +89,9 @@ export class KeyboardManager extends ManagerTool {
         (reader._internalReader?._primaryView as any)?._iframeWindow,
       () =>
         this._initKeyboardListener(
-          (reader._internalReader._primaryView as any)?._iframeWindow
-        )
+          (reader._internalReader._primaryView as any)?._iframeWindow,
+        ),
     );
-    // @ts-ignore extra property
     reader._iframeWindow[initializedKey] = true;
   }
 
@@ -149,7 +147,7 @@ type KeyboardCallback = (
   options: {
     keyboard?: KeyModifier;
     type: KeyboardEventType;
-  }
+  },
 ) => void;
 
 interface KeyModifierStatus {
@@ -176,11 +174,11 @@ export class KeyModifier implements KeyModifierStatus {
 
   constructor(
     raw?: string | KeyboardEvent | KeyModifier,
-    options?: { useAccel?: boolean }
+    options?: { useAccel?: boolean },
   ) {
     this.useAccel = options?.useAccel || false;
     if (typeof raw === "undefined") {
-      return;
+      // ignore
     } else if (typeof raw === "string") {
       raw = raw || "";
       raw = this.unLocalized(raw);
@@ -191,7 +189,7 @@ export class KeyModifier implements KeyModifierStatus {
       this.alt = raw.includes("alt");
       // Remove all modifiers, space, comma, and dash
       this.key = raw
-        .replace(/(accel|shift|control|meta|alt| |,|-)/g, "")
+        .replace(/(accel|shift|control|meta|alt|[ ,\-])/g, "")
         .toLocaleLowerCase();
     } else if (raw instanceof KeyModifier) {
       this.merge(raw, { allowOverwrite: true });
@@ -217,7 +215,8 @@ export class KeyModifier implements KeyModifierStatus {
    * Merge another KeyModifier into this one.
    * @param newMod the new KeyModifier
    * @param options
-   * @returns
+   * @param options.allowOverwrite
+   * @returns KeyModifier
    */
   merge(newMod: KeyModifier, options?: { allowOverwrite?: boolean }) {
     const allowOverwrite = options?.allowOverwrite || false;
@@ -328,7 +327,7 @@ export class KeyModifier implements KeyModifierStatus {
   private mergeAttribute<T extends keyof this>(
     attribute: T,
     value: this[T],
-    allowOverwrite: boolean
+    allowOverwrite: boolean,
   ) {
     if (allowOverwrite || !this[attribute]) {
       this[attribute] = value;

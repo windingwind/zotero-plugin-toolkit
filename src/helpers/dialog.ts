@@ -1,4 +1,5 @@
-import { ElementProps, TagElementProps, UITool } from "../tools/ui.js";
+import type { ElementProps, TagElementProps } from "../tools/ui.js";
+import { UITool } from "../tools/ui.js";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
@@ -21,7 +22,7 @@ export class DialogHelper extends UITool {
   constructor(row: number, column: number) {
     super();
     if (row <= 0 || column <= 0) {
-      throw Error(`row and column must be positive integers.`);
+      throw new Error(`row and column must be positive integers.`);
     }
     this.elementProps = {
       tag: "vbox",
@@ -65,16 +66,16 @@ export class DialogHelper extends UITool {
     row: number,
     column: number,
     elementProps: TagElementProps,
-    cellFlex: boolean = true
+    cellFlex: boolean = true,
   ) {
     if (
       row >= this.elementProps.children!.length ||
       column >= this.elementProps.children![row].children!.length
     ) {
-      throw Error(
+      throw new Error(
         `Cell index (${row}, ${column}) is invalid, maximum (${
           this.elementProps.children!.length
-        }, ${this.elementProps.children![0].children!.length})`
+        }, ${this.elementProps.children![0].children!.length})`,
       );
     }
     this.elementProps.children![row].children![column].children = [
@@ -90,8 +91,9 @@ export class DialogHelper extends UITool {
    * @param label Button label
    * @param id Button id.
    * The corresponding id of the last button user clicks before window exit will be set to `dialogData._lastButtonId`.
-   * @param options.noClose Don't close window when clicking this button.
-   * @param options.callback Callback of button click event.
+   * @param options Options
+   * @param [options.noClose] Don't close window when clicking this button.
+   * @param [options.callback] Callback of button click event.
    */
   addButton(
     label: string,
@@ -99,7 +101,7 @@ export class DialogHelper extends UITool {
     options: {
       noClose?: boolean;
       callback?: (ev: Event) => any;
-    } = {}
+    } = {},
   ) {
     id = id || `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
     this.elementProps.children![
@@ -169,6 +171,7 @@ export class DialogHelper extends UITool {
   /**
    * Open the dialog
    * @param title Window title
+   * @param windowFeatures
    * @param windowFeatures.width Ignored if fitContent is `true`.
    * @param windowFeatures.height Ignored if fitContent is `true`.
    * @param windowFeatures.left
@@ -195,7 +198,7 @@ export class DialogHelper extends UITool {
       centerscreen: true,
       resizable: true,
       fitContent: true,
-    }
+    },
   ) {
     this.window = openDialog(
       this,
@@ -203,7 +206,7 @@ export class DialogHelper extends UITool {
       title,
       this.elementProps,
       this.dialogData,
-      windowFeatures
+      windowFeatures,
     );
     return this;
   }
@@ -229,7 +232,7 @@ function openDialog(
     centerscreen: true,
     resizable: true,
     fitContent: true,
-  }
+  },
 ) {
   const Zotero = dialogHelper.getGlobal("Zotero");
   dialogData = dialogData || {};
@@ -268,7 +271,7 @@ function openDialog(
     "about:blank",
     targetId || "_blank",
     featureString,
-    dialogData
+    dialogData,
   );
 
   // After load
@@ -279,7 +282,7 @@ function openDialog(
         dialogHelper.createElement(win.document, "title", {
           properties: { innerText: title },
           attributes: { "data-l10n-id": title },
-        })
+        }),
       );
       let l10nFiles = dialogData.l10nFiles || [];
       if (typeof l10nFiles === "string") {
@@ -292,7 +295,7 @@ function openDialog(
               rel: "localization",
               href: file,
             },
-          })
+          }),
         );
       });
       // Add style according to Zotero prefs
@@ -304,6 +307,7 @@ function openDialog(
             {
               tag: "style",
               properties: {
+                // eslint-disable-next-line ts/no-use-before-define
                 innerHTML: style,
               },
             },
@@ -316,14 +320,14 @@ function openDialog(
             },
           ],
         },
-        win.document.head
+        win.document.head,
       );
       replaceElement(elementProps, dialogHelper);
       // Create element
       win.document.body.appendChild(
         dialogHelper.createElement(win.document, "fragment", {
           children: [elementProps],
-        })
+        }),
       );
       // Load data-binding
       Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
@@ -338,7 +342,7 @@ function openDialog(
               elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
             }
           }
-        }
+        },
       );
       // Resize window
       if (windowFeatures.fitContent) {
@@ -360,15 +364,15 @@ function openDialog(
   // Wait for window loading to resolve the lock promise
   win.addEventListener(
     "DOMContentLoaded",
-    function onWindowLoad(ev: Event) {
+    function onWindowLoad(_ev: Event) {
       (win as any).arguments[0]?.loadLock?.resolve();
       win.removeEventListener("DOMContentLoaded", onWindowLoad, false);
     },
-    false
+    false,
   );
 
   // Wait for window unload. Use beforeunload to access elements.
-  win.addEventListener("beforeunload", function onWindowBeforeUnload(ev) {
+  win.addEventListener("beforeunload", function onWindowBeforeUnload(_ev) {
     // Update data-binding
     Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
       (elem: Element) => {
@@ -383,18 +387,18 @@ function openDialog(
             dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
           }
         }
-      }
+      },
     );
     this.window.removeEventListener(
       "beforeunload",
       onWindowBeforeUnload,
-      false
+      false,
     );
     dialogData?.beforeUnloadCallback && dialogData.beforeUnloadCallback();
   });
 
   // Wait for window unload to resolve the lock promise
-  win.addEventListener("unload", function onWindowUnload(ev) {
+  win.addEventListener("unload", function onWindowUnload(_ev) {
     if ((this.window as any).arguments[0]?.loadLock.promise.isPending()) {
       return;
     }
@@ -409,7 +413,7 @@ function openDialog(
 
 function replaceElement(
   elementProps: ElementProps & { tag: string },
-  uiTool: UITool
+  uiTool: UITool,
 ) {
   let checkChildren = true;
   if (elementProps.tag === "select") {
@@ -435,7 +439,7 @@ function replaceElement(
               listener: (ev: Event) => {
                 const select = ev.target as HTMLElement;
                 const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content"
+                  ".dropdown-content",
                 ) as HTMLDivElement;
                 dropdown && (dropdown.style.display = "block");
                 select.setAttribute("focus", "true");
@@ -446,7 +450,7 @@ function replaceElement(
               listener: (ev: Event) => {
                 const select = ev.target as HTMLElement;
                 const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content"
+                  ".dropdown-content",
                 ) as HTMLDivElement;
                 dropdown && (dropdown.style.display = "none");
                 select.removeAttribute("focus");
@@ -464,7 +468,7 @@ function replaceElement(
             },
             properties: {
               innerHTML:
-                option.properties?.innerHTML || option.properties?.innerText,
+                option.properties?.innerHTML || option.properties?.textContent,
             },
             classList: ["dropdown-item"],
             listeners: [
@@ -499,7 +503,7 @@ function replaceElement(
       type: "click",
       listener: (ev: Event) => {
         const href = (ev.target as HTMLLinkElement)?.getAttribute(
-          "zotero-href"
+          "zotero-href",
         );
         href && uiTool.getGlobal("Zotero").launchURL(href);
       },
@@ -546,9 +550,9 @@ const style = `
 interface DialogData {
   [key: string | number | symbol]: any;
   loadLock?: _ZoteroTypes.PromiseObject;
-  loadCallback?: Function;
+  loadCallback?: () => void;
   unloadLock?: _ZoteroTypes.PromiseObject;
-  unloadCallback?: Function;
-  beforeUnloadCallback?: Function;
+  unloadCallback?: () => void;
+  beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
 }

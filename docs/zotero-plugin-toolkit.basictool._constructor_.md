@@ -42,7 +42,7 @@ data
 
 </td><td>
 
-_(Optional)_
+_(Optional)_ Pass an BasicTool instance to copy its options.
 
 
 </td></tr>

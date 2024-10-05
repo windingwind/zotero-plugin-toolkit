@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createRoot } from "react-dom/client";
-import { IntlProvider } from "react-intl";
+import type React from "react";
+import type ReactDOM from "react-dom";
+import type { createRoot } from "react-dom/client";
+import type { IntlProvider } from "react-intl";
 import { BasicTool } from "../basic.js";
 
 /**
@@ -22,6 +22,7 @@ export class VirtualizedTableHelper extends BasicTool {
     super();
     this.window = win;
     const Zotero = this.getGlobal("Zotero");
+    // eslint-disable-next-line ts/no-unsafe-function-type
     const _require = (win as any).require as Function;
     // Don't actually use any React instance, so that it won't be actually compiled.
     this.React = _require("react");
@@ -45,7 +46,7 @@ export class VirtualizedTableHelper extends BasicTool {
    */
   public setProp<
     K extends keyof VirtualizedTableProps,
-    V extends VirtualizedTableProps[K]
+    V extends VirtualizedTableProps[K],
   >(propName: K, propValue: V): VirtualizedTableHelper;
   /**
    * Set properties object.
@@ -157,7 +158,7 @@ export class VirtualizedTableHelper extends BasicTool {
   public render(
     selectId?: number,
     onfulfilled?: (value: unknown) => unknown,
-    onrejected?: (reason: any) => PromiseLike<never>
+    onrejected?: (reason: any) => PromiseLike<never>,
   ) {
     const refreshSelection = () => {
       this.treeInstance.invalidate();
@@ -178,14 +179,14 @@ export class VirtualizedTableHelper extends BasicTool {
         if (vtableProps.getRowData && !vtableProps.renderItem) {
           Object.assign(vtableProps, {
             renderItem: this.VirtualizedTable.makeRowRenderer(
-              vtableProps.getRowData
+              vtableProps.getRowData,
             ),
           });
         }
         const elem = this.React.createElement(
           this.IntlProvider,
           { locale: Zotero.locale, messages: Zotero.Intl.strings },
-          this.React.createElement(this.VirtualizedTable, vtableProps)
+          this.React.createElement(this.VirtualizedTable, vtableProps),
         );
         const container = this.window.document.getElementById(this.containerId);
         this.ReactDOM.createRoot(container!).render(elem);
@@ -235,7 +236,7 @@ interface VirtualizedTableProps {
     index: number,
     selection: TreeSelection,
     oldElem: HTMLElement,
-    columns: ColumnOptions[]
+    columns: ColumnOptions[],
   ) => Node;
   // Row height specified as lines of text per row. Defaults to 1
   linesPerRow?: number;
@@ -270,7 +271,7 @@ interface VirtualizedTableProps {
 
   onSelectionChange?: (
     selection: TreeSelection,
-    shouldDebounce: boolean
+    shouldDebounce: boolean,
   ) => void;
 
   // The below are for arrow-key navigation
@@ -301,36 +302,37 @@ interface VirtualizedTableProps {
   onItemContextMenu?: (
     e: MouseEvent | KeyboardEvent,
     x: number,
-    y: number
+    y: number,
   ) => boolean;
 }
 
 interface VirtualizedTableConstructor
-  extends React.ComponentClass<VirtualizedTableProps, {}> {
-  renderCell(
+  extends React.ComponentClass<VirtualizedTableProps, object> {
+  renderCell: (
     index: number,
     data: string,
     column: HTMLElement,
-    dir?: string
-  ): HTMLSpanElement;
-  renderCheckboxCell(
+    dir?: string,
+  ) => HTMLSpanElement;
+  renderCheckboxCell: (
     index: number,
     data: string,
     column: HTMLElement,
-    dir?: string
-  ): HTMLSpanElement;
-  makeRowRenderer(
-    getRowData: (index: number) => { [dataKey: string]: string }
-  ): (
+    dir?: string,
+  ) => HTMLSpanElement;
+  makeRowRenderer: (
+    getRowData: (index: number) => { [dataKey: string]: string },
+  ) => (
     index: number,
     selection: any,
     oldDiv: HTMLDivElement,
-    columns: HTMLElement
+    columns: HTMLElement,
   ) => any;
-  formatColumnName(column: HTMLElement): string;
+  formatColumnName: (column: HTMLElement) => string;
 }
 
-interface VirtualizedTable extends React.Component<VirtualizedTableProps, {}> {
+interface VirtualizedTable
+  extends React.Component<VirtualizedTableProps, object> {
   selection: TreeSelection;
   invalidate: () => void;
 }
@@ -363,16 +365,16 @@ interface TreeSelection {
    * @param index {Number} The index is 0-clamped.
    * @returns {boolean}
    */
-  isSelected(index: number): boolean;
+  isSelected: (index: number) => boolean;
 
   /**
    * Toggles an item's selection state, updates focused item to index.
    * @param index {Number} The index is 0-clamped.
    * @param shouldDebounce {Boolean} Whether the update to the tree should be debounced
    */
-  toggleSelect(index: number, shouldDebounce?: boolean): void;
+  toggleSelect: (index: number, shouldDebounce?: boolean) => void;
 
-  clearSelection(): void;
+  clearSelection: () => void;
 
   /**
    * Selects an item, updates focused item to index.
@@ -380,14 +382,14 @@ interface TreeSelection {
    * @param shouldDebounce {Boolean} Whether the update to the tree should be debounced
    * @returns {boolean} False if nothing to select and select handlers won't be called
    */
-  select(index: number, shouldDebounce?: boolean): boolean;
+  select: (index: number, shouldDebounce?: boolean) => boolean;
 
-  rangedSelect(
+  rangedSelect: (
     from: number,
     to: number,
     augment: boolean,
-    isSelectAll: boolean
-  ): void;
+    isSelectAll: boolean,
+  ) => void;
 
   /**
    * Performs a shift-select from current pivot to provided index. Updates focused item to index.
@@ -395,14 +397,18 @@ interface TreeSelection {
    * @param augment {Boolean} Adds to existing selection if true
    * @param shouldDebounce {Boolean} Whether the update to the tree should be debounced
    */
-  shiftSelect(index: number, augment: boolean, shouldDebounce?: boolean): void;
+  shiftSelect: (
+    index: number,
+    augment: boolean,
+    shouldDebounce?: boolean,
+  ) => void;
 
   /**
    * Calls the onSelectionChange prop on the tree
    * @param shouldDebounce {Boolean} Whether the update to the tree should be debounced
    * @private
    */
-  _updateTree(shouldDebounce?: boolean): void;
+  _updateTree: (shouldDebounce?: boolean) => void;
 
   get count(): number;
 

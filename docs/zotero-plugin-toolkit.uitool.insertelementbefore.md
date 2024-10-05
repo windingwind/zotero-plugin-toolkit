@@ -67,4 +67,5 @@ The node before which newNode is inserted.
 
 Node \| undefined
 
+Node
 

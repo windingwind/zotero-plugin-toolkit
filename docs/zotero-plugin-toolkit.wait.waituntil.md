@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-declare function waitUntil(condition: () => boolean, callback: () => void, interval?: number, timeout?: number): void;
+export declare function waitUntil(condition: () => boolean, callback: () => void, interval?: number, timeout?: number): void;
 ```
 
 ## Parameters

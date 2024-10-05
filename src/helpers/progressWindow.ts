@@ -1,6 +1,21 @@
 import { BasicTool } from "../basic.js";
 
 /**
+ * Icon dict. Add your custom icons here.
+ * @default
+ * ```ts
+ * {
+ *   success: "chrome://zotero/skin/tick.png",
+ *   fail: "chrome://zotero/skin/cross.png",
+ * };
+ * ```
+ */
+const icons: { [key: string | number]: string } = {
+  success: "chrome://zotero/skin/tick.png",
+  fail: "chrome://zotero/skin/cross.png",
+};
+
+/**
  * ProgressWindow helper.
  * @example
  * Show a popup with success icon
@@ -34,13 +49,17 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
   private lines: Zotero.ItemProgress[];
   private closeTime: number | undefined;
   private originalShow: typeof Zotero.ProgressWindow.prototype.show;
-  // @ts-ignore
+  // @ts-expect-error override show
   public declare show: typeof _popupWindowShow;
 
   /**
    *
    * @param header window header
    * @param options
+   * @param options.window
+   * @param options.closeOnClick
+   * @param options.closeTime
+   * @param options.closeOtherProgressWindows
    */
   constructor(
     header: string,
@@ -52,7 +71,7 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
     } = {
       closeOnClick: true,
       closeTime: 5000,
-    }
+    },
   ) {
     super(options);
     this.lines = [];
@@ -69,6 +88,11 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
   /**
    * Create a new line
    * @param options
+   * @param options.type
+   * @param options.icon
+   * @param options.text
+   * @param options.progress
+   * @param options.idx
    */
   createLine(options: {
     type?: string;
@@ -90,6 +114,11 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
   /**
    * Change the line content
    * @param options
+   * @param options.type
+   * @param options.icon
+   * @param options.text
+   * @param options.progress
+   * @param options.idx
    */
   changeLine(options: {
     type?: string;
@@ -109,7 +138,7 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
         : 0;
     const icon = this.getIcon(options.type, options.icon);
     if (icon) {
-      // @ts-ignore
+      // @ts-expect-error setItemTypeAndIcon is new func not included in types
       this.lines[idx].setItemTypeAndIcon(icon);
     }
     options.text && this.lines[idx].setText(options.text);
@@ -155,27 +184,12 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
           box.style.backgroundImage = `url(${box.dataset.itemType})`;
         }
       });
-    } catch (e) {
+    } catch {
       // Ignore
     }
   }
 }
 
-/**
- * Icon dict. Add your custom icons here.
- * @default
- * ```ts
- * {
- *   success: "chrome://zotero/skin/tick.png",
- *   fail: "chrome://zotero/skin/cross.png",
- * };
- * ```
- */
-const icons: { [key: string | number]: string } = {
-  success: "chrome://zotero/skin/tick.png",
-  fail: "chrome://zotero/skin/cross.png",
-};
-
 declare function _popupWindowShow(
-  closeTime?: number | undefined
+  closeTime?: number | undefined,
 ): ProgressWindowHelper;

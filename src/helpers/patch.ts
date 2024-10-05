@@ -17,10 +17,12 @@ export class PatchHelper extends BasicTool {
     (target[funcSign] as any) = function (this: T, ...args: any[]) {
       if (options.enabled)
         try {
+          // eslint-disable-next-line ts/no-unsafe-function-type
           return (patcher(origin) as Function).apply(this, args);
         } catch (e) {
           Zotero.logError(e as any);
         }
+      // eslint-disable-next-line ts/no-unsafe-function-type
       return (origin as Function).apply(this, args);
     };
     return this;

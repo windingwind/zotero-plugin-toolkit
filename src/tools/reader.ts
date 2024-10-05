@@ -10,7 +10,7 @@ export class ReaderTool extends BasicTool {
    * @param waitTime Wait for n MS until the reader is ready
    */
   async getReader(
-    waitTime: number = 5000
+    waitTime: number = 5000,
   ): Promise<_ZoteroTypes.ReaderInstance | undefined> {
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
     if (Zotero_Tabs.selectedType !== "reader") {
@@ -33,19 +33,19 @@ export class ReaderTool extends BasicTool {
    */
   getWindowReader(): Array<_ZoteroTypes.ReaderWindow> {
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
-    let windowReaders: Array<_ZoteroTypes.ReaderWindow> = [];
-    let tabs = Zotero_Tabs._tabs.map((e) => e.id);
+    const windowReaders: Array<_ZoteroTypes.ReaderWindow> = [];
+    const tabs = Zotero_Tabs._tabs.map((e) => e.id);
     for (let i = 0; i < Zotero.Reader._readers.length; i++) {
       let flag = false;
       for (let j = 0; j < tabs.length; j++) {
-        if (Zotero.Reader._readers[i].tabID == tabs[j]) {
+        if (Zotero.Reader._readers[i].tabID === tabs[j]) {
           flag = true;
           break;
         }
       }
       if (!flag) {
         windowReaders.push(
-          Zotero.Reader._readers[i] as _ZoteroTypes.ReaderWindow
+          Zotero.Reader._readers[i] as _ZoteroTypes.ReaderWindow,
         );
       }
     }
@@ -59,7 +59,7 @@ export class ReaderTool extends BasicTool {
    */
   getReaderTabPanelDeck(): XUL.Deck {
     const deck = this.getGlobal("window").document.querySelector(
-      ".notes-pane-deck"
+      ".notes-pane-deck",
     )?.previousElementSibling as XUL.Deck;
     return deck as XUL.Deck;
   }
@@ -70,7 +70,7 @@ export class ReaderTool extends BasicTool {
    * @alpha
    * @param callback
    */
-  async addReaderTabPanelDeckObserver(callback: Function) {
+  async addReaderTabPanelDeckObserver(callback: () => void) {
     await waitUtilAsync(() => !!this.getReaderTabPanelDeck());
     const deck = this.getReaderTabPanelDeck();
     const observer = new (this.getGlobal("MutationObserver"))(
@@ -86,7 +86,7 @@ export class ReaderTool extends BasicTool {
             callback();
           }
         });
-      }
+      },
     );
     observer.observe(deck, {
       attributes: true,
@@ -102,10 +102,10 @@ export class ReaderTool extends BasicTool {
    * @returns The selected annotation data.
    */
   getSelectedAnnotationData(
-    reader: _ZoteroTypes.ReaderInstance
+    reader: _ZoteroTypes.ReaderInstance,
   ): AnnotationData | undefined {
     const annotation =
-      // @ts-ignore
+      // @ts-expect-error _selectionPopup
       reader?._internalReader._lastView._selectionPopup?.annotation;
     return annotation;
   }

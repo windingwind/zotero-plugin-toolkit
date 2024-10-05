@@ -1,24 +1,17 @@
 {
   "name": "zotero-plugin-toolkit",
+  "type": "module",
   "version": "4.0.5",
   "description": "Toolkit for Zotero plugins",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "prettier --write src && tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
-    "release": "release-it",
-    "prepare": "husky install",
-    "update-deps": "npm update --save"
-  },
+  "author": "windingwind",
+  "license": "MIT",
+  "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/windingwind/zotero-plugin-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/windingwind/zotero-plugin-toolkit/issues"
   },
   "keywords": [
     "zotero",
@@ -26,46 +19,60 @@
     "developer",
     "toolkit"
   ],
-  "author": "windingwind",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/windingwind/zotero-plugin-toolkit/issues"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
-  "dependencies": {
-    "zotero-types": "^2.2.0"
-  },
-  "devDependencies": {
-    "@microsoft/api-documenter": "^7.25.4",
-    "@microsoft/api-extractor": "^7.47.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@types/react-intl": "^3.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.3.0",
-    "prettier": "2.8.8",
-    "react-intl": "^6.6.8",
-    "release-it": "^15.11.0",
-    "typescript": "^5.5.2"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/**/*.d.ts",
     "dist/**/*.js",
     "docs/**/*"
   ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "npm run prettier && npm run build:tsc && npm run build:docs",
+    "build:tsc": "tsc",
+    "build:docs": "api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "prettier": "prettier src --write",
+    "lint:eslint": "eslint . --fix",
+    "release": "release-it",
+    "prepare": "husky",
+    "update-deps": "npm update --save"
+  },
+  "dependencies": {
+    "zotero-types": "^2.2.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.3",
+    "@microsoft/api-documenter": "^7.25.17",
+    "@microsoft/api-extractor": "^7.47.9",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-intl": "^3.0.0",
+    "eslint": "^9.12.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "react-intl": "^6.7.0",
+    "release-it": "^17.7.0",
+    "typescript": "^5.6.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "directories": {
     "lib": "dist",
     "doc": "docs"
   },
   "prettier": {},
   "lint-staged": {
-    "*.{ts,js,css}": "prettier --write src"
-  },
-  "engines": {
-    "node": ">=16"
+    "*.{ts,js,css}": "prettier --write"
   }
 }

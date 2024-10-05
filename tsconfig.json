@@ -4,13 +4,13 @@
     "lib": ["ESNext", "DOM"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "dist",
+    "strict": true,
     "declaration": true,
-    "sourceMap": true,
     "declarationMap": true,
+    "outDir": "dist",
+    "sourceMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "typings", "node_modules/zotero-types"]

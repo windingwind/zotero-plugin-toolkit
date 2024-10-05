@@ -31,11 +31,11 @@ export class ClipboardHelper extends BasicTool {
 
   constructor() {
     super();
-    // @ts-ignore
+    // @ts-expect-error allow transferable
     this.transferable = Components.classes[
       "@mozilla.org/widget/transferable;1"
     ].createInstance(Components.interfaces.nsITransferable);
-    // @ts-ignore
+    // @ts-expect-error allow clipboard
     this.clipboardService = Components.classes[
       "@mozilla.org/widget/clipboard;1"
     ].getService(Components.interfaces.nsIClipboard);
@@ -44,9 +44,9 @@ export class ClipboardHelper extends BasicTool {
 
   public addText(
     source: string,
-    type: "text/html" | "text/plain" | "text/unicode" = "text/plain"
+    type: "text/html" | "text/plain" | "text/unicode" = "text/plain",
   ) {
-    // @ts-ignore
+    // @ts-expect-error allow supports-string
     const str = Components.classes[
       "@mozilla.org/supports-string;1"
     ].createInstance(Components.interfaces.nsISupportsString);
@@ -59,21 +59,21 @@ export class ClipboardHelper extends BasicTool {
   }
 
   public addImage(source: string) {
-    let parts = source.split(",");
+    const parts = source.split(",");
     if (!parts[0].includes("base64")) {
       return this;
     }
-    let mime = parts[0].match(/:(.*?);/)![1];
-    let bstr = this.getGlobal("window").atob(parts[1]);
+    const mime = parts[0].match(/:(.*?);/)![1];
+    const bstr = this.getGlobal("window").atob(parts[1]);
     let n = bstr.length;
-    let u8arr = new Uint8Array(n);
+    const u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    // @ts-ignore
-    let imgTools = Components.classes["@mozilla.org/image/tools;1"].getService(
-      Components.interfaces.imgITools
-    );
+    // @ts-expect-error allow image/tools
+    const imgTools = Components.classes[
+      "@mozilla.org/image/tools;1"
+    ].getService(Components.interfaces.imgITools);
     let mimeType: string;
     let img: unknown;
     if (this.getGlobal("Zotero").platformMajorVersion >= 102) {
@@ -81,13 +81,13 @@ export class ClipboardHelper extends BasicTool {
       mimeType = "application/x-moz-nativeimage";
     } else {
       mimeType = `image/png`;
-      // @ts-ignore
+      // @ts-expect-error allow supports-interface-pointer
       img = Components.classes[
         "@mozilla.org/supports-interface-pointer;1"
       ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
       (img as any).data = imgTools.decodeImageFromArrayBuffer(
         u8arr.buffer,
-        mimeType
+        mimeType,
       );
     }
     this.transferable.addDataFlavor(mimeType);
@@ -96,9 +96,9 @@ export class ClipboardHelper extends BasicTool {
   }
 
   public addFile(path: string) {
-    // @ts-ignore
+    // @ts-expect-error allow file/local
     const file = Components.classes["@mozilla.org/file/local;1"].createInstance(
-      Components.interfaces.nsIFile
+      Components.interfaces.nsIFile,
     );
     file.initWithPath(path);
     this.transferable.addDataFlavor("application/x-moz-file");
@@ -112,7 +112,7 @@ export class ClipboardHelper extends BasicTool {
       this.clipboardService.setData(
         this.transferable,
         null,
-        Components.interfaces.nsIClipboard.kGlobalClipboard
+        Components.interfaces.nsIClipboard.kGlobalClipboard,
       );
     } catch (e) {
       // For unknown reasons, on MacOS the copy will throw 0x80004005 error.
