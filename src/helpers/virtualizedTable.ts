@@ -44,7 +44,7 @@ export class VirtualizedTableHelper extends BasicTool {
    */
   public setProp<
     K extends keyof VirtualizedTableProps,
-    V extends VirtualizedTableProps[K]
+    V extends VirtualizedTableProps[K],
   >(propName: K, propValue: V): VirtualizedTableHelper;
   /**
    * Set properties object.
@@ -156,7 +156,7 @@ export class VirtualizedTableHelper extends BasicTool {
   public render(
     selectId?: number,
     onfulfilled?: (value: unknown) => unknown,
-    onrejected?: (reason: any) => PromiseLike<never>
+    onrejected?: (reason: any) => PromiseLike<never>,
   ) {
     const refreshSelection = () => {
       this.treeInstance.invalidate();
@@ -173,18 +173,18 @@ export class VirtualizedTableHelper extends BasicTool {
       if (vtableProps.getRowData && !vtableProps.renderItem) {
         Object.assign(vtableProps, {
           renderItem: this.VirtualizedTable.makeRowRenderer(
-            vtableProps.getRowData
+            vtableProps.getRowData,
           ),
         });
       }
       const elem = this.React.createElement(
         this.IntlProvider,
         { locale: Zotero.locale, messages: Zotero.Intl.strings },
-        this.React.createElement(this.VirtualizedTable, vtableProps)
+        this.React.createElement(this.VirtualizedTable, vtableProps),
       );
       const container = this.window.document.getElementById(this.containerId);
       new Promise((resolve) =>
-        this.ReactDOM.render(elem, container, resolve as () => {})
+        this.ReactDOM.render(elem, container, resolve as () => {}),
       )
         .then(() => {
           // Fix style manager showing partially blank until scrolled
@@ -231,7 +231,7 @@ interface VirtualizedTableProps {
     index: number,
     selection: TreeSelection,
     oldElem: HTMLElement,
-    columns: ColumnOptions[]
+    columns: ColumnOptions[],
   ) => Node;
   // Row height specified as lines of text per row. Defaults to 1
   linesPerRow?: number;
@@ -266,7 +266,7 @@ interface VirtualizedTableProps {
 
   onSelectionChange?: (
     selection: TreeSelection,
-    shouldDebounce: boolean
+    shouldDebounce: boolean,
   ) => void;
 
   // The below are for arrow-key navigation
@@ -297,7 +297,7 @@ interface VirtualizedTableProps {
   onItemContextMenu?: (
     e: MouseEvent | KeyboardEvent,
     x: number,
-    y: number
+    y: number,
   ) => boolean;
 }
 
@@ -307,21 +307,21 @@ interface VirtualizedTableConstructor
     index: number,
     data: string,
     column: HTMLElement,
-    dir?: string
+    dir?: string,
   ): HTMLSpanElement;
   renderCheckboxCell(
     index: number,
     data: string,
     column: HTMLElement,
-    dir?: string
+    dir?: string,
   ): HTMLSpanElement;
   makeRowRenderer(
-    getRowData: (index: number) => { [dataKey: string]: string }
+    getRowData: (index: number) => { [dataKey: string]: string },
   ): (
     index: number,
     selection: any,
     oldDiv: HTMLDivElement,
-    columns: HTMLElement
+    columns: HTMLElement,
   ) => any;
   formatColumnName(column: HTMLElement): string;
 }
@@ -382,7 +382,7 @@ interface TreeSelection {
     from: number,
     to: number,
     augment: boolean,
-    isSelectAll: boolean
+    isSelectAll: boolean,
   ): void;
 
   /**

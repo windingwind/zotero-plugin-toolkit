@@ -10,7 +10,7 @@ export class ReaderTool extends BasicTool {
    * @param waitTime Wait for n MS until the reader is ready
    */
   async getReader(
-    waitTime: number = 5000
+    waitTime: number = 5000,
   ): Promise<_ZoteroTypes.ReaderInstance | undefined> {
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
     if (Zotero_Tabs.selectedType !== "reader") {
@@ -45,7 +45,7 @@ export class ReaderTool extends BasicTool {
       }
       if (!flag) {
         windowReaders.push(
-          Zotero.Reader._readers[i] as _ZoteroTypes.ReaderWindow
+          Zotero.Reader._readers[i] as _ZoteroTypes.ReaderWindow,
         );
       }
     }
@@ -59,7 +59,7 @@ export class ReaderTool extends BasicTool {
    */
   getReaderTabPanelDeck(): XUL.Deck {
     const deck = this.getGlobal("window").document.querySelector(
-      ".notes-pane-deck"
+      ".notes-pane-deck",
     )?.previousElementSibling as XUL.Deck;
     return deck as XUL.Deck;
   }
@@ -86,7 +86,7 @@ export class ReaderTool extends BasicTool {
             callback();
           }
         });
-      }
+      },
     );
     observer.observe(deck, {
       attributes: true,
@@ -102,7 +102,7 @@ export class ReaderTool extends BasicTool {
    * @returns The selected annotation data.
    */
   getSelectedAnnotationData(
-    reader: _ZoteroTypes.ReaderInstance
+    reader: _ZoteroTypes.ReaderInstance,
   ): AnnotationData | undefined {
     const annotation =
       // @ts-ignore

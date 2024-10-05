@@ -310,7 +310,7 @@ class Guide {
       x,
       y,
       false,
-      false
+      false,
     );
   }
 
@@ -360,7 +360,7 @@ class Guide {
     this._body.innerHTML = step.description || "";
     (
       this._panel.querySelectorAll(
-        ".guide-panel-button"
+        ".guide-panel-button",
       ) as NodeListOf<HTMLButtonElement>
     ).forEach((elem) => {
       elem.hidden = true;
@@ -381,14 +381,14 @@ class Guide {
     if (showButtons?.length) {
       showButtons.forEach((btn) => {
         (this._panel.querySelector(
-          `#${btn}-button`
+          `#${btn}-button`,
         ) as HTMLButtonElement)!.hidden = false;
       });
     }
     if (step.disableButtons) {
       step.disableButtons.forEach((btn) => {
         (this._panel.querySelector(
-          `#${btn}-button`
+          `#${btn}-button`,
         ) as HTMLButtonElement)!.disabled = true;
       });
     }
@@ -436,7 +436,7 @@ class Guide {
     const win = this._window;
     this._panel.moveTo(
       win.screenX + win.innerWidth / 2 - this._panel.clientWidth / 2,
-      win.screenY + win.innerHeight / 2 - this._panel.clientHeight / 2
+      win.screenY + win.innerHeight / 2 - this._panel.clientHeight / 2,
     );
   };
 

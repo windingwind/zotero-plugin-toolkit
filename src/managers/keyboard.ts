@@ -47,7 +47,7 @@ export class KeyboardManager extends ManagerTool {
     this.removeListenerCallback("onMainWindowLoad", this.initKeyboardListener);
     this.removeListenerCallback(
       "onMainWindowUnload",
-      this.unInitKeyboardListener
+      this.unInitKeyboardListener,
     );
     for (const win of Zotero.getMainWindows()) {
       this.unInitKeyboardListener(win);
@@ -61,11 +61,11 @@ export class KeyboardManager extends ManagerTool {
     Zotero.Reader.registerEventListener(
       "renderToolbar",
       (event) => this.addReaderKeyboardCallback(event),
-      this._basicOptions.api.pluginID
+      this._basicOptions.api.pluginID,
     );
 
     Zotero.Reader._readers.forEach((reader) =>
-      this.addReaderKeyboardCallback({ reader })
+      this.addReaderKeyboardCallback({ reader }),
     );
   }
 
@@ -90,8 +90,8 @@ export class KeyboardManager extends ManagerTool {
         (reader._internalReader?._primaryView as any)?._iframeWindow,
       () =>
         this._initKeyboardListener(
-          (reader._internalReader._primaryView as any)?._iframeWindow
-        )
+          (reader._internalReader._primaryView as any)?._iframeWindow,
+        ),
     );
     // @ts-ignore extra property
     reader._iframeWindow[initializedKey] = true;
@@ -149,7 +149,7 @@ type KeyboardCallback = (
   options: {
     keyboard?: KeyModifier;
     type: KeyboardEventType;
-  }
+  },
 ) => void;
 
 interface KeyModifierStatus {
@@ -176,7 +176,7 @@ export class KeyModifier implements KeyModifierStatus {
 
   constructor(
     raw?: string | KeyboardEvent | KeyModifier,
-    options?: { useAccel?: boolean }
+    options?: { useAccel?: boolean },
   ) {
     this.useAccel = options?.useAccel || false;
     if (typeof raw === "undefined") {
@@ -328,7 +328,7 @@ export class KeyModifier implements KeyModifierStatus {
   private mergeAttribute<T extends keyof this>(
     attribute: T,
     value: this[T],
-    allowOverwrite: boolean
+    allowOverwrite: boolean,
   ) {
     if (allowOverwrite || !this[attribute]) {
       this[attribute] = value;

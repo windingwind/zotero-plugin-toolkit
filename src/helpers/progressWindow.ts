@@ -52,7 +52,7 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
     } = {
       closeOnClick: true,
       closeTime: 5000,
-    }
+    },
   ) {
     super(options);
     this.lines = [];
@@ -177,5 +177,5 @@ const icons: { [key: string | number]: string } = {
 };
 
 declare function _popupWindowShow(
-  closeTime?: number | undefined
+  closeTime?: number | undefined,
 ): ProgressWindowHelper;

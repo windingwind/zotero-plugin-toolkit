@@ -35,7 +35,7 @@ export class LargePrefHelper extends BasicTool {
   constructor(
     keyPref: string,
     valuePrefPrefix: string,
-    hooks: Partial<typeof defaultHooks> | "default" | "parser" = "default"
+    hooks: Partial<typeof defaultHooks> | "default" | "parser" = "default",
   ) {
     super();
     this.keyPref = keyPref;
@@ -77,7 +77,7 @@ export class LargePrefHelper extends BasicTool {
         }
       },
       forEach: (
-        callback: (value: any, key: string, map: Map<string, any>) => void
+        callback: (value: any, key: string, map: Map<string, any>) => void,
       ) => {
         return this.constructTempMap().forEach(callback);
       },
@@ -250,9 +250,9 @@ type HooksType = typeof defaultHooks;
 
 const defaultHooks = {
   afterGetValue: ({ value }: { value: string }) =>
-    ({ value } as { value: any }),
+    ({ value }) as { value: any },
   beforeSetValue: ({ key, value }: { key: string; value: any }) =>
-    ({ key, value } as { key: string; value: any }),
+    ({ key, value }) as { key: string; value: any },
 };
 
 const parserHooks = {

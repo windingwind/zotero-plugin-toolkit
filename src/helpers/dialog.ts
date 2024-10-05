@@ -65,7 +65,7 @@ export class DialogHelper extends UITool {
     row: number,
     column: number,
     elementProps: TagElementProps,
-    cellFlex: boolean = true
+    cellFlex: boolean = true,
   ) {
     if (
       row >= this.elementProps.children!.length ||
@@ -74,7 +74,7 @@ export class DialogHelper extends UITool {
       throw Error(
         `Cell index (${row}, ${column}) is invalid, maximum (${
           this.elementProps.children!.length
-        }, ${this.elementProps.children![0].children!.length})`
+        }, ${this.elementProps.children![0].children!.length})`,
       );
     }
     this.elementProps.children![row].children![column].children = [
@@ -99,7 +99,7 @@ export class DialogHelper extends UITool {
     options: {
       noClose?: boolean;
       callback?: (ev: Event) => any;
-    } = {}
+    } = {},
   ) {
     id = id || `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
     this.elementProps.children![
@@ -195,7 +195,7 @@ export class DialogHelper extends UITool {
       centerscreen: true,
       resizable: true,
       fitContent: true,
-    }
+    },
   ) {
     this.window = openDialog(
       this,
@@ -203,7 +203,7 @@ export class DialogHelper extends UITool {
       title,
       this.elementProps,
       this.dialogData,
-      windowFeatures
+      windowFeatures,
     );
     return this;
   }
@@ -229,7 +229,7 @@ function openDialog(
     centerscreen: true,
     resizable: true,
     fitContent: true,
-  }
+  },
 ) {
   const Zotero = dialogHelper.getGlobal("Zotero");
   dialogData = dialogData || {};
@@ -268,7 +268,7 @@ function openDialog(
     "about:blank",
     targetId || "_blank",
     featureString,
-    dialogData
+    dialogData,
   );
 
   // After load
@@ -279,7 +279,7 @@ function openDialog(
         dialogHelper.createElement(win.document, "title", {
           properties: { innerText: title },
           attributes: { "data-l10n-id": title },
-        })
+        }),
       );
       let l10nFiles = dialogData.l10nFiles || [];
       if (typeof l10nFiles === "string") {
@@ -292,7 +292,7 @@ function openDialog(
               rel: "localization",
               href: file,
             },
-          })
+          }),
         );
       });
       // Add style according to Zotero prefs
@@ -316,14 +316,14 @@ function openDialog(
             },
           ],
         },
-        win.document.head
+        win.document.head,
       );
       replaceElement(elementProps, dialogHelper);
       // Create element
       win.document.body.appendChild(
         dialogHelper.createElement(win.document, "fragment", {
           children: [elementProps],
-        })
+        }),
       );
       // Load data-binding
       Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
@@ -338,7 +338,7 @@ function openDialog(
               elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
             }
           }
-        }
+        },
       );
       // Resize window
       if (windowFeatures.fitContent) {
@@ -364,7 +364,7 @@ function openDialog(
       (win as any).arguments[0]?.loadLock?.resolve();
       win.removeEventListener("DOMContentLoaded", onWindowLoad, false);
     },
-    false
+    false,
   );
 
   // Wait for window unload. Use beforeunload to access elements.
@@ -383,12 +383,12 @@ function openDialog(
             dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
           }
         }
-      }
+      },
     );
     this.window.removeEventListener(
       "beforeunload",
       onWindowBeforeUnload,
-      false
+      false,
     );
     dialogData?.beforeUnloadCallback && dialogData.beforeUnloadCallback();
   });
@@ -409,7 +409,7 @@ function openDialog(
 
 function replaceElement(
   elementProps: ElementProps & { tag: string },
-  uiTool: UITool
+  uiTool: UITool,
 ) {
   let checkChildren = true;
   if (elementProps.tag === "select") {
@@ -435,7 +435,7 @@ function replaceElement(
               listener: (ev: Event) => {
                 const select = ev.target as HTMLElement;
                 const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content"
+                  ".dropdown-content",
                 ) as HTMLDivElement;
                 dropdown && (dropdown.style.display = "block");
                 select.setAttribute("focus", "true");
@@ -446,7 +446,7 @@ function replaceElement(
               listener: (ev: Event) => {
                 const select = ev.target as HTMLElement;
                 const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content"
+                  ".dropdown-content",
                 ) as HTMLDivElement;
                 dropdown && (dropdown.style.display = "none");
                 select.removeAttribute("focus");
@@ -499,7 +499,7 @@ function replaceElement(
       type: "click",
       listener: (ev: Event) => {
         const href = (ev.target as HTMLLinkElement)?.getAttribute(
-          "zotero-href"
+          "zotero-href",
         );
         href && uiTool.getGlobal("Zotero").launchURL(href);
       },

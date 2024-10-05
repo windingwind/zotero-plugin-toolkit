@@ -63,7 +63,7 @@ function initializeModules(instance: ToolkitGlobal) {
 function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(
   instance: ToolkitGlobal,
   key: K,
-  module: V
+  module: V,
 ) {
   if (!module) {
     return;

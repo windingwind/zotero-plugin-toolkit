@@ -181,7 +181,7 @@ export class Prompt {
             ],
           },
         ],
-      })
+      }),
     );
 
     this.inputNode = this.promptNode.querySelector("input")!;
@@ -331,16 +331,16 @@ export class Prompt {
     this.inputNode.placeholder = this.defaultText.placeholder;
     if (
       this.promptNode.querySelectorAll(
-        ".commands-containers .commands-container"
+        ".commands-containers .commands-container",
       ).length >= 2
     ) {
       (
         this.promptNode.querySelector(
-          ".commands-container:last-child"
+          ".commands-container:last-child",
         ) as HTMLDivElement
       ).remove();
       const commandsContainer = this.promptNode.querySelector(
-        ".commands-container:last-child"
+        ".commands-container:last-child",
       ) as HTMLDivElement;
       commandsContainer.style.display = "";
       commandsContainer
@@ -475,7 +475,7 @@ export class Prompt {
             }
             spanHTML += `<span class="highlight">${spanText.slice(
               start,
-              end
+              end,
             )}</span>`;
             i = end;
           }
@@ -498,7 +498,7 @@ export class Prompt {
       return true;
     } else {
       const anonymousCommand = this.commands.find(
-        (c) => !c.name && (!c.when || c.when!())
+        (c) => !c.name && (!c.when || c.when!()),
       );
       if (anonymousCommand) {
         await this.execCallback(anonymousCommand.callback);
@@ -519,11 +519,11 @@ export class Prompt {
         let selectedIndex;
         let allItems = [
           ...Array.from(
-            this.getCommandsContainer().querySelectorAll(".command")
+            this.getCommandsContainer().querySelectorAll(".command"),
           ),
         ].filter((e: any) => e.style.display != "none");
         selectedIndex = allItems.findIndex((e) =>
-          e.classList.contains("selected")
+          e.classList.contains("selected"),
         );
         if (selectedIndex != -1) {
           allItems[selectedIndex].classList.remove("selected");
@@ -547,7 +547,7 @@ export class Prompt {
           (commandsContainer.querySelector(".selected") as HTMLElement)
             .offsetTop -
             commandsContainer.offsetHeight +
-            7.5
+            7.5,
         );
         allItems[selectedIndex].classList.add("selected");
       }
@@ -774,7 +774,7 @@ export class Prompt {
           }
         }
       },
-      true
+      true,
     );
   }
 }
@@ -832,7 +832,7 @@ export class PromptManager extends ManagerTool {
         | ((prompt: Prompt) => Promise<void>)
         | ((prompt: Prompt) => void)
         | Command[];
-    }[]
+    }[],
   ) {
     // id->name
     commands.forEach((c) => (c.id ??= c.name));

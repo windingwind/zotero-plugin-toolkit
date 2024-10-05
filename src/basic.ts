@@ -50,7 +50,7 @@ export class BasicTool {
     if (typeof ChromeUtils !== "undefined") {
       // @ts-ignore import method is not recognized
       let { ConsoleAPI } = ChromeUtils.import(
-        "resource://gre/modules/Console.jsm"
+        "resource://gre/modules/Console.jsm",
       );
       this._console = new ConsoleAPI({
         consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
@@ -121,7 +121,7 @@ export class BasicTool {
    */
   getGlobal<
     K extends keyof typeof globalThis,
-    GLOBAL extends typeof globalThis
+    GLOBAL extends typeof globalThis,
   >(k: K): GLOBAL[K];
   /**
    * Get global variables.
@@ -232,7 +232,7 @@ export class BasicTool {
                 return "";
               }
             })
-            .join("\n")
+            .join("\n"),
         );
       }
     } catch (e: unknown) {
@@ -252,7 +252,7 @@ export class BasicTool {
     object: T,
     funcSign: K,
     ownerSign: string,
-    patcher: (fn: T[K]) => T[K]
+    patcher: (fn: T[K]) => T[K],
   ) {
     if ((object[funcSign] as any)[ownerSign]) {
       throw new Error(`${String(funcSign)} re-patched`);
@@ -269,7 +269,7 @@ export class BasicTool {
    */
   addListenerCallback<T extends keyof ListenerCallbackMap>(
     type: T,
-    callback: ListenerCallbackMap[T]
+    callback: ListenerCallbackMap[T],
   ) {
     if (["onMainWindowLoad", "onMainWindowUnload"].includes(type)) {
       this._ensureMainWindowListener();
@@ -287,7 +287,7 @@ export class BasicTool {
    */
   removeListenerCallback<T extends keyof ListenerCallbackMap>(
     type: T,
-    callback: ListenerCallbackMap[T]
+    callback: ListenerCallbackMap[T],
   ) {
     this._basicOptions.listeners.callbacks[type].delete(callback);
     // Remove listener if no callback
@@ -409,7 +409,7 @@ export class BasicTool {
       return Zotero;
     }
     const { Zotero: _Zotero } = ChromeUtils.importESModule(
-      "chrome://zotero/content/zotero.mjs"
+      "chrome://zotero/content/zotero.mjs",
     );
     return _Zotero;
   }
@@ -469,11 +469,11 @@ export function unregister(tools: { [key: string | number]: any }) {
 
 export function makeHelperTool<T extends typeof HelperTool>(
   cls: T,
-  options: BasicTool | BasicOptions
+  options: BasicTool | BasicOptions,
 ): T;
 export function makeHelperTool<T extends any>(
   cls: T,
-  options: BasicTool | BasicOptions
+  options: BasicTool | BasicOptions,
 ): T;
 export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
   return new Proxy(cls, {

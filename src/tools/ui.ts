@@ -77,7 +77,7 @@ export class UITool extends BasicTool {
   createElement(
     doc: Document,
     tagName: "fragment",
-    props?: FragmentElementProps
+    props?: FragmentElementProps,
   ): DocumentFragment;
   /**
    * Create `HTMLElement`.
@@ -111,7 +111,7 @@ export class UITool extends BasicTool {
    */
   createElement<
     HTML_TAG extends keyof HTMLElementTagNameMap,
-    T extends HTMLElementTagNameMap[HTML_TAG]
+    T extends HTMLElementTagNameMap[HTML_TAG],
   >(doc: Document, tagName: HTML_TAG, props?: HTMLElementProps): T;
   /**
    * Create `XUL.Element`.
@@ -126,7 +126,7 @@ export class UITool extends BasicTool {
    */
   createElement<
     XUL_TAG extends keyof XULElementTagNameMap,
-    T extends XULElementTagNameMap[XUL_TAG]
+    T extends XULElementTagNameMap[XUL_TAG],
   >(doc: Document, tagName: XUL_TAG, props?: XULElementProps): T;
   /**
    * Create `SVGElement`
@@ -136,7 +136,7 @@ export class UITool extends BasicTool {
    */
   createElement<
     SVG_TAG extends keyof SVGElementTagNameMap,
-    T extends SVGElementTagNameMap[SVG_TAG]
+    T extends SVGElementTagNameMap[SVG_TAG],
   >(doc: Document, tagName: SVG_TAG, props?: SVGElementProps): T;
   /**
    * Create Element
@@ -147,7 +147,7 @@ export class UITool extends BasicTool {
   createElement(
     doc: Document,
     tagName: string,
-    props?: ElementProps
+    props?: ElementProps,
   ): HTMLElement | XUL.Element | SVGElement;
   /**
    * @deprecated
@@ -160,7 +160,7 @@ export class UITool extends BasicTool {
     doc: Document,
     tagName: string,
     namespace?: "html" | "svg" | "xul",
-    enableElementRecord?: boolean
+    enableElementRecord?: boolean,
   ): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
   createElement(...args: any[]) {
     const doc = args[0] as Document;
@@ -220,7 +220,7 @@ export class UITool extends BasicTool {
           const mightSVG = SVGElementTagNames.includes(tagName);
           if (Number(mightHTML) + Number(mightXUL) + Number(mightSVG) > 1) {
             this.log(
-              `[Warning] Creating element ${tagName} with no namespace specified. Found multiply namespace matches.`
+              `[Warning] Creating element ${tagName} with no namespace specified. Found multiply namespace matches.`,
             );
           }
           if (mightHTML) {
@@ -242,7 +242,7 @@ export class UITool extends BasicTool {
               html: "http://www.w3.org/1999/xhtml",
               svg: "http://www.w3.org/2000/svg",
             }[namespace],
-            tagName
+            tagName,
           ) as HTMLElement | SVGElement;
         }
 
@@ -317,7 +317,7 @@ export class UITool extends BasicTool {
    */
   appendElement(properties: TagElementProps, container: Element) {
     return container.appendChild(
-      this.createElement(container.ownerDocument, properties.tag, properties)
+      this.createElement(container.ownerDocument, properties.tag, properties),
     );
   }
 
@@ -333,15 +333,15 @@ export class UITool extends BasicTool {
         this.createElement(
           referenceNode.ownerDocument,
           properties.tag,
-          properties
+          properties,
         ),
-        referenceNode
+        referenceNode,
       );
     else
       this.log(
         referenceNode.tagName +
           " has no parent, cannot insert " +
-          properties.tag
+          properties.tag,
       );
   }
 
@@ -355,13 +355,13 @@ export class UITool extends BasicTool {
     if (oldNode.parentNode)
       return oldNode.parentNode.replaceChild(
         this.createElement(oldNode.ownerDocument, properties.tag, properties),
-        oldNode
+        oldNode,
       );
     else
       this.log(
         oldNode.tagName +
           " has no parent, cannot replace it with " +
-          properties.tag
+          properties.tag,
       );
   }
 
@@ -376,7 +376,7 @@ export class UITool extends BasicTool {
   parseXHTMLToFragment(
     str: string,
     entities: string[] = [],
-    defaultXUL = true
+    defaultXUL = true,
   ): DocumentFragment {
     // Adapted from MozXULElement.parseXULToFragment
 

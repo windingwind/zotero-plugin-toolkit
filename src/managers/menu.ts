@@ -79,7 +79,7 @@ export class MenuManager extends ManagerTool {
     menuPopup: XUL.MenuPopup | keyof typeof MenuSelector,
     options: MenuitemOptions,
     insertPosition: "before" | "after" = "after",
-    anchorElement?: XUL.Element
+    anchorElement?: XUL.Element,
   ) {
     let popup: XUL.MenuPopup | null;
     if (typeof menuPopup === "string") {
@@ -116,9 +116,8 @@ export class MenuManager extends ManagerTool {
             elementOption.attributes!["class"] += " menuitem-iconic";
           }
         }
-        elementOption.styles![
-          "list-style-image" as any
-        ] = `url(${menuitemOption.icon})`;
+        elementOption.styles!["list-style-image" as any] =
+          `url(${menuitemOption.icon})`;
       }
       if (menuitemOption.commandListener) {
         elementOption.listeners?.push({
@@ -129,7 +128,7 @@ export class MenuManager extends ManagerTool {
       const menuItem = this.ui.createElement(
         doc,
         menuitemOption.tag,
-        elementOption
+        elementOption,
       ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
       if (menuitemOption.getVisibility) {
         popup?.addEventListener("popupshowing", (ev: Event) => {

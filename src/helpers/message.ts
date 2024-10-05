@@ -131,7 +131,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
       () => {
         this.destroy();
       },
-      { once: true }
+      { once: true },
     );
 
     // Infer environment
@@ -177,7 +177,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
 
         if (!this.running && _handlerName !== "_start") {
           logError(
-            `Server not started for ${this.config.name}, ignoring message ${_handlerName}`
+            `Server not started for ${this.config.name}, ignoring message ${_handlerName}`,
           );
           return;
         }
@@ -187,7 +187,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
           // Only log error if it's not a return message
           if (!_handlerName.endsWith("::return")) {
             logError(
-              `Handler ${_handlerName} not found for ${this.config.name}`
+              `Handler ${_handlerName} not found for ${this.config.name}`,
             );
           }
           return;
@@ -208,7 +208,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
           }
         } catch (e) {
           logError(
-            `Error in handler ${_handlerName} for ${this.config.name}, ${e}`
+            `Error in handler ${_handlerName} for ${this.config.name}, ${e}`,
           );
           if (_requestReturn) {
             this.send({
@@ -253,13 +253,13 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
 
   async exec<
     _HandlersName extends keyof MessageParams<_HandlersType>,
-    _HandlersType extends _TargetHandlers & BuiltInMessageHandlers
+    _HandlersType extends _TargetHandlers & BuiltInMessageHandlers,
   >(
     name: _HandlersName,
     params?: MessageParams<_HandlersType>[_HandlersName],
     options: {
       timeout?: number;
-    } = {}
+    } = {},
   ): Promise<Awaited<MessageReturnType<_HandlersType>[_HandlersName]>> {
     const { timeout = 5000 } = options;
     let resolved = false;
@@ -344,7 +344,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
       logError(
         `Sending message ${name} from ${
           this.config.name
-        }, ${new Date().toISOString()}`
+        }, ${new Date().toISOString()}`,
       );
     }
     this.config.target.postMessage({

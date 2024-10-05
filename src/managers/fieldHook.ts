@@ -59,7 +59,7 @@ export class FieldHookManager extends ManagerTool {
   public register(
     type: "getField",
     field: string,
-    hook: typeof getFieldHookFunc
+    hook: typeof getFieldHookFunc,
   ): void;
   /**
    * Register `Zotero.Item.setField` hook.
@@ -70,7 +70,7 @@ export class FieldHookManager extends ManagerTool {
   public register(
     type: "setField",
     field: string,
-    hook: typeof setFieldHookFunc
+    hook: typeof setFieldHookFunc,
   ): void;
   /**
    * Register `Zotero.ItemFields.isFieldOfBase` hook. Used in itemBox.
@@ -81,19 +81,19 @@ export class FieldHookManager extends ManagerTool {
   public register(
     type: "isFieldOfBase",
     field: string,
-    hook: typeof isFieldOfBaseHookFunc
+    hook: typeof isFieldOfBaseHookFunc,
   ): void;
   public register(
     type: "getField" | "setField" | "isFieldOfBase",
     field: string,
-    hook: any
+    hook: any,
   ) {
     this.data[type][field] = hook;
   }
 
   public unregister(
     type: "getField" | "setField" | "isFieldOfBase",
-    field: string
+    field: string,
   ) {
     delete this.data[type][field];
   }
@@ -127,7 +127,7 @@ export declare function getFieldHookFunc(
   unformatted: boolean,
   includeBaseMapped: boolean,
   item: Zotero.Item,
-  original: Function
+  original: Function,
 ): string;
 
 export declare function setFieldHookFunc(
@@ -135,11 +135,11 @@ export declare function setFieldHookFunc(
   value: string,
   loadIn: boolean,
   item: Zotero.Item,
-  original: Function
+  original: Function,
 ): boolean;
 
 export declare function isFieldOfBaseHookFunc(
   field: string,
   baseField: string | number,
-  original: Function
+  original: Function,
 ): boolean;

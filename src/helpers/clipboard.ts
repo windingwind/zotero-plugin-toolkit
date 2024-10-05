@@ -44,7 +44,7 @@ export class ClipboardHelper extends BasicTool {
 
   public addText(
     source: string,
-    type: "text/html" | "text/plain" | "text/unicode" = "text/plain"
+    type: "text/html" | "text/plain" | "text/unicode" = "text/plain",
   ) {
     // @ts-ignore
     const str = Components.classes[
@@ -72,7 +72,7 @@ export class ClipboardHelper extends BasicTool {
     }
     // @ts-ignore
     let imgTools = Components.classes["@mozilla.org/image/tools;1"].getService(
-      Components.interfaces.imgITools
+      Components.interfaces.imgITools,
     );
     let mimeType: string;
     let img: unknown;
@@ -87,7 +87,7 @@ export class ClipboardHelper extends BasicTool {
       ].createInstance(Components.interfaces.nsISupportsInterfacePointer);
       (img as any).data = imgTools.decodeImageFromArrayBuffer(
         u8arr.buffer,
-        mimeType
+        mimeType,
       );
     }
     this.transferable.addDataFlavor(mimeType);
@@ -98,7 +98,7 @@ export class ClipboardHelper extends BasicTool {
   public addFile(path: string) {
     // @ts-ignore
     const file = Components.classes["@mozilla.org/file/local;1"].createInstance(
-      Components.interfaces.nsIFile
+      Components.interfaces.nsIFile,
     );
     file.initWithPath(path);
     this.transferable.addDataFlavor("application/x-moz-file");
@@ -112,7 +112,7 @@ export class ClipboardHelper extends BasicTool {
       this.clipboardService.setData(
         this.transferable,
         null,
-        Components.interfaces.nsIClipboard.kGlobalClipboard
+        Components.interfaces.nsIClipboard.kGlobalClipboard,
       );
     } catch (e) {
       // For unknown reasons, on MacOS the copy will throw 0x80004005 error.

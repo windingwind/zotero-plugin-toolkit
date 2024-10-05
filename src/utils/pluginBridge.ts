@@ -31,7 +31,7 @@ export class PluginBridge {
   private initializePluginBridge() {
     // @ts-ignore
     const { AddonManager } = ChromeUtils.import(
-      "resource://gre/modules/AddonManager.jsm"
+      "resource://gre/modules/AddonManager.jsm",
     );
     const Zotero = BasicTool.getZotero();
     const pluginBridgeExtension = {
@@ -59,7 +59,7 @@ export class PluginBridge {
             ) {
               throw new Error(
                 `Plugin is not compatible with Zotero version ${Zotero.version}.` +
-                  `The plugin requires Zotero version between ${params.minVersion} and ${params.maxVersion}.`
+                  `The plugin requires Zotero version between ${params.minVersion} and ${params.maxVersion}.`,
               );
             }
             const addon = await AddonManager.getInstallForURL(params.url);
@@ -94,7 +94,7 @@ function hint(content: string, success: boolean) {
     success
       ? "chrome://zotero/skin/tick.png"
       : "chrome://zotero/skin/cross.png",
-    content
+    content,
   );
   // @ts-ignore
   progressWindow.progress.setProgress(100);

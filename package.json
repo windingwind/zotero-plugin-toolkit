@@ -11,9 +11,13 @@
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "prettier --write src && tsc && api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "dev": "tsc --watch",
+    "build": "npm run prettier && npm run build:tsc && npm run build:docs",
+    "build:tsc": "tsc",
+    "build:docs": "api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "prettier": "prettier src --write",
     "release": "release-it",
-    "prepare": "husky install",
+    "prepare": "husky",
     "update-deps": "npm update --save"
   },
   "repository": {
@@ -36,17 +40,17 @@
     "zotero-types": "^2.2.0"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.25.4",
-    "@microsoft/api-extractor": "^7.47.0",
-    "@types/react": "^18.3.3",
+    "@microsoft/api-documenter": "^7.25.17",
+    "@microsoft/api-extractor": "^7.47.9",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/react-intl": "^3.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.3.0",
-    "prettier": "2.8.8",
-    "react-intl": "^6.6.8",
-    "release-it": "^15.11.0",
-    "typescript": "^5.5.2"
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "react-intl": "^6.7.0",
+    "release-it": "^17.7.0",
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "access": "public",
@@ -63,7 +67,7 @@
   },
   "prettier": {},
   "lint-staged": {
-    "*.{ts,js,css}": "prettier --write src"
+    "*.{ts,js,css}": "prettier --write"
   },
   "engines": {
     "node": ">=16"
