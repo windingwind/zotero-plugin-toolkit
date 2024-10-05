@@ -19,7 +19,7 @@ import { BasicTool } from "../basic.js";
  * ```
  */
 export class FilePickerHelper<
-  MODE extends "open" | "save" | "folder" | "multiple"
+  MODE extends "open" | "save" | "folder" | "multiple",
 > extends BasicTool {
   private title: string;
   private mode: MODE;
@@ -53,7 +53,7 @@ export class FilePickerHelper<
       | "urls"
       | "audio"
       | "video",
-    directory?: string
+    directory?: string,
   ) {
     super();
     this.title = title;
@@ -66,14 +66,14 @@ export class FilePickerHelper<
   }
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
-    let backend = ChromeUtils.importESModule(
-      "chrome://zotero/content/modules/filePicker.mjs"
+    const Backend = ChromeUtils.importESModule(
+      "chrome://zotero/content/modules/filePicker.mjs",
     ).FilePicker;
-    const fp = new backend();
+    const fp = new Backend();
     fp.init(
       this.window || this.getGlobal("window"),
       this.title,
-      this.getMode(fp)
+      this.getMode(fp),
     );
     for (const [label, ext] of this.filters || []) {
       fp.appendFilter(label, ext);

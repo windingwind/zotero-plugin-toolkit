@@ -1,7 +1,10 @@
-import { BasicTool, BasicOptions } from "../basic.js";
-import { ManagerTool } from "../basic.js";
+/* eslint-disable eslint-comments/no-unlimited-disable */
+/* eslint-disable */
+import type { BasicOptions } from "../basic.js";
+import type { GlobalInstance } from "./toolkitGlobal.js";
+import { BasicTool, ManagerTool } from "../basic.js";
 import { UITool } from "../tools/ui.js";
-import ToolkitGlobal, { GlobalInstance } from "./toolkitGlobal.js";
+import ToolkitGlobal from "./toolkitGlobal.js";
 
 /**
  * Prompt for setting up or executing some commands quickly.
@@ -181,7 +184,7 @@ export class Prompt {
             ],
           },
         ],
-      })
+      }),
     );
 
     this.inputNode = this.promptNode.querySelector("input")!;
@@ -203,7 +206,7 @@ export class Prompt {
     }
     this.inputNode.placeholder = this.defaultText.placeholder;
     const commandsContainer = this.createCommandsContainer();
-    for (let command of commands) {
+    for (const command of commands) {
       /**
        * Filter out anonymous commands
        */
@@ -246,7 +249,7 @@ export class Prompt {
     return [
       ...Array.from(this.promptNode.querySelectorAll(".commands-container")),
     ].find((e: any) => {
-      return e.style.display != "none";
+      return e.style.display !== "none";
     }) as HTMLDivElement;
   }
 
@@ -308,7 +311,7 @@ export class Prompt {
         },
       ],
     });
-    // @ts-ignore
+    // @ts-expect-error custom element
     commandNode.command = command;
     return commandNode;
   }
@@ -319,7 +322,7 @@ export class Prompt {
   private trigger() {
     (
       [...Array.from(this.promptNode.querySelectorAll(".commands-container"))]
-        .find((e: any) => e.style.display != "none")!
+        .find((e: any) => e.style.display !== "none")!
         .querySelector(".selected") as HTMLDivElement
     ).click();
   }
@@ -331,16 +334,16 @@ export class Prompt {
     this.inputNode.placeholder = this.defaultText.placeholder;
     if (
       this.promptNode.querySelectorAll(
-        ".commands-containers .commands-container"
+        ".commands-containers .commands-container",
       ).length >= 2
     ) {
       (
         this.promptNode.querySelector(
-          ".commands-container:last-child"
+          ".commands-container:last-child",
         ) as HTMLDivElement
       ).remove();
       const commandsContainer = this.promptNode.querySelector(
-        ".commands-container:last-child"
+        ".commands-container:last-child",
       ) as HTMLDivElement;
       commandsContainer.style.display = "";
       commandsContainer
@@ -364,17 +367,17 @@ export class Prompt {
    */
   private async showSuggestions(inputText: string) {
     // From Obsidian
-    var _w =
-        /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/,
-      jw = /\s/,
-      Ww =
-        /[\u0F00-\u0FFF\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/;
+    const _w =
+      /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/;
+    const jw = /\s/;
+    const Ww =
+      /[\u0F00-\u0FFF\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFF66-\uFF9F]/;
 
     function Yw(e: any, t: any, n: any, i: any) {
-      if (0 === e.length) return 0;
-      var r = 0;
+      if (e.length === 0) return 0;
+      let r = 0;
       (r -= Math.max(0, e.length - 1)), (r -= i / 10);
-      var o = e[0][0];
+      const o = e[0][0];
       return (
         (r -= (e[e.length - 1][1] - o + 1 - t) / 100),
         (r -= o / 1e3),
@@ -383,18 +386,18 @@ export class Prompt {
     }
 
     function $w(e: any, t: any, n: any, i: any) {
-      if (0 === e.length) return null;
+      if (e.length === 0) return null;
       for (
         var r = n.toLowerCase(), o = 0, a = 0, s = [], l = 0;
         l < e.length;
         l++
       ) {
-        var c = e[l],
-          u = r.indexOf(c, a);
-        if (-1 === u) return null;
-        var h = n.charAt(u);
+        const c = e[l];
+        const u = r.indexOf(c, a);
+        if (u === -1) return null;
+        const h = n.charAt(u);
         if (u > 0 && !_w.test(h) && !Ww.test(h)) {
-          var p = n.charAt(u - 1);
+          const p = n.charAt(u - 1);
           if (
             (h.toLowerCase() !== h && p.toLowerCase() !== p) ||
             (h.toUpperCase() !== h && !_w.test(p) && !jw.test(p) && !Ww.test(p))
@@ -406,9 +409,9 @@ export class Prompt {
               }
             } else o += 1;
         }
-        if (0 === s.length) s.push([u, u + c.length]);
+        if (s.length === 0) s.push([u, u + c.length]);
         else {
-          var d = s[s.length - 1];
+          const d = s[s.length - 1];
           d[1] < u ? s.push([u, u + c.length]) : (d[1] = u + c.length);
         }
         a = u + c.length;
@@ -421,7 +424,7 @@ export class Prompt {
 
     function Gw(e: any): { query: string; tokens: string[]; fuzzy: string[] } {
       for (var t = e.toLowerCase(), n = [], i = 0, r = 0; r < t.length; r++) {
-        var o = t.charAt(r);
+        const o = t.charAt(r);
         jw.test(o)
           ? (i !== r && n.push(t.substring(i, r)), (i = r + 1))
           : (_w.test(o) || Ww.test(o)) &&
@@ -438,15 +441,15 @@ export class Prompt {
     }
 
     function Xw(e: any, t: any): { matches: number[][]; score: number } | null {
-      if ("" === e.query)
+      if (e.query === "")
         return {
           score: 0,
           matches: [],
         };
-      var n = $w(e.tokens, e.query, t, !1);
+      const n = $w(e.tokens, e.query, t, !1);
       return n || $w(e.fuzzy, e.query, t, !0);
     }
-    var e = Gw(inputText);
+    const e = Gw(inputText);
     let container = this.getCommandsContainer();
     if (container.classList.contains("suggestions")) {
       this.exit();
@@ -454,28 +457,28 @@ export class Prompt {
     if (inputText.trim() == "") {
       return true;
     }
-    let suggestions: {
+    const suggestions: {
       score: number;
       commandNode: HTMLDivElement;
     }[] = [];
     this.getCommandsContainer()
       .querySelectorAll(".command")
       .forEach((commandNode: any) => {
-        let spanNode = commandNode.querySelector(".name span") as HTMLElement;
-        let spanText = spanNode.innerText;
-        let res = Xw(e, spanText);
+        const spanNode = commandNode.querySelector(".name span") as HTMLElement;
+        const spanText = spanNode.innerText;
+        const res = Xw(e, spanText);
         if (res) {
           commandNode = this.createCommandNode(commandNode.command);
           let spanHTML = "";
           let i = 0;
           for (let j = 0; j < res.matches.length; j++) {
-            let [start, end] = res.matches[j];
+            const [start, end] = res.matches[j];
             if (start > i) {
               spanHTML += spanText.slice(i, start);
             }
             spanHTML += `<span class="highlight">${spanText.slice(
               start,
-              end
+              end,
             )}</span>`;
             i = end;
           }
@@ -498,7 +501,7 @@ export class Prompt {
       return true;
     } else {
       const anonymousCommand = this.commands.find(
-        (c) => !c.name && (!c.when || c.when!())
+        (c) => !c.name && (!c.when || c.when!()),
       );
       if (anonymousCommand) {
         await this.execCallback(anonymousCommand.callback);
@@ -513,17 +516,17 @@ export class Prompt {
    */
   private initInputEvents() {
     this.promptNode.addEventListener("keydown", (event) => {
-      if (["ArrowUp", "ArrowDown"].indexOf(event.key) != -1) {
+      if (["ArrowUp", "ArrowDown"].includes(event.key)) {
         event.preventDefault();
         // get selected item and index
         let selectedIndex;
-        let allItems = [
+        const allItems = [
           ...Array.from(
-            this.getCommandsContainer().querySelectorAll(".command")
+            this.getCommandsContainer().querySelectorAll(".command"),
           ),
         ].filter((e: any) => e.style.display != "none");
         selectedIndex = allItems.findIndex((e) =>
-          e.classList.contains("selected")
+          e.classList.contains("selected"),
         );
         if (selectedIndex != -1) {
           allItems[selectedIndex].classList.remove("selected");
@@ -541,13 +544,13 @@ export class Prompt {
           selectedIndex = 0;
         }
         allItems[selectedIndex].classList.add("selected");
-        let commandsContainer = this.getCommandsContainer();
+        const commandsContainer = this.getCommandsContainer();
         commandsContainer.scrollTo(
           0,
           (commandsContainer.querySelector(".selected") as HTMLElement)
             .offsetTop -
             commandsContainer.offsetHeight +
-            7.5
+            7.5,
         );
         allItems[selectedIndex].classList.add("selected");
       }
@@ -562,7 +565,7 @@ export class Prompt {
         } else {
           this.exit();
         }
-      } else if (["ArrowUp", "ArrowDown"].indexOf(event.key) != -1) {
+      } else if (["ArrowUp", "ArrowDown"].includes(event.key)) {
         return;
       }
       const currentInputText = this.inputNode.value;
@@ -586,7 +589,7 @@ export class Prompt {
         innerText: text,
       },
     });
-    let container = this.createCommandsContainer();
+    const container = this.createCommandsContainer();
     container.classList.add("suggestions");
     container.appendChild(tipNode);
     return tipNode;
@@ -774,7 +777,7 @@ export class Prompt {
           }
         }
       },
-      true
+      true,
     );
   }
 }
@@ -832,7 +835,7 @@ export class PromptManager extends ManagerTool {
         | ((prompt: Prompt) => Promise<void>)
         | ((prompt: Prompt) => void)
         | Command[];
-    }[]
+    }[],
   ) {
     // id->name
     commands.forEach((c) => (c.id ??= c.name));

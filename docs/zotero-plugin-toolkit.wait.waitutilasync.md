@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-declare function waitUtilAsync(condition: () => boolean, interval?: number, timeout?: number): Promise<void>;
+export declare function waitUtilAsync(condition: () => boolean, interval?: number, timeout?: number): Promise<void>;
 ```
 
 ## Parameters

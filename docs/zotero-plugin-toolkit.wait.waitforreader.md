@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-declare function waitForReader(reader: _ZoteroTypes.ReaderInstance): Promise<void>;
+export declare function waitForReader(reader: _ZoteroTypes.ReaderInstance): Promise<void>;
 ```
 
 ## Parameters

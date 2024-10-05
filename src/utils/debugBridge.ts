@@ -35,7 +35,7 @@ export class DebugBridge {
   public get password(): string {
     return BasicTool.getZotero().Prefs.get(
       DebugBridge.passwordPref,
-      true
+      true,
     ) as string;
   }
   public set password(v: string) {
@@ -95,8 +95,8 @@ export class DebugBridge {
                 ""
               ).slice(
                 0,
-                100
-              )}\nIf you do not know what it is, please click Cancel to deny.`
+                100,
+              )}\nIf you do not know what it is, please click Cancel to deny.`,
             );
           } else {
             allowed = this.password === params.password;
@@ -106,7 +106,7 @@ export class DebugBridge {
           if (params.run) {
             try {
               const AsyncFunction = Object.getPrototypeOf(
-                async function () {}
+                async () => {},
               ).constructor;
               const f = new AsyncFunction("Zotero,window", params.run);
               await f(Zotero, window);
@@ -128,11 +128,11 @@ export class DebugBridge {
           }
         }
       },
-      newChannel: function (uri: any) {
+      newChannel(uri: any) {
         this.doAction(uri);
       },
     };
-    // @ts-ignore
+    // @ts-expect-error wrappedJSObject
     Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
       "zotero://ztoolkit-debug"
     ] = debugBridgeExtension;

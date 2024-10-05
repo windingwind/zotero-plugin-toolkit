@@ -1,7 +1,7 @@
+import type { PromptGlobal } from "./prompt.js";
 import { BasicTool } from "../basic.js";
 import { DebugBridge } from "../utils/debugBridge.js";
 import { PluginBridge } from "../utils/pluginBridge.js";
-import { PromptGlobal } from "./prompt.js";
 
 /**
  * The Singleton class of global parameters used by managers.
@@ -63,7 +63,7 @@ function initializeModules(instance: ToolkitGlobal) {
 function setModule<K extends keyof ToolkitGlobal, V extends ToolkitGlobal[K]>(
   instance: ToolkitGlobal,
   key: K,
-  module: V
+  module: V,
 ) {
   if (!module) {
     return;

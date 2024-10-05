@@ -23,7 +23,7 @@ export class BasicTool {
 
   /**
    *
-   * @param basicTool Pass an BasicTool instance to copy its options.
+   * @param data Pass an BasicTool instance to copy its options.
    */
   constructor(data?: BasicTool | BasicOptions) {
     this._basicOptions = {
@@ -48,16 +48,15 @@ export class BasicTool {
       },
     };
     if (typeof ChromeUtils !== "undefined") {
-      // @ts-ignore import method is not recognized
-      let { ConsoleAPI } = ChromeUtils.import(
-        "resource://gre/modules/Console.jsm"
+      // @ts-expect-error import method is not recognized
+      const { ConsoleAPI } = ChromeUtils.import(
+        "resource://gre/modules/Console.jsm",
       );
       this._console = new ConsoleAPI({
         consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
       });
     }
     this.updateOptions(data);
-    return;
   }
 
   /**
@@ -121,7 +120,7 @@ export class BasicTool {
    */
   getGlobal<
     K extends keyof typeof globalThis,
-    GLOBAL extends typeof globalThis
+    GLOBAL extends typeof globalThis,
   >(k: K): GLOBAL[K];
   /**
    * Get global variables.
@@ -181,7 +180,7 @@ export class BasicTool {
    * ```
    */
   createXULElement(doc: Document, type: string): XUL.Element {
-    // @ts-ignore
+    // @ts-expect-error doc.createXULElement returns XUL.Element
     return doc.createXULElement(type);
   }
 
@@ -227,12 +226,12 @@ export class BasicTool {
             .map((d: any) => {
               try {
                 return typeof d === "object" ? JSON.stringify(d) : String(d);
-              } catch (e) {
+              } catch {
                 Zotero.debug(d);
                 return "";
               }
             })
-            .join("\n")
+            .join("\n"),
         );
       }
     } catch (e: unknown) {
@@ -252,7 +251,7 @@ export class BasicTool {
     object: T,
     funcSign: K,
     ownerSign: string,
-    patcher: (fn: T[K]) => T[K]
+    patcher: (fn: T[K]) => T[K],
   ) {
     if ((object[funcSign] as any)[ownerSign]) {
       throw new Error(`${String(funcSign)} re-patched`);
@@ -269,7 +268,7 @@ export class BasicTool {
    */
   addListenerCallback<T extends keyof ListenerCallbackMap>(
     type: T,
-    callback: ListenerCallbackMap[T]
+    callback: ListenerCallbackMap[T],
   ) {
     if (["onMainWindowLoad", "onMainWindowUnload"].includes(type)) {
       this._ensureMainWindowListener();
@@ -287,7 +286,7 @@ export class BasicTool {
    */
   removeListenerCallback<T extends keyof ListenerCallbackMap>(
     type: T,
-    callback: ListenerCallbackMap[T]
+    callback: ListenerCallbackMap[T],
   ) {
     this._basicOptions.listeners.callbacks[type].delete(callback);
     // Remove listener if no callback
@@ -322,7 +321,6 @@ export class BasicTool {
     }
     const mainWindowListener: nsIWindowMediatorListener = {
       onOpenWindow: (xulWindow) => {
-        // @ts-ignore
         const domWindow = xulWindow.docShell.domWindow as Window;
         const onload = async () => {
           domWindow.removeEventListener("load", onload, false);
@@ -344,7 +342,6 @@ export class BasicTool {
         domWindow.addEventListener("load", () => onload(), false);
       },
       onCloseWindow: async (xulWindow) => {
-        // @ts-ignore
         const domWindow = xulWindow.docShell.domWindow as Window;
         if (
           domWindow.location.href !== "chrome://zotero/content/zoteroPane.xhtml"
@@ -409,7 +406,7 @@ export class BasicTool {
       return Zotero;
     }
     const { Zotero: _Zotero } = ChromeUtils.importESModule(
-      "chrome://zotero/content/zotero.mjs"
+      "chrome://zotero/content/zotero.mjs",
     );
     return _Zotero;
   }
@@ -447,7 +444,7 @@ export abstract class ManagerTool extends BasicTool {
   abstract unregisterAll(): any;
 
   protected _ensureAutoUnregisterAll() {
-    this.addListenerCallback("onPluginUnload", (params, reason) => {
+    this.addListenerCallback("onPluginUnload", (params, _reason) => {
       if (params.id !== this.basicOptions.api.pluginID) {
         return;
       }
@@ -469,15 +466,13 @@ export function unregister(tools: { [key: string | number]: any }) {
 
 export function makeHelperTool<T extends typeof HelperTool>(
   cls: T,
-  options: BasicTool | BasicOptions
+  options: BasicTool | BasicOptions,
 ): T;
-export function makeHelperTool<T extends any>(
-  cls: T,
-  options: BasicTool | BasicOptions
-): T;
+export function makeHelperTool<T>(cls: T, options: BasicTool | BasicOptions): T;
 export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
   return new Proxy(cls, {
     construct(target, args) {
+      // eslint-disable-next-line new-cap
       const _origin = new cls(...args);
       if (_origin instanceof BasicTool) {
         _origin.updateOptions(options);
@@ -495,6 +490,7 @@ declare interface ListenerCallbackMap {
   ) => void;
 }
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 declare class HelperTool {
   constructor(...args: any);
   updateOptions: BasicTool["updateOptions"];

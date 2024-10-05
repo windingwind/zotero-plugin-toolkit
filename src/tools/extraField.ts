@@ -10,12 +10,12 @@ export class ExtraFieldTool extends BasicTool {
    */
   getExtraFields(
     item: Zotero.Item,
-    backend: "default" | "custom" = "custom"
+    backend: "default" | "custom" = "custom",
   ): Map<string, string> {
     const extraFiledRaw = item.getField("extra") as string;
     if (backend === "default") {
       return this.getGlobal("Zotero").Utilities.Internal.extractExtraFields(
-        extraFiledRaw
+        extraFiledRaw,
       ).fields as Map<string, string>;
     } else {
       const map = new Map<string, string>();
@@ -50,9 +50,9 @@ export class ExtraFieldTool extends BasicTool {
    */
   async replaceExtraFields(
     item: Zotero.Item,
-    fields: Map<string, string>
+    fields: Map<string, string>,
   ): Promise<void> {
-    let kvs: string[] = [];
+    const kvs: string[] = [];
     if (fields.has("__nonStandard__")) {
       kvs.push(fields.get("__nonStandard__") as string);
       fields.delete("__nonStandard__");
@@ -73,7 +73,7 @@ export class ExtraFieldTool extends BasicTool {
   async setExtraField(
     item: Zotero.Item,
     key: string,
-    value: string
+    value: string,
   ): Promise<void> {
     const fields = this.getExtraFields(item);
     if (value === "" || typeof value === "undefined") {
