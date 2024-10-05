@@ -30,7 +30,7 @@ import { BasicTool } from "../basic.js";
  * }, 3000);
  * ```
  */
-export class ProgressWindowHelper extends Zotero.ProgressWindow {
+export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
   private lines: Zotero.ItemProgress[];
   private closeTime: number | undefined;
   private originalShow: typeof Zotero.ProgressWindow.prototype.show;
