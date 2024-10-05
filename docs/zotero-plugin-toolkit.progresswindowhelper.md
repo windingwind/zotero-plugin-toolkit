@@ -9,9 +9,9 @@ ProgressWindow helper.
 **Signature:**
 
 ```typescript
-export declare class ProgressWindowHelper extends Zotero.ProgressWindow 
+export declare class ProgressWindowHelper extends ProgressWindowHelper_base 
 ```
-**Extends:** Zotero.ProgressWindow
+**Extends:** ProgressWindowHelper\_base
 
 ## Example 1
 
