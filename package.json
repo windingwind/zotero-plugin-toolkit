@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/windingwind/zotero-plugin-toolkit#readme",
   "dependencies": {
-    "zotero-types": "^2.0.3"
+    "zotero-types": "^2.2.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.25.4",

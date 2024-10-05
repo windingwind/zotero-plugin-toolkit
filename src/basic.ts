@@ -10,7 +10,7 @@ export class BasicTool {
    */
   protected _basicOptions: BasicOptions;
 
-  protected _console: Console;
+  protected _console?: Console;
 
   /**
    * @deprecated Use `patcherManager` instead.
@@ -47,12 +47,15 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    let { ConsoleAPI } = Components.utils.import(
-      "resource://gre/modules/Console.jsm"
-    );
-    this._console = new ConsoleAPI({
-      consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
-    });
+    if (typeof ChromeUtils !== "undefined") {
+      // @ts-ignore import method is not recognized
+      let { ConsoleAPI } = ChromeUtils.import(
+        "resource://gre/modules/Console.jsm"
+      );
+      this._console = new ConsoleAPI({
+        consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
+      });
+    }
     this.updateOptions(data);
     return;
   }
@@ -203,17 +206,20 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        let console = Zotero.getMainWindow()?.console;
-        if (!console) {
-          console = this._console;
+        let _console = Zotero.getMainWindow()?.console;
+        if (!_console) {
+          if (!this._console) {
+            return;
+          }
+          _console = this._console;
         }
-        if (console.groupCollapsed) {
-          console.groupCollapsed(...data);
+        if (_console.groupCollapsed) {
+          _console.groupCollapsed(...data);
         } else {
-          console.group(...data);
+          _console.group(...data);
         }
-        console.trace();
-        console.groupEnd();
+        _console.trace();
+        _console.groupEnd();
       }
       if (!options.disableZLog) {
         Zotero.debug(

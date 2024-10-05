@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-protected _console: Console;
+protected _console?: Console;
 ```

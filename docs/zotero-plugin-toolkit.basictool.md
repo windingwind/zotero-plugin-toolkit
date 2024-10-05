@@ -92,7 +92,7 @@ configurations.
 </td></tr>
 <tr><td>
 
-[\_console](./zotero-plugin-toolkit.basictool._console.md)
+[\_console?](./zotero-plugin-toolkit.basictool._console.md)
 
 
 </td><td>
@@ -106,6 +106,8 @@ Console
 
 
 </td><td>
+
+_(Optional)_
 
 
 </td></tr>
