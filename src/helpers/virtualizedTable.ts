@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { IntlProvider } from "react-intl";
 import { BasicTool } from "../basic.js";
 
@@ -13,7 +14,7 @@ export class VirtualizedTableHelper extends BasicTool {
   public treeInstance!: VirtualizedTable;
   private window: Window;
   private React: typeof React;
-  private ReactDOM: typeof ReactDOM;
+  private ReactDOM: typeof ReactDOM & { createRoot: typeof createRoot };
   private VirtualizedTable: VirtualizedTableConstructor;
   private IntlProvider: typeof IntlProvider;
 
@@ -167,25 +168,28 @@ export class VirtualizedTableHelper extends BasicTool {
       }
     };
     if (!this.treeInstance) {
-      const vtableProps = Object.assign({}, this.props, {
-        ref: (ref: VirtualizedTable) => (this.treeInstance = ref),
-      });
-      if (vtableProps.getRowData && !vtableProps.renderItem) {
-        Object.assign(vtableProps, {
-          renderItem: this.VirtualizedTable.makeRowRenderer(
-            vtableProps.getRowData
-          ),
+      new Promise((resolve) => {
+        const vtableProps = Object.assign({}, this.props, {
+          ref: (ref: VirtualizedTable) => {
+            this.treeInstance = ref;
+            resolve(void 0);
+          },
         });
-      }
-      const elem = this.React.createElement(
-        this.IntlProvider,
-        { locale: Zotero.locale, messages: Zotero.Intl.strings },
-        this.React.createElement(this.VirtualizedTable, vtableProps)
-      );
-      const container = this.window.document.getElementById(this.containerId);
-      new Promise((resolve) =>
-        this.ReactDOM.render(elem, container, resolve as () => {})
-      )
+        if (vtableProps.getRowData && !vtableProps.renderItem) {
+          Object.assign(vtableProps, {
+            renderItem: this.VirtualizedTable.makeRowRenderer(
+              vtableProps.getRowData
+            ),
+          });
+        }
+        const elem = this.React.createElement(
+          this.IntlProvider,
+          { locale: Zotero.locale, messages: Zotero.Intl.strings },
+          this.React.createElement(this.VirtualizedTable, vtableProps)
+        );
+        const container = this.window.document.getElementById(this.containerId);
+        this.ReactDOM.createRoot(container!).render(elem);
+      })
         .then(() => {
           // Fix style manager showing partially blank until scrolled
           this.getGlobal("setTimeout")(() => {
