@@ -33,7 +33,10 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
-      debug: ToolkitGlobal.getInstance()?.debugBridge,
+      debug: ToolkitGlobal.getInstance()?.debugBridge || {
+        disableDebugBridgePassword: false,
+        password: "",
+      },
       api: {
         pluginID: "zotero-plugin-toolkit@windingwind.com",
       },
@@ -440,7 +443,7 @@ export interface BasicOptions {
     disableZLog: boolean;
     prefix: string;
   };
-  debug?: {
+  debug: {
     disableDebugBridgePassword: boolean;
     password: string;
   };
