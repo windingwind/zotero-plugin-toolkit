@@ -51,6 +51,7 @@ interface MessageServerConfig {
   target?: Window | Worker;
   dev?: boolean;
   canBeDestroyed?: boolean;
+  returnStatus?: boolean;
 }
 
 interface BuiltInMessageHandlers {
@@ -200,7 +201,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
         }
         try {
           // Expose handler success to handler if it's an object
-          if (typeof _handlerData === "object") {
+          if (this.config.returnStatus && typeof _handlerData === "object") {
             _handlerData._handlerSuccess = _handlerSuccess;
           }
           const res = await handler(_handlerData);
@@ -273,6 +274,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
 
     // Send the message
     const jobID = await this.send({ name: name as string, data: params });
+    const returnStatus = this.config.returnStatus;
     return new Promise((resolve) => {
       const handler = function (event: MessageEvent) {
         if (resolved) {
@@ -294,7 +296,7 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
         // eslint-disable-next-line ts/no-use-before-define
         clearTimeout(timer);
         target.removeEventListener("message", handler);
-        if (typeof _handlerData === "object") {
+        if (returnStatus && typeof _handlerData === "object") {
           _handlerData._handlerSuccess = _handlerSuccess;
         }
         resolve(_handlerData);
@@ -359,14 +361,17 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
         }, ${new Date().toISOString()}`,
       );
     }
-    this.config.target.postMessage({
+    const message = {
       _jobID: jobID,
       _senderName: this.config.name,
       _handlerName: name,
-      _handlerSuccess: success,
       _requestReturn: requestReturn,
       _handlerData: params,
-    });
+    } as any;
+    if (this.config.returnStatus) {
+      message._handlerSuccess = success;
+    }
+    this.config.target.postMessage(message);
     return jobID;
   }
 
