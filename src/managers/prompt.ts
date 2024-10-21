@@ -790,7 +790,10 @@ export class PromptManager extends ManagerTool {
   private commands: Command[] = [];
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    const globalCache = ToolkitGlobal.getInstance().prompt;
+    const globalCache = ToolkitGlobal.getInstance()?.prompt;
+    if (!globalCache) {
+      throw new Error("Prompt is not initialized.");
+    }
     if (!globalCache._ready) {
       globalCache._ready = true;
       globalCache.instance = new Prompt();
