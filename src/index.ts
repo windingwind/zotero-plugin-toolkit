@@ -4,6 +4,7 @@ export * from "./helpers/dialog.js";
 export * from "./helpers/filePicker.js";
 export * from "./helpers/guide.js";
 export * from "./helpers/largePref.js";
+export * from "./helpers/message.js";
 export * from "./helpers/patch.js";
 export * from "./helpers/progressWindow.js";
 export * from "./helpers/virtualizedTable.js";

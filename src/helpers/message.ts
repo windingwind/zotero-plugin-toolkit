@@ -374,4 +374,19 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
       return ret === "pong";
     }
   }
+
+  static wrapHandlers<T extends Record<string, (...params: any) => any>>(
+    funcs: T,
+  ): {
+    [K in keyof T]: (
+      data: Parameters<T[K]>,
+    ) => Promise<Awaited<ReturnType<T[K]>>>;
+  } {
+    return Object.entries(funcs).reduce((acc, [key, value]) => {
+      acc[key] = async (data: Parameters<typeof value>) => {
+        return await value(...data);
+      };
+      return acc;
+    }, {} as MessageHandlers) as any;
+  }
 }
