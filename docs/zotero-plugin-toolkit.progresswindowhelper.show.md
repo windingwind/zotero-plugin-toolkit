@@ -2,10 +2,50 @@
 
 [Home](./index.md) &gt; [zotero-plugin-toolkit](./zotero-plugin-toolkit.md) &gt; [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md) &gt; [show](./zotero-plugin-toolkit.progresswindowhelper.show.md)
 
-## ProgressWindowHelper.show property
+## ProgressWindowHelper.show() method
 
 **Signature:**
 
 ```typescript
-show: typeof _popupWindowShow;
+show(closeTime?: number | undefined): this;
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+closeTime
+
+
+</td><td>
+
+number \| undefined
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
+**Returns:**
+
+this
+

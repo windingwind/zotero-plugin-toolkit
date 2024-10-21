@@ -9,9 +9,8 @@ ProgressWindow helper.
 **Signature:**
 
 ```typescript
-export declare class ProgressWindowHelper extends ProgressWindowHelper_base 
+export declare class ProgressWindowHelper 
 ```
-**Extends:** ProgressWindowHelper\_base
 
 ## Example 1
 
@@ -105,7 +104,7 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[show](./zotero-plugin-toolkit.progresswindowhelper.show.md)
+[win](./zotero-plugin-toolkit.progresswindowhelper.win.md)
 
 
 </td><td>
@@ -113,7 +112,7 @@ Description
 
 </td><td>
 
-typeof \_popupWindowShow
+Zotero.ProgressWindow
 
 
 </td><td>
@@ -142,6 +141,42 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[addDescription(text)](./zotero-plugin-toolkit.progresswindowhelper.adddescription.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[addLines(labels, icons)](./zotero-plugin-toolkit.progresswindowhelper.addlines.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[changeHeadline(text, icon, postText)](./zotero-plugin-toolkit.progresswindowhelper.changeheadline.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [changeLine(options)](./zotero-plugin-toolkit.progresswindowhelper.changeline.md)
 
 
@@ -151,6 +186,18 @@ Description
 </td><td>
 
 Change the line content
+
+
+</td></tr>
+<tr><td>
+
+[close()](./zotero-plugin-toolkit.progresswindowhelper.close.md)
+
+
+</td><td>
+
+
+</td><td>
 
 
 </td></tr>
@@ -181,6 +228,30 @@ Create a new line
 </td><td>
 
 Set custom icon uri for progress window
+
+
+</td></tr>
+<tr><td>
+
+[show(closeTime)](./zotero-plugin-toolkit.progresswindowhelper.show.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[startCloseTimer(ms, requireMouseOver)](./zotero-plugin-toolkit.progresswindowhelper.startclosetimer.md)
+
+
+</td><td>
+
+
+</td><td>
 
 
 </td></tr>
