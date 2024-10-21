@@ -76,7 +76,7 @@ export class DebugBridge {
           });
 
         const skipPasswordCheck =
-          ToolkitGlobal.getInstance().debugBridge.disableDebugBridgePassword;
+          ToolkitGlobal.getInstance()?.debugBridge.disableDebugBridgePassword;
         let allowed = false;
         if (skipPasswordCheck) {
           allowed = true;

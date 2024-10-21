@@ -45,12 +45,10 @@ const icons: { [key: string | number]: string } = {
  * }, 3000);
  * ```
  */
-export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
+export class ProgressWindowHelper {
+  win: Zotero.ProgressWindow;
   private lines: Zotero.ItemProgress[];
   private closeTime: number | undefined;
-  private originalShow: typeof Zotero.ProgressWindow.prototype.show;
-  // @ts-expect-error override show
-  public declare show: typeof _popupWindowShow;
 
   /**
    *
@@ -73,13 +71,10 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
       closeTime: 5000,
     },
   ) {
-    super(options);
+    this.win = new (BasicTool.getZotero().ProgressWindow)(options);
     this.lines = [];
     this.closeTime = options.closeTime || 5000;
-    this.changeHeadline(header);
-    this.originalShow = this
-      .show as unknown as typeof Zotero.ProgressWindow.prototype.show;
-    this.show = this.showWithTimer;
+    this.win.changeHeadline(header);
     if (options.closeOtherProgressWindows) {
       BasicTool.getZotero().ProgressWindowSet.closeAll();
     }
@@ -102,7 +97,7 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
     idx?: number;
   }) {
     const icon = this.getIcon(options.type, options.icon);
-    const line = new this.ItemProgress(icon || "", options.text || "");
+    const line = new this.win.ItemProgress(icon || "", options.text || "");
     if (typeof options.progress === "number") {
       line.setProgress(options.progress);
     }
@@ -148,11 +143,11 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
     return this;
   }
 
-  private showWithTimer(closeTime: number | undefined = undefined) {
-    this.originalShow();
+  show(closeTime: number | undefined = undefined) {
+    this.win.show();
     typeof closeTime !== "undefined" && (this.closeTime = closeTime);
     if (this.closeTime && this.closeTime > 0) {
-      this.startCloseTimer(this.closeTime);
+      this.win.startCloseTimer(this.closeTime);
     }
     setTimeout(this.updateIcons.bind(this), 50);
     return this;
@@ -188,8 +183,32 @@ export class ProgressWindowHelper extends BasicTool.getZotero().ProgressWindow {
       // Ignore
     }
   }
-}
 
-declare function _popupWindowShow(
-  closeTime?: number | undefined,
-): ProgressWindowHelper;
+  changeHeadline(text: string, icon?: string, postText?: string) {
+    this.win.changeHeadline(text, icon, postText);
+    return this;
+  }
+
+  addLines(
+    labels: string | { [key: string | number | symbol]: string },
+    icons: string | { [key: string | number | symbol]: string },
+  ) {
+    this.win.addLines(labels, icons);
+    return this;
+  }
+
+  addDescription(text: string) {
+    this.win.addDescription(text);
+    return this;
+  }
+
+  startCloseTimer(ms: number, requireMouseOver?: boolean) {
+    this.win.startCloseTimer(ms, requireMouseOver);
+    return this;
+  }
+
+  close() {
+    this.win.close();
+    return this;
+  }
+}

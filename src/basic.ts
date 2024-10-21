@@ -33,7 +33,7 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
-      debug: ToolkitGlobal.getInstance().debugBridge,
+      debug: ToolkitGlobal.getInstance()?.debugBridge,
       api: {
         pluginID: "zotero-plugin-toolkit@windingwind.com",
       },
@@ -47,7 +47,8 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    if (typeof ChromeUtils !== "undefined") {
+    // @ts-expect-error import method is not recognized
+    if (typeof ChromeUtils?.import !== "undefined") {
       // @ts-expect-error import method is not recognized
       const { ConsoleAPI } = ChromeUtils.import(
         "resource://gre/modules/Console.jsm",
@@ -192,7 +193,14 @@ export class BasicTool {
     if (data.length === 0) {
       return;
     }
-    const Zotero = this.getGlobal("Zotero");
+    let _Zotero: _ZoteroTypes.Zotero | undefined;
+    try {
+      if (typeof Zotero !== "undefined") {
+        _Zotero = Zotero;
+      } else {
+        _Zotero = BasicTool.getZotero();
+      }
+    } catch {}
     // If logOption is not provides, use the global one.
     let options: typeof this._basicOptions.log;
     if (data[data.length - 1]?._type === "toolkitlog") {
@@ -205,7 +213,14 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        let _console = Zotero.getMainWindow()?.console;
+        let _console: Console | undefined;
+        // Assume either console or _Zotero is available
+        if (typeof console !== "undefined") {
+          _console = console;
+        } else if (_Zotero) {
+          _console = _Zotero.getMainWindow()?.console;
+        }
+        // Do we really need this?
         if (!_console) {
           if (!this._console) {
             return;
@@ -221,13 +236,16 @@ export class BasicTool {
         _console.groupEnd();
       }
       if (!options.disableZLog) {
-        Zotero.debug(
+        if (typeof _Zotero === "undefined") {
+          return;
+        }
+        _Zotero.debug(
           data
             .map((d: any) => {
               try {
                 return typeof d === "object" ? JSON.stringify(d) : String(d);
               } catch {
-                Zotero.debug(d);
+                _Zotero.debug(d);
                 return "";
               }
             })
@@ -235,7 +253,10 @@ export class BasicTool {
         );
       }
     } catch (e: unknown) {
-      Zotero.logError(e as Error);
+      if (_Zotero) Zotero.logError(e as Error);
+      else {
+        console.error(e);
+      }
     }
   }
 
@@ -419,7 +440,7 @@ export interface BasicOptions {
     disableZLog: boolean;
     prefix: string;
   };
-  debug: {
+  debug?: {
     disableDebugBridgePassword: boolean;
     password: string;
   };

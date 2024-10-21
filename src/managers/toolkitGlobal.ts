@@ -23,17 +23,27 @@ export class ToolkitGlobal {
    * Get the global unique instance of `class ToolkitGlobal`.
    * @returns An instance of `ToolkitGlobal`.
    */
-  static getInstance(): Required<ToolkitGlobal> {
-    const Zotero = BasicTool.getZotero();
+  static getInstance(): Required<ToolkitGlobal> | undefined {
+    let _Zotero: _ZoteroTypes.Zotero | undefined;
+    try {
+      if (typeof Zotero !== "undefined") {
+        _Zotero = Zotero;
+      } else {
+        _Zotero = BasicTool.getZotero();
+      }
+    } catch {}
+    if (!_Zotero) {
+      return undefined;
+    }
     let requireInit = false;
 
-    if (!("_toolkitGlobal" in Zotero)) {
-      Zotero._toolkitGlobal = new ToolkitGlobal();
+    if (!("_toolkitGlobal" in _Zotero)) {
+      _Zotero._toolkitGlobal = new ToolkitGlobal();
       requireInit = true;
     }
 
-    const currentGlobal = Zotero._toolkitGlobal as ToolkitGlobal;
-    if (currentGlobal.currentWindow !== Zotero.getMainWindow()) {
+    const currentGlobal = _Zotero._toolkitGlobal as ToolkitGlobal;
+    if (currentGlobal.currentWindow !== _Zotero.getMainWindow()) {
       checkWindowDependentModules(currentGlobal);
       requireInit = true;
     }
