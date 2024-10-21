@@ -65,10 +65,10 @@ interface BuiltInMessageHandlers {
 }
 
 /**
- * MessageServerHelper
+ * MessageHelper
  * @alpha
  */
-export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
+export class MessageHelper<_TargetHandlers extends MessageHandlers> {
   protected config: Required<MessageServerConfig>;
 
   protected env: "webworker" | "chromeworker" | "browser" | "content";

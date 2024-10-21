@@ -140,6 +140,17 @@ Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->
 </td></tr>
 <tr><td>
 
+[MessageHelper](./zotero-plugin-toolkit.messagehelper.md)
+
+
+</td><td>
+
+**_(ALPHA)_** MessageHelper
+
+
+</td></tr>
+<tr><td>
+
 [PatchHelper](./zotero-plugin-toolkit.patchhelper.md)
 
 

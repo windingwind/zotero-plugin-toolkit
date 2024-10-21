@@ -16,6 +16,7 @@ export {
   LargePrefHelper,
   // PromptManager,
   MenuManager,
+  MessageHelper,
   PatchHelper,
   ProgressWindowHelper,
   ReaderTool,
