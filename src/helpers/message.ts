@@ -125,6 +125,11 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
         const obj = getProperty(self, parts.join("."));
         obj[last] = value;
       },
+      _eval: async (data: { code: string }) => {
+        const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
+        const fn = new AsyncFunction("self", data.code);
+        return await fn(self);
+      },
     };
 
     this.config.target.addEventListener(
@@ -322,6 +327,11 @@ export class MessageServerHelper<_TargetHandlers extends MessageHandlers> {
   async set(key: string, value: any) {
     // @ts-expect-error - This is a dynamic call
     return await this.exec("_set", { key, value });
+  }
+
+  async eval(code: string) {
+    // @ts-expect-error - This is a dynamic call
+    return await this.exec("_eval", { code });
   }
 
   async send(options: {
