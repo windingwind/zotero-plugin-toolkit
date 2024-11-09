@@ -29,20 +29,21 @@ function logError(e: any) {
 }
 
 type MessageParams<T extends MessageHandlers> = {
-  [K in keyof T]: T[K] extends (params: infer P) => void ? P : never;
+  [K in keyof T]: T[K] extends (...params: infer P) => void ? P : never;
 };
 
 type MessageReturnType<T extends MessageHandlers> = {
-  [K in keyof T]: T[K] extends (params: any) => infer R ? R : never;
+  [K in keyof T]: T[K] extends (...params: any) => infer R ? R : never;
 };
 
 interface MessageHandlers {
-  [key: string]: (data?: any) => Promise<any>;
+  [key: string]: (...data: any[]) => Promise<any> | any;
 }
 
-// eslint-disable-next-line unused-imports/no-unused-vars
-type GenerateMessageHandlerInterface<T extends MessageHandlers> = {
-  [K in keyof T]: T[K];
+type PromisedMessageHandlers<T extends MessageHandlers> = {
+  [K in keyof T]: (
+    ...data: Parameters<T[K]>
+  ) => Promise<Awaited<ReturnType<T[K]>>>;
 };
 
 interface MessageServerConfig {
@@ -51,7 +52,6 @@ interface MessageServerConfig {
   target?: Window | Worker;
   dev?: boolean;
   canBeDestroyed?: boolean;
-  returnStatus?: boolean;
 }
 
 interface BuiltInMessageHandlers {
@@ -65,8 +65,85 @@ interface BuiltInMessageHandlers {
 }
 
 /**
- * MessageHelper
- * @alpha
+ * Helper class to manage messages between workers/iframes and their parent
+ * @beta
+ *
+ * @example
+ * Use the `MessageHelper` to create a server that can be used to communicate between workers or iframes and their parent.
+ *
+ * In the child `worker.js`:
+ * ```typescript
+ * const handlers = {
+ *   async test() {
+ *     return "test";
+ *   },
+ * };
+ * // Create a new server
+ * const server = new MessageHelper({
+ *   name: "child",
+ *   handlers,
+ *   canBeDestroyed: true,
+ * });
+ * // Start the listener
+ * server.start();
+ * // Export the handlers for type hinting
+ * export { handlers };
+ * ```
+ * In the parent:
+ * ```typescript
+ * // Import the handlers
+ * import type { handlers } from "./worker.js";
+ * // Create a new worker
+ * const worker = new Worker("worker.js");
+ * // Create a new server with the type from the target handlers
+ * const server = new MessageHelper<typeof handlers>({
+ *   name: "worker",
+ *   handlers: {
+ *     async test() {
+ *       return "test";
+ *     },
+ *   },
+ *   target: worker,
+ * });
+ * server.start();
+ * // Execute the handlers defined in the worker as if they were local
+ * ztoolkit.log(await server.proxy.test());
+ * // ...
+ * // Stop the server, can be restarted with server.start()
+ * server.stop();
+ * // Destroy the server and the worker
+ * server.destroy();
+ * ```
+ *
+ * @example
+ * Evaluate code in the other side of the server
+ * ```typescript
+ * await server.eval("self.firstName = 'John';");
+ * ```
+ *
+ * @example
+ * Get a property from the other side of the server, can be nested.
+ *
+ * Only works if the property is a primitive or a serializable object
+ * ```typescript
+ * ztoolkit.log(await server.get("self.firstName"));
+ * ```
+ *
+ * @example
+ * Set a property from the other side of the server, can be nested.
+ *
+ * Only works if the property is a primitive or a serializable object
+ * ```typescript
+ * await server.set("self.firstName", "Alice");
+ * ```
+ *
+ * @example
+ * Check if the target is alive
+ * ```typescript
+ * ztoolkit.log(await server.isTargetAlive());
+ * // Alternatively, send a ping message
+ * ztoolkit.log(await server.proxy._ping());
+ * ```
  */
 export class MessageHelper<_TargetHandlers extends MessageHandlers> {
   protected config: Required<MessageServerConfig>;
@@ -76,6 +153,22 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
   protected listener?: any;
 
   public running = false;
+
+  /**
+   * Proxy object to call the message handlers
+   */
+  public proxy: PromisedMessageHandlers<
+    _TargetHandlers & BuiltInMessageHandlers
+  > = new Proxy(
+    {},
+    {
+      get: (target, prop) => {
+        return async (...args: any[]) => {
+          return await this.exec(prop as string, args as any);
+        };
+      },
+    },
+  ) as PromisedMessageHandlers<_TargetHandlers & BuiltInMessageHandlers>;
 
   get target() {
     return this.config.target;
@@ -110,25 +203,22 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
       _ping: async () => {
         return "pong";
       },
-      _call: async (data: { func: string; args: any[] }) => {
-        const { func, args } = data;
+      _call: async (func: string, args: any[]) => {
         const funcObj = getProperty(self, func);
         return await funcObj(...args);
       },
-      _get: async (data: { key: string }) => {
-        const { key } = data;
+      _get: async (key: string) => {
         return await getProperty(self, key);
       },
-      _set: async (data: { key: string; value: any }) => {
-        const { key, value } = data;
+      _set: async (key: string, value: any) => {
         const parts = key.split(".");
         const last = parts.pop()!;
         const obj = getProperty(self, parts.join("."));
         obj[last] = value;
       },
-      _eval: async (data: { code: string }) => {
+      _eval: async (code: string) => {
         const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
-        const fn = new AsyncFunction("self", data.code);
+        const fn = new AsyncFunction("self", code);
         return await fn(self);
       },
     };
@@ -173,7 +263,6 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
           _jobID,
           _senderName,
           _handlerName,
-          _handlerSuccess,
           _handlerData,
           _requestReturn,
         } = data;
@@ -200,11 +289,7 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
           return;
         }
         try {
-          // Expose handler success to handler if it's an object
-          if (this.config.returnStatus && typeof _handlerData === "object") {
-            _handlerData._handlerSuccess = _handlerSuccess;
-          }
-          const res = await handler(_handlerData);
+          const res = await handler(...((_handlerData || []) as any[]));
           if (_requestReturn) {
             this.send({
               name: `${_handlerName}::return`,
@@ -273,19 +358,13 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
     const target = this.config.target;
 
     // Send the message
-    const jobID = await this.send({ name: name as string, data: params });
-    const returnStatus = this.config.returnStatus;
+    const jobID = await this.send({ name: name as string, data: params || [] });
     return new Promise((resolve) => {
       const handler = function (event: MessageEvent) {
         if (resolved) {
           return;
         }
-        const {
-          _handlerName,
-          _jobID: returnJobID,
-          _handlerData,
-          _handlerSuccess,
-        } = event.data;
+        const { _handlerName, _jobID: returnJobID, _handlerData } = event.data;
         if (
           _handlerName !== `${name as string}::return` ||
           returnJobID !== jobID
@@ -296,9 +375,6 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
         // eslint-disable-next-line ts/no-use-before-define
         clearTimeout(timer);
         target.removeEventListener("message", handler);
-        if (returnStatus && typeof _handlerData === "object") {
-          _handlerData._handlerSuccess = _handlerSuccess;
-        }
         resolve(_handlerData);
       } as EventListener;
 
@@ -318,22 +394,22 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
 
   async call(func: string, args: any[]) {
     // @ts-expect-error - This is a dynamic call
-    return await this.exec("_call", { func, args });
+    return await this.exec("_call", [func, args]);
   }
 
   async get(key: string) {
     // @ts-expect-error - This is a dynamic call
-    return await this.exec("_get", { key });
+    return await this.exec("_get", [key]);
   }
 
   async set(key: string, value: any) {
     // @ts-expect-error - This is a dynamic call
-    return await this.exec("_set", { key, value });
+    return await this.exec("_set", [key, value]);
   }
 
   async eval(code: string) {
     // @ts-expect-error - This is a dynamic call
-    return await this.exec("_eval", { code });
+    return await this.exec("_eval", [code]);
   }
 
   async send(options: {
@@ -368,9 +444,6 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
       _requestReturn: requestReturn,
       _handlerData: params,
     } as any;
-    if (this.config.returnStatus) {
-      message._handlerSuccess = success;
-    }
     this.config.target.postMessage(message);
     return jobID;
   }
@@ -388,20 +461,5 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
       const ret = await this.exec("_ping", undefined, { timeout: 200 });
       return ret === "pong";
     }
-  }
-
-  static wrapHandlers<T extends Record<string, (...params: any) => any>>(
-    funcs: T,
-  ): {
-    [K in keyof T]: (
-      data: Parameters<T[K]>,
-    ) => Promise<Awaited<ReturnType<T[K]>>>;
-  } {
-    return Object.entries(funcs).reduce((acc, [key, value]) => {
-      acc[key] = async (data: Parameters<typeof value>) => {
-        return await value(...data);
-      };
-      return acc;
-    }, {} as MessageHandlers) as any;
   }
 }

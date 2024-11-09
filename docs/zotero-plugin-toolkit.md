@@ -145,7 +145,7 @@ Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->
 
 </td><td>
 
-**_(ALPHA)_** MessageHelper
+**_(BETA)_** Helper class to manage messages between workers/iframes and their parent
 
 
 </td></tr>
