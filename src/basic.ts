@@ -51,7 +51,7 @@ export class BasicTool {
       },
     };
     // @ts-expect-error import method is not recognized
-    if (typeof ChromeUtils?.import !== "undefined") {
+    if (typeof globalThis.ChromeUtils?.import !== "undefined") {
       // @ts-expect-error import method is not recognized
       const { ConsoleAPI } = ChromeUtils.import(
         "resource://gre/modules/Console.jsm",
