@@ -132,6 +132,9 @@ export class BasicTool {
    */
   getGlobal(k: string): any;
   getGlobal(k: string) {
+    if (typeof globalThis[k as keyof typeof globalThis] !== "undefined") {
+      return globalThis[k as keyof typeof globalThis];
+    }
     const _Zotero = BasicTool.getZotero();
     try {
       const window = _Zotero.getMainWindow();
