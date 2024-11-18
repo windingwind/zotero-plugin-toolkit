@@ -127,6 +127,10 @@ export class MenuManager extends ManagerTool {
           listener: menuitemOption.commandListener!,
         });
       }
+      if (menuitemOption.tag === "menuitem") {
+        elementOption.attributes!.type = menuitemOption.type || "";
+        elementOption.attributes!.checked = menuitemOption.checked || false;
+      }
       const menuItem = this.ui.createElement(
         doc,
         menuitemOption.tag,
@@ -135,6 +139,9 @@ export class MenuManager extends ManagerTool {
       if (menuitemOption.getVisibility) {
         popup?.addEventListener("popupshowing", (ev: Event) => {
           const showing = menuitemOption.getVisibility!(menuItem as any, ev);
+          if (typeof showing === "undefined") {
+            return;
+          }
           if (showing) {
             menuItem.removeAttribute("hidden");
           } else {
@@ -189,12 +196,14 @@ type MenuitemTagDependentOptions =
   | {
       tag: "menuitem";
       /* return true to show and false to hide current element */
-      getVisibility?: (elem: XUL.MenuItem, ev: Event) => boolean;
+      getVisibility?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      type?: "" | "checkbox" | "radio";
+      checked?: boolean;
     }
   | {
       tag: "menu";
       /* return true to show and false to hide current element */
-      getVisibility?: (elem: XUL.Menu, ev: Event) => boolean;
+      getVisibility?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
       /* Attributes below are used when type === "menu" */
       popupId?: string;
       onpopupshowing?: string;
@@ -207,7 +216,10 @@ type MenuitemTagDependentOptions =
   | {
       tag: "menuseparator";
       /* return true to show and false to hide current element */
-      getVisibility?: (elem: XUL.MenuSeparator, ev: Event) => boolean;
+      getVisibility?: (
+        elem: XUL.MenuSeparator,
+        ev: Event,
+      ) => boolean | undefined;
     };
 
 interface MenuitemCommonOptions {
