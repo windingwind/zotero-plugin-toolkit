@@ -203,7 +203,7 @@ Create `HTMLElement`<!-- -->.
 
 </td><td>
 
-Create `XUL.Element`<!-- -->.
+Create `XULElement`<!-- -->.
 
 
 </td></tr>

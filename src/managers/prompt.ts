@@ -321,7 +321,13 @@ export class Prompt {
    */
   private trigger() {
     (
-      [...Array.from(this.promptNode.querySelectorAll(".commands-container"))]
+      (
+        [
+          ...Array.from(
+            this.promptNode.querySelectorAll(".commands-container"),
+          ),
+        ] as Element[]
+      )
         .find((e: any) => e.style.display !== "none")!
         .querySelector(".selected") as HTMLDivElement
     ).click();
@@ -524,9 +530,9 @@ export class Prompt {
           ...Array.from(
             this.getCommandsContainer().querySelectorAll(".command"),
           ),
-        ].filter((e: any) => e.style.display != "none");
+        ].filter((e: any) => e.style.display != "none") as Element[];
         selectedIndex = allItems.findIndex((e) =>
-          e.classList.contains("selected"),
+          (e as Element).classList.contains("selected"),
         );
         if (selectedIndex != -1) {
           allItems[selectedIndex].classList.remove("selected");

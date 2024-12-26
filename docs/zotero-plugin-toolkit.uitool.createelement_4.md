@@ -9,7 +9,7 @@ Create Element
 **Signature:**
 
 ```typescript
-createElement(doc: Document, tagName: string, props?: ElementProps): HTMLElement | XUL.Element | SVGElement;
+createElement(doc: Document, tagName: string, props?: ElementProps): HTMLElement | XULElement | SVGElement;
 ```
 
 ## Parameters
@@ -77,5 +77,5 @@ _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
 </tbody></table>
 **Returns:**
 
-HTMLElement \| XUL.Element \| SVGElement
+HTMLElement \| XULElement \| SVGElement
 

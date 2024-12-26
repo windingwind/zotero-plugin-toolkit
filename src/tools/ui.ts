@@ -8,7 +8,7 @@ export class UITool extends BasicTool {
   /**
    * UITool options
    */
-  protected declare _basicOptions: UIOptions;
+  declare protected _basicOptions: UIOptions;
 
   public get basicOptions(): UIOptions {
     return this._basicOptions;
@@ -115,14 +115,14 @@ export class UITool extends BasicTool {
     T extends HTMLElementTagNameMap[HTML_TAG],
   >(doc: Document, tagName: HTML_TAG, props?: HTMLElementProps): T;
   /**
-   * Create `XUL.Element`.
+   * Create `XULElement`.
    * @see ElementProps
    * @param doc
    * @param tagName
    * @param props See {@link ElementProps }
    * @example
    * ```ts
-   * const menuitem: XUL.MenuItem = ui.createElement(document, "menuitem", { attributes: { label: "Click Me!" } });
+   * const menuitem: XULMenuItem = ui.createElement(document, "menuitem", { attributes: { label: "Click Me!" } });
    * ```
    */
   createElement<
@@ -149,7 +149,7 @@ export class UITool extends BasicTool {
     doc: Document,
     tagName: string,
     props?: ElementProps,
-  ): HTMLElement | XUL.Element | SVGElement;
+  ): HTMLElement | XULElement | SVGElement;
   /**
    * @deprecated
    * @param doc target document, e.g. Zotero main window.document
@@ -162,7 +162,7 @@ export class UITool extends BasicTool {
     tagName: string,
     namespace?: "html" | "svg" | "xul",
     enableElementRecord?: boolean,
-  ): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
+  ): HTMLElement | XULElement | SVGElement | DocumentFragment;
   createElement(...args: any[]) {
     const doc = args[0] as Document;
     const tagName = args[1].toLowerCase() as string;
@@ -189,7 +189,7 @@ export class UITool extends BasicTool {
     props.properties = props.properties || props.directAttributes;
     props.children = props.children || props.subElementOptions;
 
-    let elem: HTMLElement | DocumentFragment | SVGElement | XUL.Element;
+    let elem: HTMLElement | DocumentFragment | SVGElement | XULElement;
     if (tagName === "fragment") {
       const fragElem = doc.createDocumentFragment();
       elem = fragElem;
@@ -201,7 +201,7 @@ export class UITool extends BasicTool {
         ).querySelector(`#${props.id}`)) as
         | HTMLElement
         | SVGElement
-        | XUL.Element
+        | XULElement
         | undefined;
       if (realElem && props.ignoreIfExists) {
         return realElem;
@@ -239,7 +239,7 @@ export class UITool extends BasicTool {
         }
 
         if (namespace === "xul") {
-          realElem = this.createXULElement(doc, tagName) as XUL.Element;
+          realElem = this.createXULElement(doc, tagName) as XULElement;
         } else {
           realElem = doc.createElementNS(
             {
@@ -551,117 +551,117 @@ export interface FragmentElementProps {
 
 /* cspell:disable */
 interface XULElementTagNameMap {
-  action: XUL.Element;
-  arrowscrollbox: XUL.Element;
-  bbox: XUL.Element;
-  binding: XUL.Element;
-  bindings: XUL.Element;
-  box: XUL.Box;
-  broadcaster: XUL.Element;
-  broadcasterset: XUL.Element;
-  button: XUL.Button;
-  browser: XUL.Element;
-  checkbox: XUL.Checkbox;
-  caption: XUL.Element;
-  colorpicker: XUL.Element;
-  column: XUL.Element;
-  columns: XUL.Element;
-  commandset: XUL.Element;
-  command: XUL.Command;
-  conditions: XUL.Element;
-  content: XUL.Element;
-  deck: XUL.Deck;
-  description: XUL.Description;
-  dialog: XUL.Element;
-  dialogheader: XUL.Element;
-  editor: XUL.Element;
-  grid: XUL.Element;
-  grippy: XUL.Grippy;
-  groupbox: XUL.GroupBox;
-  hbox: XUL.Box;
-  iframe: XUL.Element;
-  image: XUL.Element;
-  key: XUL.Element;
-  keyset: XUL.Element;
-  label: XUL.Label;
-  listbox: XUL.Element;
-  listcell: XUL.Element;
-  listcol: XUL.Element;
-  listcols: XUL.Element;
-  listhead: XUL.Element;
-  listheader: XUL.Element;
-  listitem: XUL.ListItem;
-  member: XUL.Element;
-  menu: XUL.Menu;
-  menubar: XUL.MenuBar;
-  menuitem: XUL.MenuItem;
-  menulist: XUL.MenuList;
-  menupopup: XUL.MenuPopup;
-  menuseparator: XUL.MenuSeparator;
-  observes: XUL.Element;
-  overlay: XUL.Element;
-  page: XUL.Element;
-  popup: XUL.Popup;
-  popupset: XUL.Element;
-  preference: XUL.Element;
-  preferences: XUL.Element;
-  prefpane: XUL.Element;
-  prefwindow: XUL.Element;
-  progressmeter: XUL.Element;
-  radio: XUL.Radio;
-  radiogroup: XUL.RadioGroup;
-  resizer: XUL.Element;
-  richlistbox: XUL.Element;
-  richlistitem: XUL.Element;
-  row: XUL.Element;
-  rows: XUL.Element;
-  rule: XUL.Element;
-  script: XUL.Element;
-  scrollbar: XUL.ScrollBar;
-  scrollbox: XUL.Element;
-  scrollcorner: XUL.Element;
-  separator: XUL.Separator;
-  spacer: XUL.Spacer;
-  splitter: XUL.Splitter;
-  stack: XUL.Element;
-  statusbar: XUL.StatusBar;
-  statusbarpanel: XUL.StatusBarPanel;
-  stringbundle: XUL.Element;
-  stringbundleset: XUL.Element;
-  tab: XUL.Tab;
-  tabbrowser: XUL.Element;
-  tabbox: XUL.TabBox;
-  tabpanel: XUL.TabPanel;
-  tabpanels: XUL.TabPanels;
-  tabs: XUL.Tabs;
-  template: XUL.Element;
-  textnode: XUL.Element;
-  textbox: XUL.Textbox;
-  titlebar: XUL.Element;
-  toolbar: XUL.ToolBar;
-  toolbarbutton: XUL.ToolBarButton;
-  toolbargrippy: XUL.ToolBarGrippy;
-  toolbaritem: XUL.ToolBarItem;
-  toolbarpalette: XUL.ToolBarPalette;
-  toolbarseparator: XUL.ToolBarSeparator;
-  toolbarset: XUL.ToolBarSet;
-  toolbarspacer: XUL.ToolBarSpacer;
-  toolbarspring: XUL.ToolBarSpring;
-  toolbox: XUL.ToolBox;
-  tooltip: XUL.Tooltip;
-  tree: XUL.Tree;
-  treecell: XUL.TreeCell;
-  treechildren: XUL.TreeChildren;
-  treecol: XUL.TreeCol;
-  treecols: XUL.TreeCols;
-  treeitem: XUL.TreeItem;
-  treerow: XUL.TreeRow;
-  treeseparator: XUL.TreeSeparator;
-  triple: XUL.Element;
-  vbox: XUL.Box;
-  window: XUL.Element;
-  wizard: XUL.Element;
-  wizardpage: XUL.Element;
+  action: XULElement;
+  arrowscrollbox: XULElement;
+  bbox: XULBoxElement;
+  binding: XULElement;
+  bindings: XULElement;
+  box: XULElement;
+  broadcaster: XULElement;
+  broadcasterset: XULElement;
+  button: XULButtonElement;
+  browser: XULBrowserElement;
+  checkbox: XULCheckboxElement;
+  caption: XULElement;
+  colorpicker: XULColorPickerElement;
+  column: XULElement;
+  columns: XULElement;
+  commandset: XULElement;
+  command: XULCommandElement;
+  conditions: XULElement;
+  content: XULElement;
+  deck: XULDeckElement;
+  description: XULDescriptionElement;
+  dialog: XULElement;
+  dialogheader: XULElement;
+  editor: XULElement;
+  grid: XULElement;
+  grippy: XULGrippyElement;
+  groupbox: XULGroupBoxElement;
+  hbox: XULBoxElement;
+  iframe: XULElement;
+  image: XULElement;
+  key: XULElement;
+  keyset: XULElement;
+  label: XULLabelElement;
+  listbox: XULElement;
+  listcell: XULElement;
+  listcol: XULElement;
+  listcols: XULElement;
+  listhead: XULElement;
+  listheader: XULElement;
+  listitem: XULListItemElement;
+  member: XULElement;
+  menu: XULMenuElement;
+  menubar: XULMenuBarElement;
+  menuitem: XULMenuItemElement;
+  menulist: XULMenuListElement;
+  menupopup: XULMenuPopupElement;
+  menuseparator: XULMenuSeparatorElement;
+  observes: XULElement;
+  overlay: XULElement;
+  page: XULElement;
+  popup: XULPopupElement;
+  popupset: XULElement;
+  preference: XULElement;
+  preferences: XULElement;
+  prefpane: XULElement;
+  prefwindow: XULElement;
+  progressmeter: XULProgressMeterElement;
+  radio: XULRadioElement;
+  radiogroup: XULRadioGroupElement;
+  resizer: XULElement;
+  richlistbox: XULElement;
+  richlistitem: XULElement;
+  row: XULElement;
+  rows: XULElement;
+  rule: XULElement;
+  script: XULElement;
+  scrollbar: XULScrollBarElement;
+  scrollbox: XULElement;
+  scrollcorner: XULElement;
+  separator: XULSeparatorElement;
+  spacer: XULSpacerElement;
+  splitter: XULSplitterElement;
+  stack: XULElement;
+  statusbar: XULStatusBarElement;
+  statusbarpanel: XULStatusBarPanelElement;
+  stringbundle: XULElement;
+  stringbundleset: XULElement;
+  tab: XULTabElement;
+  tabbrowser: XULElement;
+  tabbox: XULTabBoxElement;
+  tabpanel: XULTabPanelElement;
+  tabpanels: XULTabPanelsElement;
+  tabs: XULTabsElement;
+  template: XULElement;
+  textnode: XULElement;
+  textbox: XULTextBoxElement;
+  titlebar: XULElement;
+  toolbar: XULToolBarElement;
+  toolbarbutton: XULToolBarButtonElement;
+  toolbargrippy: XULToolBarGrippyElement;
+  toolbaritem: XULToolBarItemElement;
+  toolbarpalette: XULToolBarPaletteElement;
+  toolbarseparator: XULToolBarSeparatorElement;
+  toolbarset: XULToolBarSetElement;
+  toolbarspacer: XULToolBarSpacerElement;
+  toolbarspring: XULToolBarSpringElement;
+  toolbox: XULToolBoxElement;
+  tooltip: XULTooltipElement;
+  tree: XULTreeElement;
+  treecell: XULTreeCellElement;
+  treechildren: XULTreeChildrenElement;
+  treecol: XULTreeColElement;
+  treecols: XULTreeColsElement;
+  treeitem: XULTreeItemElement;
+  treerow: XULTreeRowElement;
+  treeseparator: XULTreeSeparatorElement;
+  triple: XULElement;
+  vbox: XULBoxElement;
+  window: XULWindowElement;
+  wizard: XULElement;
+  wizardpage: XULElement;
 }
 
 const HTMLElementTagNames = [

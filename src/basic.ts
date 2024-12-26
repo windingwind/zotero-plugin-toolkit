@@ -1,3 +1,4 @@
+import type { FunctionNamesOf } from "../typings/basic.d.ts";
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
 /**
@@ -186,7 +187,7 @@ export class BasicTool {
    * const elem = compat.createXULElement(doc, "menuitem");
    * ```
    */
-  createXULElement(doc: Document, type: string): XUL.Element {
+  createXULElement(doc: Document, type: string): XULElement {
     // @ts-expect-error doc.createXULElement returns XUL.Element
     return doc.createXULElement(type);
   }

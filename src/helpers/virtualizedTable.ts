@@ -1,4 +1,4 @@
-import type React from "react";
+import type * as React from "react";
 import type ReactDOM from "react-dom";
 import type { createRoot } from "react-dom/client";
 import type { IntlProvider } from "react-intl";

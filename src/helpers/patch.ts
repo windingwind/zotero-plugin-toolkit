@@ -1,3 +1,4 @@
+import type { FunctionNamesOf } from "../../typings/basic.d.ts";
 import { BasicTool } from "../basic.js";
 
 export class PatchHelper extends BasicTool {

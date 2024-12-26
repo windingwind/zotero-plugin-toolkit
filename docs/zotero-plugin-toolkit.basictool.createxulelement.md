@@ -13,7 +13,7 @@ For Zotero 7+, use `createXULElement`<!-- -->.
 **Signature:**
 
 ```typescript
-createXULElement(doc: Document, type: string): XUL.Element;
+createXULElement(doc: Document, type: string): XULElement;
 ```
 
 ## Parameters
@@ -65,7 +65,7 @@ string
 </tbody></table>
 **Returns:**
 
-XUL.Element
+XULElement
 
 ## Example
 

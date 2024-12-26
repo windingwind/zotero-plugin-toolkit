@@ -267,12 +267,12 @@ function openDialog(
   }
 
   // Create window
-  const win: Window = dialogHelper.getGlobal("openDialog")(
+  const win = dialogHelper.getGlobal("openDialog")(
     "about:blank",
     targetId || "_blank",
     featureString,
     dialogData,
-  );
+  ) as Window;
 
   // After load
   dialogData.loadLock?.promise
@@ -330,20 +330,20 @@ function openDialog(
         }),
       );
       // Load data-binding
-      Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
-        (elem: Element) => {
-          const bindKey = elem.getAttribute("data-bind");
-          const bindAttr = elem.getAttribute("data-attr");
-          const bindProp = elem.getAttribute("data-prop");
-          if (bindKey && dialogData && dialogData[bindKey]) {
-            if (bindProp) {
-              (elem as any)[bindProp] = dialogData[bindKey];
-            } else {
-              elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
-            }
+      (
+        Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
+      ).forEach((elem: Element) => {
+        const bindKey = elem.getAttribute("data-bind");
+        const bindAttr = elem.getAttribute("data-attr");
+        const bindProp = elem.getAttribute("data-prop");
+        if (bindKey && dialogData && dialogData[bindKey]) {
+          if (bindProp) {
+            (elem as any)[bindProp] = dialogData[bindKey];
+          } else {
+            elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
           }
-        },
-      );
+        }
+      });
       // Resize window
       if (windowFeatures.fitContent) {
         setTimeout(() => {
@@ -374,21 +374,21 @@ function openDialog(
   // Wait for window unload. Use beforeunload to access elements.
   win.addEventListener("beforeunload", function onWindowBeforeUnload(_ev) {
     // Update data-binding
-    Array.from(win.document.querySelectorAll("*[data-bind]")).forEach(
-      (elem: Element) => {
-        const dialogData = (this.window as any).arguments[0];
-        const bindKey = elem.getAttribute("data-bind");
-        const bindAttr = elem.getAttribute("data-attr");
-        const bindProp = elem.getAttribute("data-prop");
-        if (bindKey && dialogData) {
-          if (bindProp) {
-            dialogData[bindKey] = (elem as any)[bindProp];
-          } else {
-            dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
-          }
+    (
+      Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
+    ).forEach((elem: Element) => {
+      const dialogData = (this.window as any).arguments[0];
+      const bindKey = elem.getAttribute("data-bind");
+      const bindAttr = elem.getAttribute("data-attr");
+      const bindProp = elem.getAttribute("data-prop");
+      if (bindKey && dialogData) {
+        if (bindProp) {
+          dialogData[bindKey] = (elem as any)[bindProp];
+        } else {
+          dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
         }
-      },
-    );
+      }
+    });
     this.window.removeEventListener(
       "beforeunload",
       onWindowBeforeUnload,

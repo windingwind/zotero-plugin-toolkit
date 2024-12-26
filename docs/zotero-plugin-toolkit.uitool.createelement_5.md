@@ -11,7 +11,7 @@
 **Signature:**
 
 ```typescript
-createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul", enableElementRecord?: boolean): HTMLElement | XUL.Element | SVGElement | DocumentFragment;
+createElement(doc: Document, tagName: string, namespace?: "html" | "svg" | "xul", enableElementRecord?: boolean): HTMLElement | XULElement | SVGElement | DocumentFragment;
 ```
 
 ## Parameters
@@ -99,5 +99,5 @@ _(Optional)_ If current element will be recorded and maintained by toolkit. If n
 </tbody></table>
 **Returns:**
 
-HTMLElement \| XUL.Element \| SVGElement \| DocumentFragment
+HTMLElement \| XULElement \| SVGElement \| DocumentFragment
 

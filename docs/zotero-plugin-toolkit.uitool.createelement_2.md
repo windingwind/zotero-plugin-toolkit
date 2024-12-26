@@ -4,7 +4,7 @@
 
 ## UITool.createElement() method
 
-Create `XUL.Element`<!-- -->.
+Create `XULElement`<!-- -->.
 
 **Signature:**
 
@@ -83,6 +83,6 @@ T
 
 
 ```ts
-const menuitem: XUL.MenuItem = ui.createElement(document, "menuitem", { attributes: { label: "Click Me!" } });
+const menuitem: XULMenuItem = ui.createElement(document, "menuitem", { attributes: { label: "Click Me!" } });
 ```
 
