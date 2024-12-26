@@ -136,17 +136,45 @@ export class MenuManager extends ManagerTool {
         menuitemOption.tag,
         elementOption,
       ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
-      if (menuitemOption.getVisibility) {
+      if (menuitemOption.isHidden || menuitemOption.getVisibility) {
         popup?.addEventListener("popupshowing", (ev: Event) => {
-          const showing = menuitemOption.getVisibility!(menuItem as any, ev);
-          if (typeof showing === "undefined") {
+          let hidden: boolean | undefined;
+          if (menuitemOption.isHidden) {
+            hidden = menuitemOption.isHidden(menuItem as any, ev);
+          } else if (menuitemOption.getVisibility) {
+            const visible = menuitemOption.getVisibility(menuItem as any, ev);
+            hidden = typeof visible === "undefined" ? undefined : !visible;
+          }
+          if (typeof hidden === "undefined") {
             return;
           }
-          if (showing) {
-            menuItem.removeAttribute("hidden");
-          } else {
+          if (hidden) {
             menuItem.setAttribute("hidden", "true");
+          } else {
+            menuItem.removeAttribute("hidden");
           }
+        });
+      }
+      if (menuitemOption.isDisabled) {
+        popup?.addEventListener("popupshowing", (ev: Event) => {
+          const disabled = menuitemOption.isDisabled!(menuItem as any, ev);
+          if (typeof disabled === "undefined") {
+            return;
+          }
+          if (disabled) {
+            menuItem.setAttribute("disabled", "true");
+          } else {
+            menuItem.removeAttribute("disabled");
+          }
+        });
+      }
+      if (
+        (menuitemOption.tag === "menuitem" ||
+          menuitemOption.tag === "menuseparator") &&
+        menuitemOption.onShowing
+      ) {
+        popup?.addEventListener("popupshowing", (ev: Event) => {
+          menuitemOption.onShowing!(menuItem as any, ev);
         });
       }
       if (menuitemOption.tag === "menu") {
@@ -162,14 +190,18 @@ export class MenuManager extends ManagerTool {
       return menuItem;
     };
     const topMenuItem = genMenuElement(options);
-    if (!anchorElement) {
-      anchorElement = (
-        insertPosition === "after"
-          ? popup.lastElementChild
-          : popup.firstElementChild
-      ) as XUL.Element;
+    if (popup.childElementCount) {
+      if (!anchorElement) {
+        anchorElement = (
+          insertPosition === "after"
+            ? popup.lastElementChild
+            : popup.firstElementChild
+        ) as XUL.Element;
+      }
+      anchorElement[insertPosition](topMenuItem);
+    } else {
+      popup.appendChild(topMenuItem);
     }
-    anchorElement[insertPosition](topMenuItem);
   }
 
   unregister(menuId: string) {
@@ -195,17 +227,50 @@ enum MenuSelector {
 type MenuitemTagDependentOptions =
   | {
       tag: "menuitem";
-      /* return true to show and false to hide current element */
+      /**
+       * return true to show and false to hide current element
+       * @deprecated Use `isHidden`.
+       */
       getVisibility?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      /**
+       * Dynamically hide/show the menu item
+       * @returns Whether the menu item should be hidden
+       */
+      isHidden?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      /**
+       * Dynamically enable/disable the menu item
+       * @returns Whether the menu item should be disabled
+       */
+      isDisabled?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      /**
+       * Fired when the containing menu popup is shown
+       */
+      onShowing?: (elem: XUL.MenuItem, event: Event) => any;
       type?: "" | "checkbox" | "radio";
       checked?: boolean;
     }
   | {
       tag: "menu";
-      /* return true to show and false to hide current element */
+      /**
+       * return true to show and false to hide current element
+       * @deprecated Use `isHidden`.
+       */
       getVisibility?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
+      /**
+       * Dynamically hide/show the menu
+       * @returns Whether the menu should be hidden
+       */
+      isHidden?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
+      /**
+       * Dynamically enable/disable the menu
+       * @returns Whether the menu should be disabled
+       */
+      isDisabled?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
       /* Attributes below are used when type === "menu" */
       popupId?: string;
+      /**
+       * Fired when the containing menu popup is shown. Consider using `onShowing` instead.
+       */
       onpopupshowing?: string;
       children?: Array<MenuitemOptions>;
       /**
@@ -215,11 +280,28 @@ type MenuitemTagDependentOptions =
     }
   | {
       tag: "menuseparator";
-      /* return true to show and false to hide current element */
+      /**
+       * return true to show and false to hide current element
+       * @deprecated Use `isHidden`.
+       */
       getVisibility?: (
         elem: XUL.MenuSeparator,
         ev: Event,
       ) => boolean | undefined;
+      /**
+       * Dynamically hide/show the separator
+       * @returns Whether the separator should be hidden
+       */
+      isHidden?: (elem: XUL.MenuSeparator, ev: Event) => boolean | undefined;
+      /**
+       * Dynamically enable/disable the separator
+       * @returns Whether the separator should be disabled
+       */
+      isDisabled?: (elem: XUL.MenuSeparator, ev: Event) => boolean | undefined;
+      /**
+       * Fired when the containing menu popup is shown
+       */
+      onShowing?: (elem: XUL.MenuSeparator, event: Event) => any;
     };
 
 interface MenuitemCommonOptions {
