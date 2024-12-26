@@ -1,4 +1,4 @@
-import type { FunctionNamesOf } from "../typings/basic.d.ts";
+import type { FunctionNamesOf } from "./typings/basic.js";
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
 /**
