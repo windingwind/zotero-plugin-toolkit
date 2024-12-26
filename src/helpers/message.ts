@@ -271,6 +271,11 @@ export class MessageHelper<_TargetHandlers extends MessageHandlers> {
           return;
         }
 
+        // Ignore message if format is incorrect
+        if (!_handlerName) {
+          return;
+        }
+
         if (!this.running && _handlerName !== "_start") {
           logError(
             `Server not started for ${this.config.name}, ignoring message ${_handlerName}`,
