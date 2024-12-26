@@ -171,10 +171,10 @@ export class MenuManager extends ManagerTool {
       if (
         (menuitemOption.tag === "menuitem" ||
           menuitemOption.tag === "menuseparator") &&
-        menuitemOption.onPopupShowing
+        menuitemOption.onShowing
       ) {
         popup?.addEventListener("popupshowing", (ev: Event) => {
-          menuitemOption.onPopupShowing!(menuItem as any, ev);
+          menuitemOption.onShowing!(menuItem as any, ev);
         });
       }
       if (menuitemOption.tag === "menu") {
@@ -245,7 +245,7 @@ type MenuitemTagDependentOptions =
       /**
        * Fired when the containing menu popup is shown
        */
-      onPopupShowing?: (elem: XUL.MenuItem, event: Event) => any;
+      onShowing?: (elem: XUL.MenuItem, event: Event) => any;
       type?: "" | "checkbox" | "radio";
       checked?: boolean;
     }
@@ -268,6 +268,9 @@ type MenuitemTagDependentOptions =
       isDisabled?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
       /* Attributes below are used when type === "menu" */
       popupId?: string;
+      /**
+       * Fired when the containing menu popup is shown. Consider using `onShowing` instead.
+       */
       onpopupshowing?: string;
       children?: Array<MenuitemOptions>;
       /**
@@ -298,7 +301,7 @@ type MenuitemTagDependentOptions =
       /**
        * Fired when the containing menu popup is shown
        */
-      onPopupShowing?: (elem: XUL.MenuSeparator, event: Event) => any;
+      onShowing?: (elem: XUL.MenuSeparator, event: Event) => any;
     };
 
 interface MenuitemCommonOptions {
