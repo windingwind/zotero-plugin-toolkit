@@ -46,20 +46,19 @@
     "update-deps": "npm update --save"
   },
   "peerDependencies": {
-    "zotero-types": "^3.0.5"
+    "zotero-types": "^3.0.9"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.12.1",
     "@microsoft/api-documenter": "^7.26.3",
     "@microsoft/api-extractor": "^7.48.1",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
     "@types/react-intl": "^3.0.0",
     "eslint": "^9.17.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "prettier": "^3.4.2",
-    "react-intl": "^6.8.9",
     "release-it": "^17.11.0",
     "typescript": "^5.7.2"
   },
