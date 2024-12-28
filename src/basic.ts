@@ -252,7 +252,7 @@ export class BasicTool {
               try {
                 return typeof d === "object" ? JSON.stringify(d) : String(d);
               } catch {
-                _Zotero.debug(d);
+                _Zotero!.debug(d);
                 return "";
               }
             })

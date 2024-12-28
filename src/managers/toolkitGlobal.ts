@@ -38,10 +38,14 @@ export class ToolkitGlobal {
     let requireInit = false;
 
     if (!("_toolkitGlobal" in _Zotero)) {
+      // eslint-disable-next-line ts/ban-ts-comment
+      // @ts-ignore - add global property
       _Zotero._toolkitGlobal = new ToolkitGlobal();
       requireInit = true;
     }
 
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-ignore - add global property
     const currentGlobal = _Zotero._toolkitGlobal as ToolkitGlobal;
     if (currentGlobal.currentWindow !== _Zotero.getMainWindow()) {
       checkWindowDependentModules(currentGlobal);
