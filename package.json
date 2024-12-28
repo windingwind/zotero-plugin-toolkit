@@ -46,7 +46,7 @@
     "update-deps": "npm update --save"
   },
   "peerDependencies": {
-    "zotero-types": "^3.0.10-beta.0"
+    "zotero-types": "^3.0.10"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.12.1",
