@@ -47,7 +47,7 @@ const icons: { [key: string | number]: string } = {
  */
 export class ProgressWindowHelper {
   win: Zotero.ProgressWindow;
-  private lines: Zotero.ItemProgress[];
+  private lines: _ZoteroTypes.ItemProgress[];
   private closeTime: number | undefined;
 
   /**

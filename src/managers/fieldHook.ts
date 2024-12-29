@@ -31,7 +31,7 @@ export class FieldHookManager extends ManagerTool {
     for (const type of Object.keys(this.patchHelpers) as Array<PatchType>) {
       const helper = this.patchHelpers[type];
       helper.setData({
-        target: this.getGlobal("Zotero").Item.prototype as typeof Zotero.Item,
+        target: this.getGlobal("Zotero").Item.prototype,
         funcSign: type,
         patcher: (original) =>
           function (field: string | number, ...args: any[]) {

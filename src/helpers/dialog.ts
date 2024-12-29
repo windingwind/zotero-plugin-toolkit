@@ -549,9 +549,9 @@ const style = `
 
 interface DialogData {
   [key: string | number | symbol]: any;
-  loadLock?: _ZoteroTypes.PromiseObject;
+  loadLock?: _ZoteroTypes.Promise.PromiseObject;
   loadCallback?: () => void;
-  unloadLock?: _ZoteroTypes.PromiseObject;
+  unloadLock?: _ZoteroTypes.Promise.PromiseObject;
   unloadCallback?: () => void;
   beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
