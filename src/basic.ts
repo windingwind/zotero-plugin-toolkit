@@ -34,9 +34,16 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
-      debug: ToolkitGlobal.getInstance()?.debugBridge || {
-        disableDebugBridgePassword: false,
-        password: "",
+      // We will remove this in the future, for now just let it be lazy loaded.
+      get debug() {
+        if (this._debug) {
+          return this._debug;
+        }
+        this._debug = ToolkitGlobal.getInstance()?.debugBridge || {
+          disableDebugBridgePassword: false,
+          password: "",
+        };
+        return this._debug;
       },
       api: {
         pluginID: "zotero-plugin-toolkit@windingwind.com",
@@ -451,6 +458,7 @@ export interface BasicOptions {
     disableDebugBridgePassword: boolean;
     password: string;
   };
+  _debug?: BasicOptions["debug"];
   api: {
     pluginID: string;
   };

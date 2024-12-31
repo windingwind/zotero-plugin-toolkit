@@ -66,6 +66,7 @@ export class ToolkitGlobal {
  * @param instance ToolkitGlobal instance
  */
 function initializeModules(instance: ToolkitGlobal) {
+  new BasicTool().log("Initializing ToolkitGlobal modules");
   setModule(instance, "prompt", {
     _ready: false,
     instance: undefined,

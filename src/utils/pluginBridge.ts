@@ -3,6 +3,10 @@ import { BasicTool } from "../basic.js";
 
 /**
  * Plugin bridge. Install plugin from zotero://plugin
+ *
+ * @deprecated Since this is a temporary solution for debugging, it is not recommended to use.
+ * The zotero-plugin-scaffold no longer need this.
+ *
  * @example
  * Install plugin from url, with minimal Zotero version requirement.
  * ```text

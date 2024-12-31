@@ -4,6 +4,9 @@ import ToolkitGlobal from "../managers/toolkitGlobal.js";
 /**
  * Debug bridge.
  *
+ * @deprecated Since this is a temporary solution for debugging, it is not recommended to use.
+ * The zotero-plugin-scaffold no longer need this.
+ *
  * @remarks
  * Global variables: Zotero, window(main window).
  *
