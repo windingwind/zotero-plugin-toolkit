@@ -30,7 +30,7 @@ export class VirtualizedTableHelper extends BasicTool {
     this.VirtualizedTable = _require("components/virtualized-table");
     this.IntlProvider = _require("react-intl").IntlProvider;
     this.props = {
-      id: `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
+      id: `vtable-${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
       getRowCount: () => 0,
     };
     this.localeStrings = Zotero.Intl.strings;

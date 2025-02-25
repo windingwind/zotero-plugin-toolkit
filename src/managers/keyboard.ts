@@ -11,7 +11,7 @@ export class KeyboardManager extends ManagerTool {
   private id: string;
   constructor(base?: BasicTool | BasicOptions) {
     super(base);
-    this.id = Zotero.Utilities.randomString();
+    this.id = `kbd-${Zotero.Utilities.randomString()}`;
     this._ensureAutoUnregisterAll();
 
     this.addListenerCallback("onMainWindowLoad", this.initKeyboardListener);

@@ -103,7 +103,7 @@ export class DialogHelper extends UITool {
       callback?: (ev: Event) => any;
     } = {},
   ) {
-    id = id || `${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
+    id = id || `btn-${Zotero.Utilities.randomString()}-${new Date().getTime()}`;
     this.elementProps.children![
       this.elementProps.children!.length - 1
     ].children!.push({
@@ -202,7 +202,7 @@ export class DialogHelper extends UITool {
   ) {
     this.window = openDialog(
       this,
-      `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
+      `dialog-${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
       title,
       this.elementProps,
       this.dialogData,

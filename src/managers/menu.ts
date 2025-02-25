@@ -205,7 +205,7 @@ export class MenuManager extends ManagerTool {
   }
 
   unregister(menuId: string) {
-    this.getGlobal("document").querySelector(`#${menuId}`)?.remove();
+    this.getGlobal("document").getElementById(`${menuId}`)?.remove();
   }
 
   unregisterAll(): void {
