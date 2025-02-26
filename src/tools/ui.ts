@@ -195,14 +195,14 @@ export class UITool extends BasicTool {
       elem = fragElem;
     } else {
       let realElem = (props.id &&
-        (props.checkExistenceParent
-          ? props.checkExistenceParent
-          : doc
-        ).querySelector(`#${props.id}`)) as
-        | HTMLElement
-        | SVGElement
-        | XULElement
-        | undefined;
+          (props.checkExistenceParent
+                  ? props.checkExistenceParent
+                  : doc
+          ).querySelector(`#${props.id}`)) as
+          | HTMLElement
+          | SVGElement
+          | XULElement
+          | undefined;
       if (realElem && props.ignoreIfExists) {
         return realElem;
       }
