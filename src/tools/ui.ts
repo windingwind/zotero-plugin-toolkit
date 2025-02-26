@@ -194,10 +194,15 @@ export class UITool extends BasicTool {
       const fragElem = doc.createDocumentFragment();
       elem = fragElem;
     } else {
-      let realElem = props.id
-          ? (props.checkExistenceParent?.ownerDocument || props.checkExistenceParent as unknown as Document || doc).getElementById(props.id)
-          : undefined;
-
+      let realElem = (props.id &&
+          (props.checkExistenceParent
+                  ? props.checkExistenceParent
+                  : doc
+          ).querySelector(`#${props.id}`)) as
+          | HTMLElement
+          | SVGElement
+          | XULElement
+          | undefined;
       if (realElem && props.ignoreIfExists) {
         return realElem;
       }

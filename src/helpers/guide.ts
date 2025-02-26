@@ -241,7 +241,7 @@ class Guide {
       doc.documentElement.append(doc.importNode(content, true));
     }
 
-    this._panel = doc.getElementById(`${this._id}`)!;
+    this._panel = doc.querySelector(`#${this._id}`)!;
     this._header = this._panel.querySelector(".guide-panel-header")!;
     this._body = this._panel.querySelector(".guide-panel-body")!;
     this._footer = this._panel.querySelector(".guide-panel-footer")!;
