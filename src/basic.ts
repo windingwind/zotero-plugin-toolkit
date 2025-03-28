@@ -85,7 +85,7 @@ export class BasicTool {
    * @alpha
    * @param k
    */
-  getGlobal(k: "Zotero_Tabs"): typeof Zotero_Tabs;
+  getGlobal(k: "Zotero_Tabs"): _ZoteroTypes.Zotero_Tabs;
   /**
    * @alpha
    * @param k
@@ -120,7 +120,7 @@ export class BasicTool {
    * @alpha
    * @param k
    */
-  getGlobal(k: "ZoteroContextPane"): typeof ZoteroContextPane;
+  getGlobal(k: "ZoteroContextPane"): _ZoteroTypes.ZoteroContextPane;
   /**
    * @alpha
    * @param k
