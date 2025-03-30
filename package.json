@@ -1,7 +1,7 @@
 {
   "name": "zotero-plugin-toolkit",
   "type": "module",
-  "version": "5.0.0-0",
+  "version": "5.0.0-1",
   "description": "Toolkit for Zotero plugins",
   "author": "windingwind",
   "license": "MIT",
