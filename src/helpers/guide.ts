@@ -117,7 +117,7 @@ class Guide {
 
   initialized!: boolean;
 
-  _cachedMasks = [] as WeakRef<Element>[];
+  _cachedMasks = [] as WeakRef<HTMLElement | SVGElement>[];
 
   get content() {
     return this._window.MozXULElement.parseXULToFragment(`
@@ -191,13 +191,13 @@ class Guide {
     const step = this.currentStep;
     if (!step?.element) return undefined;
 
-    let elem: Element;
+    let elem: Element | undefined;
     if (typeof step.element === "function") {
       elem = step.element();
     } else if (typeof step.element === "string") {
-      elem = document.querySelector(step.element)!;
+      elem = this._window.document.querySelector(step.element)!;
     } else if (!step.element) {
-      elem = document.documentElement;
+      elem = this._window.document.documentElement || undefined;
     } else {
       elem = step.element;
     }
@@ -238,7 +238,7 @@ class Guide {
 
     const content = this.content;
     if (content) {
-      doc.documentElement.append(doc.importNode(content, true));
+      doc.documentElement?.append(doc.importNode(content, true));
     }
 
     this._panel = doc.querySelector(`#${this._id}`)!;
@@ -301,8 +301,8 @@ class Guide {
     let position = step.position || "after_start";
     if (position === "center") {
       position = "overlap";
-      x = window.innerWidth / 2;
-      y = window.innerHeight / 2;
+      x = this._window.innerWidth / 2;
+      y = this._window.innerHeight / 2;
     }
     this._panel.openPopup(
       elem,
@@ -362,7 +362,7 @@ class Guide {
       this._panel.querySelectorAll(
         ".guide-panel-button",
       ) as NodeListOf<HTMLButtonElement>
-    ).forEach((elem) => {
+    ).forEach((elem: HTMLButtonElement) => {
       elem.hidden = true;
       elem.disabled = false;
     });
@@ -444,7 +444,7 @@ class Guide {
     const doc = targetElement?.ownerDocument || this._window.document;
     const NS = "http://www.w3.org/2000/svg";
 
-    const svg = doc.createElementNS(NS, "svg");
+    const svg = doc.createElementNS(NS, "svg") as unknown as SVGSVGElement;
     svg.id = "guide-panel-mask";
     svg.style.position = "fixed";
     svg.style.top = "0";
@@ -488,7 +488,7 @@ class Guide {
     svg.appendChild(maskedRect);
 
     this._cachedMasks.push(new WeakRef(svg));
-    doc.documentElement.appendChild(svg);
+    doc.documentElement?.appendChild(svg);
   }
 
   _removeMask() {

@@ -278,7 +278,7 @@ function openDialog(
   dialogData.loadLock?.promise
     .then(() => {
       // Set title
-      win.document.head.appendChild(
+      win.document.head!.appendChild(
         dialogHelper.createElement(win.document, "title", {
           properties: { innerText: title },
           attributes: { "data-l10n-id": title },
@@ -289,7 +289,7 @@ function openDialog(
         l10nFiles = [l10nFiles];
       }
       l10nFiles.forEach((file) => {
-        win.document.head.appendChild(
+        win.document.head!.appendChild(
           dialogHelper.createElement(win.document, "link", {
             properties: {
               rel: "localization",
@@ -320,11 +320,11 @@ function openDialog(
             },
           ],
         },
-        win.document.head,
+        win.document.head!,
       );
       replaceElement(elementProps, dialogHelper);
       // Create element
-      win.document.body.appendChild(
+      win.document.body!.appendChild(
         dialogHelper.createElement(win.document, "fragment", {
           children: [elementProps],
         }),

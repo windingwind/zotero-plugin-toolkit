@@ -4,7 +4,7 @@
     "lib": ["ESNext", "DOM"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "types": ["zotero-types/entries/mainWindow"],
+    "types": ["zotero-types/entries/shared"],
     "strict": true,
     "declaration": true,
     "declarationMap": true,

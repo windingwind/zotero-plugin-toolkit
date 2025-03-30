@@ -1,4 +1,7 @@
 /* eslint-disable no-restricted-globals */
+/// <reference lib="webworker" />
+/// <reference lib="dom" />
+
 function randomJobID() {
   return `${Math.random().toString(36).substring(2, 15)}-${Date.now()}`;
 }
