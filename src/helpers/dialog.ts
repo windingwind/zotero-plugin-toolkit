@@ -517,6 +517,9 @@ function replaceElement(
 }
 
 const style = `
+html {
+  color-scheme: light dark;
+}
 .zotero-text-link {
   -moz-user-focus: normal;
   color: -moz-nativehyperlinktext;
