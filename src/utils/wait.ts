@@ -19,6 +19,8 @@ export function waitUntil(
   }, interval);
 }
 
+// For compatibility
+export const waitUtilAsync = waitUntilAsync;
 export function waitUntilAsync(
   condition: () => boolean,
   interval = 100,
