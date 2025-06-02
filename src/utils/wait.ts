@@ -19,7 +19,9 @@ export function waitUntil(
   }, interval);
 }
 
-export function waitUtilAsync(
+// For compatibility
+export const waitUtilAsync = waitUntilAsync;
+export function waitUntilAsync(
   condition: () => boolean,
   interval = 100,
   timeout = 10000,
