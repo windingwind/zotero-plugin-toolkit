@@ -2,80 +2,10 @@
 
 [Home](./index.md) &gt; [zotero-plugin-toolkit](./zotero-plugin-toolkit.md) &gt; [wait](./zotero-plugin-toolkit.wait.md) &gt; [waitUtilAsync](./zotero-plugin-toolkit.wait.waitutilasync.md)
 
-## wait.waitUtilAsync() function
+## wait.waitUtilAsync variable
 
 **Signature:**
 
 ```typescript
-export declare function waitUtilAsync(condition: () => boolean, interval?: number, timeout?: number): Promise<void>;
+waitUtilAsync: typeof waitUntilAsync
 ```
-
-## Parameters
-
-<table><thead><tr><th>
-
-Parameter
-
-
-</th><th>
-
-Type
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-condition
-
-
-</td><td>
-
-() =&gt; boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-interval
-
-
-</td><td>
-
-number
-
-
-</td><td>
-
-_(Optional)_
-
-
-</td></tr>
-<tr><td>
-
-timeout
-
-
-</td><td>
-
-number
-
-
-</td><td>
-
-_(Optional)_
-
-
-</td></tr>
-</tbody></table>
-**Returns:**
-
-Promise&lt;void&gt;
-

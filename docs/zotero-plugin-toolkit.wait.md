@@ -37,7 +37,31 @@ Description
 </td></tr>
 <tr><td>
 
-[waitUtilAsync(condition, interval, timeout)](./zotero-plugin-toolkit.wait.waitutilasync.md)
+[waitUntilAsync(condition, interval, timeout)](./zotero-plugin-toolkit.wait.waituntilasync.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Variables
+
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[waitUtilAsync](./zotero-plugin-toolkit.wait.waitutilasync.md)
 
 
 </td><td>
