@@ -46,21 +46,21 @@
     "update-deps": "npm update --save"
   },
   "peerDependencies": {
-    "zotero-types": "^4.0.0-beta.4"
+    "zotero-types": "^4.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.12.1",
-    "@microsoft/api-documenter": "^7.26.18",
-    "@microsoft/api-extractor": "^7.52.2",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.1",
+    "@antfu/eslint-config": "^3.16.0",
+    "@microsoft/api-documenter": "^7.26.27",
+    "@microsoft/api-extractor": "^7.52.8",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@types/react-intl": "^3.0.0",
-    "eslint": "^9.17.0",
+    "eslint": "^9.28.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.11",
-    "prettier": "^3.4.2",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.5.3",
     "release-it": "^17.11.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.3"
   },
   "publishConfig": {
     "access": "public",
