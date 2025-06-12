@@ -33,7 +33,6 @@ export class PluginBridge {
   }
 
   private initializePluginBridge() {
-    // @ts-expect-error has import
     const { AddonManager } = ChromeUtils.import(
       "resource://gre/modules/AddonManager.jsm",
     );
