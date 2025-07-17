@@ -58,9 +58,9 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    if (typeof globalThis.ChromeUtils?.import !== "undefined") {
-      const { ConsoleAPI } = ChromeUtils.import(
-        "resource://gre/modules/Console.jsm",
+    if (typeof globalThis.ChromeUtils?.importESModule !== "undefined") {
+      const { ConsoleAPI } = ChromeUtils.importESModule(
+        "resource://gre/modules/Console.sys.mjs",
       );
       this._console = new ConsoleAPI({
         consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
