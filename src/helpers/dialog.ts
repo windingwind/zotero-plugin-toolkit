@@ -212,6 +212,15 @@ export class DialogHelper extends UITool {
   }
 }
 
+function createDeferred() {
+  let resolve!: () => void, reject!: (reason?: any) => void;
+  const promise = new Promise<void>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { resolve, reject, promise };
+}
+
 function openDialog(
   dialogHelper: DialogHelper,
   targetId: string,
@@ -234,37 +243,23 @@ function openDialog(
     fitContent: true,
   },
 ) {
-  const Zotero = dialogHelper.getGlobal("Zotero");
   dialogData = dialogData || {};
+  dialogData.loadLock ??= createDeferred();
+  dialogData.unloadLock ??= createDeferred();
 
   // Make windowfeature string
-  if (!dialogData.loadLock) {
-    dialogData.loadLock = Zotero.Promise.defer();
-  }
-  if (!dialogData.unloadLock) {
-    dialogData.unloadLock = Zotero.Promise.defer();
-  }
-  let featureString = `resizable=${windowFeatures.resizable ? "yes" : "no"},`;
-  if (windowFeatures.width || windowFeatures.height) {
-    featureString += `width=${windowFeatures.width || 100},height=${
-      windowFeatures.height || 100
-    },`;
-  }
-  if (windowFeatures.left) {
-    featureString += `left=${windowFeatures.left},`;
-  }
-  if (windowFeatures.top) {
-    featureString += `top=${windowFeatures.top},`;
-  }
-  if (windowFeatures.centerscreen) {
-    featureString += "centerscreen,";
-  }
-  if (windowFeatures.noDialogMode) {
-    featureString += "dialog=no,";
-  }
-  if (windowFeatures.alwaysRaised) {
-    featureString += "alwaysRaised=yes,";
-  }
+  const featureString = [
+    `resizable=${windowFeatures.resizable ? "yes" : "no"}`,
+    windowFeatures.width && `width=${windowFeatures.width}`,
+    windowFeatures.height && `height=${windowFeatures.height}`,
+    windowFeatures.left && `left=${windowFeatures.left}`,
+    windowFeatures.top && `top=${windowFeatures.top}`,
+    windowFeatures.centerscreen && "centerscreen",
+    windowFeatures.noDialogMode && "dialog=no",
+    windowFeatures.alwaysRaised && "alwaysRaised=yes",
+  ]
+    .filter(Boolean)
+    .join(",");
 
   // Create window
   const win = dialogHelper.getGlobal("openDialog")(
@@ -275,109 +270,87 @@ function openDialog(
   ) as Window;
 
   // After load
-  dialogData.loadLock?.promise
-    .then(() => {
-      // Set title
-      win.document.head!.appendChild(
-        dialogHelper.createElement(win.document, "title", {
-          properties: { innerText: title },
-          attributes: { "data-l10n-id": title },
-        }),
-      );
-      let l10nFiles = dialogData.l10nFiles || [];
-      if (typeof l10nFiles === "string") {
-        l10nFiles = [l10nFiles];
-      }
-      l10nFiles.forEach((file) => {
-        win.document.head!.appendChild(
-          dialogHelper.createElement(win.document, "link", {
+  const onLoad = async () => {
+    // Set title
+    win.document.title = title;
+
+    // Add locale files
+    const l10nFiles = [dialogData.l10nFiles || []].flat();
+    for (const file of l10nFiles) {
+      const link = dialogHelper.createElement(win.document, "link", {
+        properties: { rel: "localization", href: file },
+      });
+      win.document.head.appendChild(link);
+    }
+
+    // Add style according to Zotero prefs
+    // For custom select(menulist) and a link
+    dialogHelper.appendElement(
+      {
+        tag: "fragment",
+        children: [
+          {
+            tag: "style",
             properties: {
-              rel: "localization",
-              href: file,
+              // eslint-disable-next-line ts/no-use-before-define
+              innerHTML: style,
             },
-          }),
-        );
-      });
-      // Add style according to Zotero prefs
-      // For custom select(menulist) and a link
-      dialogHelper.appendElement(
-        {
-          tag: "fragment",
-          children: [
-            {
-              tag: "style",
-              properties: {
-                // eslint-disable-next-line ts/no-use-before-define
-                innerHTML: style,
-              },
+          },
+          {
+            tag: "link",
+            properties: {
+              rel: "stylesheet",
+              href: "chrome://zotero-platform/content/zotero.css",
             },
-            {
-              tag: "link",
-              properties: {
-                rel: "stylesheet",
-                href: "chrome://zotero-platform/content/zotero.css",
-              },
-            },
-          ],
-        },
-        win.document.head!,
-      );
-      replaceElement(elementProps, dialogHelper);
-      // Create element
-      win.document.body!.appendChild(
-        dialogHelper.createElement(win.document, "fragment", {
-          children: [elementProps],
-        }),
-      );
-      // Load data-binding
-      (
-        Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
-      ).forEach((elem: Element) => {
-        const bindKey = elem.getAttribute("data-bind");
-        const bindAttr = elem.getAttribute("data-attr");
-        const bindProp = elem.getAttribute("data-prop");
-        if (bindKey && dialogData && dialogData[bindKey]) {
-          if (bindProp) {
-            (elem as any)[bindProp] = dialogData[bindKey];
-          } else {
-            elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
-          }
-        }
-      });
-      // Resize window
-      if (windowFeatures.fitContent) {
-        setTimeout(() => {
-          (win as any).sizeToContent();
-        }, 300);
-      }
-      win.focus();
-    })
-    .then(() => {
-      // Custom load callback
-      dialogData?.loadCallback && dialogData.loadCallback();
-    });
-  dialogData.unloadLock.promise.then(() => {
-    // Custom unload callback
-    dialogData?.unloadCallback && dialogData.unloadCallback();
-  });
+          },
+        ],
+      },
+      win.document.head!,
+    );
 
-  // Wait for window loading to resolve the lock promise
-  win.addEventListener(
-    "DOMContentLoaded",
-    function onWindowLoad(_ev: Event) {
-      (win as any).arguments[0]?.loadLock?.resolve();
-      win.removeEventListener("DOMContentLoaded", onWindowLoad, false);
-    },
-    false,
-  );
+    // Create element
+    replaceElement(elementProps, dialogHelper);
+    win.document.body!.appendChild(
+      dialogHelper.createElement(win.document, "fragment", {
+        children: [elementProps],
+      }),
+    );
 
-  // Wait for window unload. Use beforeunload to access elements.
-  win.addEventListener("beforeunload", function onWindowBeforeUnload(_ev) {
-    // Update data-binding
+    // Load data-binding
     (
       Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
     ).forEach((elem: Element) => {
-      const dialogData = (this.window as any).arguments[0];
+      const bindKey = elem.getAttribute("data-bind");
+      const bindAttr = elem.getAttribute("data-attr");
+      const bindProp = elem.getAttribute("data-prop");
+      if (bindKey && dialogData && dialogData[bindKey]) {
+        if (bindProp) {
+          (elem as any)[bindProp] = dialogData[bindKey];
+        } else {
+          elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
+        }
+      }
+    });
+
+    // Resize window
+    if (windowFeatures.fitContent) {
+      setTimeout(() => {
+        win.sizeToContent();
+      }, 300);
+    }
+    win.focus();
+
+    dialogData.loadCallback?.();
+    dialogData.loadLock!.resolve();
+  };
+
+  const beforeUnolad = () => {
+    // Update data-binding
+    const attrs = Array.from(
+      win.document.querySelectorAll("*[data-bind]"),
+    ) as Element[];
+    attrs.forEach((elem: Element) => {
+      // const dialogData = (window as any).arguments[0];
       const bindKey = elem.getAttribute("data-bind");
       const bindAttr = elem.getAttribute("data-attr");
       const bindProp = elem.getAttribute("data-prop");
@@ -389,24 +362,24 @@ function openDialog(
         }
       }
     });
-    this.window.removeEventListener(
-      "beforeunload",
-      onWindowBeforeUnload,
-      false,
-    );
-    dialogData?.beforeUnloadCallback && dialogData.beforeUnloadCallback();
-  });
 
-  // Wait for window unload to resolve the lock promise
-  win.addEventListener("unload", function onWindowUnload(_ev) {
-    if ((this.window as any).arguments[0]?.loadLock.promise.isPending()) {
-      return;
-    }
-    (this.window as any).arguments[0]?.unloadLock?.resolve();
-    this.window.removeEventListener("unload", onWindowUnload, false);
-  });
+    // Custom beforeUnload hook
+    dialogData?.beforeUnloadCallback?.();
+  };
+
+  const onUnload = () => {
+    dialogData.unloadCallback?.();
+    dialogData.unloadLock!.resolve();
+  };
+
+  win.addEventListener("DOMContentLoaded", onLoad);
+  // Wait for window unload. Use beforeunload to access elements.
+  win.addEventListener("beforeunload", beforeUnolad);
+  win.addEventListener("unload", onUnload);
+
   if (win.document.readyState === "complete") {
-    (win as any).arguments[0]?.loadLock?.resolve();
+    dialogData.loadLock?.resolve();
+    (dialogData as any)._loaded = true;
   }
   return win;
 }
@@ -552,9 +525,17 @@ html {
 
 interface DialogData {
   [key: string | number | symbol]: any;
-  loadLock?: _ZoteroTypes.Promise.PromiseObject;
+  loadLock?: {
+    resolve: () => void;
+    reject: (reason?: any) => void;
+    promise: Promise<void>;
+  };
   loadCallback?: () => void;
-  unloadLock?: _ZoteroTypes.Promise.PromiseObject;
+  unloadLock?: {
+    resolve: () => void;
+    reject: (reason?: any) => void;
+    promise: Promise<void>;
+  };
   unloadCallback?: () => void;
   beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
