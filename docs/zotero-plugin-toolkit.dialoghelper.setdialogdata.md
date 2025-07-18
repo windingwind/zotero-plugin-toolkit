@@ -60,9 +60,9 @@ The data-binding values are in `dialogData`<!-- -->.
 ```ts
 interface DialogData {
   [key: string | number | symbol]: any;
-  loadLock?: _ZoteroTypes.PromiseObject; // resolve after window load (auto-generated)
+  loadLock?: { promise: Promise<void>; resolve: () => void; isResolved: () => boolean }; // resolve after window load (auto-generated)
   loadCallback?: Function; // called after window load
-  unloadLock?: _ZoteroTypes.PromiseObject; // resolve after window unload (auto-generated)
+  unloadLock?: { promise: Promise<void>; resolve: () => void }; // resolve after window unload (auto-generated)
   unloadCallback?: Function; // called after window unload
   beforeUnloadCallback?: Function; // called before window unload when elements are accessable.
 }

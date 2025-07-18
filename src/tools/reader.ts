@@ -20,7 +20,7 @@ export class ReaderTool extends BasicTool {
     let delayCount = 0;
     const checkPeriod = 50;
     while (!reader && delayCount * checkPeriod < waitTime) {
-      await Zotero.Promise.delay(checkPeriod);
+      await new Promise((resolve) => setTimeout(resolve, checkPeriod));
       reader = Zotero.Reader.getByTabID(Zotero_Tabs.selectedID);
       delayCount++;
     }

@@ -154,9 +154,9 @@ export class DialogHelper extends UITool {
    * ```ts
    * interface DialogData {
    *   [key: string | number | symbol]: any;
-   *   loadLock?: _ZoteroTypes.PromiseObject; // resolve after window load (auto-generated)
+   *   loadLock?: { promise: Promise<void>; resolve: () => void; isResolved: () => boolean }; // resolve after window load (auto-generated)
    *   loadCallback?: Function; // called after window load
-   *   unloadLock?: _ZoteroTypes.PromiseObject; // resolve after window unload (auto-generated)
+   *   unloadLock?: { promise: Promise<void>; resolve: () => void }; // resolve after window unload (auto-generated)
    *   unloadCallback?: Function; // called after window unload
    *   beforeUnloadCallback?: Function; // called before window unload when elements are accessable.
    * }
@@ -234,15 +234,33 @@ function openDialog(
     fitContent: true,
   },
 ) {
-  const Zotero = dialogHelper.getGlobal("Zotero");
   dialogData = dialogData || {};
 
   // Make windowfeature string
   if (!dialogData.loadLock) {
-    dialogData.loadLock = Zotero.Promise.defer();
+    let loadResolve: () => void;
+    let isLoadResolved = false;
+    const loadPromise = new Promise<void>((resolve) => {
+      loadResolve = resolve;
+    });
+    loadPromise.then(() => {
+      isLoadResolved = true;
+    });
+    dialogData.loadLock = {
+      promise: loadPromise,
+      resolve: loadResolve!,
+      isResolved: () => isLoadResolved,
+    };
   }
   if (!dialogData.unloadLock) {
-    dialogData.unloadLock = Zotero.Promise.defer();
+    let unloadResolve: () => void;
+    const unloadPromise = new Promise<void>((resolve) => {
+      unloadResolve = resolve;
+    });
+    dialogData.unloadLock = {
+      promise: unloadPromise,
+      resolve: unloadResolve!,
+    };
   }
   let featureString = `resizable=${windowFeatures.resizable ? "yes" : "no"},`;
   if (windowFeatures.width || windowFeatures.height) {
@@ -356,7 +374,7 @@ function openDialog(
       // Custom load callback
       dialogData?.loadCallback && dialogData.loadCallback();
     });
-  dialogData.unloadLock.promise.then(() => {
+  dialogData.unloadLock?.promise.then(() => {
     // Custom unload callback
     dialogData?.unloadCallback && dialogData.unloadCallback();
   });
@@ -399,7 +417,7 @@ function openDialog(
 
   // Wait for window unload to resolve the lock promise
   win.addEventListener("unload", function onWindowUnload(_ev) {
-    if ((this.window as any).arguments[0]?.loadLock.promise.isPending()) {
+    if (!(this.window as any).arguments[0]?.loadLock?.isResolved()) {
       return;
     }
     (this.window as any).arguments[0]?.unloadLock?.resolve();
@@ -552,9 +570,16 @@ html {
 
 interface DialogData {
   [key: string | number | symbol]: any;
-  loadLock?: _ZoteroTypes.Promise.PromiseObject;
+  loadLock?: {
+    promise: Promise<void>;
+    resolve: () => void;
+    isResolved: () => boolean;
+  };
   loadCallback?: () => void;
-  unloadLock?: _ZoteroTypes.Promise.PromiseObject;
+  unloadLock?: {
+    promise: Promise<void>;
+    resolve: () => void;
+  };
   unloadCallback?: () => void;
   beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
