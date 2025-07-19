@@ -527,9 +527,9 @@ export function _importESModule(path: string): any {
     return ChromeUtils.importESModule(path);
   }
 
-  // If matching *.sys.mjs, convert to *.mjs
+  // If matching *.sys.mjs, convert to *.jsm
   if (path.endsWith(".sys.mjs")) {
-    path = path.replace(/\.sys\.mjs$/, ".mjs");
+    path = path.replace(/\.sys\.mjs$/, ".jsm");
   }
   return ChromeUtils.import(path);
 }
