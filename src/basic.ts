@@ -58,17 +58,20 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    if (
-      typeof globalThis.ChromeUtils?.importESModule !== "undefined" ||
-      typeof globalThis.ChromeUtils?.import !== "undefined"
-    ) {
-      const { ConsoleAPI } = _importESModule(
-        "resource://gre/modules/Console.sys.mjs",
-      );
-      this._console = new ConsoleAPI({
-        consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
-      });
-    }
+    try {
+      if (
+        typeof globalThis.ChromeUtils?.importESModule !== "undefined" ||
+        typeof globalThis.ChromeUtils?.import !== "undefined"
+      ) {
+        const { ConsoleAPI } = _importESModule(
+          "resource://gre/modules/Console.sys.mjs",
+        );
+        this._console = new ConsoleAPI({
+          consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
+        });
+      }
+    } catch {}
+
     this.updateOptions(data);
   }
 
@@ -521,10 +524,10 @@ export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
 
 // Make compatible import between fx128 (import jsm) and fx140 (importESModule mjs)
 export function _importESModule(path: string): any {
-  const platformVersion = Zotero.platformMajorVersion;
-
-  if (platformVersion >= 140) {
-    return ChromeUtils.importESModule(path);
+  // Since the `Zotero` or `Services` might not be available,
+  // we directly check `ChromeUtils` for import.
+  if (typeof ChromeUtils.import === "undefined") {
+    return ChromeUtils.importESModule(path, { global: "contextual" });
   }
 
   // If matching *.sys.mjs, convert to *.jsm
