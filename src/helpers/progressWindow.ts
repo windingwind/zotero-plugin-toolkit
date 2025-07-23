@@ -171,11 +171,7 @@ export class ProgressWindowHelper {
       this.lines.forEach((line) => {
         const box = (line as any)._image as XUL.Box;
         const icon = box.dataset.itemType;
-        if (
-          icon &&
-          icon.startsWith("chrome://") &&
-          !box.style.backgroundImage.includes("progress_arcs")
-        ) {
+        if (icon && !box.style.backgroundImage.includes("progress_arcs")) {
           box.style.backgroundImage = `url(${box.dataset.itemType})`;
         }
       });
