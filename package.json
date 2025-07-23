@@ -41,7 +41,7 @@
     "build:docs": "api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
     "prettier": "prettier src --write",
     "lint:eslint": "eslint . --fix",
-    "release": "release-it",
+    "release": "bumpp --execute \"npm run build\"",
     "prepare": "husky",
     "update-deps": "npm update --save"
   },
@@ -52,11 +52,11 @@
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/react-intl": "^3.0.0",
+    "bumpp": "^10.2.0",
     "eslint": "^9.28.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",
-    "release-it": "^17.11.0",
     "typescript": "^5.8.3",
     "zotero-types": ">=4.0.0"
   },
