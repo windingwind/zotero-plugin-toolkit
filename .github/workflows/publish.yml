@@ -39,6 +39,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
       - name: Sync to GitHub Release
-        run: npm run release -- --no-increment --no-git --github.release --ci --VV
+        run: npx changelogithub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
