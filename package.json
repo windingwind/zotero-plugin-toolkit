@@ -39,7 +39,7 @@
     "build": "npm run prettier && npm run build:tsc && npm run build:docs",
     "prebuild": "node scripts/generate-version.js",
     "build:tsc": "npm run prebuild && tsc",
-    "build:docs": "api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
+    "build:docs": "api-extractor run --local --verbose && api-documenter generate --input-folder ./temp --output-folder ./docs",
     "prettier": "prettier src --write",
     "lint:eslint": "eslint . --fix",
     "release": "bumpp --execute \"npm run build\"",

@@ -69,7 +69,7 @@
    *
    * DEFAULT VALUE: "crlf"
    */
-  // "newlineKind": "crlf",
+  "newlineKind": "lf",
 
   /**
    * Set to true when invoking API Extractor's test harness. When `testMode` is true, the `toolVersion` field in the
