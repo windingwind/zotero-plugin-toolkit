@@ -25,6 +25,8 @@ import {
  * To minimize your plugin, import the modules you need manually.
  */
 class ZoteroToolkit extends BasicTool {
+  static _version = BasicTool._version;
+
   UI = new UITool(this);
   Reader = new ReaderTool(this);
   ExtraField = new ExtraFieldTool(this);

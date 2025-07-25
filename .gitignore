@@ -5,3 +5,5 @@ temp
 dist
 *.tgz
 .vscode
+src/version.ts
+src/version.ts

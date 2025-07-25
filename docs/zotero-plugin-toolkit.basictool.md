@@ -113,6 +113,46 @@ _(Optional)_
 </td></tr>
 <tr><td>
 
+[\_version](./zotero-plugin-toolkit.basictool._version.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Get version - checks subclass first, then falls back to parent
+
+
+</td></tr>
+<tr><td>
+
+[\_version](./zotero-plugin-toolkit.basictool._version.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [basicOptions](./zotero-plugin-toolkit.basictool.basicoptions.md)
 
 

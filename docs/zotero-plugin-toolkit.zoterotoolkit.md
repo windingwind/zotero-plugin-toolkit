@@ -76,6 +76,25 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[\_version](./zotero-plugin-toolkit.zoterotoolkit._version.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [Clipboard](./zotero-plugin-toolkit.zoterotoolkit.clipboard.md)
 
 

@@ -35,9 +35,10 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "tsc --watch",
+    "dev": "npm run prebuild && tsc --watch",
     "build": "npm run prettier && npm run build:tsc && npm run build:docs",
-    "build:tsc": "tsc",
+    "prebuild": "node scripts/generate-version.js",
+    "build:tsc": "npm run prebuild && tsc",
     "build:docs": "api-extractor run --local --verbose && api-documenter markdown --input-folder ./temp --output-folder ./docs",
     "prettier": "prettier src --write",
     "lint:eslint": "eslint . --fix",

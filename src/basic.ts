@@ -1,5 +1,7 @@
 import type { FunctionNamesOf } from "./typings/basic.js";
+
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
+import { VERSION } from "./version.js";
 
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
@@ -17,6 +19,15 @@ export class BasicTool {
    * @deprecated Use `patcherManager` instead.
    */
   protected readonly patchSign: string = "zotero-plugin-toolkit@3.0.0";
+
+  static _version = VERSION;
+
+  /**
+   * Get version - checks subclass first, then falls back to parent
+   */
+  get _version() {
+    return VERSION;
+  }
 
   public get basicOptions(): BasicOptions {
     return this._basicOptions;
@@ -516,6 +527,8 @@ export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
       const _origin = new cls(...args);
       if (_origin instanceof BasicTool) {
         _origin.updateOptions(options);
+      } else {
+        _origin._version = BasicTool._version;
       }
       return _origin;
     },
