@@ -4,6 +4,8 @@
 
 This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npmjs.com/package/zotero-plugin-toolkit), which provides useful APIs for [Zotero](https://www.zotero.org/) plugin developers.
 
+> Zotero 8 is now supported. Use toolkit version `5.1.0` or later.
+
 [API Documentation](docs/index.md)
 
 ## Modules
@@ -14,7 +16,7 @@ This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npm
 
   - [getGlobal](docs/zotero-plugin-toolkit.basictool-getglobal_12.md): Get global variables for bootstrapped plugin sandbox. `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`. With type hint.
   - [log](docs/zotero-plugin-toolkit.basictool.log.md): Output to both `Zotero.debug` and `console.log`. Can be customized depending on dev/prod environment.
-  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6 & 7+. See https://www.zotero.org/support/dev/zotero_7_for_developers
+  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6, 7, and 8. See https://www.zotero.org/support/dev/zotero_7_for_developers
 
 - Tools
 
