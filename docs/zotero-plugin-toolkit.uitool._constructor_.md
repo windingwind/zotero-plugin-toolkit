@@ -37,7 +37,7 @@ base
 
 </td><td>
 
-[BasicTool](./zotero-plugin-toolkit.basictool.md) \| BasicOptions
+[BasicTool](./zotero-plugin-toolkit.basictool.md) \| [BasicOptions](./zotero-plugin-toolkit.basicoptions.md)
 
 
 </td><td>
@@ -47,3 +47,4 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+

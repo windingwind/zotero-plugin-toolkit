@@ -81,6 +81,7 @@ _(Optional)_ true for default XUL namespace
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 DocumentFragment

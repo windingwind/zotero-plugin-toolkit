@@ -10,8 +10,8 @@ Constructs a new instance of the `KeyModifier` class
 
 ```typescript
 constructor(raw?: string | KeyboardEvent | KeyModifier, options?: {
-        useAccel?: boolean;
-    });
+    useAccel?: boolean;
+  });
 ```
 
 ## Parameters
@@ -65,3 +65,4 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+

@@ -47,6 +47,7 @@ e.g. string, number, object, ...
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

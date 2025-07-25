@@ -97,6 +97,7 @@ _(Optional)_ If current element will be recorded and maintained by toolkit. If n
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 HTMLElement \| XULElement \| SVGElement \| DocumentFragment

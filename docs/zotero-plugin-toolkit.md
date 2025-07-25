@@ -171,6 +171,28 @@ ProgressWindow helper.
 </td></tr>
 <tr><td>
 
+[Prompt](./zotero-plugin-toolkit.prompt.md)
+
+
+</td><td>
+
+Prompt for setting up or executing some commands quickly.
+
+`Shift + P` can show/hide its UI anywhere after registering commands.
+
+
+</td></tr>
+<tr><td>
+
+[PromptManager](./zotero-plugin-toolkit.promptmanager.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [ReaderTool](./zotero-plugin-toolkit.readertool.md)
 
 
@@ -226,6 +248,108 @@ VirtualizedTable helper.
 </td></tr>
 </tbody></table>
 
+## Abstract Classes
+
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ManagerTool](./zotero-plugin-toolkit.managertool.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\_importESModule(path)](./zotero-plugin-toolkit._importesmodule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getFieldHookFunc(field, unformatted, includeBaseMapped, item, original)](./zotero-plugin-toolkit.getfieldhookfunc.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFieldOfBaseHookFunc(field, baseField, original)](./zotero-plugin-toolkit.isfieldofbasehookfunc.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[makeHelperTool(cls, options)](./zotero-plugin-toolkit.makehelpertool.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[makeHelperTool(cls, options)](./zotero-plugin-toolkit.makehelpertool_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[setFieldHookFunc(field, value, loadIn, item, original)](./zotero-plugin-toolkit.setfieldhookfunc.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unregister(tools)](./zotero-plugin-toolkit.unregister.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
 ## Interfaces
 
 <table><thead><tr><th>
@@ -241,12 +365,93 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[BasicOptions](./zotero-plugin-toolkit.basicoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ColumnOptions](./zotero-plugin-toolkit.columnoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Command](./zotero-plugin-toolkit.command.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [ElementProps](./zotero-plugin-toolkit.elementprops.md)
 
 
 </td><td>
 
 `props` of `UITool.createElement`<!-- -->. See [UITool](./zotero-plugin-toolkit.uitool.md)
+
+
+</td></tr>
+<tr><td>
+
+[FragmentElementProps](./zotero-plugin-toolkit.fragmentelementprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[HTMLElementProps](./zotero-plugin-toolkit.htmlelementprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PromptGlobal](./zotero-plugin-toolkit.promptglobal.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[UIOptions](./zotero-plugin-toolkit.uioptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[XULElementProps](./zotero-plugin-toolkit.xulelementprops.md)
+
+
+</td><td>
 
 
 </td></tr>
@@ -275,3 +480,28 @@ Description
 
 </td></tr>
 </tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[MenuitemOptions](./zotero-plugin-toolkit.menuitemoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+

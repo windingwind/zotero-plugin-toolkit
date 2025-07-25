@@ -10,12 +10,12 @@ Change the line content
 
 ```typescript
 changeLine(options: {
-        type?: string;
-        icon?: string;
-        text?: string;
-        progress?: number;
-        idx?: number;
-    }): this;
+    type?: string;
+    icon?: string;
+    text?: string;
+    progress?: number;
+    idx?: number;
+  }): this;
 ```
 
 ## Parameters
@@ -51,6 +51,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

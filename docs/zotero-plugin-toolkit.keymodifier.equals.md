@@ -47,6 +47,7 @@ the new KeyModifier
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

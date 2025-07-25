@@ -35,14 +35,13 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "npm run prebuild && tsc --watch",
-    "build": "npm run prettier && npm run build:tsc && npm run build:docs",
-    "prebuild": "node scripts/generate-version.js",
-    "build:tsc": "npm run prebuild && tsc",
+    "dev": "tsdown --watch",
+    "build": "npm run build:tsc && npm run build:tsdown && npm run build:docs",
+    "build:tsdown": "tsdown",
+    "build:tsc": "tsc --noEmit",
     "build:docs": "api-extractor run --local --verbose && api-documenter generate --input-folder ./temp --output-folder ./docs",
-    "prettier": "prettier src --write",
-    "lint:eslint": "eslint . --fix",
-    "release": "bumpp --execute \"npm run build\"",
+    "lint": "prettier src --write && eslint . --fix",
+    "release": "bumpp --execute \"npm run build\" --all",
     "prepare": "husky",
     "update-deps": "npm update --save"
   },
@@ -58,6 +57,7 @@
     "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",
     "react-intl": "^7.1.11",
+    "tsdown": "^0.13.0",
     "typescript": "^5.8.3",
     "zotero-types": ">=4.0.0"
   },

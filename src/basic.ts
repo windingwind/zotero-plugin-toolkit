@@ -1,7 +1,7 @@
 import type { FunctionNamesOf } from "./typings/basic.js";
 
+import { version } from "../package.json";
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
-import { VERSION } from "./version.js";
 
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
@@ -20,13 +20,13 @@ export class BasicTool {
    */
   protected readonly patchSign: string = "zotero-plugin-toolkit@3.0.0";
 
-  static _version = VERSION;
+  static _version = version;
 
   /**
    * Get version - checks subclass first, then falls back to parent
    */
   get _version() {
-    return VERSION;
+    return version;
   }
 
   public get basicOptions(): BasicOptions {

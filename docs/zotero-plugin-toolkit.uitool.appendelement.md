@@ -37,7 +37,7 @@ properties
 
 </td><td>
 
-TagElementProps
+[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)
 
 
 </td><td>
@@ -63,6 +63,7 @@ The parent node to append to.
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Node

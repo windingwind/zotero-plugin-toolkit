@@ -4,68 +4,8 @@
 
 ## wait namespace
 
-## Functions
+**Signature:**
 
-<table><thead><tr><th>
-
-Function
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[waitForReader(reader)](./zotero-plugin-toolkit.wait.waitforreader.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[waitUntil(condition, callback, interval, timeout)](./zotero-plugin-toolkit.wait.waituntil.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[waitUntilAsync(condition, interval, timeout)](./zotero-plugin-toolkit.wait.waituntilasync.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
-## Variables
-
-<table><thead><tr><th>
-
-Variable
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[waitUtilAsync](./zotero-plugin-toolkit.wait.waitutilasync.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
+```typescript
+declare namespace wait_d_exports 
+```

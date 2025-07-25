@@ -65,7 +65,7 @@ props
 
 </td><td>
 
-HTMLElementProps
+[HTMLElementProps](./zotero-plugin-toolkit.htmlelementprops.md)
 
 
 </td><td>
@@ -75,6 +75,7 @@ _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 T
