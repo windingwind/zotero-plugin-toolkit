@@ -9,7 +9,7 @@ Class to represent key with modifiers
 **Signature:**
 
 ```typescript
-export declare class KeyModifier implements KeyModifierStatus 
+declare class KeyModifier implements KeyModifierStatus 
 ```
 **Implements:** KeyModifierStatus
 
@@ -266,3 +266,4 @@ Merge another KeyModifier into this one.
 
 </td></tr>
 </tbody></table>
+

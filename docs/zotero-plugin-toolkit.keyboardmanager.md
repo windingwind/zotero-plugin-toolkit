@@ -9,9 +9,9 @@ Register a global keyboard event listener.
 **Signature:**
 
 ```typescript
-export declare class KeyboardManager extends ManagerTool 
+declare class KeyboardManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+**Extends:** [ManagerTool](./zotero-plugin-toolkit.managertool.md)
 
 ## Constructors
 
@@ -108,3 +108,4 @@ Unregister all keyboard event listeners.
 
 </td></tr>
 </tbody></table>
+

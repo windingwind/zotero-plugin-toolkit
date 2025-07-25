@@ -290,7 +290,7 @@ typeof [ProgressWindowHelper](./zotero-plugin-toolkit.progresswindowhelper.md)
 
 </td><td>
 
-PromptManager
+[PromptManager](./zotero-plugin-toolkit.promptmanager.md)
 
 
 </td><td>
@@ -383,3 +383,4 @@ Unregister everything created by managers.
 
 </td></tr>
 </tbody></table>
+

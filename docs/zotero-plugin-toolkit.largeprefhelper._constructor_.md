@@ -79,3 +79,4 @@ _(Optional)_ Hooks for parsing the values of the data. - `afterGetValue`<!-- -->
 
 </td></tr>
 </tbody></table>
+

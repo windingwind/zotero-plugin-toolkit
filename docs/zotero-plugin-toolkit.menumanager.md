@@ -9,9 +9,9 @@ Register &lt;<!-- -->menuitem<!-- -->&gt;<!-- -->, &lt;<!-- -->menupopup<!-- -->
 **Signature:**
 
 ```typescript
-export declare class MenuManager extends ManagerTool 
+declare class MenuManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+**Extends:** [ManagerTool](./zotero-plugin-toolkit.managertool.md)
 
 ## Constructors
 
@@ -104,3 +104,4 @@ Insert an menu item/menu(with popup)/menuseprator into a menupopup
 
 </td></tr>
 </tbody></table>
+

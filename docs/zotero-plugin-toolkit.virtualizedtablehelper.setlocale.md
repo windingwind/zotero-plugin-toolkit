@@ -10,8 +10,8 @@ Set locale strings, which replaces the table header's label if matches. Default 
 
 ```typescript
 setLocale(localeStrings: {
-        [name: string]: string;
-    }): this;
+    [name: string]: string;
+  }): this;
 ```
 
 ## Parameters
@@ -47,6 +47,7 @@ localeStrings
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

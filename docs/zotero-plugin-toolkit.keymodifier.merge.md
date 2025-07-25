@@ -10,8 +10,8 @@ Merge another KeyModifier into this one.
 
 ```typescript
 merge(newMod: KeyModifier, options?: {
-        allowOverwrite?: boolean;
-    }): this;
+    allowOverwrite?: boolean;
+  }): this;
 ```
 
 ## Parameters
@@ -65,6 +65,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

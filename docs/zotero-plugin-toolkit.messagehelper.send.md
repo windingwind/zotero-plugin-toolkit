@@ -11,12 +11,12 @@
 
 ```typescript
 send(options: {
-        name: string;
-        data: any;
-        jobID?: string;
-        success?: boolean;
-        requestReturn?: boolean;
-    }): Promise<string>;
+    name: string;
+    data: any;
+    jobID?: string;
+    success?: boolean;
+    requestReturn?: boolean;
+  }): Promise<string>;
 ```
 
 ## Parameters
@@ -52,6 +52,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Promise&lt;string&gt;

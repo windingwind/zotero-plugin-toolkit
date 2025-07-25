@@ -47,6 +47,7 @@ Global variable name, `Zotero`<!-- -->, `ZoteroPane`<!-- -->, `window`<!-- -->, 
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 any

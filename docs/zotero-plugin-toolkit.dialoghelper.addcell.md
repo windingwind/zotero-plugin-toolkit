@@ -65,7 +65,7 @@ elementProps
 
 </td><td>
 
-TagElementProps
+[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)
 
 
 </td><td>
@@ -91,6 +91,7 @@ _(Optional)_ If the cell is flex. Default true.
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

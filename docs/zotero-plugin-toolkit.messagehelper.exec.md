@@ -11,8 +11,8 @@
 
 ```typescript
 exec<_HandlersName extends keyof MessageParams<_HandlersType>, _HandlersType extends _TargetHandlers & BuiltInMessageHandlers>(name: _HandlersName, params?: MessageParams<_HandlersType>[_HandlersName], options?: {
-        timeout?: number;
-    }): Promise<Awaited<MessageReturnType<_HandlersType>[_HandlersName]>>;
+    timeout?: number;
+  }): Promise<Awaited<MessageReturnType<_HandlersType>[_HandlersName]>>;
 ```
 
 ## Parameters
@@ -80,6 +80,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Promise&lt;Awaited&lt;MessageReturnType&lt;\_HandlersType&gt;\[\_HandlersName\]&gt;&gt;

@@ -100,6 +100,7 @@ The new wrapper of the patched function
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

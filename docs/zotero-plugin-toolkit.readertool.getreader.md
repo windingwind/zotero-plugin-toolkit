@@ -47,6 +47,7 @@ _(Optional)_ Wait for n MS until the reader is ready
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Promise&lt;\_ZoteroTypes.ReaderInstance \| undefined&gt;

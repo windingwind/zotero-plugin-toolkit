@@ -12,7 +12,7 @@ Helper for creating a guide. Designed for creating a step-by-step guide for user
 **Signature:**
 
 ```typescript
-export declare class GuideHelper extends BasicTool 
+declare class GuideHelper extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -93,3 +93,4 @@ GuideStep\[\]
 
 </td></tr>
 </tbody></table>
+

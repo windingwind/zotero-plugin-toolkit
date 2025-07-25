@@ -8,6 +8,6 @@
 
 ```typescript
 localeStrings: {
-        [name: string]: string;
-    };
+    [name: string]: string;
+  };
 ```
