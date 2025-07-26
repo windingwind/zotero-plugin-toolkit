@@ -1,153 +1,28 @@
 # Zotero Plugin Toolkit
 
-## Intro
+[zotero-plugin-toolkit](https://www.npmjs.com/package/zotero-plugin-toolkit) is an npm package that provides a collection of helpful APIs for [Zotero](https://www.zotero.org/) plugin developers.
 
-This repo is published as an NPM package [zotero-plugin-toolkit](https://www.npmjs.com/package/zotero-plugin-toolkit), which provides useful APIs for [Zotero](https://www.zotero.org/) plugin developers.
+> [!TIP]
+> Zotero 8 is now supported. Use version `5.1.0` or later of the toolkit.
 
-> Zotero 8 is now supported. Use toolkit version `5.1.0` or later.
+## Documentation
 
-[API Documentation](docs/index.md)
-
-## Modules
-
-- [ZoteroToolkit](docs/zotero-plugin-toolkit.zoterotoolkit.md): Contains all modules of this library. Start from `import ZoteroToolkit from "zotero-plugin-toolkit"` to get familiar with the APIs.
-
-- [Basic Tool](docs/zotero-plugin-toolkit.basictool.md)
-
-  - [getGlobal](docs/zotero-plugin-toolkit.basictool-getglobal_12.md): Get global variables for bootstrapped plugin sandbox. `Zotero`, `ZoteroPane`, `window`, `document`, and any variables under `window`. With type hint.
-  - [log](docs/zotero-plugin-toolkit.basictool.log.md): Output to both `Zotero.debug` and `console.log`. Can be customized depending on dev/prod environment.
-  - [createXULElement](docs/zotero-plugin-toolkit.basictool.createxulelement.md)/[getDOMParser](docs/zotero-plugin-toolkit.basictool.getdomparser.md): Compatible on Zotero 6, 7, and 8. See https://www.zotero.org/support/dev/zotero_7_for_developers
-
-- Tools
-
-  - [UI](docs/zotero-plugin-toolkit.uitool.md): Create elements and manage them automatically.
-
-  - [Reader](docs/zotero-plugin-toolkit.readertool.md): Reader instance APIs.
-
-  - [ExtraField](docs/zotero-plugin-toolkit.extrafieldtool.md): Get/set extra fields APIs.
-
-- Managers
-
-  - [Menu](docs/zotero-plugin-toolkit.menumanager.md): Register menu/menu popup.
-
-  - [Keyboard](docs/zotero-plugin-toolkit.keyboardmanager.md): Register keyboard shortcuts.
-
-  - [FieldHook](docs/zotero-plugin-toolkit.fieldhookmanager.md): Register custom fields.
-
-  - [Prompt](docs/zotero-plugin-toolkit.promptmanager.md): Register prompt panel command.
-
-- Helpers
-
-  - [Clipboard](docs/zotero-plugin-toolkit.clibpoardhelper.md): Copy text/rich text/image.
-
-  - [FilePicker](docs/zotero-plugin-toolkit.filepickerhelper.md): Open file picker.
-
-  - [ProgressWindow](docs/zotero-plugin-toolkit.progresswindowhelper.md): Open progress window.
-
-  - [VirtualizedTable](docs/zotero-plugin-toolkit.virtualizedtablehelper.md): Create a VirtualizedTable (an advanced table view element, which is used by the Zotero item tree, collections tree, item picker, etc.)
-
-  - [Dialog](docs/zotero-plugin-toolkit.dialoghelper.md): Create a dialog window(a superset of XUL dialog). With data-binding, auto-layout, and control buttons.
-
-  - [Guide](docs/zotero-plugin-toolkit.guidehelper.md): Create a step-by-step guide.
-
-  - [LargePref](docs/zotero-plugin-toolkit.largeprefhelper.md): Store/read large data in `prefs.js`.
-
-  - [Patch](docs/zotero-plugin-toolkit.patchhelper.md): Patch Zotero's built-in functions. A replacement of `PatchManager`.
-
-- Utils
-
-  - [Debug Bridge](src/utils/debugBridge.ts): Use `zotero://ztoolkit-debug/?file=x.js&run=y()&password=zzz&app=m`
-
-    See https://github.com/windingwind/zotero-plugin-template/blob/main/scripts/reload.mjs for example.
-
-    > Parameters (all parameters should be URLEncoded):
-    >
-    > - file: the path of JS file to run if provided. starts with `file:///`.
-    > - run: the JS script to run if provided.
-    > - password: the value of `extensions.zotero.debug-bridge.password`. If the password is not empty in Zotero and not provided in the call, the command won't run; otherwise a popup will show to ask user if to execute the command.
-    > - app: The app name to show in the popup.
-
-  - [Plugin Bridge](src/utils/pluginBridge.ts): Use `zotero://plugin/?action=install&url=x.xpi`
-
-    > Parameters (all parameters should be URLEncoded):
-    >
-    > - action: `install`.
-    > - url: the url of plugin `xpi` to install.
-    > - minVersion: the required minimal version of Zotero if provided.
-    > - maxVersion: the required maximal version of Zotero if provided.
-
-  - [Wait](src/utils/wait.ts): Wait for a condition to be true.
-
-## Usage
-
-1. Run `npm install --save zotero-plugin-toolkit`.
-
-2. Import the toolkit class
-
-````ts
-import { ZoteroToolkit } from "zotero-plugin-toolkit";
-/* Alternatively, import class you need to minify the plugin size
- * ```ts
- * import { BasicTool } from "zotero-plugin-toolkit";
- * import { UITool } from "zotero-plugin-toolkit";
- */
-const ztoolkit = new ZoteroToolkit();
-````
-
-3. Use the toolkit following this [API Documentation](./docs/index.md)
-
-```ts
-ztoolkit.log("This is Zotero:", toolkit.getGlobal("Zotero"));
-```
-
-> ⚠️All Manager classes have `register` method with corresponding `unregister/unregisterAll`. Don't forget to unregister when plugin exits.
-
-> This repo depends on [zotero-types](https://github.com/windingwind/zotero-types). See its hompage for more details about Zotero type definitions.
+📚 [View Full Documentation](https://windingwind.github.io/zotero-plugin-toolkit/)
 
 ## Examples
 
-This package is integrated into the [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template/). You can find examples there.
+This package is integrated into the [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template/), which contains practical examples.
 
-If you are new to Zotero plugins/looking for solutions to migrate from Zotero 6 to 7, please take a look at that repo.
+If you're new to Zotero plugin development or looking for a migration path from Zotero 6 to 7 or 8, we recommend starting with that template.
 
-The API documentation also contains example code for some APIs.
+Many API entries in the documentation also include usage examples.
 
 ## Contributing
 
-### Setup
-
-1. Fork this repo.
-
-2. Make sure you have `nodejs` and `npm` installed. Clone the repo folder and install dependencies:
-
-```bash
-git clone https://github.com/windingwind/zotero-plugin-toolkit
-cd zotero-plugin-toolkit
-npm install
-```
-
-### Build
-
-Run `npm run build`.
-
-- Package `.js` and `.d.ts` under `./dist`;
-
-- Documentations under `./docs`.
-
-### Test Locally
-
-Test it with your plugin or use [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template/) as a playground.
-
-Run `npm install /path/to/this/repo` under the playground repo folder, the lib will be installed from your local build.
-
-The playground uses the latest build. No need to npm install again if you rebuild this lib.
-
-### Release
-
-`npm run release`. Tagged pushes will trigger a npm-publish GitHub action.
+Please see [CONTRIBUTING.md](./docs/contributing.md) for guidelines.
 
 ## Disclaimer
 
-Use this code under MIT License. No warranties are provided. Keep the laws of your locality in mind!
+This project is licensed under the MIT License. No warranties are provided. Please ensure compliance with local laws when using this code.
 
-If you want to change the license, please contact me at wyzlshx@foxmail.com
+If you'd like to propose a license change, feel free to contact me at [wyzlshx@foxmail.com](mailto:wyzlshx@foxmail.com).
