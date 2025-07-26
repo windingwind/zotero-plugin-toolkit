@@ -2,6 +2,7 @@
   "name": "zotero-plugin-toolkit",
   "type": "module",
   "version": "5.1.0-beta.6",
+  "packageManager": "pnpm@10.13.1",
   "description": "Toolkit for Zotero plugins",
   "author": "windingwind",
   "license": "MIT",
@@ -27,28 +28,28 @@
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/**/*.d.ts",
-    "dist/**/*.js",
-    "docs/**/*"
+    "dist"
   ],
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "npm run build:tsc && npm run build:tsdown && npm run build:docs",
+    "build": "npm run build:tsc && npm run build:tsdown",
     "build:tsdown": "tsdown",
     "build:tsc": "tsc --noEmit",
-    "build:docs": "api-extractor run --local --verbose && api-documenter generate --input-folder ./temp --output-folder ./docs",
-    "lint": "prettier src --write && eslint . --fix",
+    "lint:check": "prettier . --check && eslint .",
+    "lint:fix": "prettier . --write && eslint . --fix",
     "release": "bumpp --execute \"npm run build\" --all",
+    "docs:generate": "typedoc",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "prepare": "husky",
     "update-deps": "npm update --save"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.16.0",
-    "@microsoft/api-documenter": "^7.26.27",
-    "@microsoft/api-extractor": "^7.52.8",
+    "@types/node": "^24.1.0",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "bumpp": "^10.2.0",
@@ -58,7 +59,11 @@
     "prettier": "^3.5.3",
     "react-intl": "^7.1.11",
     "tsdown": "^0.13.0",
+    "typedoc": "^0.28.7",
+    "typedoc-plugin-markdown": "^4.7.1",
+    "typedoc-vitepress-theme": "^1.1.2",
     "typescript": "^5.8.3",
+    "vitepress": "^1.6.3",
     "zotero-types": ">=4.0.0"
   },
   "publishConfig": {
@@ -71,6 +76,9 @@
   },
   "prettier": {},
   "lint-staged": {
-    "*.{ts,js,css}": "prettier --write"
+    "*": [
+      "prettier --write -u",
+      "eslint --fix"
+    ]
   }
 }

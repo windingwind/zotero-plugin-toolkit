@@ -5,4 +5,7 @@ pnpm-lock.yaml
 temp
 dist
 *.tgz
-.vscode
+docs/.vitepress/dist
+docs/.vitepress/cache
+docs/reference/**
+!docs/reference/.gitkeep
