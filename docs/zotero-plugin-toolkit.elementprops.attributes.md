@@ -10,6 +10,6 @@ Set with `elem.setAttribute()`
 
 ```typescript
 attributes?: {
-        [key: string]: string | boolean | number | null | undefined;
-    };
+    [key: string]: string | boolean | number | null | undefined;
+  };
 ```

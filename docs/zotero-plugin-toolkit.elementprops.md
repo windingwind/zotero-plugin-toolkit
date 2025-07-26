@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-export interface ElementProps 
+interface ElementProps 
 ```
 
 ## Properties
@@ -83,7 +83,7 @@ _(Optional)_ Existence check will be processed under this element, default `docu
 
 </td><td>
 
-Array&lt;TagElementProps&gt;
+Array&lt;[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)<!-- -->&gt;
 
 
 </td><td>
@@ -368,7 +368,7 @@ _(Optional)_ styles
 
 </td><td>
 
-Array&lt;TagElementProps&gt;
+Array&lt;[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)<!-- -->&gt;
 
 
 </td><td>
@@ -397,3 +397,4 @@ _(Optional)_ tagName
 
 </td></tr>
 </tbody></table>
+

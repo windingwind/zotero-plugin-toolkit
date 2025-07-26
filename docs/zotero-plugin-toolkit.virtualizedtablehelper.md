@@ -9,7 +9,7 @@ VirtualizedTable helper.
 **Signature:**
 
 ```typescript
-export declare class VirtualizedTableHelper extends BasicTool 
+declare class VirtualizedTableHelper extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -229,3 +229,4 @@ Set properties object.
 
 </td></tr>
 </tbody></table>
+

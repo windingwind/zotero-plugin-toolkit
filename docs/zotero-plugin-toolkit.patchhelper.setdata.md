@@ -43,6 +43,7 @@ PatchOptions&lt;T, K&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

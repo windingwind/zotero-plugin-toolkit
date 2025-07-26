@@ -65,7 +65,7 @@ props
 
 </td><td>
 
-XULElementProps
+[XULElementProps](./zotero-plugin-toolkit.xulelementprops.md)
 
 
 </td><td>
@@ -75,6 +75,7 @@ _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 T

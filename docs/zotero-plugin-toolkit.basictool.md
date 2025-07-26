@@ -9,7 +9,7 @@ Basic APIs with Zotero 6 &amp; newer (7) compatibility. See also https://www.zot
 **Signature:**
 
 ```typescript
-export declare class BasicTool 
+declare class BasicTool 
 ```
 
 ## Constructors
@@ -81,7 +81,7 @@ Description
 
 </td><td>
 
-BasicOptions
+[BasicOptions](./zotero-plugin-toolkit.basicoptions.md)
 
 
 </td><td>
@@ -163,7 +163,7 @@ string
 
 </td><td>
 
-BasicOptions
+[BasicOptions](./zotero-plugin-toolkit.basicoptions.md)
 
 
 </td><td>
@@ -388,3 +388,4 @@ Remove a Zotero event listener callback
 
 </td></tr>
 </tbody></table>
+

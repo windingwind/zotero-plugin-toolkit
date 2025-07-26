@@ -75,6 +75,7 @@ typeof isFieldOfBaseHookFunc
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

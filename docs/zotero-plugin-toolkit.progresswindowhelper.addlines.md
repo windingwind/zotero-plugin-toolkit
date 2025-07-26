@@ -8,10 +8,10 @@
 
 ```typescript
 addLines(labels: string | {
-        [key: string | number | symbol]: string;
-    }, icons: string | {
-        [key: string | number | symbol]: string;
-    }): this;
+    [key: string | number | symbol]: string;
+  }, icons: string | {
+    [key: string | number | symbol]: string;
+  }): this;
 ```
 
 ## Parameters
@@ -61,6 +61,7 @@ string \| { \[key: string \| number \| symbol\]: string; }
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

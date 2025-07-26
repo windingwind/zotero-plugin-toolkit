@@ -2,17 +2,19 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "types": ["zotero-types/entries/shared"],
     "strict": true,
     "declaration": true,
-    "declarationMap": true,
+    // "declarationMap": true,
     "outDir": "dist",
-    "sourceMap": true,
+    // "sourceMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist"]
 }

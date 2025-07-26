@@ -9,9 +9,9 @@ Item field hooks manager.
 **Signature:**
 
 ```typescript
-export declare class FieldHookManager extends ManagerTool 
+declare class FieldHookManager extends ManagerTool 
 ```
-**Extends:** ManagerTool
+**Extends:** [ManagerTool](./zotero-plugin-toolkit.managertool.md)
 
 ## Constructors
 
@@ -132,3 +132,4 @@ Register `Zotero.ItemFields.isFieldOfBase` hook. Used in itemBox.
 
 </td></tr>
 </tbody></table>
+

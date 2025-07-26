@@ -37,7 +37,7 @@ properties
 
 </td><td>
 
-TagElementProps
+[TagElementProps](./zotero-plugin-toolkit.tagelementprops.md)
 
 
 </td><td>
@@ -63,6 +63,7 @@ The node before which newNode is inserted.
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Node \| undefined

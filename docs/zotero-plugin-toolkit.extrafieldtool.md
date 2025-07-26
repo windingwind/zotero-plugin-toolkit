@@ -9,7 +9,7 @@ Get/set extra field APIs.
 **Signature:**
 
 ```typescript
-export declare class ExtraFieldTool extends BasicTool 
+declare class ExtraFieldTool extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -88,3 +88,4 @@ Set an key-value pair to the item's extra field
 
 </td></tr>
 </tbody></table>
+

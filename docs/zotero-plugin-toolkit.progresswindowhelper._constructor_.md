@@ -10,11 +10,11 @@ Constructs a new instance of the `ProgressWindowHelper` class
 
 ```typescript
 constructor(header: string, options?: {
-        window?: Window;
-        closeOnClick?: boolean;
-        closeTime?: number;
-        closeOtherProgressWindows?: boolean;
-    });
+    window?: Window;
+    closeOnClick?: boolean;
+    closeTime?: number;
+    closeOtherProgressWindows?: boolean;
+  });
 ```
 
 ## Parameters
@@ -68,3 +68,4 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+

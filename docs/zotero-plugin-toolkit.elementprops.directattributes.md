@@ -13,6 +13,6 @@
 
 ```typescript
 directAttributes?: {
-        [key: string]: string | boolean | number | null | undefined;
-    };
+    [key: string]: string | boolean | number | null | undefined;
+  };
 ```

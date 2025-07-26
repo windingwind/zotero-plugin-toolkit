@@ -63,6 +63,7 @@ Property value
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [VirtualizedTableHelper](./zotero-plugin-toolkit.virtualizedtablehelper.md)

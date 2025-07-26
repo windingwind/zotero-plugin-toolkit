@@ -10,8 +10,8 @@ Replace oldNode with a new one.
 
 ```typescript
 replaceElement(properties: ElementProps & {
-        tag: string;
-    }, oldNode: Element): Node | undefined;
+    tag: string;
+  }, oldNode: Element): Node | undefined;
 ```
 
 ## Parameters
@@ -65,6 +65,7 @@ The child to be replaced.
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Node \| undefined

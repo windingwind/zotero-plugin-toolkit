@@ -9,7 +9,7 @@ UI APIs. Create elements and manage them.
 **Signature:**
 
 ```typescript
-export declare class UITool extends BasicTool 
+declare class UITool extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -82,7 +82,7 @@ Description
 
 </td><td>
 
-UIOptions
+[UIOptions](./zotero-plugin-toolkit.uioptions.md)
 
 
 </td><td>
@@ -103,7 +103,7 @@ UITool options
 
 </td><td>
 
-UIOptions
+[UIOptions](./zotero-plugin-toolkit.uioptions.md)
 
 
 </td><td>
@@ -306,3 +306,4 @@ Remove all elements created by `createElement`<!-- -->.
 
 </td></tr>
 </tbody></table>
+

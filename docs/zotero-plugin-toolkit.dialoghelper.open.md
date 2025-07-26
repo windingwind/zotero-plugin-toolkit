@@ -10,16 +10,16 @@ Open the dialog
 
 ```typescript
 open(title: string, windowFeatures?: {
-        width?: number;
-        height?: number;
-        left?: number;
-        top?: number;
-        centerscreen?: boolean;
-        resizable?: boolean;
-        fitContent?: boolean;
-        noDialogMode?: boolean;
-        alwaysRaised?: boolean;
-    }): this;
+    width?: number;
+    height?: number;
+    left?: number;
+    top?: number;
+    centerscreen?: boolean;
+    resizable?: boolean;
+    fitContent?: boolean;
+    noDialogMode?: boolean;
+    alwaysRaised?: boolean;
+  }): this;
 ```
 
 ## Parameters
@@ -73,6 +73,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this
