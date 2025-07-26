@@ -12,7 +12,7 @@ Helper class to manage messages between workers/iframes and their parent
 **Signature:**
 
 ```typescript
-export declare class MessageHelper<_TargetHandlers extends MessageHandlers> 
+declare class MessageHelper<_TargetHandlers extends MessageHandlers> 
 ```
 
 ## Example 1
@@ -464,3 +464,4 @@ Description
 
 </td></tr>
 </tbody></table>
+

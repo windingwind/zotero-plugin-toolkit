@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export declare class PatchHelper extends BasicTool 
+declare class PatchHelper extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -100,3 +100,4 @@ Description
 
 </td></tr>
 </tbody></table>
+

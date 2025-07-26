@@ -10,8 +10,8 @@ Event listeners
 
 ```typescript
 listeners?: Array<{
-        type: string;
-        listener: EventListenerOrEventListenerObject | ((e: Event) => void) | null | undefined;
-        options?: boolean | AddEventListenerOptions;
-    }>;
+    type: string;
+    listener: EventListenerOrEventListenerObject | ((e: Event) => void) | null | undefined;
+    options?: boolean | AddEventListenerOptions;
+  }>;
 ```

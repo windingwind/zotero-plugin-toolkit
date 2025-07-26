@@ -65,7 +65,7 @@ props
 
 </td><td>
 
-FragmentElementProps
+[FragmentElementProps](./zotero-plugin-toolkit.fragmentelementprops.md)
 
 
 </td><td>
@@ -75,6 +75,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 DocumentFragment

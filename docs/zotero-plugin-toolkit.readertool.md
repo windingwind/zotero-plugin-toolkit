@@ -9,7 +9,7 @@ Zotero ReaderInstance APIs.
 **Signature:**
 
 ```typescript
-export declare class ReaderTool extends BasicTool 
+declare class ReaderTool extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -88,3 +88,4 @@ Get all window readers.
 
 </td></tr>
 </tbody></table>
+

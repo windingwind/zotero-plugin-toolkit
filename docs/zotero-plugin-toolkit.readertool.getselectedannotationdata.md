@@ -47,6 +47,7 @@ Target reader
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 AnnotationData \| undefined

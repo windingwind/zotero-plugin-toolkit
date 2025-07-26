@@ -9,7 +9,7 @@ ProgressWindow helper.
 **Signature:**
 
 ```typescript
-export declare class ProgressWindowHelper 
+declare class ProgressWindowHelper 
 ```
 
 ## Example 1
@@ -256,3 +256,4 @@ Set custom icon uri for progress window
 
 </td></tr>
 </tbody></table>
+

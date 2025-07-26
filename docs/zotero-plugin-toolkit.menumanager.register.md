@@ -51,7 +51,7 @@ options
 
 </td><td>
 
-MenuitemOptions
+[MenuitemOptions](./zotero-plugin-toolkit.menuitemoptions.md)
 
 
 </td><td>
@@ -91,6 +91,7 @@ _(Optional)_ The menuitem will be put before/after `anchorElement`<!-- -->. If n
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 false \| undefined

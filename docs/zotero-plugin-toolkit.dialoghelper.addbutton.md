@@ -10,9 +10,9 @@ Add a control button to the bottom of the dialog.
 
 ```typescript
 addButton(label: string, id?: string, options?: {
-        noClose?: boolean;
-        callback?: (ev: Event) => any;
-    }): this;
+    noClose?: boolean;
+    callback?: (ev: Event) => any;
+  }): this;
 ```
 
 ## Parameters
@@ -82,6 +82,7 @@ _(Optional)_ Options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

@@ -75,6 +75,7 @@ _(Optional)_ See [ElementProps](./zotero-plugin-toolkit.elementprops.md)
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 T

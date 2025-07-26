@@ -9,7 +9,7 @@ Copy helper for text/richtext/image.
 **Signature:**
 
 ```typescript
-export declare class ClipboardHelper extends BasicTool 
+declare class ClipboardHelper extends BasicTool 
 ```
 **Extends:** [BasicTool](./zotero-plugin-toolkit.basictool.md)
 
@@ -143,3 +143,4 @@ Description
 
 </td></tr>
 </tbody></table>
+

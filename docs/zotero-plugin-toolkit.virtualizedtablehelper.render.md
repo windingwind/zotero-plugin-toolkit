@@ -79,6 +79,7 @@ _(Optional)_ callback after rendering with error
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this
