@@ -1,9 +1,11 @@
 node_modules
+package-lock.json
 yarn.lock
 pnpm-lock.yaml
 temp
 dist
 *.tgz
-.vscode
-src/version.ts
-src/version.ts
+docs/.vitepress/dist
+docs/.vitepress/cache
+docs/reference/**
+!docs/reference/.gitkeep
