@@ -20,6 +20,7 @@ export {
   PatchHelper,
   ProgressWindowHelper,
   ReaderTool,
+  SettingsDialogHelper,
   UITool,
   VirtualizedTableHelper,
   wait,

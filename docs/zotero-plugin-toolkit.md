@@ -182,6 +182,17 @@ Zotero ReaderInstance APIs.
 </td></tr>
 <tr><td>
 
+[SettingsDialogHelper](./zotero-plugin-toolkit.settingsdialoghelper.md)
+
+
+</td><td>
+
+Settings dialog helper. Extends DialogHelper with setting management capabilities.
+
+
+</td></tr>
+<tr><td>
+
 [UITool](./zotero-plugin-toolkit.uitool.md)
 
 

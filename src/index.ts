@@ -7,6 +7,7 @@ export * from "./helpers/largePref.js";
 export * from "./helpers/message.js";
 export * from "./helpers/patch.js";
 export * from "./helpers/progressWindow.js";
+export * from "./helpers/settingsDialog.js";
 export * from "./helpers/virtualizedTable.js";
 export * from "./managers/fieldHook.js";
 export * from "./managers/keyboard.js";

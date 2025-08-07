@@ -13,7 +13,7 @@ export class DialogHelper extends UITool {
    * Dialog window instance
    */
   window!: Window;
-  private elementProps: ElementProps & { tag: string };
+  protected elementProps: ElementProps & { tag: string };
   /**
    * Create a dialog helper with row \* column grids.
    * @param row
@@ -568,7 +568,7 @@ html {
 }
 `;
 
-interface DialogData {
+export interface DialogData {
   [key: string | number | symbol]: any;
   loadLock?: {
     promise: Promise<void>;

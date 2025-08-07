@@ -91,6 +91,25 @@ Passed to dialog window for data-binding and lifecycle controls. See [DialogHelp
 </td></tr>
 <tr><td>
 
+[elementProps](./zotero-plugin-toolkit.dialoghelper.elementprops.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+[ElementProps](./zotero-plugin-toolkit.elementprops.md) &amp; { tag: string; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [window](./zotero-plugin-toolkit.dialoghelper.window.md)
 
 
