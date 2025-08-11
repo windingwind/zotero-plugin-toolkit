@@ -1,0 +1,12 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.readonlyInclude": {
+    "docs/reference/**": true
+  },
+  "markdownlint.config": {
+    "no-inline-html": false
+  }
+}
