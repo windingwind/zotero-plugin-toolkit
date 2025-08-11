@@ -11,7 +11,7 @@ Add a control button that will auto-save settings when clicked.
 ```typescript
 addAutoSaveButton(label: string, id?: string, options?: {
         noClose?: boolean;
-        validate?: (data: any) => true | string;
+        validate?: (data: any) => Promise<true | string> | true | string;
         callback?: (ev: Event) => any;
     }): this;
 ```
@@ -73,7 +73,7 @@ options
 
 </td><td>
 
-{ noClose?: boolean; validate?: (data: any) =&gt; true \| string; callback?: (ev: Event) =&gt; any; }
+{ noClose?: boolean; validate?: (data: any) =&gt; Promise&lt;true \| string&gt; \| true \| string; callback?: (ev: Event) =&gt; any; }
 
 
 </td><td>
