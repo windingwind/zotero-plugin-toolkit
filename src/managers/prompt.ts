@@ -382,7 +382,7 @@ export class Prompt {
     function Yw(e: any, t: any, n: any, i: any) {
       if (e.length === 0) return 0;
       let r = 0;
-      ((r -= Math.max(0, e.length - 1)), (r -= i / 10));
+      (r -= Math.max(0, e.length - 1)), (r -= i / 10);
       const o = e[0][0];
       return (
         (r -= (e[e.length - 1][1] - o + 1 - t) / 100),
@@ -410,7 +410,7 @@ export class Prompt {
           )
             if (i) {
               if (u !== a) {
-                ((a += c.length), l--);
+                (a += c.length), l--;
                 continue;
               }
             } else o += 1;

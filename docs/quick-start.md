@@ -57,8 +57,7 @@ ztoolkit.log("This is Zotero:", ztoolkit.getGlobal("Zotero"));
 const ZoteroPane = ztoolkit.getGlobal("ZoteroPane");
 ```
 
-> [!TIP]
-> `getGlobal` provides proper type hints for `Zotero`, `window`, `document`, and other global objects.
+> [!TIP] > `getGlobal` provides proper type hints for `Zotero`, `window`, `document`, and other global objects.
 
 ## 🧩 Key Features
 
@@ -84,8 +83,7 @@ It also includes:
 
 All manager classes (`MenuManager`, `KeyboardManager`, etc.) include `register()` and `unregister()` methods.
 
-> [!WARNING]
-> **Always unregister** in your plugin's shutdown phase to prevent memory leaks or stale hooks.
+> [!WARNING] > **Always unregister** in your plugin's shutdown phase to prevent memory leaks or stale hooks.
 
 ## 🧩 Type Safety
 
