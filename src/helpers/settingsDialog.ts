@@ -162,7 +162,7 @@ export class SettingsDialogHelper extends DialogHelper {
     id?: string,
     options: {
       noClose?: boolean;
-      validate?: (data: any) => true | string;
+      validate?: (data: any) => Promise<true | string> | true | string;
       callback?: (ev: Event) => any;
     } = {},
   ) {
@@ -170,12 +170,14 @@ export class SettingsDialogHelper extends DialogHelper {
     this.autoSaveButtonIds.add(id);
 
     return this.addButton(label, id, {
-      ...options,
-      callback: (ev: Event) => {
+      ...Object.assign({}, options, {
+        noClose: true, // Do not use the default close behavior
+      }),
+      callback: async (ev: Event) => {
         if (options.validate) {
           // Validate settings before saving
           const data = this.getAllSettingsData();
-          const validationResult = options.validate(data);
+          const validationResult = await options.validate(data);
           if (validationResult !== true) {
             this.window.alert(validationResult);
             return;
@@ -185,6 +187,9 @@ export class SettingsDialogHelper extends DialogHelper {
         this.saveAllSettings();
         if (options.callback) {
           options.callback(ev);
+        }
+        if (!options.noClose) {
+          this.window.close();
         }
       },
     });
