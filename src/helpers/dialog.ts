@@ -333,6 +333,13 @@ function openDialog(
               tag: "link",
               properties: {
                 rel: "stylesheet",
+                href: "chrome://global/skin/global.css",
+              },
+            },
+            {
+              tag: "link",
+              properties: {
+                rel: "stylesheet",
                 href: "chrome://zotero-platform/content/zotero.css",
               },
             },
@@ -431,85 +438,172 @@ function openDialog(
 
 function replaceElement(
   elementProps: ElementProps & { tag: string },
-  uiTool: UITool,
+  uiTool: DialogHelper,
 ) {
   let checkChildren = true;
   if (elementProps.tag === "select") {
-    checkChildren = false;
-    const customSelectProps = {
-      tag: "div",
-      classList: ["dropdown"],
-      listeners: [
-        {
-          type: "mouseleave",
-          listener: (ev: Event) => {
-            const select = (ev.target as HTMLElement).querySelector("select");
-            select?.blur();
+    let is140 = false;
+    try {
+      is140 =
+        Number.parseInt(Services.appinfo.platformVersion.match(/^\d+/)![0]) >=
+        140;
+    } catch {
+      is140 = false; // Not in Firefox 140+
+    }
+    // For older Firefox versions, use a custom select dropdown
+    if (!is140) {
+      checkChildren = false;
+      const customSelectProps = {
+        tag: "div",
+        classList: ["dropdown"],
+        listeners: [
+          {
+            type: "mouseleave",
+            listener: (ev: Event) => {
+              const select = (ev.target as HTMLElement).querySelector("select");
+              select?.blur();
+            },
           },
-        },
-      ],
-      children: [
-        Object.assign({}, elementProps, {
-          tag: "select",
-          listeners: [
-            {
-              type: "focus",
-              listener: (ev: Event) => {
-                const select = ev.target as HTMLElement;
-                const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content",
-                ) as HTMLDivElement;
-                dropdown && (dropdown.style.display = "block");
-                select.setAttribute("focus", "true");
-              },
-            },
-            {
-              type: "blur",
-              listener: (ev: Event) => {
-                const select = ev.target as HTMLElement;
-                const dropdown = select.parentElement?.querySelector(
-                  ".dropdown-content",
-                ) as HTMLDivElement;
-                dropdown && (dropdown.style.display = "none");
-                select.removeAttribute("focus");
-              },
-            },
-          ],
-        }),
-        {
-          tag: "div",
-          classList: ["dropdown-content"],
-          children: elementProps.children?.map((option) => ({
-            tag: "p",
-            attributes: {
-              value: option.properties?.value,
-            },
-            properties: {
-              innerHTML:
-                option.properties?.innerHTML || option.properties?.textContent,
-            },
-            classList: ["dropdown-item"],
+        ],
+        children: [
+          Object.assign({}, elementProps, {
+            tag: "select",
             listeners: [
               {
-                type: "click",
+                type: "focus",
                 listener: (ev: Event) => {
-                  const select = (ev.target as HTMLElement).parentElement
-                    ?.previousElementSibling as HTMLSelectElement;
-                  select &&
-                    (select.value =
-                      (ev.target as HTMLElement).getAttribute("value") || "");
-                  select?.blur();
+                  const select = ev.target as HTMLElement;
+                  const dropdown = select.parentElement?.querySelector(
+                    ".dropdown-content",
+                  ) as HTMLDivElement;
+                  dropdown && (dropdown.style.display = "block");
+                  select.setAttribute("focus", "true");
+                },
+              },
+              {
+                type: "blur",
+                listener: (ev: Event) => {
+                  const select = ev.target as HTMLElement;
+                  const dropdown = select.parentElement?.querySelector(
+                    ".dropdown-content",
+                  ) as HTMLDivElement;
+                  dropdown && (dropdown.style.display = "none");
+                  select.removeAttribute("focus");
                 },
               },
             ],
+          }),
+          {
+            tag: "div",
+            classList: ["dropdown-content"],
+            children: elementProps.children?.map((option) => ({
+              tag: "p",
+              attributes: {
+                value: option.properties?.value,
+              },
+              properties: {
+                innerHTML:
+                  option.properties?.innerHTML ||
+                  option.properties?.textContent,
+              },
+              classList: ["dropdown-item"],
+              listeners: [
+                {
+                  type: "click",
+                  listener: (ev: Event) => {
+                    const select = (ev.target as HTMLElement).parentElement
+                      ?.previousElementSibling as HTMLSelectElement;
+                    select &&
+                      (select.value =
+                        (ev.target as HTMLElement).getAttribute("value") || "");
+                    select?.blur();
+                  },
+                },
+              ],
+            })),
+          },
+        ],
+      };
+      for (const key in elementProps) {
+        delete elementProps[key as keyof ElementProps];
+      }
+      Object.assign(elementProps, customSelectProps);
+    } else {
+      // For Firefox 140+, use the select element but create a menupopup at document body
+      const children = elementProps.children || [];
+
+      const randomString = CSS.escape(
+        `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
+      );
+      if (!elementProps.id) {
+        elementProps.id = `select-${randomString}`;
+      }
+      const selectId = elementProps.id;
+      const popupId = `popup-${randomString}`;
+
+      const popup = uiTool.appendElement(
+        {
+          tag: "menupopup",
+          namespace: "xul",
+          id: popupId,
+          children: children.map((option) => ({
+            tag: "menuitem",
+            attributes: {
+              value: option.properties?.value as string,
+              label: (option.properties?.innerHTML ||
+                option.properties?.textContent) as string,
+            },
           })),
+          listeners: [
+            {
+              type: "command",
+              listener: (ev: Event) => {
+                if ((ev.target as XULMenuItemElement)?.tagName !== "menuitem") {
+                  return;
+                }
+                const select = uiTool.window.document.getElementById(
+                  selectId,
+                ) as HTMLSelectElement;
+                const menuitem = ev.target as XULMenuItemElement;
+                if (select) {
+                  select.value = menuitem.getAttribute("value") || "";
+                  select.blur();
+                }
+                popup.hidePopup();
+              },
+            },
+          ],
         },
-      ],
-    };
-    for (const key in elementProps) {
-      delete elementProps[key as keyof ElementProps];
+        uiTool.window.document.body,
+      ) as XULMenuPopupElement;
+
+      if (!elementProps.listeners) {
+        elementProps.listeners = [];
+      }
+
+      elementProps.listeners.push(
+        ...[
+          {
+            type: "click",
+            listener: (ev: Event) => {
+              const select = ev.target as HTMLSelectElement;
+              // Compute the position of the select element relative to the screen
+              const rect = select.getBoundingClientRect();
+              let left = rect.left + uiTool.window.scrollX;
+              let top = rect.bottom + uiTool.window.scrollY;
+              // If on Mac, adjust the top position
+              if (uiTool.getGlobal("Zotero").isMac) {
+                left += uiTool.window.screenLeft;
+                top += uiTool.window.screenTop + rect.height;
+              }
+              fixMenuPopup(popup, uiTool);
+              popup.openPopup(null, "", left, top, false, false);
+              select.setAttribute("focus", "true");
+            },
+          },
+        ],
+      );
     }
-    Object.assign(elementProps, customSelectProps);
   } else if (elementProps.tag === "a") {
     const href = (elementProps?.properties?.href || "") as string;
     elementProps.properties ??= {};
@@ -567,6 +661,64 @@ html {
   background-color: var(--fill-quinary);
 }
 `;
+
+function fixMenuPopup(popup: XULMenuPopupElement, uiTool: DialogHelper) {
+  // The XUL menuitem should have inner elements initialized, but for some reason it is not on Windows.
+  for (const item of popup.querySelectorAll("menuitem")) {
+    // If the item inner HTML is empty, set it to the label
+    if (!(item as XULMenuItemElement).innerHTML) {
+      uiTool.appendElement(
+        {
+          tag: "fragment",
+          children: [
+            {
+              tag: "image",
+              namespace: "xul",
+              classList: ["menu-icon"],
+              attributes: {
+                "aria-hidden": "true",
+              },
+            },
+            {
+              tag: "label",
+              namespace: "xul",
+              classList: ["menu-text"],
+              properties: {
+                value: (item as XULMenuItemElement).getAttribute("label") || "",
+              },
+              attributes: {
+                crop: "end",
+                "aria-hidden": "true",
+              },
+            },
+            {
+              tag: "label",
+              namespace: "xul",
+              classList: ["menu-highlightable-text"],
+              properties: {
+                textContent:
+                  (item as XULMenuItemElement).getAttribute("label") || "",
+              },
+              attributes: {
+                crop: "end",
+                "aria-hidden": "true",
+              },
+            },
+            {
+              tag: "label",
+              namespace: "xul",
+              classList: ["menu-accel"],
+              attributes: {
+                "aria-hidden": "true",
+              },
+            },
+          ],
+        },
+        item as XULMenuItemElement,
+      );
+    }
+  }
+}
 
 export interface DialogData {
   [key: string | number | symbol]: any;
