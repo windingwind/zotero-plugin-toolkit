@@ -149,6 +149,61 @@ export class SettingsDialogHelper extends DialogHelper {
   }
 
   /**
+   * Add a static row (label + static element) to the settings grid. This is not a form control.
+   * @param label Label text for the row
+   * @param staticElementProps Properties for the static element (e.g., text, icon, etc.)
+   * @param options Additional options
+   * @param options.labelProps Properties for the label element
+   * @param options.condition Optional condition function to determine if the row should be added
+   * @returns The SettingsDialogHelper instance for chaining
+   */
+  addStaticRow(
+    label: string,
+    staticElementProps: TagElementProps,
+    options: {
+      labelProps?: Partial<TagElementProps>;
+      condition?: () => boolean;
+    } = {},
+  ) {
+    const { labelProps = {}, condition } = options;
+
+    // Skip if condition is not met
+    if (condition && !condition()) {
+      return this; // No-op if condition is false
+    }
+
+    // Get the grid container
+    const gridContainer = this.elementProps.children![0];
+
+    // Add label
+    const labelElement: TagElementProps = {
+      tag: "label",
+      properties: {
+        textContent: label,
+      },
+      styles: {
+        fontWeight: "500",
+        textAlign: "right",
+        paddingRight: "10px",
+      },
+      ...labelProps,
+    };
+
+    // Prepare static element
+    const staticElement: TagElementProps = {
+      ...staticElementProps,
+      attributes: {
+        ...staticElementProps.attributes,
+      },
+    };
+
+    // Add elements to grid
+    gridContainer.children!.push(labelElement, staticElement);
+
+    return this;
+  }
+
+  /**
    * Add a control button that will auto-save settings when clicked.
    * @param label Button label
    * @param id Button id
