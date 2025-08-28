@@ -137,12 +137,15 @@ export class MenuManager extends ManagerTool {
         elementOption,
       ) as XUL.MenuItem | XUL.Menu | XUL.MenuSeparator;
       if (menuitemOption.isHidden || menuitemOption.getVisibility) {
-        popup?.addEventListener("popupshowing", (ev: Event) => {
+        popup?.addEventListener("popupshowing", async (ev: Event) => {
           let hidden: boolean | undefined;
           if (menuitemOption.isHidden) {
-            hidden = menuitemOption.isHidden(menuItem as any, ev);
+            hidden = await menuitemOption.isHidden(menuItem as any, ev);
           } else if (menuitemOption.getVisibility) {
-            const visible = menuitemOption.getVisibility(menuItem as any, ev);
+            const visible = await menuitemOption.getVisibility(
+              menuItem as any,
+              ev,
+            );
             hidden = typeof visible === "undefined" ? undefined : !visible;
           }
           if (typeof hidden === "undefined") {
@@ -156,8 +159,11 @@ export class MenuManager extends ManagerTool {
         });
       }
       if (menuitemOption.isDisabled) {
-        popup?.addEventListener("popupshowing", (ev: Event) => {
-          const disabled = menuitemOption.isDisabled!(menuItem as any, ev);
+        popup?.addEventListener("popupshowing", async (ev: Event) => {
+          const disabled = await menuitemOption.isDisabled!(
+            menuItem as any,
+            ev,
+          );
           if (typeof disabled === "undefined") {
             return;
           }
@@ -173,8 +179,8 @@ export class MenuManager extends ManagerTool {
           menuitemOption.tag === "menuseparator") &&
         menuitemOption.onShowing
       ) {
-        popup?.addEventListener("popupshowing", (ev: Event) => {
-          menuitemOption.onShowing!(menuItem as any, ev);
+        popup?.addEventListener("popupshowing", async (ev: Event) => {
+          await menuitemOption.onShowing!(menuItem as any, ev);
         });
       }
       if (menuitemOption.tag === "menu") {
@@ -231,21 +237,30 @@ type MenuitemTagDependentOptions =
        * return true to show and false to hide current element
        * @deprecated Use `isHidden`.
        */
-      getVisibility?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      getVisibility?: (
+        elem: XUL.MenuItem,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically hide/show the menu item
        * @returns Whether the menu item should be hidden
        */
-      isHidden?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      isHidden?: (
+        elem: XUL.MenuItem,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically enable/disable the menu item
        * @returns Whether the menu item should be disabled
        */
-      isDisabled?: (elem: XUL.MenuItem, ev: Event) => boolean | undefined;
+      isDisabled?: (
+        elem: XUL.MenuItem,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Fired when the containing menu popup is shown
        */
-      onShowing?: (elem: XUL.MenuItem, event: Event) => any;
+      onShowing?: (elem: XUL.MenuItem, event: Event) => any | Promise<any>;
       type?: "" | "checkbox" | "radio";
       checked?: boolean;
     }
@@ -255,17 +270,26 @@ type MenuitemTagDependentOptions =
        * return true to show and false to hide current element
        * @deprecated Use `isHidden`.
        */
-      getVisibility?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
+      getVisibility?: (
+        elem: XUL.Menu,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically hide/show the menu
        * @returns Whether the menu should be hidden
        */
-      isHidden?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
+      isHidden?: (
+        elem: XUL.Menu,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically enable/disable the menu
        * @returns Whether the menu should be disabled
        */
-      isDisabled?: (elem: XUL.Menu, ev: Event) => boolean | undefined;
+      isDisabled?: (
+        elem: XUL.Menu,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /* Attributes below are used when type === "menu" */
       popupId?: string;
       /**
@@ -287,21 +311,27 @@ type MenuitemTagDependentOptions =
       getVisibility?: (
         elem: XUL.MenuSeparator,
         ev: Event,
-      ) => boolean | undefined;
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically hide/show the separator
        * @returns Whether the separator should be hidden
        */
-      isHidden?: (elem: XUL.MenuSeparator, ev: Event) => boolean | undefined;
+      isHidden?: (
+        elem: XUL.MenuSeparator,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Dynamically enable/disable the separator
        * @returns Whether the separator should be disabled
        */
-      isDisabled?: (elem: XUL.MenuSeparator, ev: Event) => boolean | undefined;
+      isDisabled?: (
+        elem: XUL.MenuSeparator,
+        ev: Event,
+      ) => boolean | undefined | Promise<boolean | undefined>;
       /**
        * Fired when the containing menu popup is shown
        */
-      onShowing?: (elem: XUL.MenuSeparator, event: Event) => any;
+      onShowing?: (elem: XUL.MenuSeparator, event: Event) => any | Promise<any>;
     };
 
 interface MenuitemCommonOptions {
