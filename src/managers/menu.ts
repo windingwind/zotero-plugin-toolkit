@@ -5,6 +5,7 @@ import { UITool } from "../tools/ui.js";
 
 /**
  * Register \<menuitem\>, \<menupopup\>, or \<menuseperator\> to Zotero right-click/window menus.
+ * @deprecated Use `Zotero.MenuManager` instead. This API is planned to be removed in 6 months after Zotero 8 is officially released.
  */
 export class MenuManager extends ManagerTool {
   private ui: UITool;
