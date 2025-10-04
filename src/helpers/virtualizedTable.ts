@@ -111,13 +111,13 @@ export class VirtualizedTableHelper extends BasicTool {
    *   // If you want to perform custom key handling it should be in this function
    *   // if it returns false then virtualized-table's own key handler won't run
    *   onKeyDown?: (e: Event) => boolean;
-   *   onKeyUp?: (e: Event) => boolean;
-   *   onDragOver?: (e: Event) => boolean;
-   *   onDrop?: (e: Event) => boolean;
+   *   onKeyUp?: (e: Event) => void;
+   *   onDragOver?: (e: Event) => void;
+   *   onDrop?: (e: Event) => void;
    *   // Enter, double-clicking
-   *   onActivate?: (e: Event) => boolean;
-   *   onFocus?: (e: Event) => boolean;
-   *   onItemContextMenu?: (e: Event, x: number, y: number) => boolean;
+   *   onActivate?: (e: Event, items: number[]) => void;
+   *   onFocus?: (e: Event) => void;
+   *   onItemContextMenu?: (e: Event, x: number, y: number) => void;
    * }
    * ```
    */
@@ -289,21 +289,21 @@ interface VirtualizedTableProps {
   // If you want to perform custom key handling it should be in this function
   // if it returns false then virtualized-table's own key handler won't run
   onKeyDown?: (e: KeyboardEvent) => boolean;
-  onKeyUp?: (e: KeyboardEvent) => boolean;
+  onKeyUp?: (e: KeyboardEvent) => void;
 
-  onDragOver?: (e: DragEvent) => boolean;
-  onDrop?: (e: DragEvent) => boolean;
+  onDragOver?: (e: DragEvent) => void;
+  onDrop?: (e: DragEvent) => void;
 
   // Enter, double-clicking
-  onActivate?: (e: MouseEvent) => boolean;
+  onActivate?: (e: MouseEvent | KeyboardEvent, items: number[]) => void;
 
-  onFocus?: (e: FocusEvent) => boolean;
+  onFocus?: (e: FocusEvent) => void;
 
   onItemContextMenu?: (
     e: MouseEvent | KeyboardEvent,
     x: number,
     y: number,
-  ) => boolean;
+  ) => void;
 }
 
 interface VirtualizedTableConstructor
