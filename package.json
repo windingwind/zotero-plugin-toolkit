@@ -1,7 +1,7 @@
 {
   "name": "zotero-plugin-toolkit",
   "type": "module",
-  "version": "5.1.0-beta.9",
+  "version": "5.1.0-beta.10",
   "packageManager": "pnpm@10.13.1",
   "description": "Toolkit for Zotero plugins",
   "author": "windingwind",
