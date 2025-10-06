@@ -191,6 +191,10 @@ export class KeyModifier implements KeyModifierStatus {
       this.key = raw
         .replace(/(accel|shift|control|meta|alt|[ ,\-])/g, "")
         .toLocaleLowerCase();
+      if (!this.key && (raw.includes(",,") || raw === ",")) {
+        // If there are two consecutive commas, it means the key is a comma
+        this.key = ",";
+      }
     } else if (raw instanceof KeyModifier) {
       this.merge(raw, { allowOverwrite: true });
     } else {
