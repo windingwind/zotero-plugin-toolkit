@@ -47,10 +47,12 @@ export class ExtraFieldTool extends BasicTool {
    * Replace extra field of an item.
    * @param item
    * @param fields
+   * @param [save] Whether to save the item.
    */
   async replaceExtraFields(
     item: Zotero.Item,
     fields: Map<string, string>,
+    save = true,
   ): Promise<void> {
     const kvs: string[] = [];
     if (fields.has("__nonStandard__")) {
@@ -61,7 +63,7 @@ export class ExtraFieldTool extends BasicTool {
       kvs.push(`${k}: ${v}`);
     });
     item.setField("extra", kvs.join("\n"));
-    await item.saveTx();
+    if (save) await item.saveTx();
   }
 
   /**
@@ -69,11 +71,13 @@ export class ExtraFieldTool extends BasicTool {
    * @param item
    * @param key
    * @param value
+   * @param [save] Whether to save the item.
    */
   async setExtraField(
     item: Zotero.Item,
     key: string,
     value: string,
+    save = true,
   ): Promise<void> {
     const fields = this.getExtraFields(item);
     if (value === "" || typeof value === "undefined") {
@@ -81,6 +85,6 @@ export class ExtraFieldTool extends BasicTool {
     } else {
       fields.set(key, value);
     }
-    await this.replaceExtraFields(item, fields);
+    await this.replaceExtraFields(item, fields, save);
   }
 }
