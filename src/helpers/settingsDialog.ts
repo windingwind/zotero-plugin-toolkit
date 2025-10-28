@@ -100,7 +100,9 @@ export class SettingsDialogHelper extends DialogHelper {
     }
 
     // Generate unique ID for the control
-    const controlId = `setting-${settingKey}-${Zotero.Utilities.randomString()}`;
+    const controlId = CSS.escape(
+      `setting-${settingKey}-${Zotero.Utilities.randomString()}`,
+    );
 
     // Store the binding information
     this.settingBindings.set(controlId, { key: settingKey, valueType });
