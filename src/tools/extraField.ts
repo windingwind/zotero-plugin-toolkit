@@ -6,28 +6,32 @@ import { BasicTool } from "../basic.js";
 export class ExtraFieldTool extends BasicTool {
   /**
    * Get all extra fields
-   * @param item
-   * @param backend
+   * @param item Zotero item
+   * @param parser Parsing mode:
+   *   - "default": use the enhanced custom parser (supports duplicate keys)
+   *   - "zotero": use Zotero’s built-in parser (single value per key)
    */
-  getExtraFields(item: Zotero.Item, backend: "default"): Map<string, string>;
-  getExtraFields(item: Zotero.Item, backend?: "custom"): Map<string, string[]>;
+  getExtraFields(item: Zotero.Item, parser: "zotero"): Map<string, string>;
+  getExtraFields(item: Zotero.Item, parser?: "default"): Map<string, string[]>;
 
   getExtraFields(
     item: Zotero.Item,
-    backend: "default" | "custom" = "custom",
+    parser: "default" | "zotero" = "default",
   ): Map<string, string> | Map<string, string[]> {
     const extraFiledRaw = item.getField("extra") as string;
 
-    if (backend === "default") {
+    if (parser === "zotero") {
+      // Zotero built-in parser (single value per key)
       return this.getGlobal("Zotero").Utilities.Internal.extractExtraFields(
         extraFiledRaw,
       ).fields as Map<string, string>;
     } else {
+      // Custom enhanced parser (supports multiple same keys)
       const map = new Map<string, string[]>();
       const nonStandardFields: string[] = [];
 
       extraFiledRaw.split("\n").forEach((line) => {
-        if (line === "") return;
+        if (!line) return;
 
         const split = line.split(": ");
         if (split.length >= 2 && split[0]) {
@@ -40,13 +44,13 @@ export class ExtraFieldTool extends BasicTool {
         }
       });
 
-      if (nonStandardFields.length)
+      if (nonStandardFields.length > 0) {
         map.set("__nonStandard__", [nonStandardFields.join("\n")]);
+      }
 
       return map;
     }
   }
-
   /**
    * Get extra field value by key. If it does not exists, return undefined.
    * @param item
@@ -58,7 +62,7 @@ export class ExtraFieldTool extends BasicTool {
     key: string,
     all = false,
   ): string | string[] | undefined {
-    const fields = this.getExtraFields(item, "custom");
+    const fields = this.getExtraFields(item, "default");
     const values = fields.get(key);
     if (!values) return undefined;
     return all ? values : values[0];
@@ -110,7 +114,7 @@ export class ExtraFieldTool extends BasicTool {
   ): Promise<void> {
     const { append = false, save = true } = options;
 
-    const fields = this.getExtraFields(item, "custom");
+    const fields = this.getExtraFields(item, "default");
 
     if (value === "" || typeof value === "undefined") {
       fields.delete(key);
