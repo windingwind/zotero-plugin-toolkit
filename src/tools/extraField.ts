@@ -8,18 +8,18 @@ export class ExtraFieldTool extends BasicTool {
    * Get all extra fields
    * @param item Zotero item
    * @param parser Parsing mode:
-   *   - "default": use the enhanced custom parser (supports duplicate keys)
-   *   - "zotero": use Zotero’s built-in parser (single value per key)
+   *   - "enhanced": use the enhanced custom parser (supports duplicate keys)
+   *   - "classical": use Zotero’s built-in parser (single value per key)
    */
-  getExtraFields(item: Zotero.Item, parser: "zotero"): Map<string, string>;
-  getExtraFields(item: Zotero.Item, parser?: "default"): Map<string, string[]>;
+  getExtraFields(item: Zotero.Item, parser: "classical"): Map<string, string>;
+  getExtraFields(item: Zotero.Item, parser?: "enhanced"): Map<string, string[]>;
   getExtraFields(
     item: Zotero.Item,
-    parser: "default" | "zotero" = "default",
+    parser: "enhanced" | "classical" = "enhanced",
   ): Map<string, string> | Map<string, string[]> {
     const extraFiledRaw = item.getField("extra") as string;
 
-    if (parser === "zotero") {
+    if (parser === "classical") {
       // Zotero built-in parser (single value per key)
       return this.getGlobal("Zotero").Utilities.Internal.extractExtraFields(
         extraFiledRaw,
@@ -71,7 +71,7 @@ export class ExtraFieldTool extends BasicTool {
     key: string,
     all = false,
   ): string | string[] | undefined {
-    const fields = this.getExtraFields(item, "default");
+    const fields = this.getExtraFields(item, "enhanced");
     const values = fields.get(key);
     if (!values) return undefined;
     return all ? values : values[0];
@@ -123,7 +123,7 @@ export class ExtraFieldTool extends BasicTool {
   ): Promise<void> {
     const { append = false, save = true } = options;
 
-    const fields = this.getExtraFields(item, "default");
+    const fields = this.getExtraFields(item, "enhanced");
 
     if (value === "" || typeof value === "undefined") {
       fields.delete(key);
