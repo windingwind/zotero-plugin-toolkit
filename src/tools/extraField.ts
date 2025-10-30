@@ -13,7 +13,6 @@ export class ExtraFieldTool extends BasicTool {
    */
   getExtraFields(item: Zotero.Item, parser: "zotero"): Map<string, string>;
   getExtraFields(item: Zotero.Item, parser?: "default"): Map<string, string[]>;
-
   getExtraFields(
     item: Zotero.Item,
     parser: "default" | "zotero" = "default",
@@ -57,6 +56,16 @@ export class ExtraFieldTool extends BasicTool {
    * @param key
    * @param [all] Whether to return all values if the field appears multiple times.
    */
+  getExtraField(
+    item: Zotero.Item,
+    key: string,
+    all?: false,
+  ): string | undefined;
+  getExtraField(
+    item: Zotero.Item,
+    key: string,
+    all: true,
+  ): string[] | undefined;
   getExtraField(
     item: Zotero.Item,
     key: string,
