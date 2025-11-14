@@ -90,15 +90,12 @@ export class ExtraFieldTool extends BasicTool {
     options: { save?: boolean } = {},
   ): Promise<void> {
     const { save = true } = options;
+
     const kvs: string[] = [];
-
-    if (fields.has("__nonStandard__")) {
-      kvs.push(...(fields.get("__nonStandard__") as string[]));
-      fields.delete("__nonStandard__");
-    }
-
     fields.forEach((values, key) => {
-      values.forEach((v) => kvs.push(`${key}: ${v}`));
+      key === "__nonStandard__"
+        ? kvs.push(...fields.get("__nonStandard__")!)
+        : values.forEach((v) => kvs.push(`${key}: ${v}`));
     });
 
     item.setField("extra", kvs.join("\n"));
