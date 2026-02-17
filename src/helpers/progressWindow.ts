@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic.js";
+import { waitUtilAsync } from "../utils/wait.js";
 
 /**
  * Icon dict. Add your custom icons here.
@@ -102,7 +103,6 @@ export class ProgressWindowHelper {
       line.setProgress(options.progress);
     }
     this.lines.push(line);
-    this.updateIcons();
     return this;
   }
 
@@ -149,7 +149,11 @@ export class ProgressWindowHelper {
     if (this.closeTime && this.closeTime > 0) {
       this.win.startCloseTimer(this.closeTime);
     }
-    setTimeout(this.updateIcons.bind(this), 50);
+
+    // Update icon after window load
+    waitUtilAsync(() => Boolean(this.lines?.[0])).then(() => {
+      this.updateIcons();
+    });
     return this;
   }
 
@@ -169,11 +173,16 @@ export class ProgressWindowHelper {
   private updateIcons() {
     try {
       this.lines.forEach((line) => {
-        const box = (line as any)._image as XUL.Box;
-        const icon = box.dataset.itemType;
-        if (icon && !box.style.backgroundImage.includes("progress_arcs")) {
-          box.style.backgroundImage = `url(${box.dataset.itemType})`;
-        }
+        // For each line, modify the icon after the image has loaded,
+        // otherwise it will be overwritten by setItemTypeAndIcon.
+        // https://github.com/zotero/zotero/blob/2c0bebdaf06a1eb93e654e6cc062ce7acb5b3e9c/chrome/content/zotero/xpcom/progressWindow.js#L353
+        waitUtilAsync(() => Boolean((line as any)._image)).then(() => {
+          const box = (line as any)._image as XUL.Box;
+          const icon = box.dataset.itemType;
+          if (icon && !box.style.backgroundImage.includes("progress_arcs")) {
+            box.style.backgroundImage = `url(${box.dataset.itemType})`;
+          }
+        });
       });
     } catch {
       // Ignore
