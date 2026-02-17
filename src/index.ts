@@ -15,6 +15,6 @@ export * from "./managers/prompt.js";
 export * from "./tools/extraField.js";
 export * from "./tools/reader.js";
 export * from "./tools/ui.js";
-export * as wait from "./utils/wait.js";
+export * from "./utils/wait.js";
 
 export * from "./ztoolkit.js";
