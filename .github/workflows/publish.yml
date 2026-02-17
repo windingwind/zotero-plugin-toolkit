@@ -27,6 +27,7 @@ jobs:
       - run: npm install
 
       - run: |
+          npm run build
           VERSION=$(node -p "require('./package.json').version")
           if [[ "$VERSION" == *-* ]]; then
             npm publish --tag beta
