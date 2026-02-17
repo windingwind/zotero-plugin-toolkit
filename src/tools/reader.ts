@@ -1,5 +1,4 @@
 import { BasicTool } from "../basic.js";
-import { waitUtilAsync } from "../utils/wait.js";
 
 /**
  * Zotero ReaderInstance APIs.
@@ -50,50 +49,6 @@ export class ReaderTool extends BasicTool {
       }
     }
     return windowReaders;
-  }
-
-  /**
-   * Get Reader tabpanel deck element.
-   * @deprecated - use item pane api
-   * @alpha
-   */
-  getReaderTabPanelDeck(): XUL.Deck {
-    const deck = this.getGlobal("window").document.querySelector(
-      ".notes-pane-deck",
-    )?.previousElementSibling as XUL.Deck;
-    return deck as XUL.Deck;
-  }
-
-  /**
-   * Add a reader tabpanel deck selection change observer.
-   * @deprecated - use item pane api
-   * @alpha
-   * @param callback
-   */
-  async addReaderTabPanelDeckObserver(callback: () => void) {
-    await waitUtilAsync(() => !!this.getReaderTabPanelDeck());
-    const deck = this.getReaderTabPanelDeck();
-    const observer = new (this.getGlobal("MutationObserver"))(
-      async (mutations) => {
-        mutations.forEach(async (mutation) => {
-          const target = mutation.target as XUL.Element;
-          // When the tabbox is ready, the selectedIndex of tabbox is changed.
-          // When reader tab is changed, the selectedIndex of deck is changed.
-          if (
-            target.classList.contains("zotero-view-tabbox") ||
-            target.tagName === "deck"
-          ) {
-            callback();
-          }
-        });
-      },
-    );
-    observer.observe(deck, {
-      attributes: true,
-      attributeFilter: ["selectedIndex"],
-      subtree: true,
-    });
-    return observer;
   }
 
   /**

@@ -11,7 +11,6 @@ export * from "./helpers/settingsDialog.js";
 export * from "./helpers/virtualizedTable.js";
 export * from "./managers/fieldHook.js";
 export * from "./managers/keyboard.js";
-export * from "./managers/menu.js";
 export * from "./managers/prompt.js";
 export * from "./tools/extraField.js";
 export * from "./tools/reader.js";

@@ -9,7 +9,6 @@ import {
   KeyboardManager,
   LargePrefHelper,
   makeHelperTool,
-  MenuManager,
   PatchHelper,
   ProgressWindowHelper,
   PromptManager,
@@ -33,7 +32,6 @@ class ZoteroToolkit extends BasicTool {
   FieldHooks = new FieldHookManager(this);
   Keyboard = new KeyboardManager(this);
   Prompt = new PromptManager(this);
-  Menu = new MenuManager(this);
   Clipboard = makeHelperTool(ClipboardHelper, this);
   FilePicker = makeHelperTool(FilePickerHelper, this);
   Patch = makeHelperTool(PatchHelper, this);

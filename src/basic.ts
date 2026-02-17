@@ -1,5 +1,3 @@
-import type { FunctionNamesOf } from "./typings/basic.js";
-
 import { version } from "../package.json";
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
@@ -14,11 +12,6 @@ export class BasicTool {
   protected _basicOptions: BasicOptions;
 
   protected _console?: Console;
-
-  /**
-   * @deprecated Use `patcherManager` instead.
-   */
-  protected readonly patchSign: string = "zotero-plugin-toolkit@3.0.0";
 
   static _version = version;
 
@@ -287,28 +280,6 @@ export class BasicTool {
         console.error(e);
       }
     }
-  }
-
-  /**
-   * Patch a function
-   * @deprecated Use {@link PatchHelper} instead.
-   * @param object The owner of the function
-   * @param funcSign The signature of the function(function name)
-   * @param ownerSign The signature of patch owner to avoid patching again
-   * @param patcher The new wrapper of the patched function
-   */
-  patch<T, K extends FunctionNamesOf<T>>(
-    object: T,
-    funcSign: K,
-    ownerSign: string,
-    patcher: (fn: T[K]) => T[K],
-  ) {
-    if ((object[funcSign] as any)[ownerSign]) {
-      throw new Error(`${String(funcSign)} re-patched`);
-    }
-    this.log("patching", funcSign, `by ${ownerSign}`);
-    object[funcSign] = patcher(object[funcSign]);
-    (object[funcSign] as any)[ownerSign] = true;
   }
 
   /**
