@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic.js";
+import { requirePermission } from "../env.js";
 import { waitUtilAsync } from "../utils/wait.js";
 
 /**
@@ -72,6 +73,7 @@ export class ProgressWindowHelper {
       closeTime: 5000,
     },
   ) {
+    requirePermission("userPrompt", "ProgressWindowHelper");
     this.win = new (BasicTool.getZotero().ProgressWindow)(options);
     this.lines = [];
     this.closeTime = options.closeTime || 5000;

@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic.js";
+import { requireEnv } from "../env.js";
 
 /**
  * Helper for creating a guide.
@@ -23,6 +24,7 @@ export class GuideHelper extends BasicTool {
   }
 
   async show(doc: Document) {
+    requireEnv("privileged", "GuideHelper.show");
     if (!doc?.ownerGlobal) {
       throw new Error("Document is required.");
     }
@@ -37,6 +39,7 @@ export class GuideHelper extends BasicTool {
   }
 
   async highlight(doc: Document, step: GuideStep) {
+    requireEnv("privileged", "GuideHelper.highlight");
     if (!doc?.ownerGlobal) {
       throw new Error("Document is required.");
     }

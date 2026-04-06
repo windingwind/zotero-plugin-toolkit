@@ -1,9 +1,15 @@
 import { BasicTool } from "../basic.js";
+import { requirePermission } from "../env.js";
 
 /**
  * Get/set extra field APIs.
  */
 export class ExtraFieldTool extends BasicTool {
+  constructor(base?: BasicTool | import("../basic.js").BasicOptionsInput) {
+    super(base);
+    requirePermission("data", "ExtraFieldTool");
+  }
+
   /**
    * Get all extra fields
    * @param item Zotero item

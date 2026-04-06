@@ -27,7 +27,12 @@
     }
   },
   "types": "./dist/index.d.ts",
+  "bin": {
+    "zotero-plugin-toolkit": "bin/cli.mjs"
+  },
   "files": [
+    "assets",
+    "bin",
     "dist"
   ],
   "engines": {

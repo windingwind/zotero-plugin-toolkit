@@ -25,20 +25,21 @@ export class SettingsDialogHelper extends DialogHelper {
 
     // Override the default element structure to use CSS Grid
     this.elementProps = {
-      tag: "vbox",
-      attributes: { flex: 1 },
+      tag: "div",
+      namespace: "html",
       styles: {
-        width: "100%",
-        height: "100%",
+        display: "flex",
+        flexDirection: "column",
         padding: "20px",
       },
       children: [
         {
           tag: "div",
+          namespace: "html",
           classList: ["settings-grid"],
           styles: {
             display: "grid",
-            gridTemplateColumns: "auto 1fr",
+            gridTemplateColumns: "auto minmax(300px, 1fr)",
             gap: "15px 20px",
             alignItems: "center",
             marginBottom: "20px",
@@ -46,9 +47,12 @@ export class SettingsDialogHelper extends DialogHelper {
           children: [],
         },
         {
-          tag: "hbox",
-          attributes: { flex: 0, pack: "end" },
+          tag: "div",
+          namespace: "html",
           styles: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
             marginTop: "20px",
           },
           children: [],
@@ -100,9 +104,7 @@ export class SettingsDialogHelper extends DialogHelper {
     }
 
     // Generate unique ID for the control
-    const controlId = CSS.escape(
-      `setting-${settingKey}-${Zotero.Utilities.randomString()}`,
-    );
+    const controlId = `setting-${settingKey}-${Zotero.Utilities.randomString()}`;
 
     // Store the binding information
     this.settingBindings.set(controlId, { key: settingKey, valueType });
@@ -321,17 +323,19 @@ export class SettingsDialogHelper extends DialogHelper {
    */
   open(
     title: string,
-    windowFeatures: {
-      width?: number;
-      height?: number;
-      left?: number;
-      top?: number;
-      centerscreen?: boolean;
-      resizable?: boolean;
-      fitContent?: boolean;
-      noDialogMode?: boolean;
-      alwaysRaised?: boolean;
-    } = {
+    windowFeatures:
+      | string
+      | {
+          width?: number;
+          height?: number;
+          left?: number;
+          top?: number;
+          centerscreen?: boolean;
+          resizable?: boolean;
+          fitContent?: boolean;
+          noDialogMode?: boolean;
+          alwaysRaised?: boolean;
+        } = {
       centerscreen: true,
       resizable: true,
       fitContent: true,
@@ -342,11 +346,6 @@ export class SettingsDialogHelper extends DialogHelper {
     this.dialogData.loadCallback = () => {
       // Load settings after window is ready
       this.loadAllSettings();
-
-      this.window.document.body.style.overflow = "hidden";
-      if (windowFeatures.fitContent) {
-        this.window.sizeToContent();
-      }
 
       // Call original callback if it exists
       if (originalLoadCallback) {

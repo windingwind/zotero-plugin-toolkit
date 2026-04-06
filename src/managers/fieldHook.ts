@@ -1,8 +1,9 @@
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
 
-import type { BasicOptions, BasicTool } from "../basic.js";
+import type { BasicOptions, BasicOptionsInput, BasicTool } from "../basic.js";
 import { ManagerTool } from "../basic.js";
+import { requirePermission } from "../env.js";
 import { PatchHelper } from "../helpers/patch.js";
 
 /**
@@ -25,8 +26,9 @@ export class FieldHookManager extends ManagerTool {
     isFieldOfBase: new PatchHelper(),
   };
 
-  constructor(base?: BasicTool | BasicOptions) {
+  constructor(base?: BasicTool | BasicOptionsInput) {
     super(base);
+    requirePermission("data", "FieldHookManager");
     const _thisHelper = this;
     for (const type of Object.keys(this.patchHelpers) as Array<PatchType>) {
       const helper = this.patchHelpers[type];

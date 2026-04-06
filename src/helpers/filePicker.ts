@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic.js";
+import { hasPrivilegedAPIs, requireEnv, requirePermission } from "../env.js";
 
 /**
  * File picker helper.
@@ -66,9 +67,24 @@ export class FilePickerHelper<
   }
 
   async open(): Promise<(MODE extends "multiple" ? string[] : string) | false> {
-    const Backend = ChromeUtils.importESModule(
-      "chrome://zotero/content/modules/filePicker.mjs",
-    ).FilePicker;
+    requireEnv("zotero", "FilePickerHelper.open");
+    requirePermission("fileSystem", "FilePickerHelper.open");
+
+    let Backend: any;
+    if (hasPrivilegedAPIs()) {
+      Backend = ChromeUtils.importESModule(
+        "chrome://zotero/content/modules/filePicker.mjs",
+      ).FilePicker;
+    } else {
+      // In unprivileged sandbox, FilePicker is available as a global
+      Backend = (globalThis as any).FilePicker;
+    }
+    if (!Backend) {
+      throw new Error(
+        "[zotero-plugin-toolkit] FilePickerHelper: FilePicker is not available in this environment.",
+      );
+    }
+
     const fp = new Backend();
     fp.init(
       this.window || this.getGlobal("window"),

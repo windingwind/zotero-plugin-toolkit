@@ -3,6 +3,7 @@ import type ReactDOM from "react-dom";
 import type { createRoot } from "react-dom/client";
 import type { IntlProvider } from "react-intl";
 import { BasicTool } from "../basic.js";
+import { requireEnv } from "../env.js";
 
 /**
  * VirtualizedTable helper.
@@ -20,6 +21,13 @@ export class VirtualizedTableHelper extends BasicTool {
 
   constructor(win: Window) {
     super();
+    requireEnv("zotero", "VirtualizedTableHelper");
+
+    if (typeof (win as any).require !== "function") {
+      throw new TypeError(
+        "[zotero-plugin-toolkit] VirtualizedTableHelper requires a Zotero main window with require().",
+      );
+    }
     this.window = win;
     const Zotero = this.getGlobal("Zotero");
     // eslint-disable-next-line ts/no-unsafe-function-type

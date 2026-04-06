@@ -1,4 +1,5 @@
 import { BasicTool } from "../basic.js";
+import { requirePermission } from "../env.js";
 
 /**
  * Helper class for storing large amounts of data in Zotero preferences.
@@ -38,6 +39,7 @@ export class LargePrefHelper extends BasicTool {
     hooks: Partial<typeof defaultHooks> | "default" | "parser" = "default",
   ) {
     super();
+    requirePermission("preferences", "LargePrefHelper");
     this.keyPref = keyPref;
     this.valuePrefPrefix = valuePrefPrefix;
     if (hooks === "default") {

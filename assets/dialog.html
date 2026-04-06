@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <title></title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-width: max-content;
+        min-height: max-content;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 13px;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      #dialog-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      #dialog-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 8px 16px;
+        border-top: 1px solid ThreeDShadow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dialog-content"></div>
+    <div id="dialog-buttons"></div>
+  </body>
+</html>

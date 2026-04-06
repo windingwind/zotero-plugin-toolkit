@@ -1,16 +1,23 @@
 import { BasicTool } from "../basic.js";
+import { requireEnv, requirePermission } from "../env.js";
 
 /**
  * Zotero ReaderInstance APIs.
+ *
+ * @deprecated Use `Zotero.Reader.registerEventListener()` and related Zotero.Reader APIs instead.
+ * This tool accesses internal reader properties that may change without notice.
  */
 export class ReaderTool extends BasicTool {
   /**
    * Get the selected tab reader.
+   * @deprecated Use `Zotero.Reader.registerEventListener()` instead.
    * @param waitTime Wait for n MS until the reader is ready
    */
   async getReader(
     waitTime: number = 5000,
   ): Promise<_ZoteroTypes.ReaderInstance | undefined> {
+    requireEnv("privileged", "ReaderTool.getReader");
+    requirePermission("reader", "ReaderTool.getReader");
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
     if (Zotero_Tabs.selectedType !== "reader") {
       return undefined;
@@ -29,8 +36,11 @@ export class ReaderTool extends BasicTool {
 
   /**
    * Get all window readers.
+   * @deprecated Use `Zotero.Reader.registerEventListener()` instead.
    */
   getWindowReader(): Array<_ZoteroTypes.ReaderWindow> {
+    requireEnv("privileged", "ReaderTool.getWindowReader");
+    requirePermission("reader", "ReaderTool.getWindowReader");
     const Zotero_Tabs = this.getGlobal("Zotero_Tabs");
     const windowReaders: Array<_ZoteroTypes.ReaderWindow> = [];
     const tabs = Zotero_Tabs._tabs.map((e) => e.id);
@@ -53,6 +63,7 @@ export class ReaderTool extends BasicTool {
 
   /**
    * Get the selected annotation data.
+   * @deprecated Use `Zotero.Reader.registerEventListener()` instead.
    * @param reader Target reader
    * @returns The selected annotation data.
    */
@@ -67,6 +78,7 @@ export class ReaderTool extends BasicTool {
 
   /**
    * Get the text selection of reader.
+   * @deprecated Use `Zotero.Reader.registerEventListener()` instead.
    * @param reader Target reader
    * @returns The text selection of reader.
    */

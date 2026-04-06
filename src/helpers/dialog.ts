@@ -1,8 +1,12 @@
 import type { ElementProps, TagElementProps } from "../tools/ui.js";
+import { hasPrivilegedAPIs, requirePermission } from "../env.js";
 import { UITool } from "../tools/ui.js";
 
 /**
  * Dialog window helper. A superset of XUL dialog.
+ *
+ * In privileged mode, uses `window.openDialog()`.
+ * In unprivileged mode, uses the `openWindow()` sandbox global.
  */
 export class DialogHelper extends UITool {
   /**
@@ -25,31 +29,55 @@ export class DialogHelper extends UITool {
       throw new Error(`row and column must be positive integers.`);
     }
     this.elementProps = {
-      tag: "vbox",
-      attributes: { flex: 1 },
+      tag: "div",
+      namespace: "html",
       styles: {
-        width: "100%",
-        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        flex: "1",
+        minHeight: "0",
       },
       children: [],
     };
     for (let i = 0; i < Math.max(row, 1); i++) {
       this.elementProps.children!.push({
-        tag: "hbox",
-        attributes: { flex: 1 },
+        tag: "div",
+        namespace: "html",
+        styles: {
+          display: "flex",
+          flexDirection: "row",
+          flex: "0 0 auto",
+          width: "100%",
+        },
         children: [],
       });
       for (let j = 0; j < Math.max(column, 1); j++) {
         this.elementProps.children![i].children!.push({
-          tag: "vbox",
-          attributes: { flex: 1 },
+          tag: "div",
+          namespace: "html",
+          styles: {
+            display: "flex",
+            flexDirection: "column",
+            flex: "1 1 auto",
+            width: "100%",
+            minWidth: "0",
+          },
           children: [],
         });
       }
     }
     this.elementProps.children!.push({
-      tag: "hbox",
-      attributes: { flex: 0, pack: "end" },
+      tag: "div",
+      namespace: "html",
+      styles: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        flexWrap: "wrap",
+        gap: "8px",
+        flexShrink: "0",
+        padding: "10px",
+      },
       children: [],
     });
     this.dialogData = {};
@@ -81,8 +109,22 @@ export class DialogHelper extends UITool {
     this.elementProps.children![row].children![column].children = [
       elementProps,
     ];
-    this.elementProps.children![row].children![column].attributes!.flex =
-      cellFlex ? 1 : 0;
+    if (cellFlex) {
+      // Cell and its row grow to fill available vertical space
+      this.elementProps.children![row].children![column].styles!.flex = "1 1 0";
+      this.elementProps.children![row].children![column].styles!.minHeight =
+        "0";
+      this.elementProps.children![row].styles!.flex = "1 1 0";
+      this.elementProps.children![row].styles!.minHeight = "0";
+      // Also stretch the child element to fill the cell
+      elementProps.styles = elementProps.styles || {};
+      elementProps.styles.flex = elementProps.styles.flex || "1";
+      elementProps.styles.minHeight = elementProps.styles.minHeight || "0";
+    } else {
+      // Cell and row stay at natural height
+      this.elementProps.children![row].children![column].styles!.flex =
+        "0 0 auto";
+    }
     return this;
   }
 
@@ -107,36 +149,28 @@ export class DialogHelper extends UITool {
     this.elementProps.children![
       this.elementProps.children!.length - 1
     ].children!.push({
-      tag: "vbox",
-      styles: {
-        margin: "10px",
+      tag: "button",
+      namespace: "html",
+      id,
+      attributes: {
+        type: "button",
+        "data-l10n-id": label,
       },
-      children: [
+      properties: {
+        innerHTML: label,
+      },
+      listeners: [
         {
-          tag: "button",
-          namespace: "html",
-          id,
-          attributes: {
-            type: "button",
-            "data-l10n-id": label,
+          type: "click",
+          listener: (e: Event) => {
+            this.dialogData._lastButtonId = id;
+            if (options.callback) {
+              options.callback(e);
+            }
+            if (!options.noClose) {
+              this.window.close();
+            }
           },
-          properties: {
-            innerHTML: label,
-          },
-          listeners: [
-            {
-              type: "click",
-              listener: (e: Event) => {
-                this.dialogData._lastButtonId = id;
-                if (options.callback) {
-                  options.callback(e);
-                }
-                if (!options.noClose) {
-                  this.window.close();
-                }
-              },
-            },
-          ],
         },
       ],
     });
@@ -184,35 +218,56 @@ export class DialogHelper extends UITool {
    */
   open(
     title: string,
-    windowFeatures: {
-      width?: number;
-      height?: number;
-      left?: number;
-      top?: number;
-      centerscreen?: boolean;
-      resizable?: boolean;
-      fitContent?: boolean;
-      noDialogMode?: boolean;
-      alwaysRaised?: boolean;
-    } = {
+    windowFeatures:
+      | string
+      | {
+          width?: number;
+          height?: number;
+          left?: number;
+          top?: number;
+          centerscreen?: boolean;
+          resizable?: boolean;
+          fitContent?: boolean;
+          noDialogMode?: boolean;
+          alwaysRaised?: boolean;
+        } = {
       centerscreen: true,
       resizable: true,
       fitContent: true,
     },
   ) {
-    this.window = openDialog(
-      this,
-      `dialog-${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
-      title,
-      this.elementProps,
-      this.dialogData,
-      windowFeatures,
-    );
+    if (typeof windowFeatures === "string") {
+      windowFeatures = parseFeatureString(windowFeatures);
+    }
+    if (!hasPrivilegedAPIs()) {
+      requirePermission("openWindow", "DialogHelper.open");
+    }
+    if (hasPrivilegedAPIs()) {
+      this.window = openDialogPrivileged(
+        this,
+        `dialog-${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
+        title,
+        this.elementProps,
+        this.dialogData,
+        windowFeatures,
+      );
+    } else {
+      openDialogUnprivileged(
+        this,
+        title,
+        this.elementProps,
+        this.dialogData,
+        windowFeatures,
+      );
+    }
     return this;
   }
 }
 
-function openDialog(
+/**
+ * Privileged path: uses window.openDialog().
+ */
+function openDialogPrivileged(
   dialogHelper: DialogHelper,
   targetId: string,
   title: string,
@@ -318,36 +373,6 @@ function openDialog(
       });
       // Add style according to Zotero prefs
       // For custom select(menulist) and a link
-      dialogHelper.appendElement(
-        {
-          tag: "fragment",
-          children: [
-            {
-              tag: "style",
-              properties: {
-                // eslint-disable-next-line ts/no-use-before-define
-                innerHTML: style,
-              },
-            },
-            {
-              tag: "link",
-              properties: {
-                rel: "stylesheet",
-                href: "chrome://global/skin/global.css",
-              },
-            },
-            {
-              tag: "link",
-              properties: {
-                rel: "stylesheet",
-                href: "chrome://zotero-platform/content/zotero.css",
-              },
-            },
-          ],
-        },
-        win.document.head!,
-      );
-      replaceElement(elementProps, dialogHelper);
       // Create element
       win.document.body!.appendChild(
         dialogHelper.createElement(win.document, "fragment", {
@@ -372,7 +397,11 @@ function openDialog(
       // Resize window
       if (windowFeatures.fitContent) {
         setTimeout(() => {
-          (win as any).sizeToContent();
+          try {
+            (win as any).sizeToContent();
+          } catch {
+            // sizeToContent may not be available
+          }
         }, 300);
       }
       win.focus();
@@ -436,288 +465,214 @@ function openDialog(
   return win;
 }
 
-function replaceElement(
+/**
+ * Unprivileged path: uses the `openWindow()` sandbox global.
+ */
+function openDialogUnprivileged(
+  dialogHelper: DialogHelper,
+  title: string,
   elementProps: ElementProps & { tag: string },
-  uiTool: DialogHelper,
+  dialogData: DialogData,
+  windowFeatures: {
+    width?: number;
+    height?: number;
+    left?: number;
+    top?: number;
+    centerscreen?: boolean;
+    resizable?: boolean;
+    fitContent?: boolean;
+    noDialogMode?: boolean;
+    alwaysRaised?: boolean;
+  } = {
+    centerscreen: true,
+    resizable: true,
+    fitContent: true,
+  },
 ) {
-  let checkChildren = true;
-  if (elementProps.tag === "select") {
-    let is140 = false;
-    try {
-      is140 =
-        Number.parseInt(Services.appinfo.platformVersion.match(/^\d+/)![0]) >=
-        140;
-    } catch {
-      is140 = false; // Not in Firefox 140+
-    }
-    // For older Firefox versions, use a custom select dropdown
-    if (!is140) {
-      checkChildren = false;
-      const customSelectProps = {
-        tag: "div",
-        classList: ["dropdown"],
-        listeners: [
-          {
-            type: "mouseleave",
-            listener: (ev: Event) => {
-              const select = (ev.target as HTMLElement).querySelector("select");
-              select?.blur();
-            },
-          },
-        ],
-        children: [
-          Object.assign({}, elementProps, {
-            tag: "select",
-            listeners: [
-              {
-                type: "focus",
-                listener: (ev: Event) => {
-                  const select = ev.target as HTMLElement;
-                  const dropdown = select.parentElement?.querySelector(
-                    ".dropdown-content",
-                  ) as HTMLDivElement;
-                  dropdown && (dropdown.style.display = "block");
-                  select.setAttribute("focus", "true");
-                },
-              },
-              {
-                type: "blur",
-                listener: (ev: Event) => {
-                  const select = ev.target as HTMLElement;
-                  const dropdown = select.parentElement?.querySelector(
-                    ".dropdown-content",
-                  ) as HTMLDivElement;
-                  dropdown && (dropdown.style.display = "none");
-                  select.removeAttribute("focus");
-                },
-              },
-            ],
-          }),
-          {
-            tag: "div",
-            classList: ["dropdown-content"],
-            children: elementProps.children?.map((option) => ({
-              tag: "p",
-              attributes: {
-                value: option.properties?.value,
-              },
-              properties: {
-                innerHTML:
-                  option.properties?.innerHTML ||
-                  option.properties?.textContent,
-              },
-              classList: ["dropdown-item"],
-              listeners: [
-                {
-                  type: "click",
-                  listener: (ev: Event) => {
-                    const select = (ev.target as HTMLElement).parentElement
-                      ?.previousElementSibling as HTMLSelectElement;
-                    select &&
-                      (select.value =
-                        (ev.target as HTMLElement).getAttribute("value") || "");
-                    select?.blur();
-                  },
-                },
-              ],
-            })),
-          },
-        ],
-      };
-      for (const key in elementProps) {
-        delete elementProps[key as keyof ElementProps];
-      }
-      Object.assign(elementProps, customSelectProps);
-    } else {
-      // For Firefox 140+, use the select element but create a menupopup at document body
-      const children = elementProps.children || [];
+  dialogData = dialogData || {};
 
-      const randomString = CSS.escape(
-        `${Zotero.Utilities.randomString()}-${new Date().getTime()}`,
-      );
-      if (!elementProps.id) {
-        elementProps.id = `select-${randomString}`;
-      }
-      const selectId = elementProps.id;
-      const popupId = `popup-${randomString}`;
-
-      const popup = uiTool.appendElement(
-        {
-          tag: "menupopup",
-          namespace: "xul",
-          id: popupId,
-          children: children.map((option) => ({
-            tag: "menuitem",
-            attributes: {
-              value: option.properties?.value as string,
-              label: (option.properties?.innerHTML ||
-                option.properties?.textContent) as string,
-            },
-          })),
-          listeners: [
-            {
-              type: "command",
-              listener: (ev: Event) => {
-                if ((ev.target as XULMenuItemElement)?.tagName !== "menuitem") {
-                  return;
-                }
-                const select = uiTool.window.document.getElementById(
-                  selectId,
-                ) as HTMLSelectElement;
-                const menuitem = ev.target as XULMenuItemElement;
-                if (select) {
-                  select.value = menuitem.getAttribute("value") || "";
-                  select.blur();
-                }
-                popup.hidePopup();
-              },
-            },
-          ],
-        },
-        uiTool.window.document.body,
-      ) as XULMenuPopupElement;
-
-      if (!elementProps.listeners) {
-        elementProps.listeners = [];
-      }
-
-      elementProps.listeners.push(
-        ...[
-          {
-            type: "click",
-            listener: (ev: Event) => {
-              const select = ev.target as HTMLSelectElement;
-              // Compute the position of the select element relative to the screen
-              const rect = select.getBoundingClientRect();
-              let left = rect.left + uiTool.window.scrollX;
-              let top = rect.bottom + uiTool.window.scrollY;
-              // If on Mac, adjust the top position
-              if (uiTool.getGlobal("Zotero").isMac) {
-                left += uiTool.window.screenLeft;
-                top += uiTool.window.screenTop + rect.height;
-              }
-              fixMenuPopup(popup, uiTool);
-              popup.openPopup(null, "", left, top, false, false);
-              select.setAttribute("focus", "true");
-            },
-          },
-        ],
-      );
-    }
-  } else if (elementProps.tag === "a") {
-    const href = (elementProps?.properties?.href || "") as string;
-    elementProps.properties ??= {};
-    elementProps.properties.href = "javascript:void(0);";
-    elementProps.attributes ??= {};
-    elementProps.attributes["zotero-href"] = href;
-    elementProps.listeners ??= [];
-    elementProps.listeners.push({
-      type: "click",
-      listener: (ev: Event) => {
-        const href = (ev.target as HTMLLinkElement)?.getAttribute(
-          "zotero-href",
-        );
-        href && uiTool.getGlobal("Zotero").launchURL(href);
-      },
+  // Create locks
+  if (!dialogData.loadLock) {
+    let loadResolve: () => void;
+    let isLoadResolved = false;
+    const loadPromise = new Promise<void>((resolve) => {
+      loadResolve = resolve;
     });
-    elementProps.classList ??= [];
-    elementProps.classList.push("zotero-text-link");
+    loadPromise.then(() => {
+      isLoadResolved = true;
+    });
+    dialogData.loadLock = {
+      promise: loadPromise,
+      resolve: loadResolve!,
+      isResolved: () => isLoadResolved,
+    };
   }
-  if (checkChildren) {
-    elementProps.children?.forEach((child) => replaceElement(child, uiTool));
+  if (!dialogData.unloadLock) {
+    let unloadResolve: () => void;
+    const unloadPromise = new Promise<void>((resolve) => {
+      unloadResolve = resolve;
+    });
+    dialogData.unloadLock = {
+      promise: unloadPromise,
+      resolve: unloadResolve!,
+    };
   }
-}
 
-const style = `
-html {
-  color-scheme: light dark;
-}
-.zotero-text-link {
-  -moz-user-focus: normal;
-  color: -moz-nativehyperlinktext;
-  text-decoration: underline;
-  border: 1px solid transparent;
-  cursor: pointer;
-}
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--material-toolbar);
-  min-width: 160px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  padding: 5px 0 5px 0;
-  z-index: 999;
-}
-.dropdown-item {
-  margin: 0px;
-  padding: 5px 10px 5px 10px;
-}
-.dropdown-item:hover {
-  background-color: var(--fill-quinary);
-}
-`;
+  // Build feature string for openWindow (only allowed features)
+  const featureParts: string[] = [];
+  if (windowFeatures.width) featureParts.push(`width=${windowFeatures.width}`);
+  if (windowFeatures.height)
+    featureParts.push(`height=${windowFeatures.height}`);
+  if (windowFeatures.left) featureParts.push(`left=${windowFeatures.left}`);
+  if (windowFeatures.top) featureParts.push(`top=${windowFeatures.top}`);
+  if (windowFeatures.resizable) featureParts.push("resizable=yes");
+  if (windowFeatures.centerscreen) featureParts.push("centerscreen=yes");
+  const featureString = featureParts.join(",");
 
-function fixMenuPopup(popup: XULMenuPopupElement, uiTool: DialogHelper) {
-  // The XUL menuitem should have inner elements initialized, but for some reason it is not on Windows.
-  for (const item of popup.querySelectorAll("menuitem")) {
-    // If the item inner HTML is empty, set it to the label
-    if (!(item as XULMenuItemElement).innerHTML) {
-      uiTool.appendElement(
-        {
-          tag: "fragment",
-          children: [
-            {
-              tag: "image",
-              namespace: "xul",
-              classList: ["menu-icon"],
-              attributes: {
-                "aria-hidden": "true",
-              },
-            },
-            {
-              tag: "label",
-              namespace: "xul",
-              classList: ["menu-text"],
-              properties: {
-                value: (item as XULMenuItemElement).getAttribute("label") || "",
-              },
-              attributes: {
-                crop: "end",
-                "aria-hidden": "true",
-              },
-            },
-            {
-              tag: "label",
-              namespace: "xul",
-              classList: ["menu-highlightable-text"],
-              properties: {
-                textContent:
-                  (item as XULMenuItemElement).getAttribute("label") || "",
-              },
-              attributes: {
-                crop: "end",
-                "aria-hidden": "true",
-              },
-            },
-            {
-              tag: "label",
-              namespace: "xul",
-              classList: ["menu-accel"],
-              attributes: {
-                "aria-hidden": "true",
-              },
-            },
-          ],
-        },
-        item as XULMenuItemElement,
+  // Use openWindow sandbox global
+  // eslint-disable-next-line ts/no-unsafe-function-type
+  const _openWindow = (globalThis as any).openWindow as Function;
+  if (typeof _openWindow !== "function") {
+    throw new TypeError(
+      "[zotero-plugin-toolkit] DialogHelper requires `openWindow` global (unprivileged sandbox) or privileged APIs.",
+    );
+  }
+
+  // URL must be within the plugin root; "about:blank" is rejected by the sandbox.
+  // Must be provided via `dialogData.dialogHtmlUrl`.
+  // Generate the template with `npx zotero-plugin-toolkit init-dialog`.
+  const dialogUrl = dialogData.dialogHtmlUrl;
+  if (!dialogUrl) {
+    throw new Error(
+      `[zotero-plugin-toolkit] DialogHelper requires "dialogData.dialogHtmlUrl" in unprivileged mode. ` +
+        `Set it to a URL within your plugin root (e.g. "chrome/content/dialog.html"). ` +
+        `Run \`npx zotero-plugin-toolkit init-dialog\` to generate the template.`,
+    );
+  }
+
+  _openWindow(dialogUrl, featureString, {
+    fitContent: !!windowFeatures.fitContent,
+    onLoad: (win: Window) => {
+      dialogHelper.window = win;
+
+      // Set title
+      win.document.title = title;
+
+      // Add l10n files
+      let l10nFiles = dialogData.l10nFiles || [];
+      if (typeof l10nFiles === "string") {
+        l10nFiles = [l10nFiles];
+      }
+      l10nFiles.forEach((file) => {
+        const link = win.document.createElement("link");
+        link.rel = "localization";
+        link.href = file;
+        win.document.head!.appendChild(link);
+      });
+
+      // Append to #dialog-content if present (from dialog.html template),
+      // otherwise fall back to document.body
+      const container =
+        win.document.getElementById("dialog-content") || win.document.body!;
+      container.appendChild(
+        dialogHelper.createElement(win.document, "fragment", {
+          children: [elementProps],
+        }),
       );
+
+      // Load data-binding
+      (
+        Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
+      ).forEach((elem: Element) => {
+        const bindKey = elem.getAttribute("data-bind");
+        const bindAttr = elem.getAttribute("data-attr");
+        const bindProp = elem.getAttribute("data-prop");
+        if (bindKey && dialogData && dialogData[bindKey]) {
+          if (bindProp) {
+            (elem as any)[bindProp] = dialogData[bindKey];
+          } else {
+            elem.setAttribute(bindAttr || "value", dialogData[bindKey]);
+          }
+        }
+      });
+
+      win.focus();
+
+      // Resolve load lock
+      dialogData.loadLock?.resolve();
+      dialogData?.loadCallback && dialogData.loadCallback();
+
+      // Handle beforeunload for data sync
+      win.addEventListener("beforeunload", () => {
+        // Update data-binding
+        (
+          Array.from(win.document.querySelectorAll("*[data-bind]")) as Element[]
+        ).forEach((elem: Element) => {
+          const bindKey = elem.getAttribute("data-bind");
+          const bindAttr = elem.getAttribute("data-attr");
+          const bindProp = elem.getAttribute("data-prop");
+          if (bindKey && dialogData) {
+            if (bindProp) {
+              dialogData[bindKey] = (elem as any)[bindProp];
+            } else {
+              dialogData[bindKey] = elem.getAttribute(bindAttr || "value");
+            }
+          }
+        });
+        dialogData?.beforeUnloadCallback && dialogData.beforeUnloadCallback();
+      });
+
+      // Handle unload
+      win.addEventListener("unload", () => {
+        dialogData.unloadLock?.resolve();
+        dialogData?.unloadCallback && dialogData.unloadCallback();
+      });
+    },
+  });
+}
+
+/**
+ * Parse a CSS-style window features string into a structured object.
+ * e.g. "width=600,height=400,resizable=yes,centerscreen=yes"
+ */
+function parseFeatureString(features: string): {
+  width?: number;
+  height?: number;
+  left?: number;
+  top?: number;
+  centerscreen?: boolean;
+  resizable?: boolean;
+  fitContent?: boolean;
+  noDialogMode?: boolean;
+  alwaysRaised?: boolean;
+} {
+  const result: Record<string, any> = {};
+  for (const part of features.split(",")) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    const [key, value] = trimmed.split("=");
+    if (!key) continue;
+    const k = key.trim();
+    const v = (value ?? "").trim();
+    // Boolean flags: "centerscreen", "centerscreen=yes", etc.
+    const boolKeys = [
+      "centerscreen",
+      "resizable",
+      "fitContent",
+      "noDialogMode",
+      "alwaysRaised",
+    ];
+    if (boolKeys.includes(k)) {
+      result[k] = v === "" || v === "yes" || v === "true" || v === "1";
+    } else {
+      // Numeric keys: width, height, left, top
+      const num = Number(v);
+      if (!Number.isNaN(num)) {
+        result[k] = num;
+      }
     }
   }
+  return result;
 }
 
 export interface DialogData {
@@ -735,4 +690,11 @@ export interface DialogData {
   unloadCallback?: () => void;
   beforeUnloadCallback?: () => void;
   l10nFiles?: string | string[];
+  /**
+   * URL of the dialog HTML template for unprivileged mode.
+   * Must be within the plugin root (e.g. "chrome/content/dialog.html").
+   * Generate with `npx zotero-plugin-toolkit init`.
+   * @default "chrome/content/dialog.html"
+   */
+  dialogHtmlUrl?: string;
 }

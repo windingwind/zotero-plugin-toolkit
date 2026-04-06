@@ -1,5 +1,5 @@
 import { version } from "../package.json";
-import ToolkitGlobal from "./managers/toolkitGlobal.js";
+import { hasPrivilegedAPIs, hasZotero, requireEnv } from "./env.js";
 
 /**
  * Basic APIs with Zotero 6 & newer (7) compatibility.
@@ -10,8 +10,6 @@ export class BasicTool {
    * configurations.
    */
   protected _basicOptions: BasicOptions;
-
-  protected _console?: Console;
 
   static _version = version;
 
@@ -27,10 +25,26 @@ export class BasicTool {
   }
 
   /**
+   * Get the plugin ID. Throws if not set.
+   * Must be set via constructor options before calling any Zotero API
+   * that requires a plugin ID.
+   */
+  public getPluginID(): string {
+    const id = this._basicOptions.api.pluginID;
+    if (!id) {
+      throw new Error(
+        "[zotero-plugin-toolkit] pluginID is not set. " +
+          "Pass { api: { pluginID: '...' } } in the constructor options.",
+      );
+    }
+    return id;
+  }
+
+  /**
    *
    * @param data Pass an BasicTool instance to copy its options.
    */
-  constructor(data?: BasicTool | BasicOptions) {
+  constructor(data?: BasicTool | BasicOptionsInput) {
     this._basicOptions = {
       log: {
         _type: "toolkitlog",
@@ -38,19 +52,8 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
-      // We will remove this in the future, for now just let it be lazy loaded.
-      get debug() {
-        if (this._debug) {
-          return this._debug;
-        }
-        this._debug = ToolkitGlobal.getInstance()?.debugBridge || {
-          disableDebugBridgePassword: false,
-          password: "",
-        };
-        return this._debug;
-      },
       api: {
-        pluginID: "zotero-plugin-toolkit@windingwind.com",
+        pluginID: "",
       },
       listeners: {
         callbacks: {
@@ -62,19 +65,6 @@ export class BasicTool {
         _plugin: undefined,
       },
     };
-    try {
-      if (
-        typeof globalThis.ChromeUtils?.importESModule !== "undefined" ||
-        typeof globalThis.ChromeUtils?.import !== "undefined"
-      ) {
-        const { ConsoleAPI } = _importESModule(
-          "resource://gre/modules/Console.sys.mjs",
-        );
-        this._console = new ConsoleAPI({
-          consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
-        });
-      }
-    } catch {}
 
     this.updateOptions(data);
   }
@@ -203,6 +193,12 @@ export class BasicTool {
    * ```
    */
   createXULElement(doc: Document, type: string): XULElement {
+    if (typeof (doc as any).createXULElement !== "function") {
+      throw new TypeError(
+        `[zotero-plugin-toolkit] createXULElement is not available on this document. ` +
+          `XUL element creation requires a chrome document (privileged context).`,
+      );
+    }
     // @ts-expect-error doc.createXULElement returns XUL.Element
     return doc.createXULElement(type);
   }
@@ -235,27 +231,19 @@ export class BasicTool {
         data.splice(0, 0, options.prefix);
       }
       if (!options.disableConsole) {
-        let _console: Console | undefined;
-        // Assume either console or _Zotero is available
-        if (typeof console !== "undefined") {
-          _console = console;
-        } else if (_Zotero) {
-          _console = _Zotero.getMainWindow()?.console;
-        }
-        // Do we really need this?
-        if (!_console) {
-          if (!this._console) {
-            return;
-          }
-          _console = this._console;
-        }
-        if (_console.groupCollapsed) {
-          _console.groupCollapsed(...data);
+        // console is available in all environments (privileged, unprivileged, HTML windows, workers)
+        // eslint-disable-next-line no-console -- intentional logging method
+        if (console.groupCollapsed) {
+          // eslint-disable-next-line no-console -- intentional logging method
+          console.groupCollapsed(...data);
         } else {
-          _console.group(...data);
+          // eslint-disable-next-line no-console -- intentional logging method
+          console.group(...data);
         }
-        _console.trace();
-        _console.groupEnd();
+        // eslint-disable-next-line no-console -- intentional logging method
+        console.trace();
+        // eslint-disable-next-line no-console -- intentional logging method
+        console.groupEnd();
       }
       if (!options.disableZLog) {
         if (typeof _Zotero === "undefined") {
@@ -324,7 +312,9 @@ export class BasicTool {
       listeners.callbacks.onMainWindowLoad.size === 0 &&
       listeners.callbacks.onMainWindowUnload.size === 0
     ) {
-      Services.wm.removeListener(listeners._mainWindow);
+      if (hasPrivilegedAPIs()) {
+        Services.wm.removeListener(listeners._mainWindow);
+      }
       delete listeners._mainWindow;
     }
     if (listeners._plugin && listeners.callbacks.onPluginUnload.size === 0) {
@@ -338,6 +328,13 @@ export class BasicTool {
    */
   protected _ensureMainWindowListener() {
     if (this._basicOptions.listeners._mainWindow) {
+      return;
+    }
+    if (!hasPrivilegedAPIs()) {
+      this.log(
+        "[zotero-plugin-toolkit] Main window listeners (Services.wm) are not available in unprivileged mode. " +
+          "onMainWindowLoad/onMainWindowUnload callbacks will not fire automatically.",
+      );
       return;
     }
     const mainWindowListener: nsIWindowMediatorListener = {
@@ -385,9 +382,19 @@ export class BasicTool {
 
   /**
    * Ensure the plugin listener is registered.
+   * In unprivileged mode, Zotero.Plugins is not available,
+   * so callers must use {@link dispose} for manual cleanup.
    */
   protected _ensurePluginListener() {
     if (this._basicOptions.listeners._plugin) {
+      return;
+    }
+    if (!hasZotero()) {
+      return;
+    }
+    if (!hasPrivilegedAPIs()) {
+      // Zotero.Plugins.addObserver is not available in unprivileged mode.
+      // Callers must use dispose() for cleanup.
       return;
     }
     const pluginListener = {
@@ -410,26 +417,63 @@ export class BasicTool {
     Zotero.Plugins.addObserver(pluginListener);
   }
 
-  updateOptions(source?: BasicTool | BasicOptions) {
+  updateOptions(source?: BasicTool | BasicOptionsInput) {
     if (!source) {
       return this;
     }
     if (source instanceof BasicTool) {
       this._basicOptions = source._basicOptions;
     } else {
-      this._basicOptions = source;
+      // Deep-merge partial input into existing options
+      if (source.log) {
+        Object.assign(this._basicOptions.log, source.log);
+      }
+      if (source.api) {
+        Object.assign(this._basicOptions.api, source.api);
+      }
+      if (source.listeners) {
+        Object.assign(this._basicOptions.listeners, source.listeners);
+      }
     }
     return this;
+  }
+
+  /**
+   * Manually trigger cleanup for this tool instance.
+   * Fires all registered `onPluginUnload` callbacks.
+   * Use this in unprivileged mode where Zotero.Plugins.addObserver
+   * is not available and auto-unregister does not work.
+   */
+  dispose() {
+    for (const cbk of this._basicOptions.listeners.callbacks.onPluginUnload) {
+      try {
+        cbk(
+          {
+            id: this.getPluginID(),
+            version: "",
+            rootURI: "",
+          },
+          0,
+        );
+      } catch (e) {
+        this.log(e);
+      }
+    }
   }
 
   static getZotero(): _ZoteroTypes.Zotero {
     if (typeof Zotero !== "undefined") {
       return Zotero;
     }
-    const { Zotero: _Zotero } = ChromeUtils.importESModule(
-      "chrome://zotero/content/zotero.mjs",
+    if (hasPrivilegedAPIs()) {
+      const { Zotero: _Zotero } = ChromeUtils.importESModule(
+        "chrome://zotero/content/zotero.mjs",
+      );
+      return _Zotero;
+    }
+    throw new Error(
+      "[zotero-plugin-toolkit] Zotero global is not available and cannot be imported in this environment.",
     );
-    return _Zotero;
   }
 }
 
@@ -440,11 +484,6 @@ export interface BasicOptions {
     disableZLog: boolean;
     prefix: string;
   };
-  debug: {
-    disableDebugBridgePassword: boolean;
-    password: string;
-  };
-  _debug?: BasicOptions["debug"];
   api: {
     pluginID: string;
   };
@@ -457,6 +496,14 @@ export interface BasicOptions {
   };
 }
 
+/**
+ * Input type for constructing BasicTool/subclasses.
+ * All fields are optional and will be merged with defaults.
+ */
+export type BasicOptionsInput = {
+  [K in keyof BasicOptions]?: Partial<BasicOptions[K]>;
+};
+
 export abstract class ManagerTool extends BasicTool {
   abstract register(...data: any[]): any;
   abstract unregister(...data: any[]): any;
@@ -467,7 +514,7 @@ export abstract class ManagerTool extends BasicTool {
 
   protected _ensureAutoUnregisterAll() {
     this.addListenerCallback("onPluginUnload", (params, _reason) => {
-      if (params.id !== this.basicOptions.api.pluginID) {
+      if (params.id !== this.getPluginID()) {
         return;
       }
       this.unregisterAll();
@@ -488,10 +535,16 @@ export function unregister(tools: { [key: string | number]: any }) {
 
 export function makeHelperTool<T extends typeof HelperTool>(
   cls: T,
-  options: BasicTool | BasicOptions,
+  options: BasicTool | BasicOptionsInput,
 ): T;
-export function makeHelperTool<T>(cls: T, options: BasicTool | BasicOptions): T;
-export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
+export function makeHelperTool<T>(
+  cls: T,
+  options: BasicTool | BasicOptionsInput,
+): T;
+export function makeHelperTool(
+  cls: any,
+  options: BasicTool | BasicOptionsInput,
+) {
   return new Proxy(cls, {
     construct(target, args) {
       // eslint-disable-next-line new-cap
@@ -508,6 +561,8 @@ export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
 
 // Make compatible import between fx128 (import jsm) and fx140 (importESModule mjs)
 export function _importESModule(path: string): any {
+  requireEnv("privileged", "_importESModule");
+
   // Since the `Zotero` or `Services` might not be available,
   // we directly check `ChromeUtils` for import.
   if (typeof ChromeUtils.import === "undefined") {

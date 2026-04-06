@@ -1,5 +1,6 @@
-import type { BasicOptions } from "../basic.js";
+import type { BasicOptions, BasicOptionsInput } from "../basic.js";
 import { BasicTool } from "../basic.js";
+import { hasPrivilegedAPIs } from "../env.js";
 
 /**
  * UI APIs. Create elements and manage them.
@@ -25,7 +26,7 @@ export class UITool extends BasicTool {
    */
   protected elementCache: WeakRef<Element>[];
 
-  constructor(base?: BasicTool | BasicOptions) {
+  constructor(base?: BasicTool | BasicOptionsInput) {
     super(base);
     this.elementCache = [];
     if (!this._basicOptions.ui) {
@@ -239,6 +240,17 @@ export class UITool extends BasicTool {
         }
 
         if (namespace === "xul") {
+          if (typeof (doc as any).createXULElement !== "function") {
+            if (!hasPrivilegedAPIs()) {
+              throw new Error(
+                `[zotero-plugin-toolkit] Cannot create XUL element "${tagName}" in unprivileged mode. ` +
+                  `Use HTML elements or set namespace to "html" instead.`,
+              );
+            }
+            throw new Error(
+              `[zotero-plugin-toolkit] createXULElement is not available on this document for tag "${tagName}".`,
+            );
+          }
           realElem = this.createXULElement(doc, tagName) as XULElement;
         } else {
           realElem = doc.createElementNS(

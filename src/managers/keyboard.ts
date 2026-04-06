@@ -1,6 +1,19 @@
-import type { BasicOptions, BasicTool } from "../basic.js";
+import type { BasicOptionsInput, BasicTool } from "../basic.js";
 import { ManagerTool } from "../basic.js";
-import { waitForReader, waitUntil } from "../utils/wait.js";
+import { hasPrivilegedAPIs, requirePermission } from "../env.js";
+import { waitUntil } from "../utils/wait.js";
+
+async function waitForReader(reader: _ZoteroTypes.ReaderInstance) {
+  await reader._initPromise;
+  if (!reader._lastView) return;
+  await reader._lastView.initializedPromise;
+  if (reader.type === "pdf") {
+    const pdfView = (reader as _ZoteroTypes.ReaderInstance<"pdf">)._lastView;
+    if (pdfView?._iframeWindow?.PDFViewerApplication) {
+      await pdfView._iframeWindow.PDFViewerApplication.initializedPromise;
+    }
+  }
+}
 
 /**
  * Register a global keyboard event listener.
@@ -9,15 +22,18 @@ export class KeyboardManager extends ManagerTool {
   private _keyboardCallbacks: Set<KeyboardCallback> = new Set();
   private _cachedKey?: KeyModifier;
   private id: string;
-  constructor(base?: BasicTool | BasicOptions) {
+  private _noteWindowListener?: any;
+  constructor(base?: BasicTool | BasicOptionsInput) {
     super(base);
     this.id = `kbd-${Zotero.Utilities.randomString()}`;
+    requirePermission("reader", "KeyboardManager");
     this._ensureAutoUnregisterAll();
 
     this.addListenerCallback("onMainWindowLoad", this.initKeyboardListener);
     this.addListenerCallback("onMainWindowUnload", this.unInitKeyboardListener);
 
     this.initReaderKeyboardListener();
+    this.initNoteWindowKeyboardListener();
     for (const win of Zotero.getMainWindows()) {
       this.initKeyboardListener(win);
     }
@@ -49,6 +65,10 @@ export class KeyboardManager extends ManagerTool {
       "onMainWindowUnload",
       this.unInitKeyboardListener,
     );
+    if (this._noteWindowListener && hasPrivilegedAPIs()) {
+      Services.wm.removeListener(this._noteWindowListener);
+      this._noteWindowListener = undefined;
+    }
     for (const win of Zotero.getMainWindows()) {
       this.unInitKeyboardListener(win);
     }
@@ -57,16 +77,57 @@ export class KeyboardManager extends ManagerTool {
   private initKeyboardListener = this._initKeyboardListener.bind(this);
   private unInitKeyboardListener = this._unInitKeyboardListener.bind(this);
 
+  private initNoteWindowKeyboardListener() {
+    if (!hasPrivilegedAPIs()) {
+      return;
+    }
+    const NOTE_URL = "chrome://zotero/content/note.xhtml";
+    const listener: nsIWindowMediatorListener = {
+      onOpenWindow: (xulWindow) => {
+        const domWindow = xulWindow.docShell.domWindow as Window;
+        const onload = () => {
+          domWindow.removeEventListener("load", onload, false);
+          if (domWindow.location.href !== NOTE_URL) {
+            return;
+          }
+          this._initKeyboardListener(domWindow);
+        };
+        domWindow.addEventListener("load", onload, false);
+      },
+      onCloseWindow: (xulWindow) => {
+        const domWindow = xulWindow.docShell.domWindow as Window;
+        if (domWindow.location.href !== NOTE_URL) {
+          return;
+        }
+        this._unInitKeyboardListener(domWindow);
+      },
+    };
+    this._noteWindowListener = listener;
+    Services.wm.addListener(listener);
+
+    // Attach to any already-open note windows
+    const enumerator = Services.wm.getEnumerator("");
+    while (enumerator.hasMoreElements()) {
+      const win = enumerator.getNext() as Window;
+      if (win.location?.href === NOTE_URL) {
+        this._initKeyboardListener(win);
+      }
+    }
+  }
+
   private initReaderKeyboardListener() {
     Zotero.Reader.registerEventListener(
       "renderToolbar",
       (event) => this.addReaderKeyboardCallback(event),
-      this._basicOptions.api.pluginID,
+      this.getPluginID(),
     );
 
-    Zotero.Reader._readers.forEach((reader) =>
-      this.addReaderKeyboardCallback({ reader }),
-    );
+    if (hasPrivilegedAPIs()) {
+      // _readers is a private API, only available in privileged mode
+      Zotero.Reader._readers.forEach((reader) =>
+        this.addReaderKeyboardCallback({ reader }),
+      );
+    }
   }
 
   private async addReaderKeyboardCallback(event: {
@@ -83,10 +144,21 @@ export class KeyboardManager extends ManagerTool {
       return;
     }
     this._initKeyboardListener(reader._iframeWindow);
+    const isAlive = () => {
+      try {
+        if (hasPrivilegedAPIs()) {
+          return !Components.utils.isDeadWrapper(reader._internalReader);
+        }
+        // In unprivileged mode, try accessing a property to check liveness
+        return !!reader._internalReader;
+      } catch {
+        return false;
+      }
+    };
     waitUntil(
       () =>
-        !Components.utils.isDeadWrapper(reader._internalReader) &&
-        (reader._internalReader?._primaryView as any)?._iframeWindow,
+        isAlive() &&
+        !!(reader._internalReader?._primaryView as any)?._iframeWindow,
       () =>
         this._initKeyboardListener(
           (reader._internalReader._primaryView as any)?._iframeWindow,
