@@ -20,6 +20,7 @@
     "developer",
     "toolkit"
   ],
+  "sideEfforts": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
