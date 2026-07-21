@@ -1,5 +1,5 @@
 import type ToolkitGlobal from "../managers/toolkitGlobal.js";
-import { _importESModule, BasicTool } from "../basic.js";
+import { BasicTool } from "../basic.js";
 
 /**
  * Plugin bridge. Install plugin from zotero://plugin
@@ -33,7 +33,7 @@ export class PluginBridge {
   }
 
   private initializePluginBridge() {
-    const { AddonManager } = _importESModule(
+    const { AddonManager } = ChromeUtils.importESModule(
       "resource://gre/modules/AddonManager.sys.mjs",
     );
     const Zotero = BasicTool.getZotero();

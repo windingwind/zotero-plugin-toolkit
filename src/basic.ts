@@ -2,7 +2,7 @@ import { version } from "../package.json";
 import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
 /**
- * Basic APIs with Zotero 6 & newer (7) compatibility.
+ * Basic APIs for Zotero 7+.
  * See also https://www.zotero.org/support/dev/zotero_7_for_developers
  */
 export class BasicTool {
@@ -63,17 +63,12 @@ export class BasicTool {
       },
     };
     try {
-      if (
-        typeof globalThis.ChromeUtils?.importESModule !== "undefined" ||
-        typeof globalThis.ChromeUtils?.import !== "undefined"
-      ) {
-        const { ConsoleAPI } = _importESModule(
-          "resource://gre/modules/Console.sys.mjs",
-        );
-        this._console = new ConsoleAPI({
-          consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
-        });
-      }
+      const { ConsoleAPI } = ChromeUtils.importESModule(
+        "resource://gre/modules/Console.sys.mjs",
+      );
+      this._console = new ConsoleAPI({
+        consoleID: `${this._basicOptions.api.pluginID}-${Date.now()}`,
+      });
     } catch {}
 
     this.updateOptions(data);
@@ -188,12 +183,8 @@ export class BasicTool {
 
   /**
    * Create an XUL element
-   *
-   * For Zotero 6, use `createElementNS`;
-   *
-   * For Zotero 7+, use `createXULElement`.
-   * @param doc
-   * @param type
+   * @param doc Document
+   * @param type Element type
    * @example
    * Create a `<menuitem>`:
    * ```ts
@@ -504,21 +495,6 @@ export function makeHelperTool(cls: any, options: BasicTool | BasicOptions) {
       return _origin;
     },
   });
-}
-
-// Make compatible import between fx128 (import jsm) and fx140 (importESModule mjs)
-export function _importESModule(path: string): any {
-  // Since the `Zotero` or `Services` might not be available,
-  // we directly check `ChromeUtils` for import.
-  if (typeof ChromeUtils.import === "undefined") {
-    return ChromeUtils.importESModule(path, { global: "contextual" });
-  }
-
-  // If matching *.sys.mjs, convert to *.jsm
-  if (path.endsWith(".sys.mjs")) {
-    path = path.replace(/\.sys\.mjs$/, ".jsm");
-  }
-  return ChromeUtils.import(path);
 }
 
 declare interface ListenerCallbackMap {

@@ -370,9 +370,7 @@ export class UITool extends BasicTool {
   }
 
   /**
-   * Parse XHTML to XUL fragment. For Zotero 6.
-   *
-   * To load preferences from a Zotero 7's `.xhtml`, use this method to parse it.
+   * Parse XHTML to XUL fragment.
    * @param str xhtml raw text
    * @param entities dtd file list ("chrome://xxx.dtd")
    * @param defaultXUL true for default XUL namespace
