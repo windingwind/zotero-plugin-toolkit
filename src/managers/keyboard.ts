@@ -187,9 +187,9 @@ export class KeyModifier implements KeyModifierStatus {
       this.control = raw.includes("control");
       this.meta = raw.includes("meta");
       this.alt = raw.includes("alt");
-      // Remove all modifiers, space, comma, and dash
+      // Remove all modifiers, space, and comma
       this.key = raw
-        .replace(/(accel|shift|control|meta|alt|[ ,\-])/g, "")
+        .replace(/(accel|shift|control|meta|alt|[ ,])/g, "")
         .toLocaleLowerCase();
       if (!this.key && (raw.includes(",,") || raw === ",")) {
         // If there are two consecutive commas, it means the key is a comma
