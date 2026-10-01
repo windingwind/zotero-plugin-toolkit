@@ -4,6 +4,9 @@ import { BasicTool } from "../basic.js";
 /**
  * Plugin bridge. Install plugin from zotero://plugin
  *
+ * Any link can reach this handler (a link in a note, or one another app hands to Zotero), so it
+ * only installs from an https:// address and always asks the user first, showing that address.
+ *
  * @deprecated Since this is a temporary solution for debugging, it is not recommended to use.
  * The zotero-plugin-scaffold no longer need this.
  *
@@ -14,7 +17,9 @@ import { BasicTool } from "../basic.js";
  * ```
  */
 export class PluginBridge {
-  public static readonly version: number = 1;
+  // Version 2 asks before installing. Only the highest version is registered, so this
+  // replaces version 1 handlers registered by plugins built with older toolkit releases.
+  public static readonly version: number = 2;
   public get version(): number {
     return PluginBridge.version;
   }
@@ -65,6 +70,14 @@ export class PluginBridge {
                   `The plugin requires Zotero version between ${params.minVersion} and ${params.maxVersion}.`,
               );
             }
+            if (!/^https:\/\//i.test(params.url)) {
+              throw new Error(
+                `Plugin ${params.url} was not installed: only https:// addresses are allowed.`,
+              );
+            }
+            if (!confirmInstall(params.url)) {
+              return;
+            }
             const addon = await AddonManager.getInstallForURL(params.url);
             if (addon && addon.state === AddonManager.STATE_AVAILABLE) {
               addon.install();
@@ -87,6 +100,32 @@ export class PluginBridge {
       "zotero://plugin"
     ] = pluginBridgeExtension;
   }
+}
+
+/**
+ * Ask before installing: the link may not come from the user. Cancel is the default button.
+ */
+function confirmInstall(url: string): boolean {
+  const ps = Services.prompt;
+  // nsIPromptService constants (typed as optional in zotero-types).
+  const flags =
+    (ps.BUTTON_POS_0 ?? 1) * (ps.BUTTON_TITLE_IS_STRING ?? 127) +
+    (ps.BUTTON_POS_1 ?? 256) * (ps.BUTTON_TITLE_CANCEL ?? 2) +
+    (ps.BUTTON_POS_1_DEFAULT ?? 16777216);
+  const choice = ps.confirmEx(
+    Zotero.getMainWindow() as unknown as mozIDOMWindowProxy,
+    "Install a plugin?",
+    `A link is asking Zotero to install a plugin from:\n\n${url}\n\n` +
+      "Plugins have full access to Zotero and your computer. " +
+      "Only install it if you opened this link yourself and trust where it comes from.",
+    flags,
+    "Install",
+    "",
+    "",
+    "",
+    { value: false },
+  );
+  return choice === 0;
 }
 
 function hint(content: string, success: boolean) {
