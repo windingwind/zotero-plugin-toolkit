@@ -11,7 +11,6 @@ import {
   makeHelperTool,
   PatchHelper,
   ProgressWindowHelper,
-  PromptManager,
   ReaderTool,
   UITool,
   unregister,
@@ -31,7 +30,6 @@ class ZoteroToolkit extends BasicTool {
   ExtraField = new ExtraFieldTool(this);
   FieldHooks = new FieldHookManager(this);
   Keyboard = new KeyboardManager(this);
-  Prompt = new PromptManager(this);
   Clipboard = makeHelperTool(ClipboardHelper, this);
   FilePicker = makeHelperTool(FilePickerHelper, this);
   Patch = makeHelperTool(PatchHelper, this);

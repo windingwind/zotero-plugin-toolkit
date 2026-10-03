@@ -24,8 +24,6 @@ features:
     details: "Register custom menus and menu popups with auto cleanup support."
   - title: "KeyboardManager"
     details: "Add keyboard shortcuts with conflict-free registration."
-  - title: "PromptManager"
-    details: "Add prompt panel commands with minimal boilerplate."
   - title: "FieldHookManager"
     details: "Add custom field logic by hooking into Zotero field rendering."
   - title: "DialogHelper"

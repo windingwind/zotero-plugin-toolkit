@@ -1,5 +1,4 @@
 import { version } from "../package.json";
-import ToolkitGlobal from "./managers/toolkitGlobal.js";
 
 /**
  * Basic APIs for Zotero 7+.
@@ -38,16 +37,10 @@ export class BasicTool {
         disableZLog: false,
         prefix: "",
       },
-      // We will remove this in the future, for now just let it be lazy loaded.
-      get debug() {
-        if (this._debug) {
-          return this._debug;
-        }
-        this._debug = ToolkitGlobal.getInstance()?.debugBridge || {
-          disableDebugBridgePassword: false,
-          password: "",
-        };
-        return this._debug;
+      // Kept so that existing code setting it does not throw. It has no effect.
+      debug: {
+        disableDebugBridgePassword: false,
+        password: "",
       },
       api: {
         pluginID: "zotero-plugin-toolkit@windingwind.com",
@@ -431,11 +424,14 @@ export interface BasicOptions {
     disableZLog: boolean;
     prefix: string;
   };
+  /**
+   * @deprecated Has no effect. The debug bridge is no longer registered by default.
+   * To enable it in development builds, call `DebugBridge.register()`.
+   */
   debug: {
     disableDebugBridgePassword: boolean;
     password: string;
   };
-  _debug?: BasicOptions["debug"];
   api: {
     pluginID: string;
   };

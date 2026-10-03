@@ -63,9 +63,9 @@ const ZoteroPane = ztoolkit.getGlobal("ZoteroPane");
 
 - **Basic Tools**: Logging, global variable access, cross-version DOM utilities.
 - **UI & Dialog Helpers**: Build interactive elements like dialogs, tables, and guides.
-- **Managers**: Register menus, keyboard shortcuts, field hooks, and prompt panels.
+- **Managers**: Register menus, keyboard shortcuts, and field hooks.
 - **Helpers**: Access file pickers, clipboard, progress windows, preferences, and more.
-- **Utilities**: Patch core Zotero functions, use debug/plugin bridges, and conditionally wait for actions.
+- **Utilities**: Patch core Zotero functions and conditionally wait for actions.
 
 See the [API Documentation](./reference/index.md) for detailed usage of each module.
 

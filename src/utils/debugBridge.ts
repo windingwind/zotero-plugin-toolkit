@@ -1,8 +1,10 @@
 import { BasicTool } from "../basic.js";
-import ToolkitGlobal from "../managers/toolkitGlobal.js";
 
 /**
- * Debug bridge.
+ * Debug bridge. Runs a script from a `zotero://ztoolkit-debug` link.
+ *
+ * It is not registered by default. Call `DebugBridge.register()` to enable it, only in
+ * development builds, and `DebugBridge.unregister()` on plugin shutdown.
  *
  * @deprecated Since this is a temporary solution for debugging, it is not recommended to use.
  * The zotero-plugin-scaffold no longer need this.
@@ -10,6 +12,13 @@ import ToolkitGlobal from "../managers/toolkitGlobal.js";
  * @remarks
  * Global variables: Zotero, window(main window).
  *
+ * @example
+ * Enable it in development builds only.
+ * ```ts
+ * if (__env__ === "development") {
+ *   DebugBridge.register({ disablePassword: true });
+ * }
+ * ```
  * @example
  * Run script directly. The `run` is URIencoded script.
  *
@@ -20,46 +29,28 @@ import ToolkitGlobal from "../managers/toolkitGlobal.js";
  * `zotero://ztoolkit-debug/?file=file%3A%2F%2F%2FC%3A%2FUsers%2Fw_xia%2FDesktop%2Frun.js&app=developer`
  */
 export class DebugBridge {
-  public static readonly version: number = 2;
   public static readonly passwordPref: string =
     "extensions.zotero.debug-bridge.password";
-  public get version(): number {
-    return DebugBridge.version;
-  }
 
-  private _disableDebugBridgePassword: boolean;
-  public get disableDebugBridgePassword(): boolean {
-    return this._disableDebugBridgePassword;
-  }
-  public set disableDebugBridgePassword(value: boolean) {
-    this._disableDebugBridgePassword = value;
-  }
+  private static readonly extensionKey = "zotero://ztoolkit-debug";
+  private static extension?: object;
 
-  public get password(): string {
+  public static get password(): string {
     return BasicTool.getZotero().Prefs.get(
       DebugBridge.passwordPref,
       true,
     ) as string;
   }
-  public set password(v: string) {
+  public static set password(v: string) {
     BasicTool.getZotero().Prefs.set(DebugBridge.passwordPref, v, true);
   }
 
-  constructor() {
-    this._disableDebugBridgePassword = false;
-    this.initializeDebugBridge();
-  }
-
-  public static setModule(instance: ToolkitGlobal) {
-    if (
-      !instance.debugBridge?.version ||
-      instance.debugBridge.version < DebugBridge.version
-    ) {
-      instance.debugBridge = new DebugBridge();
-    }
-  }
-
-  private initializeDebugBridge() {
+  /**
+   * Register the `zotero://ztoolkit-debug` handler, replacing any registered before.
+   * @param options Register options.
+   * @param options.disablePassword Run commands without checking the password or asking the user.
+   */
+  public static register(options: { disablePassword?: boolean } = {}) {
     const debugBridgeExtension = {
       noContent: true,
       doAction: async (uri: { spec: string }) => {
@@ -78,16 +69,15 @@ export class DebugBridge {
             params[p.split("=")[0]] = decodeURIComponent(p.split("=")[1]);
           });
 
-        const skipPasswordCheck =
-          ToolkitGlobal.getInstance()?.debugBridge.disableDebugBridgePassword;
+        const password = DebugBridge.password;
         let allowed = false;
-        if (skipPasswordCheck) {
+        if (options.disablePassword) {
           allowed = true;
         } else {
           // If password is not set, ask permission for commands without password.
           if (
             typeof params.password === "undefined" &&
-            typeof this.password === "undefined"
+            typeof password === "undefined"
           ) {
             allowed = window.confirm(
               `External App ${
@@ -102,7 +92,7 @@ export class DebugBridge {
               )}\nIf you do not know what it is, please click Cancel to deny.`,
             );
           } else {
-            allowed = this.password === params.password;
+            allowed = password === params.password;
           }
         }
         if (allowed) {
@@ -135,9 +125,26 @@ export class DebugBridge {
         this.doAction(uri);
       },
     };
-    // @ts-expect-error wrappedJSObject
-    Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions[
-      "zotero://ztoolkit-debug"
-    ] = debugBridgeExtension;
+    getProtocolExtensions()[DebugBridge.extensionKey] = debugBridgeExtension;
+    DebugBridge.extension = debugBridgeExtension;
   }
+
+  /**
+   * Unregister the handler, if it is still the one registered by `register`.
+   */
+  public static unregister() {
+    const extensions = getProtocolExtensions();
+    if (
+      DebugBridge.extension &&
+      extensions[DebugBridge.extensionKey] === DebugBridge.extension
+    ) {
+      delete extensions[DebugBridge.extensionKey];
+    }
+    DebugBridge.extension = undefined;
+  }
+}
+
+function getProtocolExtensions(): Record<string, object> {
+  // @ts-expect-error wrappedJSObject
+  return Services.io.getProtocolHandler("zotero").wrappedJSObject._extensions;
 }
