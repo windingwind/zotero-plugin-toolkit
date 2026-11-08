@@ -3,7 +3,7 @@
 [zotero-plugin-toolkit](https://www.npmjs.com/package/zotero-plugin-toolkit) is an npm package that provides a collection of helpful APIs for [Zotero](https://www.zotero.org/) plugin developers.
 
 > [!TIP]
-> Zotero 8 is now supported. Use version `5.1.0` or later of the toolkit.
+> Upgrade to v6 or later for safety reasons. See also https://github.com/zotero/zotero/commit/fd19a4062e405a1be120f03cdcfa244ed5227a77
 
 ## Documentation
 
